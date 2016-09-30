@@ -1,0 +1,33 @@
+{
+    "name": "mirko-pagliai/cakephp-thumber",
+    "description": "Thumber plugin for CakePHP",
+    "homepage": "https://github.com/mirko-pagliai/cakephp-thumber",
+    "type": "cakephp-plugin",
+    "license": "AGPL",
+    "authors": [{
+        "name": "Mirko Pagliai",
+        "email": "mirko.pagliai@gmail.com"
+    }],
+    "require": {
+        "php": ">=5.5.9",
+        "cakephp/cakephp": ">=3.2.0 <4.0",
+        "intervention/image": "^2.3",
+        "intervention/imagecache": "^2.3"
+    },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Thumber\\": "src"
+        },
+        "files": [
+            "src/Core/global_functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Thumber\\Test\\": "tests"
+        }
+    }
+}
