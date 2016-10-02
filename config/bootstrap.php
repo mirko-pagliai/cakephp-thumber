@@ -20,3 +20,29 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+
+use Cake\Core\Configure;
+
+//Default thumbnails driver
+if (!Configure::check('Thumbs.driver')) {
+    Configure::write('Thumbs.driver', 'imagick');
+}
+
+//Default thumbnails directory
+if (!Configure::check('Thumbs.target')) {
+    Configure::write('Thumbs.target', TMP . 'thumbs');
+}
+
+if (!in_array(Configure::read('Thumbs.driver'), ['imagick', 'gd'])) {
+    trigger_error(
+        sprintf('The driver %s is not supported', Configure::read('Thumbs.driver')),
+        E_USER_ERROR
+    );
+}
+
+if (!is_writeable(Configure::read('Thumbs.target'))) {
+    trigger_error(
+        sprintf('Directory %s not writeable', Configure::read('Thumbs.target')),
+        E_USER_ERROR
+    );
+}

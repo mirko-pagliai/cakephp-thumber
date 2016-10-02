@@ -97,6 +97,13 @@ Cache::config([
     ],
 ]);
 
+Configure::write('Thumbs.driver', 'imagick');
+Configure::write('Thumbs.target', TMP . 'thumbs');
+
+//@codingStandardsIgnoreStart
+@mkdir(Configure::read('Thumbs.target'));
+//@codingStandardsIgnoreEnd
+
 Plugin::load('Thumber', [
     'bootstrap' => true,
     'path' => ROOT,
