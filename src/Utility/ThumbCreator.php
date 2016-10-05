@@ -37,6 +37,22 @@ use Intervention\Image\ImageManager;
 class ThumbCreator
 {
     /**
+     * Arguments that will be used to generate the name of the thumbnail.
+     *
+     * Every time you call a method that alters the final thumbnail, its
+     * arguments must be added to this array, including the name of that method.
+     * @var array
+     */
+    protected $arguments = [];
+
+    /**
+     * Callbacks that will be called by the `save()` method to create the
+     * thumbnail
+     * @var array
+     */
+    protected $callbacks = [];
+
+    /**
      * File extension
      * @var string
      */
@@ -68,36 +84,7 @@ class ThumbCreator
     }
 
     /**
-     * Internal method to get the thumbnail path
-     * @param string $method Caller method (eg. `resize`)
-     * @param int $width Width
-     * @param int $heigth Height
-     * @param array $options Options
-     * @return string
-     * @uses $extension
-     * @uses $path
-     */
-    protected function _getThumbPath($method, $width, $heigth, array $options)
-    {
-        $thumb = $method . '_' . md5($this->path);
-
-        if ($width) {
-            $thumb .= '_w' . $width;
-        }
-
-        if ($heigth) {
-            $thumb .= '_h' . $heigth;
-        }
-
-        if ($options) {
-            $thumb .= '_' . md5(serialize($options));
-        }
-
-        return Configure::read('Thumbs.target') . DS . $thumb . '.' . $this->extension;
-    }
-
-    /**
-     * Internal method to resolve a partial path, returning a full path
+     * Internal method to resolve a partial path, returning its full path
      * @param string $path Partial path
      * @return string
      * @throws InternalErrorException
@@ -134,56 +121,55 @@ class ThumbCreator
     }
 
     /**
-     * Crops an image (cuts out a rectangular part).
+     * Crops the image (cuts out a rectangular part).
      *
      * You can use `x` and `y` options to move the top-left corner of the
      * cutout to a certain position.
      * @param int $width Width of the thumbnail
      * @param int $heigth Height of the thumbnail
      * @param array $options Options for the thumbnail
-     * @return string Thumbnail path
+     * @return \Thumber\Utility\ThumbCreator
+     * @uses $arguments
+     * @uses $callbacks
      */
     public function crop($width = null, $heigth = null, array $options = [])
     {
         //Sets default options
         $options += ['x' => null, 'y' => null];
 
-        //Sets the thumbnail path
-        $thumb = $this->_getThumbPath(__FUNCTION__, $width, $heigth, $options);
+        //Adds arguments
+        array_push($this->arguments, __FUNCTION__, $width, $heigth, $options);
 
-        //Creates the thumbnail, if this does not exist
-        if (!file_exists($thumb)) {
-            $img = (new ImageManager(['driver' => Configure::read('Thumbs.driver')]))
-                ->make($this->path);
-            $img->crop($width, $heigth, $options['x'], $options['y']);
-            $img->save($thumb);
-        }
+        //Adds the callback
+        $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
+            return $imageInstance->crop($width, $heigth, $options['x'], $options['y']);
+        };
 
-        return $thumb;
+        return $this;
     }
 
     /**
-     * Resizes an image, creating a thumbnail.
+     * Resizes the image.
      *
      * You can use `aspectRatio` and `upsize` options.
      * @param int $width Width of the thumbnail
      * @param int $heigth Height of the thumbnail
      * @param array $options Options for the thumbnail
-     * @return string Thumbnail path
+     * @return \Thumber\Utility\ThumbCreator
+     * @uses $arguments
+     * @uses $callbacks
      */
     public function resize($width = null, $heigth = null, array $options = [])
     {
         //Sets default options
         $options += ['aspectRatio' => true, 'upsize' => true];
 
-        //Sets the thumbnail path
-        $thumb = $this->_getThumbPath(__FUNCTION__, $width, $heigth, $options);
+        //Adds arguments
+        array_push($this->arguments, __FUNCTION__, $width, $heigth, $options);
 
-        //Creates the thumbnail, if this does not exist
-        if (!file_exists($thumb)) {
-            $img = (new ImageManager(['driver' => Configure::read('Thumbs.driver')]))
-                ->make($this->path);
-            $img->resize($width, $heigth, function ($constraint) use ($options) {
+        //Adds the callback
+        $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
+            return $imageInstance->resize($width, $heigth, function ($constraint) use ($options) {
                 if ($options['aspectRatio']) {
                     $constraint->aspectRatio();
                 }
@@ -192,8 +178,39 @@ class ThumbCreator
                     $constraint->upsize();
                 }
             });
-            $img->save($thumb);
+        };
+
+        return $this;
+    }
+
+    /**
+     * Saves the thumbnail
+     * @return string Thumbnail path
+     * @uses $arguments
+     * @uses $callbacks
+     * @uses $extension
+     * @uses $path
+     */
+    public function save()
+    {
+        $thumb = Configure::read('Thumbs.target') . DS . md5(serialize($this->arguments)) . '.' . $this->extension;
+
+        //Creates the thumbnail, if this does not exist
+        if (!file_exists($thumb)) {
+            $imageInstance = (new ImageManager([
+                'driver' => Configure::read('Thumbs.driver'),
+            ]))->make($this->path);
+
+            //Calls each callback
+            foreach ($this->callbacks as $callback) {
+                call_user_func($callback, $imageInstance);
+            }
+
+            $imageInstance->save($thumb);
         }
+
+        //Resets arguments and callbacks
+        $this->arguments = $this->callbacks = [];
 
         return $thumb;
     }
