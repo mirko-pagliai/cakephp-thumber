@@ -189,6 +189,18 @@ class ThumbCreatorTest extends TestCase
         $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[5], 'image/png');
+
+        $regex = sprintf(
+            '/^%sresize_[a-z0-9]+_h200_[a-z0-9]+\.png$/',
+            preg_quote(Configure::read('Thumbs.target') . DS, '/')
+        );
+
+        $thumb = (new ThumbCreator('400x400.png'))->resize(null, 200);
+        $this->assertFileExists($thumb);
+        $this->assertRegExp($regex, $thumb);
+        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
+        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
+        $this->assertEquals(array_values(getimagesize($thumb))[5], 'image/png');
     }
 
     /**
@@ -241,6 +253,18 @@ class ThumbCreatorTest extends TestCase
         $this->assertRegExp($regex, $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 450);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 450);
+
+        $regex = sprintf(
+            '/^%sresize_[a-z0-9]+_h450_[a-z0-9]+\.png$/',
+            preg_quote(Configure::read('Thumbs.target') . DS, '/')
+        );
+
+        //In this case, the thumbnail will exceed the original size
+        $thumb = (new ThumbCreator('400x400.png'))->resize(null, 450, ['upsize' => false]);
+        $this->assertFileExists($thumb);
+        $this->assertRegExp($regex, $thumb);
+        $this->assertEquals(array_values(getimagesize($thumb))[0], 450);
+        $this->assertEquals(array_values(getimagesize($thumb))[1], 450);
     }
 
     /**
@@ -264,7 +288,7 @@ class ThumbCreatorTest extends TestCase
         $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 400);
 
-        //In this case, the thumbnail will keep the ratio and the original dimensions
+        //In this case, the thumbnail will not keep the ratio and the original dimensions
         $thumb = (new ThumbCreator('400x400.png'))->resize(500, 600, [
             'aspectRatio' => false,
             'upsize' => false,
@@ -272,6 +296,21 @@ class ThumbCreatorTest extends TestCase
         $this->assertFileExists($thumb);
         $this->assertRegExp($regex, $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 500);
+        $this->assertEquals(array_values(getimagesize($thumb))[1], 600);
+
+        $regex = sprintf(
+            '/^%sresize_[a-z0-9]+_h600_[a-z0-9]+\.png$/',
+            preg_quote(Configure::read('Thumbs.target') . DS, '/')
+        );
+
+        //In this case, the thumbnail will not keep the ratio and the original dimensions
+        $thumb = (new ThumbCreator('400x400.png'))->resize(null, 600, [
+            'aspectRatio' => false,
+            'upsize' => false,
+        ]);
+        $this->assertFileExists($thumb);
+        $this->assertRegExp($regex, $thumb);
+        $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 600);
     }
 }
