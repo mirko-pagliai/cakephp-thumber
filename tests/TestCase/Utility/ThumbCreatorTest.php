@@ -173,6 +173,60 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
+     * Test for `crop()` method
+     * @ŧest
+     */
+    public function testCrop()
+    {
+        $regex = sprintf(
+            '/^%scrop_[a-z0-9]+_w200_h200_[a-z0-9]+\.png$/',
+            preg_quote(Configure::read('Thumbs.target') . DS, '/')
+        );
+
+        $thumb = (new ThumbCreator('400x400.png'))->crop(200, 200);
+        $this->assertFileExists($thumb);
+        $this->assertRegExp($regex, $thumb);
+        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
+        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
+        $this->assertEquals(array_values(getimagesize($thumb))[5], 'image/png');
+
+        $regex = sprintf(
+            '/^%scrop_[a-z0-9]+_w500_h200_[a-z0-9]+\.png$/',
+            preg_quote(Configure::read('Thumbs.target') . DS, '/')
+        );
+
+        //In this case, the width will be the original size
+        $thumb = (new ThumbCreator('400x400.png'))->crop(500, 200);
+        $this->assertFileExists($thumb);
+        $this->assertRegExp($regex, $thumb);
+        $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
+        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
+        $this->assertEquals(array_values(getimagesize($thumb))[5], 'image/png');
+    }
+
+    /**
+     * Test for `crop()` method, using  `x` and `y` options
+     * @ŧest
+     */
+    public function testCropXAndY()
+    {
+        $regex = sprintf(
+            '/^%scrop_[a-z0-9]+_w200_h200_[a-z0-9]+\.png$/',
+            preg_quote(Configure::read('Thumbs.target') . DS, '/')
+        );
+
+        $thumb = (new ThumbCreator('400x400.png'))->crop(200, 200, [
+            'x' => 50,
+            'y' => 50,
+        ]);
+        $this->assertFileExists($thumb);
+        $this->assertRegExp($regex, $thumb);
+        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
+        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
+        $this->assertEquals(array_values(getimagesize($thumb))[5], 'image/png');
+    }
+
+    /**
      * Test for `resize()` method
      * @ŧest
      */
