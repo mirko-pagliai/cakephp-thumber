@@ -1,0 +1,25 @@
+language: php
+
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+
+matrix:
+  fast_finish: true
+
+  include:
+    - php: 7.0
+      env: PHPCS=1
+
+install:
+  - printf "\n" | pecl install imagick
+  - composer self-update
+  - composer install --prefer-dist --no-interaction
+
+script:
+  - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --extensions=php,ctp,js,css --standard=vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=*.min.css,*.min.js ./config ./src ./tests; fi
+
+notifications:
+  email: false
