@@ -77,7 +77,7 @@ class ThumbCreator
      * @uses $extension
      * @uses $path
      */
-    protected function _getThumbPath($method, $width = null, $heigth = null, array $options = [])
+    protected function _getThumbPath($method, $width, $heigth, array $options)
     {
         $thumb = $method . '_' . md5($this->path);
 
@@ -177,7 +177,7 @@ class ThumbCreator
         $options += ['aspectRatio' => true, 'upsize' => true];
 
         //Sets the thumbnail path
-        $thumb = $this->_getThumbPath('resize', $width, $heigth, $options);
+        $thumb = $this->_getThumbPath(__FUNCTION__, $width, $heigth, $options);
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($thumb)) {
