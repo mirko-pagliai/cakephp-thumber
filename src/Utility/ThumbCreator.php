@@ -134,6 +134,35 @@ class ThumbCreator
     }
 
     /**
+     * Crops an image (cuts out a rectangular part).
+     *
+     * You can use `x` and `y` options to move the top-left corner of the
+     * cutout to a certain position.
+     * @param int $width Width of the thumbnail
+     * @param int $heigth Height of the thumbnail
+     * @param array $options Options for the thumbnail
+     * @return string Thumbnail path
+     */
+    public function crop($width = null, $heigth = null, array $options = [])
+    {
+        //Sets default options
+        $options += ['x' => null, 'y' => null];
+
+        //Sets the thumbnail path
+        $thumb = $this->_getThumbPath(__FUNCTION__, $width, $heigth, $options);
+
+        //Creates the thumbnail, if this does not exist
+        if (!file_exists($thumb)) {
+            $img = (new ImageManager(['driver' => Configure::read('Thumbs.driver')]))
+                ->make($this->path);
+            $img->crop($width, $heigth, $options['x'], $options['y']);
+            $img->save($thumb);
+        }
+
+        return $thumb;
+    }
+
+    /**
      * Resizes an image, creating a thumbnail.
      *
      * You can use `aspectRatio` and `upsize` options.
