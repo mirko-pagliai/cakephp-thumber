@@ -352,6 +352,18 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, passing a no existing directory target
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Can't write the file `/tmp/noExistingDir/thumb.png`
+     * @test
+     */
+    public function testSaveNoExistingDir()
+    {
+        (new ThumbCreator('400x400.png'))->resize(200)
+            ->save(TMP . 'noExistingDir' . DS . 'thumb.png');
+    }
+
+    /**
      * Test for `save()` method, using  a custom target path
      * @ŧest
      */

@@ -211,7 +211,14 @@ class ThumbCreator
                 call_user_func($callback, $imageInstance);
             }
 
-            $imageInstance->save($target);
+            //@codingStandardsIgnoreLine
+            $write = @file_put_contents($target, $imageInstance->encode());
+
+            if (!$write) {
+                throw new InternalErrorException(
+                    __d('thumber', 'Can\'t write the file `{0}`', str_replace(APP, null, $target))
+                );
+            }
         }
 
         //Resets arguments and callbacks
