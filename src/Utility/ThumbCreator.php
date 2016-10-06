@@ -72,6 +72,7 @@ class ThumbCreator
      * @param string $path File path
      * @return \Thumber\Utility\ThumbCreator
      * @uses _resolveFilePath()
+     * @uses $arguments
      * @uses $extension
      * @uses $path
      */
@@ -79,6 +80,7 @@ class ThumbCreator
     {
         $this->path = $this->_resolveFilePath($path);
         $this->extension = strtolower(pathinfo(explode('?', $this->path, 2)[0], PATHINFO_EXTENSION));
+        $this->arguments[] = $this->path;
 
         return $this;
     }
