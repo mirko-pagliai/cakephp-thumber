@@ -185,18 +185,21 @@ class ThumbCreator
 
     /**
      * Saves the thumbnail
+     * @param string|null $target Full path where to save the thumbnail
      * @return string Thumbnail path
      * @uses $arguments
      * @uses $callbacks
      * @uses $extension
      * @uses $path
      */
-    public function save()
+    public function save($target = null)
     {
-        $thumb = Configure::read('Thumbs.target') . DS . md5(serialize($this->arguments)) . '.' . $this->extension;
+        if (empty($target)) {
+            $target = Configure::read('Thumbs.target') . DS . md5(serialize($this->arguments)) . '.' . $this->extension;
+        }
 
         //Creates the thumbnail, if this does not exist
-        if (!file_exists($thumb)) {
+        if (!file_exists($target)) {
             $imageInstance = (new ImageManager([
                 'driver' => Configure::read('Thumbs.driver'),
             ]))->make($this->path);
@@ -206,12 +209,12 @@ class ThumbCreator
                 call_user_func($callback, $imageInstance);
             }
 
-            $imageInstance->save($thumb);
+            $imageInstance->save($target);
         }
 
         //Resets arguments and callbacks
         $this->arguments = $this->callbacks = [];
 
-        return $thumb;
+        return $target;
     }
 }

@@ -350,4 +350,18 @@ class ThumbCreatorTest extends TestCase
         $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 600);
     }
+
+    /**
+     * Test for `save()` method, using  a custom target path
+     * @ŧest
+     */
+    public function testSaveWithCustomTarget()
+    {
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(TMP . 'thumb.png');
+        $this->assertFileExists($thumb);
+        $this->assertEquals(TMP . 'thumb.png', $thumb);
+        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
+        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
+        $this->assertEquals(array_values(getimagesize($thumb))[5], 'image/png');
+    }
 }
