@@ -25,7 +25,7 @@ namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\TestSuite\TestCase;
+use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator as BaseThumbCreator;
 
 /**
@@ -179,16 +179,14 @@ class ThumbCreatorTest extends TestCase
     public function testCrop()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->crop(200, 200)->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'crop_w200_h200.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'crop_w200_h200.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
 
         //In this case, the width will be the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->crop(500, 200)->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'crop_w400_h200.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'crop_w400_h200.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -204,8 +202,7 @@ class ThumbCreatorTest extends TestCase
             'x' => 50,
             'y' => 50,
         ])->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'crop_w200_h200_x50_y50.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'crop_w200_h200_x50_y50.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -218,15 +215,13 @@ class ThumbCreatorTest extends TestCase
     public function testResize()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_w200_h200.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_w200_h200.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
 
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(null, 200)->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_w200_h200.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_w200_h200.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -242,8 +237,7 @@ class ThumbCreatorTest extends TestCase
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200, 300, [
             'aspectRatio' => true,
         ])->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_w200_h200.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_w200_h200.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -252,8 +246,7 @@ class ThumbCreatorTest extends TestCase
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200, 300, [
             'aspectRatio' => false,
         ])->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_w200_h300_noAspectRatio.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_w200_h300_noAspectRatio.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 300);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -269,8 +262,7 @@ class ThumbCreatorTest extends TestCase
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(450, 450, [
             'upsize' => true,
         ])->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_equals_original.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_equals_original.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 400);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -279,8 +271,7 @@ class ThumbCreatorTest extends TestCase
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(450, 450, [
             'upsize' => false,
         ])->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_w450_h450_noUpsize.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_w450_h450_noUpsize.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 450);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 450);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -289,8 +280,7 @@ class ThumbCreatorTest extends TestCase
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(null, 450, [
             'upsize' => false,
         ])->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_w450_h450_noUpsize.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_w450_h450_noUpsize.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 450);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 450);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -307,8 +297,7 @@ class ThumbCreatorTest extends TestCase
             'aspectRatio' => true,
             'upsize' => true,
         ])->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_equals_original.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_equals_original.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 400);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -318,8 +307,7 @@ class ThumbCreatorTest extends TestCase
             'aspectRatio' => false,
             'upsize' => false,
         ])->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_w500_h600_noAspectRatio_noUpsize.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_w500_h600_noAspectRatio_noUpsize.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 500);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 600);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -329,8 +317,7 @@ class ThumbCreatorTest extends TestCase
             'aspectRatio' => false,
             'upsize' => false,
         ])->save();
-        $this->assertFileExists($thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_w400_h600_noAspectRatio_noUpsize.jpg', $thumb);
+        $this->assertJpegFileEquals(COMPARING_DIR . 'resize_w400_h600_noAspectRatio_noUpsize.jpg', $thumb);
         $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
         $this->assertEquals(array_values(getimagesize($thumb))[1], 600);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
@@ -356,11 +343,6 @@ class ThumbCreatorTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)
             ->save(Configure::read('Thumbs.target') . DS . 'thumb.jpg');
-        $this->assertFileExists($thumb);
         $this->assertEquals(Configure::read('Thumbs.target') . DS . 'thumb.jpg', $thumb);
-        $this->assertFileEquals(COMPARING_DIR . 'resize_w200_h200.jpg', $thumb);
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
     }
 }
