@@ -38,7 +38,7 @@ abstract class TestCase extends CakeTestCase
     {
         $image = imagecreatefromjpeg($path);
         $result = tempnam(sys_get_temp_dir(), $path);
-        imagejpeg($image, $result, 100);
+        imagepng($image, $result, 0, PNG_NO_FILTER);
         imagedestroy($image);
 
         return $result;
