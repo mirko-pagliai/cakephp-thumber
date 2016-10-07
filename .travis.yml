@@ -17,7 +17,7 @@ matrix:
       env: COVERAGE=1
 
 install:
-  - printf "\n" | pecl install imagick
+  - printf "\n" | pecl install imagick-3.4.2
   - composer self-update
   - composer install --prefer-dist --no-interaction
 
