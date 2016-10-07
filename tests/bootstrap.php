@@ -97,6 +97,8 @@ Cache::config([
     ],
 ]);
 
+define('COMPARING_DIR', TESTS . DS . 'comparing_files' . DS);
+
 Configure::write('Thumbs.driver', 'imagick');
 Configure::write('Thumbs.target', TMP . 'thumbs');
 
