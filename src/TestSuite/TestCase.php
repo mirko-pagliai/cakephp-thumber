@@ -36,9 +36,9 @@ abstract class TestCase extends CakeTestCase
      */
     protected static function _createJpegCopy($path)
     {
-        $image = imagecreatefromjpeg($path);
+        $image = imagecreatefromstring(file_get_contents($path));
         $result = tempnam(sys_get_temp_dir(), $path);
-        imagepng($image, $result, 0, PNG_NO_FILTER);
+        imagejpeg($image, $result, 100);
         imagedestroy($image);
 
         return $result;
