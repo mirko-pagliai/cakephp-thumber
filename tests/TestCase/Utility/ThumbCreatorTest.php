@@ -179,15 +179,13 @@ class ThumbCreatorTest extends TestCase
     public function testCrop()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->crop(200, 200)->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 200, 200);
+        $this->assertMime($thumb, 'image/jpeg');
 
         //In this case, the width will be the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->crop(400, 200)->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 400, 200);
+        $this->assertMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -215,9 +213,8 @@ class ThumbCreatorTest extends TestCase
             'x' => 50,
             'y' => 50,
         ])->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 200, 200);
+        $this->assertMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -241,14 +238,12 @@ class ThumbCreatorTest extends TestCase
     public function testResize()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 200, 200);
+        $this->assertMime($thumb, 'image/jpeg');
 
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(null, 200)->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 200, 200);
+        $this->assertMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -275,17 +270,15 @@ class ThumbCreatorTest extends TestCase
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200, 300, [
             'aspectRatio' => true,
         ])->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 200, 200);
+        $this->assertMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will not maintain the ratio
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200, 300, [
             'aspectRatio' => false,
         ])->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 200);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 300);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 200, 300);
+        $this->assertMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -319,25 +312,22 @@ class ThumbCreatorTest extends TestCase
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(450, 450, [
             'upsize' => true,
         ])->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 400);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 400, 400);
+        $this->assertMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will exceed the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(450, 450, [
             'upsize' => false,
         ])->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 450);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 450);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 450, 450);
+        $this->assertMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will exceed the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(null, 450, [
             'upsize' => false,
         ])->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 450);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 450);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 450, 450);
+        $this->assertMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -377,27 +367,24 @@ class ThumbCreatorTest extends TestCase
             'aspectRatio' => true,
             'upsize' => true,
         ])->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 400);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 400, 400);
+        $this->assertMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will not keep the ratio and the original dimensions
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(500, 600, [
             'aspectRatio' => false,
             'upsize' => false,
         ])->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 500);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 600);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 500, 600);
+        $this->assertMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will not keep the ratio and the original dimensions
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(null, 600, [
             'aspectRatio' => false,
             'upsize' => false,
         ])->save();
-        $this->assertEquals(array_values(getimagesize($thumb))[0], 400);
-        $this->assertEquals(array_values(getimagesize($thumb))[1], 600);
-        $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
+        $this->assertImageSize($thumb, 400, 600);
+        $this->assertMime($thumb, 'image/jpeg');
     }
 
     /**

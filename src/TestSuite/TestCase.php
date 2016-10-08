@@ -70,4 +70,32 @@ abstract class TestCase extends CakeTestCase
         @unlink($actualCopy);
         //@codingStandardsIgnoreEnd
     }
+
+    /**
+     * Asserts that an image file has size
+     * @param string $filename Path to the tested file
+     * @param int $width Image width
+     * @param int $height Image height
+     * @param string $message Error message
+     * @return void
+     */
+    public static function assertImageSize($filename, $width, $height, $message = '')
+    {
+        self::assertFileExists($filename, $message);
+        self::assertEquals(array_values(getimagesize($filename))[0], $width);
+        self::assertEquals(array_values(getimagesize($filename))[1], $height);
+    }
+
+    /**
+     * Asserts that a file has a MIME content type
+     * @param string $filename Path to the tested file
+     * @param string $mime  MIME content type, like `text/plain` or `application/octet-stream`
+     * @param string $message Error message
+     * @return void
+     */
+    public static function assertMime($filename, $mime, $message = '')
+    {
+        self::assertFileExists($filename, $message);
+        self::assertEquals(mime_content_type($filename), $mime, $message);
+    }
 }
