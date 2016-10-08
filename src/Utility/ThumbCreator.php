@@ -196,6 +196,12 @@ class ThumbCreator
      */
     public function save($target = null)
     {
+        if (empty($this->callbacks)) {
+            throw new InternalErrorException(
+                __d('thumber', 'No valid method called before the `{0}` method', 'save()')
+            );
+        }
+
         if (empty($target)) {
             $target = Configure::read('Thumbs.target') . DS . md5(serialize($this->arguments)) . '.' . $this->extension;
         }

@@ -452,4 +452,14 @@ class ThumbCreatorTest extends TestCase
             ->save(Configure::read('Thumbs.target') . DS . 'thumb.jpg');
         $this->assertEquals(Configure::read('Thumbs.target') . DS . 'thumb.jpg', $thumb);
     }
+
+    /**
+     * Test for `save()` method, without a valid method called before
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage No valid method called before the `save()` method
+     */
+    public function testSaveWithoutCallbacks()
+    {
+        (new ThumbCreator('400x400.jpg'))->save();
+    }
 }
