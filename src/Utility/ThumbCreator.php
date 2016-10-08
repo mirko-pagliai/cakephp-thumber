@@ -140,7 +140,7 @@ class ThumbCreator
         $options += ['x' => null, 'y' => null];
 
         //Adds arguments
-        array_push($this->arguments, __FUNCTION__, $width, $heigth, $options);
+        $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
 
         //Adds the callback
         $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
@@ -167,7 +167,7 @@ class ThumbCreator
         $options += ['aspectRatio' => true, 'upsize' => true];
 
         //Adds arguments
-        array_push($this->arguments, __FUNCTION__, $width, $heigth, $options);
+        $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
 
         //Adds the callback
         $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
