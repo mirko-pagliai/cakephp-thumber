@@ -212,14 +212,14 @@ class ThumbCreator
             }
 
             //@codingStandardsIgnoreLine
-//            $write = @file_put_contents($target, $imageInstance->encode());
-//
-//            if (!$write) {
-//                throw new InternalErrorException(
-//                    __d('thumber', 'Can\'t write the file `{0}`', str_replace(APP, null, $target))
-//                );
-//            }
-            $imageInstance->save($target);
+            $write = @file_put_contents($target, $imageInstance->encode());
+
+            if (!$write) {
+                throw new InternalErrorException(
+                    __d('thumber', 'Can\'t write the file `{0}`', str_replace(APP, null, $target))
+                );
+            }
+
             $imageInstance->destroy();
         }
 

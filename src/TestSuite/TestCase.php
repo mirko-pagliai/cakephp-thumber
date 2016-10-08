@@ -36,10 +36,11 @@ abstract class TestCase extends CakeTestCase
      */
     protected static function _createJpegCopy($path)
     {
-        $image = imagecreatefromstring(file_get_contents($path));
         $result = tempnam(sys_get_temp_dir(), $path);
-        imagejpeg($image, $result, 100);
-        imagedestroy($image);
+
+        $imagick = new \Imagick($path);
+        $imagick->stripImage();
+        $imagick->writeImage($result);
 
         return $result;
     }
