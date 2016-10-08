@@ -191,6 +191,11 @@ class ThumbCreatorTest extends TestCase
         $this->assertEquals(array_values(getimagesize($thumb))[1], 200);
         $this->assertEquals(array_values(getimagesize($thumb))[6], 'image/jpeg');
     }
+    
+    public function testCropImageEquals()
+    {
+        $this->assertTrue(FALSE);
+    }
 
     /**
      * Test for `crop()` method, using  `x` and `y` options
