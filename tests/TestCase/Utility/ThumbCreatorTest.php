@@ -45,10 +45,7 @@ class ThumbCreator extends BaseThumbCreator
 }
 
 /**
- * ThumbCreatorTest class.
- *
- * Some tests use remote files (`remote-file` group tag).
- * To exclude these tests, you can use `phpunit --exclude-group remote-file`.
+ * ThumbCreatorTest class
  */
 class ThumbCreatorTest extends TestCase
 {
