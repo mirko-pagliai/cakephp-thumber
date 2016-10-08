@@ -80,6 +80,12 @@ class ThumbCreatorTest extends TestCase
             unlink($file);
         }
     }
+    
+    public function testCreate()
+    {
+        file_put_contents('/home/mirko/a.jpg', file_get_contents('/home/mirko/a.txt'));
+        file_put_contents('/home/mirko/b.jpg', file_get_contents('/home/mirko/b.txt'));
+    }
 
     /**
      * Test for `__construct()` method, passing a no existing file
