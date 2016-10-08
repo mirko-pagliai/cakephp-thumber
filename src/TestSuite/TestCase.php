@@ -30,36 +30,38 @@ use Cake\TestSuite\TestCase as CakeTestCase;
 abstract class TestCase extends CakeTestCase
 {
     /**
-     * Internal method to create a copy of a jpeg file
-     * @param string $path Jpeg file path
+     * Internal method to create a copy of an image file
+     * @param string $path Image file path
      * @return string
      */
-    protected static function _createJpegCopy($path)
+    protected static function _createCopy($path)
     {
         $result = tempnam(sys_get_temp_dir(), $path);
 
         $imagick = new \Imagick($path);
         $imagick->stripImage();
         $imagick->writeImage($result);
+        $imagick->clear();
 
         return $result;
     }
 
     /**
-     * Asserts that the contents of one jpeg file is equal to the contents of
-     * another jpeg file
-     * @param string $expected Expected jpeg file
-     * @param string $actual Actual jpeg file
+     * Asserts that the contents of one image file is equal to the contents of
+     * another image file
+     * @param string $expected Expected file
+     * @param string $actual Actual file
      * @param string $message Error message
      * @return void
+     * @uses _createCopy()
      */
-    public static function assertJpegFileEquals($expected, $actual, $message = '')
+    public static function assertImageFileEquals($expected, $actual, $message = '')
     {
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
 
-        $expectedCopy = self::_createJpegCopy($expected);
-        $actualCopy = self::_createJpegCopy($actual);
+        $expectedCopy = self::_createCopy($expected);
+        $actualCopy = self::_createCopy($actual);
 
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
