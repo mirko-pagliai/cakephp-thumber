@@ -23,6 +23,7 @@
 namespace Thumber\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 
 /**
  * Thumbs controller class
@@ -30,11 +31,14 @@ use Cake\Controller\Controller;
 class ThumbsController extends Controller
 {
     /**
-     * Thumb action
-     * @param string $basename Basename
-     * @return void
+     * Renders a thumbnail
+     * @param string $basename Encoded thumbnail basename
+     * @return Cake\Network\Response|null
      */
-    public function thumb($basename)
+    public function thumb($basename = null)
     {
+        $this->response->file(Configure::read('Thumbs.target') . DS . base64_decode($basename));
+
+        return $this->response;
     }
 }
