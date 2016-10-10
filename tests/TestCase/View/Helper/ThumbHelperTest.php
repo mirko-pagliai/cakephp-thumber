@@ -55,6 +55,11 @@ class ThumbHelperTest extends TestCase
         parent::tearDown();
 
         unset($this->Thumb, $this->View);
+
+        //Deletes all thumbnails
+        foreach (glob(Configure::read('Thumbs.target') . DS . '*') as $file) {
+            unlink($file);
+        }
     }
 
     /**
