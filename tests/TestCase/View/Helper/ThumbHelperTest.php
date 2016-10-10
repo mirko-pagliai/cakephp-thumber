@@ -23,6 +23,7 @@
 
 namespace Thumber\Test\TestCase\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\View\View;
 use Thumber\TestSuite\TestCase;
 use Thumber\View\Helper\ThumbHelper;
