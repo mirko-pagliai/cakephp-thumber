@@ -153,6 +153,10 @@ class ThumbCreator
      */
     public function crop($width = null, $heigth = null, array $options = [])
     {
+        if (!empty($width) && empty($heigth)) {
+            $heigth = $width;
+        }
+
         //Sets default options
         $options += ['x' => null, 'y' => null];
 

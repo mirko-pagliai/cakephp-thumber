@@ -179,6 +179,11 @@ class ThumbCreatorTest extends TestCase
         $this->assertImageSize($thumb, 200, 200);
         $this->assertMime($thumb, 'image/jpeg');
 
+        //Only width
+        $thumb = (new ThumbCreator('400x400.jpg'))->crop(200)->save();
+        $this->assertImageSize($thumb, 200, 200);
+        $this->assertMime($thumb, 'image/jpeg');
+
         //In this case, the width will be the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->crop(400, 200)->save();
         $this->assertImageSize($thumb, 400, 200);
