@@ -71,6 +71,7 @@ class ThumbCreator
      * If the path is relative, it will be relative to  `APP/webroot/img`.
      * @param string $path File path
      * @return \Thumber\Utility\ThumbCreator
+     * @uses _getExtension()
      * @uses _resolveFilePath()
      * @uses $arguments
      * @uses $extension
@@ -79,10 +80,26 @@ class ThumbCreator
     public function __construct($path)
     {
         $this->path = $this->_resolveFilePath($path);
-        $this->extension = strtolower(pathinfo(explode('?', $this->path, 2)[0], PATHINFO_EXTENSION));
+        $this->extension = $this->_getExtension($this->path);
         $this->arguments[] = $this->path;
 
         return $this;
+    }
+
+    /**
+     * Gets the extension for a file
+     * @param string $path File path
+     * @return string
+     */
+    protected function _getExtension($path)
+    {
+        $extension = strtolower(pathinfo(explode('?', $this->path, 2)[0], PATHINFO_EXTENSION));
+
+        if ($extension === 'jpeg') {
+            $extension = 'jpg';
+        }
+
+        return $extension;
     }
 
     /**
