@@ -476,6 +476,30 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
+     * Test for `save()` method. It tests the thumbnails is created only if it
+     *  does not exist
+     * @test
+     */
+    public function testSaveReturnsExistingThumb()
+    {
+        //Creates the thumbnail and gets the creation time
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
+        $time = filemtime($thumb);
+
+        //Tries to create again the same thumbnail. Now the creation time is the same
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
+        $this->assertEquals($time, filemtime($thumb));
+
+        //Deletes the thumbnail and wait 1 second
+        unlink($thumb);
+        sleep(1);
+
+        //Tries to create again the same thumbnail. Now the creation time is different
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
+        $this->assertNotEquals($time, filemtime($thumb));
+    }
+
+    /**
      * Test for `save()` method, using  a custom target path
      * @ŧest
      */
