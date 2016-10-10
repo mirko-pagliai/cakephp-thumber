@@ -119,7 +119,7 @@ class ThumbCreatorTest extends TestCase
         $this->assertEquals($thumber->getExtension(), 'jpg');
 
         $thumber = new ThumbCreator('400x400.jpeg');
-        $this->assertEquals($thumber->getExtension(), 'jpeg');
+        $this->assertEquals($thumber->getExtension(), 'jpg');
 
         //From plugin
         $thumber = new ThumbCreator('TestPlugin.400x400.png');
@@ -412,6 +412,55 @@ class ThumbCreatorTest extends TestCase
             'upsize' => false,
         ])->save();
         $this->assertImageFileEquals(COMPARING_DIR . 'resize_w400_h600_noAspectRatio_noUpsize.jpg', $thumb);
+    }
+
+    /**
+     * Test for `save()` method, using a gif file
+     * @test
+     */
+    public function testSaveGif()
+    {
+        $thumb = (new ThumbCreator('400x400.gif'))->resize(200)->save();
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.gif/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/gif');
+    }
+
+    /**
+     * Test for `save()` method, using jpg and jpeg files
+     * @test
+     */
+    public function testSaveJpeg()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save();
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.jpg$/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/jpeg');
+
+        $thumb = (new ThumbCreator('400x400.jpeg'))->resize(200)->save();
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.jpg$/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for `save()` method, using a png file
+     * @test
+     */
+    public function testSavePng()
+    {
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.png/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/png');
     }
 
     /**
