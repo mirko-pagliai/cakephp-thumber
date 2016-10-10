@@ -20,3 +20,12 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
+use Cake\Routing\Router;
+
+Router::plugin('Thumber', ['path' => '/thumb'], function ($routes) {
+    $routes->connect(
+        '/:basename',
+        ['controller' => 'Thumbs', 'action' => 'thumb'],
+        ['_name' => 'thumb', 'basename' => '[A-z0-9]+', 'pass' => ['basename']]
+    );
+});
