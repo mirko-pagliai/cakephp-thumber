@@ -29,8 +29,12 @@ use Cake\Controller\Controller;
  */
 class ThumbsController extends Controller
 {
-    public function thumb()
+    /**
+     * Thumb action
+     * @param string $basename Basename
+     * @return void
+     */
+    public function thumb($basename)
     {
-        
     }
 }
