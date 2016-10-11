@@ -41,6 +41,29 @@ class ThumbHelper extends Helper
     public $helpers = ['Html'];
 
     /**
+     * Internal method to get the url for a thumbnail
+     * @param string $path Thumbnail path
+     * @return string
+     */
+    protected function _getUrl($path)
+    {
+        return Router::url(['_name' => 'thumb', base64_encode(basename($path))]);
+    }
+
+    /**
+     * Internal method to parse parameters
+     * @param array $params Parameters for creating the thumbnail
+     * @return array Array with width and height
+     */
+    protected function _parseParams($params)
+    {
+        return [
+            empty($params['width']) ? null : $params['width'],
+            empty($params['height']) ? null : $params['height'],
+        ];
+    }
+
+    /**
      * Creates a cropped thumbnail and returns a formatted `img` element
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
@@ -58,16 +81,17 @@ class ThumbHelper extends Helper
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
      * @return string
+     * @uses _getUrl()
+     * @uses _parseParams()
      */
     public function cropUrl($path, array $params = [])
     {
-        $width = empty($params['width']) ? null : $params['width'];
-        $height = empty($params['height']) ? null : $params['height'];
+        list($width, $height) = $this->_parseParams($params);
 
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->crop($width, $height)->save();
 
-        return Router::url(['_name' => 'thumb', base64_encode(basename($thumb))]);
+        return $this->_getUrl($thumb);
     }
 
     /**
@@ -88,15 +112,16 @@ class ThumbHelper extends Helper
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
      * @return string
+     * @uses _getUrl()
+     * @uses _parseParams()
      */
     public function resizeUrl($path, array $params = [])
     {
-        $width = empty($params['width']) ? null : $params['width'];
-        $height = empty($params['height']) ? null : $params['height'];
+        list($width, $height) = $this->_parseParams($params);
 
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->resize($width, $height)->save();
 
-        return Router::url(['_name' => 'thumb', base64_encode(basename($thumb))]);
+        return $this->_getUrl($thumb);
     }
 }
