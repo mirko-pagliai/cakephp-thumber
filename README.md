@@ -4,7 +4,9 @@
 [![Coverage Status](https://img.shields.io/codecov/c/github/mirko-pagliai/cakephp-thumber.svg?style=flat-square)](https://codecov.io/github/mirko-pagliai/cakephp-thumber)
 
 *cakephp-thumber* is a CakePHP plugin to create thumbnails.  
-It can create thumbnails (rectangular or square) of local and remote images.
+
+It uses [intervention/image](https://github.com/Intervention/image) and
+provides a convenient helper that allows you to create thumbnails on the fly.
 
 ## Installation
 You can install the plugin via composer:
