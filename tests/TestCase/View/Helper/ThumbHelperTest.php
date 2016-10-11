@@ -81,6 +81,17 @@ class ThumbHelperTest extends TestCase
     }
 
     /**
+     * Test for `crop()` method, called without parameters
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Missing parameters for the `crop` method
+     * @test
+     */
+    public function testCropWithoutParameters()
+    {
+        $this->Thumb->crop('400x400.png');
+    }
+
+    /**
      * Test for `resize()` and `resizeUrl()` methods
      * @return void
      * @test
@@ -95,5 +106,16 @@ class ThumbHelperTest extends TestCase
             ],
         ];
         $this->assertHtml($expected, $html);
+    }
+
+    /**
+     * Test for `resize()` method, called without parameters
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Missing parameters for the `resize` method
+     * @test
+     */
+    public function testResizeWithoutParameters()
+    {
+        $this->Thumb->resize('400x400.png');
     }
 }

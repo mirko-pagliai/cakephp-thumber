@@ -148,12 +148,17 @@ class ThumbCreator
      * @param int $heigth Height of the thumbnail
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
+     * @throws InternalErrorException
      * @uses $arguments
      * @uses $callbacks
      */
     public function crop($width = null, $heigth = null, array $options = [])
     {
-        if (!empty($width) && empty($heigth)) {
+        if (empty($width) && empty($heigth)) {
+            throw new InternalErrorException(
+                __d('thumber', 'Missing parameters for the `{0}` method', __FUNCTION__)
+            );
+        } elseif (!empty($width) && empty($heigth)) {
             $heigth = $width;
         }
 
@@ -179,11 +184,18 @@ class ThumbCreator
      * @param int $heigth Height of the thumbnail
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
+     * @throws InternalErrorException
      * @uses $arguments
      * @uses $callbacks
      */
     public function resize($width = null, $heigth = null, array $options = [])
     {
+        if (empty($width) && empty($heigth)) {
+            throw new InternalErrorException(
+                __d('thumber', 'Missing parameters for the `{0}` method', __FUNCTION__)
+            );
+        }
+
         //Sets default options
         $options += ['aspectRatio' => true, 'upsize' => true];
 

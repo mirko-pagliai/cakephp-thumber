@@ -234,6 +234,17 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
+     * Test for `crop()` method, called without parameters
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Missing parameters for the `crop` method
+     * @test
+     */
+    public function testCropWithoutParameters()
+    {
+        (new ThumbCreator('400x400.gif'))->crop()->save();
+    }
+
+    /**
      * Test for `resize()` method
      * @ŧest
      */
@@ -417,6 +428,17 @@ class ThumbCreatorTest extends TestCase
             'upsize' => false,
         ])->save();
         $this->assertImageFileEquals(COMPARING_DIR . 'resize_w400_h600_noAspectRatio_noUpsize.jpg', $thumb);
+    }
+
+    /**
+     * Test for `resize()` method, called without parameters
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Missing parameters for the `resize` method
+     * @test
+     */
+    public function testResizeWithoutParameters()
+    {
+        (new ThumbCreator('400x400.gif'))->resize()->save();
     }
 
     /**
