@@ -62,11 +62,85 @@ class ThumbsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test for `thumb()` method
+     * Test for `thumb()` method, with a a no existing file
      * @return void
      * @test
      */
-    public function testThumb()
+    public function testThumbNoExistingFile()
+    {
+        $this->get('/thumb/noExistingFile');
+        $this->assertResponseError();
+    }
+
+    /**
+     * Test for `thumb()` method, with a gif file
+     * @return void
+     * @test
+     */
+    public function testThumbWithGif()
+    {
+        $file = '400x400.gif';
+
+        //Thumbnail path
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+
+        //Url from helper
+        $url = $this->Thumb->resizeUrl($file, ['width' => 200]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertContentType('image/gif');
+        $this->assertFileResponse($thumb);
+    }
+
+    /**
+     * Test for `thumb()` method, with a jpeg file
+     * @return void
+     * @test
+     */
+    public function testThumbWithJpeg()
+    {
+        $file = '400x400.jpeg';
+
+        //Thumbnail path
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+
+        //Url from helper
+        $url = $this->Thumb->resizeUrl($file, ['width' => 200]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertContentType('image/jpeg');
+        $this->assertFileResponse($thumb);
+    }
+
+    /**
+     * Test for `thumb()` method, with a jpg file
+     * @return void
+     * @test
+     */
+    public function testThumbWithJpg()
+    {
+        $file = '400x400.jpg';
+
+        //Thumbnail path
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+
+        //Url from helper
+        $url = $this->Thumb->resizeUrl($file, ['width' => 200]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertContentType('image/jpeg');
+        $this->assertFileResponse($thumb);
+    }
+
+    /**
+     * Test for `thumb()` method, with a png file
+     * @return void
+     * @test
+     */
+    public function testThumbWithPng()
     {
         $file = '400x400.png';
 
