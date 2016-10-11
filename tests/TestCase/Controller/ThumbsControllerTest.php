@@ -80,14 +80,9 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithGif()
     {
         $file = '400x400.gif';
-
-        //Thumbnail path
         $thumb = (new ThumbCreator($file))->resize(200)->save();
 
-        //Url from helper
-        $url = $this->Thumb->resizeUrl($file, ['width' => 200]);
-
-        $this->get($url);
+        $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
         $this->assertResponseOk();
         $this->assertContentType('image/gif');
         $this->assertFileResponse($thumb);
@@ -101,14 +96,9 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithJpeg()
     {
         $file = '400x400.jpeg';
-
-        //Thumbnail path
         $thumb = (new ThumbCreator($file))->resize(200)->save();
 
-        //Url from helper
-        $url = $this->Thumb->resizeUrl($file, ['width' => 200]);
-
-        $this->get($url);
+        $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
         $this->assertResponseOk();
         $this->assertContentType('image/jpeg');
         $this->assertFileResponse($thumb);
@@ -122,14 +112,9 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithJpg()
     {
         $file = '400x400.jpg';
-
-        //Thumbnail path
         $thumb = (new ThumbCreator($file))->resize(200)->save();
 
-        //Url from helper
-        $url = $this->Thumb->resizeUrl($file, ['width' => 200]);
-
-        $this->get($url);
+        $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
         $this->assertResponseOk();
         $this->assertContentType('image/jpeg');
         $this->assertFileResponse($thumb);
@@ -143,14 +128,9 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithPng()
     {
         $file = '400x400.png';
-
-        //Thumbnail path
         $thumb = (new ThumbCreator($file))->resize(200)->save();
 
-        //Url from helper
-        $url = $this->Thumb->resizeUrl($file, ['width' => 200]);
-
-        $this->get($url);
+        $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
         $this->assertResponseOk();
         $this->assertContentType('image/png');
         $this->assertFileResponse($thumb);
