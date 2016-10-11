@@ -35,7 +35,7 @@ class ThumbsController extends Controller
      * @param string $basename Encoded thumbnail basename
      * @return Cake\Network\Response|null
      */
-    public function thumb($basename = null)
+    public function thumb($basename)
     {
         $this->response->file(Configure::read('Thumbs.target') . DS . base64_decode($basename));
 
