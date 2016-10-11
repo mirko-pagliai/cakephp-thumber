@@ -96,7 +96,7 @@ class ThumbCreator
         $extension = strtolower(pathinfo(explode('?', $this->path, 2)[0], PATHINFO_EXTENSION));
 
         if ($extension === 'jpeg') {
-            $extension = 'jpg';
+            return 'jpg';
         }
 
         return $extension;
