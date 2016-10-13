@@ -70,13 +70,26 @@ class ThumbHelperTest extends TestCase
      */
     public function testCrop()
     {
+        $url = $this->Thumb->cropUrl('400x400.png', ['width' => 200]);
+        $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
+
         $html = $this->Thumb->crop('400x400.png', ['width' => 200]);
-        $expected = [
-            'img' => [
-                'src' => $this->Thumb->cropUrl('400x400.png', ['width' => 200]),
-                'alt' => '',
-            ],
-        ];
+        $expected = ['img' => ['src' => $url, 'alt' => '']];
+        $this->assertHtml($expected, $html);
+    }
+
+    /**
+     * Test for `crop()` and `cropUrl()` methods, with the `fullBase` option
+     * @return void
+     * @test
+     */
+    public function testCropFullBase()
+    {
+        $url = $this->Thumb->cropUrl('400x400.png', ['width' => 200], ['fullBase' => true]);
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
+
+        $html = $this->Thumb->crop('400x400.png', ['width' => 200], ['fullBase' => true]);
+        $expected = ['img' => ['src' => $url, 'alt' => '']];
         $this->assertHtml($expected, $html);
     }
 
@@ -98,13 +111,26 @@ class ThumbHelperTest extends TestCase
      */
     public function testResize()
     {
+        $url = $this->Thumb->resizeUrl('400x400.png', ['width' => 200]);
+        $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
+
         $html = $this->Thumb->resize('400x400.png', ['width' => 200]);
-        $expected = [
-            'img' => [
-                'src' => $this->Thumb->resizeUrl('400x400.png', ['width' => 200]),
-                'alt' => '',
-            ],
-        ];
+        $expected = ['img' => ['src' => $url, 'alt' => '']];
+        $this->assertHtml($expected, $html);
+    }
+
+    /**
+     * Test for `resize()` and `resizeUrl()` methods, with the `fullBase` option
+     * @return void
+     * @test
+     */
+    public function testResizeFullBase()
+    {
+        $url = $this->Thumb->resizeUrl('400x400.png', ['width' => 200], ['fullBase' => true]);
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
+
+        $html = $this->Thumb->resize('400x400.png', ['width' => 200], ['fullBase' => true]);
+        $expected = ['img' => ['src' => $url, 'alt' => '']];
         $this->assertHtml($expected, $html);
     }
 
