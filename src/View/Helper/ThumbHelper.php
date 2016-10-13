@@ -22,7 +22,6 @@
  */
 namespace Thumber\View\Helper;
 
-use Cake\Routing\Router;
 use Cake\View\Helper;
 use Thumber\Utility\ThumbCreator;
 
@@ -42,11 +41,12 @@ class ThumbHelper extends Helper
     /**
      * Internal method to get the url for a thumbnail
      * @param string $path Thumbnail path
+     * @param bool $full If `true`, the full base URL will be prepended to the result
      * @return string
      */
-    protected function _getUrl($path)
+    protected function _getUrl($path, $full = false)
     {
-        return Router::url(['_name' => 'thumb', base64_encode(basename($path))]);
+        return $this->Url->build(['_name' => 'thumb', base64_encode(basename($path))], $full);
     }
 
     /**
@@ -61,7 +61,7 @@ class ThumbHelper extends Helper
             empty($params['height']) ? null : $params['height'],
         ];
     }
-    
+
     /**
      * Creates a formatted `img` element for a thumbnail.
      *
@@ -73,6 +73,8 @@ class ThumbHelper extends Helper
      */
     protected function image($path, array $options = [])
     {
+        unset($options['fullBase']);
+
         $options = array_diff_key($options, ['fullBase' => null, 'pathPrefix' => null]);
 
         if (!isset($options['alt'])) {
@@ -113,25 +115,28 @@ class ThumbHelper extends Helper
      */
     public function crop($path, array $params = [], array $options = [])
     {
-        return $this->image($this->cropUrl($path, $params), $options);
+        return $this->image($this->cropUrl($path, $params, $options), $options);
     }
 
     /**
      * Creates a cropped thumbnail and returns its url
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
+     * @param array $options Array of HTML attributes for the `img` element
      * @return string
      * @uses _getUrl()
      * @uses _parseParams()
      */
-    public function cropUrl($path, array $params = [])
+    public function cropUrl($path, array $params = [], array $options = [])
     {
         list($width, $height) = $this->_parseParams($params);
 
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->crop($width, $height)->save();
 
-        return $this->_getUrl($thumb);
+        $full = !empty($options['fullBase']) && $options['fullBase'] == true;
+
+        return $this->_getUrl($thumb, $full);
     }
 
     /**
@@ -145,24 +150,27 @@ class ThumbHelper extends Helper
      */
     public function resize($path, array $params = [], array $options = [])
     {
-        return $this->image($this->resizeUrl($path, $params), $options);
+        return $this->image($this->resizeUrl($path, $params, $options), $options);
     }
 
     /**
      * Creates a resizes thumbnail and returns its url
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
+     * @param array $options Array of HTML attributes for the `img` element
      * @return string
      * @uses _getUrl()
      * @uses _parseParams()
      */
-    public function resizeUrl($path, array $params = [])
+    public function resizeUrl($path, array $params = [], array $options = [])
     {
         list($width, $height) = $this->_parseParams($params);
 
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->resize($width, $height)->save();
 
-        return $this->_getUrl($thumb);
+        $full = !empty($options['fullBase']) && $options['fullBase'] == true;
+
+        return $this->_getUrl($thumb, $full);
     }
 }
