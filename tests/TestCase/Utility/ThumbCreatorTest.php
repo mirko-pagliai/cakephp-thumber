@@ -442,6 +442,30 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
+     * Test for several methods called in sequence on the same image (eg.,
+     *  `crop()` and `resize()`
+     * @test
+     */
+    public function testSeveralMethods()
+    {
+        $thumb = (new ThumbCreator('example_pic.jpg'))->crop(600)->resize(200)->save();
+        $this->assertImageSize($thumb, 200, 200);
+        $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for several methods called in sequence on the same image (eg.,
+     *  `crop()` and `resize()`, equating images
+     * @group imageEquals
+     * @test
+     */
+    public function testSeveralMethodsEquals()
+    {
+        $thumb = (new ThumbCreator('example_pic.jpg'))->crop(600)->resize(200)->save();
+        $this->assertImageFileEquals(COMPARING_DIR . 'example_pic_w200_h200.jpg', $thumb);
+    }
+
+    /**
      * Test for `save()` method, using a gif file
      * @test
      */
