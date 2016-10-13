@@ -1,0 +1,31 @@
+# LANGUAGE translation of cakephp-thumber plugin
+# Copyright 2016 Mirko Pagliai <mirko.pagliai@gmail.com>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2016-10-13 19:31+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:135
+msgid "File `{0}` not readable"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:159;195
+msgid "Missing parameters for the `{0}` method"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:234
+msgid "No valid method called before the `{0}` method"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:260
+msgid "Can't write the file `{0}`"
+msgstr ""
+
