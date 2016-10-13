@@ -135,6 +135,24 @@ class ThumbHelperTest extends TestCase
     }
 
     /**
+     * Test for `resize()` method, using the `url` option
+     * @return void
+     * @test
+     */
+    public function testResizeWithUrl()
+    {
+        $url = $this->Thumb->resizeUrl('400x400.png', ['width' => 200]);
+
+        $html = $this->Thumb->resize('400x400.png', ['width' => 200], ['url' => 'http://example']);
+        $expected = [
+            'a' => ['href' => 'http://example'],
+            'img' => ['src' => $url, 'alt' => ''],
+            '/a',
+        ];
+        $this->assertHtml($expected, $html);
+    }
+
+    /**
      * Test for `resize()` method, called without parameters
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage Missing parameters for the `resize` method
