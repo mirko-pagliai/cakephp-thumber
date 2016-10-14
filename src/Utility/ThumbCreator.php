@@ -301,6 +301,12 @@ class ThumbCreator
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
+            if (!in_array($format, ['gif', 'jpg', 'jpeg', 'png'])) {
+                throw new InternalErrorException(
+                    __d('thumber', 'The format `{0}` is invalid', $format)
+                );
+            }
+            
             $imageInstance = (new ImageManager([
                 'driver' => Configure::read('Thumbs.driver'),
             ]))->make($this->path);
