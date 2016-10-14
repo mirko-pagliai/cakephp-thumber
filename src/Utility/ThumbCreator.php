@@ -93,7 +93,7 @@ class ThumbCreator
      */
     protected function _getExtension($path)
     {
-        $extension = strtolower(pathinfo(explode('?', $this->path, 2)[0], PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo(explode('?', $path, 2)[0], PATHINFO_EXTENSION));
 
         if ($extension === 'jpeg') {
             return 'jpg';
@@ -263,15 +263,17 @@ class ThumbCreator
     }
 
     /**
-     * Saves the thumbnail
-     * @param string|null $target Full path where to save the thumbnail
+     * Saves the thumbnail.
+     *
+     * You can use `format` and `target` options.
+     * @param array $options Options for saving
      * @return string Thumbnail path
      * @uses $arguments
      * @uses $callbacks
      * @uses $extension
      * @uses $path
      */
-    public function save($target = null)
+    public function save(array $options = [])
     {
         if (empty($this->callbacks)) {
             throw new InternalErrorException(
@@ -279,8 +281,22 @@ class ThumbCreator
             );
         }
 
-        if (empty($target)) {
-            $target = Configure::read('Thumbs.target') . DS . md5(serialize($this->arguments)) . '.' . $this->extension;
+        if (!empty($options['target'])) {
+            if (!Folder::isAbsolute($options['target'])) {
+                $target = Configure::read('Thumbs.target') . DS . $options['target'];
+            } else {
+                $target = $options['target'];
+            }
+
+            $format = $this->_getExtension($target);
+        } else {
+            if (!empty($options['format'])) {
+                $format = $options['format'];
+            } else {
+                $format = $this->extension;
+            }
+
+            $target = Configure::read('Thumbs.target') . DS . md5(serialize($this->arguments)) . '.' . $format;
         }
 
         //Creates the thumbnail, if this does not exist
@@ -295,7 +311,7 @@ class ThumbCreator
             }
 
             //@codingStandardsIgnoreLine
-            $write = @file_put_contents($target, $imageInstance->encode());
+            $write = @file_put_contents($target, $imageInstance->encode($format));
 
             $imageInstance->destroy();
 
