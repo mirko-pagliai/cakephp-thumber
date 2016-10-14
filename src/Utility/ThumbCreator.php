@@ -158,8 +158,9 @@ class ThumbCreator
             throw new InternalErrorException(
                 __d('thumber', 'Missing parameters for the `{0}` method', __FUNCTION__)
             );
-        } elseif (!empty($width) && empty($heigth)) {
-            $heigth = $width;
+        } else {
+            $heigth = empty($heigth) ? $width : $heigth;
+            $width = empty($width) ? $heigth : $width;
         }
 
         //Sets default options
@@ -171,6 +172,49 @@ class ThumbCreator
         //Adds the callback
         $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
             return $imageInstance->crop($width, $heigth, $options['x'], $options['y']);
+        };
+
+        return $this;
+    }
+
+    /**
+     * Combines cropping and resizing to format image in a smart way. It will
+     *  find the best fitting aspect ratio on the current image automatically,
+     *  cut it out and resize it to the given dimension.
+     *
+     * You can use `position` and `upsize` options.
+     * @param int $width Width of the thumbnail
+     * @param int $heigth Height of the thumbnail
+     * @param array $options Options for the thumbnail
+     * @return \Thumber\Utility\ThumbCreator
+     * @throws InternalErrorException
+     * @uses $arguments
+     * @uses $callbacks
+     */
+    public function fit($width = null, $heigth = null, array $options = [])
+    {
+        if (empty($width) && empty($heigth)) {
+            throw new InternalErrorException(
+                __d('thumber', 'Missing parameters for the `{0}` method', __FUNCTION__)
+            );
+        } else {
+            $heigth = empty($heigth) ? $width : $heigth;
+            $width = empty($width) ? $heigth : $width;
+        }
+
+        //Sets default options
+        $options += ['position' => 'center', 'upsize' => true];
+
+        //Adds arguments
+        $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
+
+        //Adds the callback
+        $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
+            return $imageInstance->fit($width, $heigth, function ($constraint) use ($options) {
+                if ($options['upsize']) {
+                    $constraint->upsize();
+                }
+            }, $options['position']);
         };
 
         return $this;
