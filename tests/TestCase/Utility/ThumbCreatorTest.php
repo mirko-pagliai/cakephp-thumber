@@ -206,7 +206,7 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
-     * Test for `crop()` method, using  `x` and `y` options
+     * Test for `crop()` method, using `x` and `y` options
      * @ŧest
      */
     public function testCropXAndY()
@@ -242,6 +242,131 @@ class ThumbCreatorTest extends TestCase
     public function testCropWithoutParameters()
     {
         (new ThumbCreator('400x400.gif'))->crop()->save();
+    }
+
+    /**
+     * Test for `fit()` method
+     * @ŧest
+     */
+    public function testFit()
+    {
+        $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200)->save();
+        $this->assertImageSize($thumb, 200, 200);
+        $this->assertMime($thumb, 'image/jpeg');
+
+        $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200, 400)->save();
+        $this->assertImageSize($thumb, 200, 400);
+        $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for `fit()` method, equating images
+     * @group imageEquals
+     * @test
+     */
+    public function testFitEquals()
+    {
+        $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200)->save();
+        $this->assertImageFileEquals(COMPARING_DIR . 'fit_w200_h200.jpg', $thumb);
+
+        $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200, 400)->save();
+        $this->assertImageFileEquals(COMPARING_DIR . 'fit_w200_h400.jpg', $thumb);
+    }
+
+    /**
+     * Test for `fit()` method, using `position` option
+     * @ŧest
+     */
+    public function testFitPosition()
+    {
+        $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200, 200, [
+            'position' => 'top',
+        ])->save();
+        $this->assertImageSize($thumb, 200, 200);
+        $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for `fit()` method, using `position` option, equating images
+     * @group imageEquals
+     * @ŧest
+     */
+    public function testFitPositionImageEquals()
+    {
+        $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200, 200, [
+            'position' => 'top-left',
+        ])->save();
+        $this->assertImageFileEquals(COMPARING_DIR . 'fit_w200_h200_position_top_left.jpg', $thumb);
+
+        $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200, 200, [
+            'position' => 'bottom-right',
+        ])->save();
+        $this->assertImageFileEquals(COMPARING_DIR . 'fit_w200_h200_position_bottom_right.jpg', $thumb);
+    }
+
+    /**
+     * Test for `fit()` method, using  the `upsize` option
+     * @ŧest
+     */
+    public function testFitUpsize()
+    {
+        //In this case, the thumbnail will keep the original dimensions
+        $thumb = (new ThumbCreator('400x400.jpg'))->fit(450, 450, [
+            'upsize' => true,
+        ])->save();
+        $this->assertImageSize($thumb, 400, 400);
+        $this->assertMime($thumb, 'image/jpeg');
+
+        //In this case, the thumbnail will exceed the original size
+        $thumb = (new ThumbCreator('400x400.jpg'))->fit(450, 450, [
+            'upsize' => false,
+        ])->save();
+        $this->assertImageSize($thumb, 450, 450);
+        $this->assertMime($thumb, 'image/jpeg');
+
+        //In this case, the thumbnail will exceed the original size
+        $thumb = (new ThumbCreator('400x400.jpg'))->fit(null, 450, [
+            'upsize' => false,
+        ])->save();
+        $this->assertImageSize($thumb, 450, 450);
+        $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for `resize()` method, using  the `upsize` option, equating images
+     * @group imageEquals
+     * @test
+     */
+    public function testFitUpsizeImageEquals()
+    {
+        //In this case, the thumbnail will keep the original dimensions
+        $thumb = (new ThumbCreator('400x400.jpg'))->fit(450, 450, [
+            'upsize' => true,
+        ])->save();
+        $this->assertImageFileEquals(COMPARING_DIR . 'fit_w400_h400.jpg', $thumb);
+
+        //In this case, the thumbnail will exceed the original size
+        $thumb = (new ThumbCreator('400x400.jpg'))->fit(450, 450, [
+            'upsize' => false,
+        ])->save();
+        $this->assertImageFileEquals(COMPARING_DIR . 'fit_w450_h450_noUpsize.jpg', $thumb);
+
+        //In this case, the thumbnail will exceed the original size
+        $thumb = (new ThumbCreator('400x400.jpg'))->fit(null, 450, [
+            'upsize' => false,
+        ])->save();
+        $this->assertImageFileEquals(COMPARING_DIR . 'fit_w450_h450_noUpsize.jpg', $thumb);
+    }
+
+    /**
+     * Test for `fit()` method, called without parameters
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Missing parameters for the `fit` method
+     * @test
+     */
+    public function testFitWithoutParameters()
+    {
+        (new ThumbCreator('400x400.gif'))->fit()->save();
     }
 
     /**
