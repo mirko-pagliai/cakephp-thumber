@@ -277,7 +277,7 @@ class ThumbCreator
     {
         if (empty($this->callbacks)) {
             throw new InternalErrorException(
-                __d('thumber', 'No valid method called before the `{0}` method', 'save()')
+                __d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__)
             );
         }
 
