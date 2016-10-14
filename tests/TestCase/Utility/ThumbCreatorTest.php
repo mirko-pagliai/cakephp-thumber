@@ -648,7 +648,7 @@ class ThumbCreatorTest extends TestCase
     public function testSaveNoExistingDir()
     {
         (new ThumbCreator('400x400.png'))->resize(200)
-            ->save(TMP . 'noExistingDir' . DS . 'thumb.jpg');
+            ->save(['target' => TMP . 'noExistingDir' . DS . 'thumb.jpg']);
     }
 
     /**
@@ -676,20 +676,85 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
-     * Test for `save()` method, using  a custom target path
+     * Test for `save()` method, using the `format` option
      * @ŧest
      */
-    public function testSaveWithCustomTarget()
+    public function testSaveWithFormat()
     {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)
-            ->save(Configure::read('Thumbs.target') . DS . 'thumb.jpg');
+        //From png to jpg
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpg']);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.jpg/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/jpeg');
+
+        //From jpeg to png
+        $thumb = (new ThumbCreator('400x400.jpeg'))->resize(200)->save(['format' => 'png']);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.png/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/png');
+    }
+
+    /**
+     * Test for `save()` method, using the `format` option with an invalid file
+     *  format
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage The format `txt` is invalid
+     * @ŧest
+     */
+    public function testSaveWithInvalidFormat()
+    {
+        (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'txt']);
+    }
+
+    /**
+     * Test for `save()` method, using the `target` option
+     * @ŧest
+     */
+    public function testSaveWithTarget()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['target' => 'thumb.jpg']);
+        $this->assertMime($thumb, 'image/jpeg');
         $this->assertEquals(Configure::read('Thumbs.target') . DS . 'thumb.jpg', $thumb);
+    }
+
+    /**
+     * Test for `save()` method, using the `target` option with a different
+     *  file formats (eg., from png to jpg)
+     * @test
+     */
+    public function testSaveWithTargetAndDifferentFormat()
+    {
+        //From png to jpg
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'from_png_to_jpg.jpg']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'from_png_to_jpg.jpg', $thumb);
+        $this->assertMime($thumb, 'image/jpeg');
+
+        //From jpeg to png
+        $thumb = (new ThumbCreator('400x400.jpeg'))->resize(200)->save(['target' => 'from_jpeg_to_png.png']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'from_jpeg_to_png.png', $thumb);
+        $this->assertMime($thumb, 'image/png');
+    }
+
+    /**
+     * Test for `save()` method, using the `target` option with an invalid file
+     *  format
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage The format `txt` is invalid
+     * @test
+     */
+    public function testSaveWithTargetAndInvalidFormat()
+    {
+        (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'from_png_to_txt.txt']);
     }
 
     /**
      * Test for `save()` method, without a valid method called before
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage No valid method called before the `save()` method
+     * @expectedExceptionMessage No valid method called before the `save` method
      */
     public function testSaveWithoutCallbacks()
     {
