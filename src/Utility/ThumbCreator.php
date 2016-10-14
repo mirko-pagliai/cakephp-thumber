@@ -306,7 +306,7 @@ class ThumbCreator
                     __d('thumber', 'The format `{0}` is invalid', $format)
                 );
             }
-            
+
             $imageInstance = (new ImageManager([
                 'driver' => Configure::read('Thumbs.driver'),
             ]))->make($this->path);
