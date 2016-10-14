@@ -584,7 +584,7 @@ class ThumbCreatorTest extends TestCase
      * @group imageEquals
      * @test
      */
-    public function testSeveralMethodsEquals()
+    public function testSeveralMethodsImageEquals()
     {
         $thumb = (new ThumbCreator('example_pic.jpg'))->crop(600)->resize(200)->save();
         $this->assertImageFileEquals(COMPARING_DIR . 'crop_and_resize_w600_h200.jpg', $thumb);
