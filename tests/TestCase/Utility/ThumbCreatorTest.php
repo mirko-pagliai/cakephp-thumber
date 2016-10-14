@@ -264,7 +264,7 @@ class ThumbCreatorTest extends TestCase
      * @group imageEquals
      * @test
      */
-    public function testFitEquals()
+    public function testFitImageEquals()
     {
         $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200)->save();
         $this->assertImageFileEquals(COMPARING_DIR . 'fit_w200_h200.jpg', $thumb);
@@ -473,7 +473,7 @@ class ThumbCreatorTest extends TestCase
      * @group imageEquals
      * @test
      */
-    public function testResizeUpsizeEquals()
+    public function testResizeUpsizeImageEquals()
     {
         //In this case, the thumbnail will keep the original dimensions
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(450, 450, [
@@ -587,7 +587,7 @@ class ThumbCreatorTest extends TestCase
     public function testSeveralMethodsEquals()
     {
         $thumb = (new ThumbCreator('example_pic.jpg'))->crop(600)->resize(200)->save();
-        $this->assertImageFileEquals(COMPARING_DIR . 'example_pic_w200_h200.jpg', $thumb);
+        $this->assertImageFileEquals(COMPARING_DIR . 'crop_and_resize_w600_h200.jpg', $thumb);
     }
 
     /**
