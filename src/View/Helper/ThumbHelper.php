@@ -140,6 +140,43 @@ class ThumbHelper extends Helper
     }
 
     /**
+     * Creates a thumbnail, combining cropping and resizing to format image in
+     *   a smart way, and returns a formatted `img` element
+     * @param string $path File path
+     * @param array $params Parameters for creating the thumbnail
+     * @param array $options Array of HTML attributes for the `img` element
+     * @return string
+     * @uses fitUrl()
+     * @uses image()
+     */
+    public function fit($path, array $params = [], array $options = [])
+    {
+        return $this->image($this->fitUrl($path, $params, $options), $options);
+    }
+
+    /**
+     * Creates a thumbnail, combining cropping and resizing to format image in
+     *   a smart way, and returns its url
+     * @param string $path File path
+     * @param array $params Parameters for creating the thumbnail
+     * @param array $options Array of HTML attributes for the `img` element
+     * @return string
+     * @uses _getUrl()
+     * @uses _parseParams()
+     */
+    public function fitUrl($path, array $params = [], array $options = [])
+    {
+        list($width, $height) = $this->_parseParams($params);
+
+        //Creates the thumbnail
+        $thumb = (new ThumbCreator($path))->fit($width, $height)->save();
+
+        $full = !empty($options['fullBase']) && $options['fullBase'] == true;
+
+        return $this->_getUrl($thumb, $full);
+    }
+
+    /**
      * Creates a resized thumbnail and returns a formatted `img` element
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail

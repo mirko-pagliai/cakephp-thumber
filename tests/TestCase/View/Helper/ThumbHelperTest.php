@@ -105,6 +105,47 @@ class ThumbHelperTest extends TestCase
     }
 
     /**
+     * Test for `fit()` and `fitUrl()` methods
+     * @return void
+     * @test
+     */
+    public function testFit()
+    {
+        $url = $this->Thumb->fitUrl('400x400.png', ['width' => 200]);
+        $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
+
+        $html = $this->Thumb->fit('400x400.png', ['width' => 200]);
+        $expected = ['img' => ['src' => $url, 'alt' => '']];
+        $this->assertHtml($expected, $html);
+    }
+
+    /**
+     * Test for `fit()` and `fitUrl()` methods, with the `fullBase` option
+     * @return void
+     * @test
+     */
+    public function testFitFullBase()
+    {
+        $url = $this->Thumb->fitUrl('400x400.png', ['width' => 200], ['fullBase' => true]);
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
+
+        $html = $this->Thumb->fit('400x400.png', ['width' => 200], ['fullBase' => true]);
+        $expected = ['img' => ['src' => $url, 'alt' => '']];
+        $this->assertHtml($expected, $html);
+    }
+
+    /**
+     * Test for `fit()` method, called without parameters
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Missing parameters for the `fit` method
+     * @test
+     */
+    public function testFitWithoutParameters()
+    {
+        $this->Thumb->fit('400x400.png');
+    }
+
+    /**
      * Test for `resize()` and `resizeUrl()` methods
      * @return void
      * @test
