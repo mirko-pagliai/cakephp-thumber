@@ -80,9 +80,25 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithGif()
     {
         $file = '400x400.gif';
-        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
 
         $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
+        $this->assertResponseOk();
+        $this->assertContentType('image/jpeg');
+        $this->assertFileResponse($thumb);
+    }
+
+    /**
+     * Test for `thumb()` method, with a gif file saved as gif
+     * @return void
+     * @test
+     */
+    public function testThumbWithGifSavedAsGif()
+    {
+        $file = '400x400.gif';
+        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'gif']);
+
+        $this->get($this->Thumb->resizeUrl($file, ['format' => 'gif', 'width' => 200]));
         $this->assertResponseOk();
         $this->assertContentType('image/gif');
         $this->assertFileResponse($thumb);
@@ -96,7 +112,7 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithJpeg()
     {
         $file = '400x400.jpeg';
-        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
 
         $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
         $this->assertResponseOk();
@@ -112,7 +128,7 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithJpg()
     {
         $file = '400x400.jpg';
-        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
 
         $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
         $this->assertResponseOk();
@@ -128,9 +144,25 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithPng()
     {
         $file = '400x400.png';
-        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
 
         $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
+        $this->assertResponseOk();
+        $this->assertContentType('image/jpeg');
+        $this->assertFileResponse($thumb);
+    }
+
+    /**
+     * Test for `thumb()` method, with a png file saved as png
+     * @return void
+     * @test
+     */
+    public function testThumbWithPngSavedAsPng()
+    {
+        $file = '400x400.png';
+        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'png']);
+
+        $this->get($this->Thumb->resizeUrl($file, ['format' => 'png', 'width' => 200]));
         $this->assertResponseOk();
         $this->assertContentType('image/png');
         $this->assertFileResponse($thumb);

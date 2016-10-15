@@ -105,7 +105,9 @@ class ThumbHelper extends Helper
     }
 
     /**
-     * Creates a cropped thumbnail and returns a formatted `img` element
+     * Creates a cropped thumbnail and returns a formatted `img` element.
+     *
+     * You can use `width`, `height` and `format` parameters.
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
@@ -119,7 +121,9 @@ class ThumbHelper extends Helper
     }
 
     /**
-     * Creates a cropped thumbnail and returns its url
+     * Creates a cropped thumbnail and returns its url.
+     *
+     * You can use `width`, `height` and `format` parameters.
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
@@ -131,8 +135,10 @@ class ThumbHelper extends Helper
     {
         list($width, $height) = $this->_parseParams($params);
 
+        $params += ['format' => 'jpg'];
+
         //Creates the thumbnail
-        $thumb = (new ThumbCreator($path))->crop($width, $height)->save();
+        $thumb = (new ThumbCreator($path))->crop($width, $height)->save($params);
 
         $full = !empty($options['fullBase']) && $options['fullBase'] == true;
 
@@ -141,7 +147,9 @@ class ThumbHelper extends Helper
 
     /**
      * Creates a thumbnail, combining cropping and resizing to format image in
-     *   a smart way, and returns a formatted `img` element
+     *   a smart way, and returns a formatted `img` element.
+     *
+     * You can use `width`, `height` and `format` parameters.
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
@@ -156,7 +164,9 @@ class ThumbHelper extends Helper
 
     /**
      * Creates a thumbnail, combining cropping and resizing to format image in
-     *   a smart way, and returns its url
+     *   a smart way, and returns its url.
+     *
+     * You can use `width`, `height` and `format` parameters.
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
@@ -168,8 +178,10 @@ class ThumbHelper extends Helper
     {
         list($width, $height) = $this->_parseParams($params);
 
+        $params += ['format' => 'jpg'];
+
         //Creates the thumbnail
-        $thumb = (new ThumbCreator($path))->fit($width, $height)->save();
+        $thumb = (new ThumbCreator($path))->fit($width, $height)->save($params);
 
         $full = !empty($options['fullBase']) && $options['fullBase'] == true;
 
@@ -177,7 +189,9 @@ class ThumbHelper extends Helper
     }
 
     /**
-     * Creates a resized thumbnail and returns a formatted `img` element
+     * Creates a resized thumbnail and returns a formatted `img` element.
+     *
+     * You can use `width`, `height` and `format` parameters.
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
@@ -191,7 +205,9 @@ class ThumbHelper extends Helper
     }
 
     /**
-     * Creates a resizes thumbnail and returns its url
+     * Creates a resizes thumbnail and returns its url.
+     *
+     * You can use `width`, `height` and `format` parameters.
      * @param string $path File path
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
@@ -203,8 +219,10 @@ class ThumbHelper extends Helper
     {
         list($width, $height) = $this->_parseParams($params);
 
+        $params += ['format' => 'jpg'];
+
         //Creates the thumbnail
-        $thumb = (new ThumbCreator($path))->resize($width, $height)->save();
+        $thumb = (new ThumbCreator($path))->resize($width, $height)->save($params);
 
         $full = !empty($options['fullBase']) && $options['fullBase'] == true;
 
