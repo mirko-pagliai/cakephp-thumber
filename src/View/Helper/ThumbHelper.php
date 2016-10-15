@@ -36,34 +36,7 @@ class ThumbHelper extends Helper
      * Helpers
      * @var array
      */
-    public $helpers = [
-        'Thumber.Html' => ['className' => 'Thumber.Html'],
-        'Url',
-    ];
-
-    /**
-     * Internal method to get the url for a thumbnail
-     * @param string $path Thumbnail path
-     * @param bool $full If `true`, the full base URL will be prepended to the result
-     * @return string
-     */
-    protected function _getUrl($path, $full = false)
-    {
-        return $this->Url->build(['_name' => 'thumb', base64_encode(basename($path))], $full);
-    }
-
-    /**
-     * Internal method to parse parameters
-     * @param array $params Parameters for creating the thumbnail
-     * @return array Array with width and height
-     */
-    protected function _parseParams($params)
-    {
-        return [
-            empty($params['width']) ? null : $params['width'],
-            empty($params['height']) ? null : $params['height'],
-        ];
-    }
+    public $helpers = ['Thumber.Html' => ['className' => 'Thumber.Html']];
 
     /**
      * Creates a cropped thumbnail and returns a formatted `img` element.
@@ -88,21 +61,17 @@ class ThumbHelper extends Helper
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
-     * @uses _getUrl()
-     * @uses _parseParams()
      */
     public function cropUrl($path, array $params = [], array $options = [])
     {
-        list($width, $height) = $this->_parseParams($params);
-
-        $params += ['format' => 'jpg'];
+        //Sets default parameters and options
+        $params += ['format' => 'jpg', 'height' => null, 'width' => null];
+        $options += ['fullBase' => false];
 
         //Creates the thumbnail
-        $thumb = (new ThumbCreator($path))->crop($width, $height)->save($params);
+        $thumb = (new ThumbCreator($path))->crop($params['width'], $params['height'])->save($params);
 
-        $full = !empty($options['fullBase']) && $options['fullBase'] == true;
-
-        return $this->_getUrl($thumb, $full);
+        return thumbUrl($thumb, $options['fullBase']);
     }
 
     /**
@@ -130,21 +99,17 @@ class ThumbHelper extends Helper
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
-     * @uses _getUrl()
-     * @uses _parseParams()
      */
     public function fitUrl($path, array $params = [], array $options = [])
     {
-        list($width, $height) = $this->_parseParams($params);
-
-        $params += ['format' => 'jpg'];
+        //Sets default parameters and options
+        $params += ['format' => 'jpg', 'height' => null, 'width' => null];
+        $options += ['fullBase' => false];
 
         //Creates the thumbnail
-        $thumb = (new ThumbCreator($path))->fit($width, $height)->save($params);
+        $thumb = (new ThumbCreator($path))->fit($params['width'], $params['height'])->save($params);
 
-        $full = !empty($options['fullBase']) && $options['fullBase'] == true;
-
-        return $this->_getUrl($thumb, $full);
+        return thumbUrl($thumb, $options['fullBase']);
     }
 
     /**
@@ -170,20 +135,16 @@ class ThumbHelper extends Helper
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
-     * @uses _getUrl()
-     * @uses _parseParams()
      */
     public function resizeUrl($path, array $params = [], array $options = [])
     {
-        list($width, $height) = $this->_parseParams($params);
-
-        $params += ['format' => 'jpg'];
+        //Sets default parameters and options
+        $params += ['format' => 'jpg', 'height' => null, 'width' => null];
+        $options += ['fullBase' => false];
 
         //Creates the thumbnail
-        $thumb = (new ThumbCreator($path))->resize($width, $height)->save($params);
+        $thumb = (new ThumbCreator($path))->resize($params['width'], $params['height'])->save($params);
 
-        $full = !empty($options['fullBase']) && $options['fullBase'] == true;
-
-        return $this->_getUrl($thumb, $full);
+        return thumbUrl($thumb, $options['fullBase']);
     }
 }

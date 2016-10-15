@@ -60,4 +60,30 @@ class GlobalFunctionsTest extends TestCase
         $this->assertFalse(isUrl(DS . 'folder' . DS));
         $this->assertFalse(isUrl(DS . 'folder' . DS . 'file.txt'));
     }
+
+    /**
+     * Test for `isUrl()` global function
+     * @return void
+     * @test
+     */
+    public function testThumbUrl()
+    {
+        $path = 'mypath';
+        $this->assertEquals(sprintf('/thumb/%s', base64_encode(basename($path))), thumbUrl($path));
+
+        $path = 'mypath.ext';
+        $this->assertEquals(sprintf('/thumb/%s', base64_encode(basename($path))), thumbUrl($path));
+
+        $path = 'dir/mypath';
+        $this->assertEquals(sprintf('/thumb/%s', base64_encode(basename($path))), thumbUrl($path));
+
+        $path = 'dir/mypath.ext';
+        $this->assertEquals(sprintf('/thumb/%s', base64_encode(basename($path))), thumbUrl($path));
+
+        $path = '/dir/mypath';
+        $this->assertEquals(sprintf('/thumb/%s', base64_encode(basename($path))), thumbUrl($path));
+
+        $path = '/dir/mypath.ext';
+        $this->assertEquals(sprintf('/thumb/%s', base64_encode(basename($path))), thumbUrl($path));
+    }
 }

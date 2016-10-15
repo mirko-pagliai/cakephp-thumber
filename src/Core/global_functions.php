@@ -21,6 +21,8 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
+use Cake\Routing\Router;
+
 if (!function_exists('isUrl')) {
     /**
      * Checks whether a url is valid
@@ -33,5 +35,18 @@ if (!function_exists('isUrl')) {
             '/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i',
             $url
         );
+    }
+}
+
+if (!function_exists('thumbUrl')) {
+    /**
+     * Returns the url for a thumbnail
+     * @param string $path Thumbnail path
+     * @param bool $full If `true`, the full base URL will be prepended to the result
+     * @return string
+     */
+    function thumbUrl($path, $full = false)
+    {
+        return Router::url(['_name' => 'thumb', base64_encode(basename($path))], $full);
     }
 }
