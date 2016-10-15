@@ -26,6 +26,6 @@ Router::plugin('Thumber', ['path' => '/thumb'], function ($routes) {
     $routes->connect(
         '/:basename',
         ['controller' => 'Thumbs', 'action' => 'thumb'],
-        ['_name' => 'thumb', 'basename' => '[A-z0-9]+', 'pass' => ['basename']]
+        ['_name' => 'thumb', 'basename' => '[A-z0-9=]+', 'pass' => ['basename']]
     );
 });

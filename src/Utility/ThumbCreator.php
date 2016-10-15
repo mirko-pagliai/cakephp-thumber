@@ -265,9 +265,10 @@ class ThumbCreator
     /**
      * Saves the thumbnail.
      *
-     * You can use `format` and `target` options.
+     * You can use `format`, `quality` and `target` options.
      * @param array $options Options for saving
      * @return string Thumbnail path
+     * @uses _getExtension()
      * @uses $arguments
      * @uses $callbacks
      * @uses $extension
@@ -281,29 +282,26 @@ class ThumbCreator
             );
         }
 
-        if (!empty($options['target'])) {
-            if (!Folder::isAbsolute($options['target'])) {
-                $target = Configure::read('Thumbs.target') . DS . $options['target'];
-            } else {
-                $target = $options['target'];
-            }
+        //Sets default options
+        $options += ['format' => $this->extension, 'quality' => 90, 'target' => false];
 
-            $format = $this->_getExtension($target);
+        $target = $options['target'];
+
+        if ($target) {
+            $options['format'] = $this->_getExtension($target);
         } else {
-            if (!empty($options['format'])) {
-                $format = $options['format'];
-            } else {
-                $format = $this->extension;
-            }
+            $target = md5(serialize($this->arguments)) . '.' . $options['format'];
+        }
 
-            $target = Configure::read('Thumbs.target') . DS . md5(serialize($this->arguments)) . '.' . $format;
+        if (!Folder::isAbsolute($target)) {
+            $target = Configure::read('Thumbs.target') . DS . $target;
         }
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
-            if (!in_array($format, ['gif', 'jpg', 'jpeg', 'png'])) {
+            if (!in_array($options['format'], ['gif', 'jpg', 'jpeg', 'png'])) {
                 throw new InternalErrorException(
-                    __d('thumber', 'The format `{0}` is invalid', $format)
+                    __d('thumber', 'Invalid `{0}` format', $options['format'])
                 );
             }
 
@@ -316,12 +314,11 @@ class ThumbCreator
                 call_user_func($callback, $imageInstance);
             }
 
-            //@codingStandardsIgnoreLine
-            $write = @file_put_contents($target, $imageInstance->encode($format));
-
+            $content = $imageInstance->encode($options['format'], $options['quality']);
             $imageInstance->destroy();
 
-            if (!$write) {
+            //@codingStandardsIgnoreLine
+            if (!@file_put_contents($target, $content)) {
                 throw new InternalErrorException(
                     __d('thumber', 'Can\'t write the file `{0}`', str_replace(APP, null, $target))
                 );

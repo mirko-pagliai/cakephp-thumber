@@ -702,12 +702,37 @@ class ThumbCreatorTest extends TestCase
      * Test for `save()` method, using the `format` option with an invalid file
      *  format
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage The format `txt` is invalid
+     * @expectedExceptionMessage Invalid `txt` format
      * @ŧest
      */
     public function testSaveWithInvalidFormat()
     {
         (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'txt']);
+    }
+
+    /**
+     * Test for `save()` method, using the `quality` option
+     * @ŧest
+     */
+    public function testSaveWithQuality()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.jpg/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for `save()` method, using the `quality` option, equating images
+     * @group imageEquals
+     * @ŧest
+     */
+    public function testSaveWithQualityImageEquals()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
+        $this->assertImageFileEquals(COMPARING_DIR . 'resize_w200_h200_quality_10.jpg', $thumb);
     }
 
     /**
@@ -717,8 +742,8 @@ class ThumbCreatorTest extends TestCase
     public function testSaveWithTarget()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['target' => 'thumb.jpg']);
-        $this->assertMime($thumb, 'image/jpeg');
         $this->assertEquals(Configure::read('Thumbs.target') . DS . 'thumb.jpg', $thumb);
+        $this->assertMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -743,7 +768,7 @@ class ThumbCreatorTest extends TestCase
      * Test for `save()` method, using the `target` option with an invalid file
      *  format
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage The format `txt` is invalid
+     * @expectedExceptionMessage Invalid `txt` format
      * @test
      */
     public function testSaveWithTargetAndInvalidFormat()
