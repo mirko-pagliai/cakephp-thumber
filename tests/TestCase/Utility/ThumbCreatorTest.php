@@ -702,7 +702,7 @@ class ThumbCreatorTest extends TestCase
      * Test for `save()` method, using the `format` option with an invalid file
      *  format
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage The format `txt` is invalid
+     * @expectedExceptionMessage Invalid `txt` format
      * @ŧest
      */
     public function testSaveWithInvalidFormat()
@@ -743,7 +743,7 @@ class ThumbCreatorTest extends TestCase
      * Test for `save()` method, using the `target` option with an invalid file
      *  format
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage The format `txt` is invalid
+     * @expectedExceptionMessage Invalid `txt` format
      * @test
      */
     public function testSaveWithTargetAndInvalidFormat()
