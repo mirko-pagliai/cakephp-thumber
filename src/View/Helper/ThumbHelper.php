@@ -36,7 +36,10 @@ class ThumbHelper extends Helper
      * Helpers
      * @var array
      */
-    public $helpers = ['Html', 'Url'];
+    public $helpers = [
+        'Thumber.Html' => ['className' => 'Thumber.Html'],
+        'Url',
+    ];
 
     /**
      * Internal method to get the url for a thumbnail
@@ -63,48 +66,6 @@ class ThumbHelper extends Helper
     }
 
     /**
-     * Creates a formatted `img` element for a thumbnail.
-     *
-     * Instead of `HtmlHelper::image()`, this method does not alter the image
-     *  path, making it possible to create the html tag for the thumb.
-     * @param string $path Thumbnail path
-     * @param array $options Array of HTML attributes
-     * @return string
-     */
-    protected function image($path, array $options = [])
-    {
-        unset($options['fullBase']);
-
-        $options = array_diff_key($options, ['fullBase' => null, 'pathPrefix' => null]);
-
-        if (!isset($options['alt'])) {
-            $options['alt'] = '';
-        }
-
-        $url = false;
-        if (!empty($options['url'])) {
-            $url = $options['url'];
-            unset($options['url']);
-        }
-
-        $templater = $this->Html->templater();
-        $image = $templater->format('image', [
-            'url' => $path,
-            'attrs' => $templater->formatAttributes($options),
-        ]);
-
-        if ($url) {
-            return $templater->format('link', [
-                'url' => $this->Url->build($url),
-                'attrs' => null,
-                'content' => $image
-            ]);
-        }
-
-        return $image;
-    }
-
-    /**
      * Creates a cropped thumbnail and returns a formatted `img` element.
      *
      * You can use `width`, `height` and `format` parameters.
@@ -113,11 +74,10 @@ class ThumbHelper extends Helper
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
      * @uses cropUrl()
-     * @uses image()
      */
     public function crop($path, array $params = [], array $options = [])
     {
-        return $this->image($this->cropUrl($path, $params, $options), $options);
+        return $this->Html->image($this->cropUrl($path, $params, $options), $options);
     }
 
     /**
@@ -155,11 +115,10 @@ class ThumbHelper extends Helper
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
      * @uses fitUrl()
-     * @uses image()
      */
     public function fit($path, array $params = [], array $options = [])
     {
-        return $this->image($this->fitUrl($path, $params, $options), $options);
+        return $this->Html->image($this->fitUrl($path, $params, $options), $options);
     }
 
     /**
@@ -196,12 +155,11 @@ class ThumbHelper extends Helper
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
-     * @uses image()
      * @uses resizeUrl()
      */
     public function resize($path, array $params = [], array $options = [])
     {
-        return $this->image($this->resizeUrl($path, $params, $options), $options);
+        return $this->Html->image($this->resizeUrl($path, $params, $options), $options);
     }
 
     /**
