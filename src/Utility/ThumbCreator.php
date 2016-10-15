@@ -265,9 +265,10 @@ class ThumbCreator
     /**
      * Saves the thumbnail.
      *
-     * You can use `format` and `target` options.
+     * You can use `format`, `quality` and `target` options.
      * @param array $options Options for saving
      * @return string Thumbnail path
+     * @uses _getExtension()
      * @uses $arguments
      * @uses $callbacks
      * @uses $extension
@@ -282,7 +283,7 @@ class ThumbCreator
         }
 
         //Sets default options
-        $options += ['format' => $this->extension, 'target' => false];
+        $options += ['format' => $this->extension, 'quality' => 90, 'target' => false];
 
         $target = $options['target'];
 
@@ -313,12 +314,11 @@ class ThumbCreator
                 call_user_func($callback, $imageInstance);
             }
 
-            //@codingStandardsIgnoreLine
-            $write = @file_put_contents($target, $imageInstance->encode($options['format']));
-
+            $content = $imageInstance->encode($options['format'], $options['quality']);
             $imageInstance->destroy();
 
-            if (!$write) {
+            //@codingStandardsIgnoreLine
+            if (!@file_put_contents($target, $content)) {
                 throw new InternalErrorException(
                     __d('thumber', 'Can\'t write the file `{0}`', str_replace(APP, null, $target))
                 );
