@@ -82,7 +82,7 @@ class ThumbsControllerTest extends IntegrationTestCase
         $file = '400x400.gif';
         $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
 
-        $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
+        $this->get($this->Thumb->resizeUrl($file, ['width' => 200], ['fullBase' => false]));
         $this->assertResponseOk();
         $this->assertContentType('image/jpeg');
         $this->assertFileResponse($thumb);
@@ -98,7 +98,7 @@ class ThumbsControllerTest extends IntegrationTestCase
         $file = '400x400.gif';
         $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'gif']);
 
-        $this->get($this->Thumb->resizeUrl($file, ['format' => 'gif', 'width' => 200]));
+        $this->get($this->Thumb->resizeUrl($file, ['format' => 'gif', 'width' => 200], ['fullBase' => false]));
         $this->assertResponseOk();
         $this->assertContentType('image/gif');
         $this->assertFileResponse($thumb);
@@ -114,7 +114,7 @@ class ThumbsControllerTest extends IntegrationTestCase
         $file = '400x400.jpeg';
         $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
 
-        $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
+        $this->get($this->Thumb->resizeUrl($file, ['width' => 200], ['fullBase' => false]));
         $this->assertResponseOk();
         $this->assertContentType('image/jpeg');
         $this->assertFileResponse($thumb);
@@ -130,7 +130,7 @@ class ThumbsControllerTest extends IntegrationTestCase
         $file = '400x400.jpg';
         $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
 
-        $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
+        $this->get($this->Thumb->resizeUrl($file, ['width' => 200], ['fullBase' => false]));
         $this->assertResponseOk();
         $this->assertContentType('image/jpeg');
         $this->assertFileResponse($thumb);
@@ -146,7 +146,7 @@ class ThumbsControllerTest extends IntegrationTestCase
         $file = '400x400.png';
         $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
 
-        $this->get($this->Thumb->resizeUrl($file, ['width' => 200]));
+        $this->get($this->Thumb->resizeUrl($file, ['width' => 200], ['fullBase' => false]));
         $this->assertResponseOk();
         $this->assertContentType('image/jpeg');
         $this->assertFileResponse($thumb);
@@ -162,7 +162,7 @@ class ThumbsControllerTest extends IntegrationTestCase
         $file = '400x400.png';
         $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'png']);
 
-        $this->get($this->Thumb->resizeUrl($file, ['format' => 'png', 'width' => 200]));
+        $this->get($this->Thumb->resizeUrl($file, ['format' => 'png', 'width' => 200], ['fullBase' => false]));
         $this->assertResponseOk();
         $this->assertContentType('image/png');
         $this->assertFileResponse($thumb);
