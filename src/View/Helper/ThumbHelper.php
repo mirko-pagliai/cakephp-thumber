@@ -36,7 +36,7 @@ class ThumbHelper extends Helper
      * Helpers
      * @var array
      */
-    public $helpers = ['Thumber.Html' => ['className' => 'Thumber.Html']];
+    public $helpers = ['ThumbHtml' => ['className' => 'Thumber.Html']];
 
     /**
      * Creates a cropped thumbnail and returns a formatted `img` element.
@@ -50,7 +50,7 @@ class ThumbHelper extends Helper
      */
     public function crop($path, array $params = [], array $options = [])
     {
-        return $this->Html->image($this->cropUrl($path, $params, $options), $options);
+        return $this->ThumbHtml->image($this->cropUrl($path, $params, $options), $options);
     }
 
     /**
@@ -87,7 +87,7 @@ class ThumbHelper extends Helper
      */
     public function fit($path, array $params = [], array $options = [])
     {
-        return $this->Html->image($this->fitUrl($path, $params, $options), $options);
+        return $this->ThumbHtml->image($this->fitUrl($path, $params, $options), $options);
     }
 
     /**
@@ -124,7 +124,7 @@ class ThumbHelper extends Helper
      */
     public function resize($path, array $params = [], array $options = [])
     {
-        return $this->Html->image($this->resizeUrl($path, $params, $options), $options);
+        return $this->ThumbHtml->image($this->resizeUrl($path, $params, $options), $options);
     }
 
     /**
