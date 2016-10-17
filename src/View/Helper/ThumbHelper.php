@@ -36,7 +36,7 @@ class ThumbHelper extends Helper
      * Helpers
      * @var array
      */
-    public $helpers = ['ThumbHtml' => ['className' => 'Thumber.Html']];
+    public $helpers = ['Html'];
 
     /**
      * Creates a cropped thumbnail and returns a formatted `img` element.
@@ -50,7 +50,7 @@ class ThumbHelper extends Helper
      */
     public function crop($path, array $params = [], array $options = [])
     {
-        return $this->ThumbHtml->image($this->cropUrl($path, $params, $options), $options);
+        return $this->Html->image($this->cropUrl($path, $params, $options), $options);
     }
 
     /**
@@ -66,7 +66,7 @@ class ThumbHelper extends Helper
     {
         //Sets default parameters and options
         $params += ['format' => 'jpg', 'height' => null, 'width' => null];
-        $options += ['fullBase' => false];
+        $options += ['fullBase' => true];
 
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->crop($params['width'], $params['height'])->save($params);
@@ -87,7 +87,7 @@ class ThumbHelper extends Helper
      */
     public function fit($path, array $params = [], array $options = [])
     {
-        return $this->ThumbHtml->image($this->fitUrl($path, $params, $options), $options);
+        return $this->Html->image($this->fitUrl($path, $params, $options), $options);
     }
 
     /**
@@ -104,7 +104,7 @@ class ThumbHelper extends Helper
     {
         //Sets default parameters and options
         $params += ['format' => 'jpg', 'height' => null, 'width' => null];
-        $options += ['fullBase' => false];
+        $options += ['fullBase' => true];
 
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->fit($params['width'], $params['height'])->save($params);
@@ -124,7 +124,7 @@ class ThumbHelper extends Helper
      */
     public function resize($path, array $params = [], array $options = [])
     {
-        return $this->ThumbHtml->image($this->resizeUrl($path, $params, $options), $options);
+        return $this->Html->image($this->resizeUrl($path, $params, $options), $options);
     }
 
     /**
@@ -140,7 +140,7 @@ class ThumbHelper extends Helper
     {
         //Sets default parameters and options
         $params += ['format' => 'jpg', 'height' => null, 'width' => null];
-        $options += ['fullBase' => false];
+        $options += ['fullBase' => true];
 
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->resize($params['width'], $params['height'])->save($params);

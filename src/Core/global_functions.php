@@ -45,7 +45,7 @@ if (!function_exists('thumbUrl')) {
      * @param bool $full If `true`, the full base URL will be prepended to the result
      * @return string
      */
-    function thumbUrl($path, $full = false)
+    function thumbUrl($path, $full = true)
     {
         return Router::url(['_name' => 'thumb', base64_encode(basename($path))], $full);
     }
