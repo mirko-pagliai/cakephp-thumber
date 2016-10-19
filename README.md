@@ -5,13 +5,48 @@
 
 *cakephp-thumber* is a CakePHP plugin to create thumbnails.  
 
-It uses [intervention/image](https://github.com/Intervention/image) and
-provides a convenient helper that allows you to create thumbnails on the fly.
+It uses [intervention/image](https://github.com/Intervention/image) and provides:
+* `ThumbCreator`, an utility to create thumbnails;
+* `ThumbHelper`, a convenient helper that allows you to create thumbnails on the fly from your templates.
+
+## Requirements
+*cakephp-thumber* requires GD Library (>=2.0) **or** Imagick PHP extension (>=6.5.7).
 
 ## Installation
 You can install the plugin via composer:
 
     $ composer require --prefer-dist mirko-pagliai/cakephp-thumber
+    
+Then you have to edit `APP/config/bootstrap.php` to load the plugin:
+
+    Plugin::load('Thumber', ['bootstrap' => true, 'routes' => true]);
+
+For more information on how to load the plugin, please refer to the [Cookbook](http://book.cakephp.org/3.0/en/plugins.html#loading-a-plugin).
+    
+By default the plugin uses the `APP/tmp/thumbs` directory to save the thumbnails. So you have to create the directory and make it writable:
+
+    $ mkdir tmp/thumbs && chmod 775 tmp/thumbs
+
+If you want to use a different directory, read below.
+
+## Configuration
+The plugin uses some configuration parameters and you can set them using the 
+`\Cake\Core\Configure` class. It does not matter if you do it before or after
+loading the plugin.
+
+For example, you can do this at the bottom of the file `APP/config/app.php`
+of your application.
+
+### Configuration values
+
+    Configure::write('Thumbs.driver', 'imagick');
+    
+Setting `Thumbs.driver`, you can choose which driver to use for the creation of thumbnails. Valid values are `imagick` or `gd`.  
+It's **highly preferable** to use Imagick, because It provides better performance and a greater number of supported formats.
+
+    Configure::write('Thumbs.target', TMP . 'thumbs');
+    
+Setting `Thumbs.target`, you can use another directory where the plugin will save thumbnails.
 
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward 
