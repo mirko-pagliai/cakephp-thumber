@@ -106,20 +106,36 @@ class ThumbCreatorTest extends TestCase
      */
     public function testExtension()
     {
-        $thumber = new ThumbCreator('400x400.png');
-        $this->assertEquals($thumber->getExtension(), 'png');
-
-        $thumber = new ThumbCreator(WWW_ROOT . 'img' . DS . '400x400.png');
-        $this->assertEquals($thumber->getExtension(), 'png');
+        $thumber = new ThumbCreator('400x400.bmp');
+        $this->assertEquals($thumber->getExtension(), 'bmp');
 
         $thumber = new ThumbCreator('400x400.gif');
         $this->assertEquals($thumber->getExtension(), 'gif');
+
+        $thumber = new ThumbCreator('400x400.ico');
+        $this->assertEquals($thumber->getExtension(), 'ico');
 
         $thumber = new ThumbCreator('400x400.jpg');
         $this->assertEquals($thumber->getExtension(), 'jpg');
 
         $thumber = new ThumbCreator('400x400.jpeg');
         $this->assertEquals($thumber->getExtension(), 'jpg');
+
+        $thumber = new ThumbCreator('400x400.png');
+        $this->assertEquals($thumber->getExtension(), 'png');
+
+        $thumber = new ThumbCreator('400x400.psd');
+        $this->assertEquals($thumber->getExtension(), 'psd');
+
+        $thumber = new ThumbCreator('400x400.tif');
+        $this->assertEquals($thumber->getExtension(), 'tiff');
+
+        $thumber = new ThumbCreator('400x400.tiff');
+        $this->assertEquals($thumber->getExtension(), 'tiff');
+
+        //Full path
+        $thumber = new ThumbCreator(WWW_ROOT . 'img' . DS . '400x400.png');
+        $this->assertEquals($thumber->getExtension(), 'png');
 
         //From plugin
         $thumber = new ThumbCreator('TestPlugin.400x400.png');

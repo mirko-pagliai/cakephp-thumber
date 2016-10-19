@@ -47,6 +47,20 @@ class ThumbCreatorFormatsTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, using a bmp file
+     * @test
+     */
+    public function testSaveBmp()
+    {
+        $thumb = (new ThumbCreator('400x400.bmp'))->resize(200)->save();
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.bmp/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/x-ms-bmp');
+    }
+
+    /**
      * Test for `save()` method, using a gif file
      * @test
      */
@@ -58,6 +72,20 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
         $this->assertMime($thumb, 'image/gif');
+    }
+
+    /**
+     * Test for `save()` method, using a ico file
+     * @test
+     */
+    public function testSaveIco()
+    {
+        $thumb = (new ThumbCreator('400x400.ico'))->resize(200)->save();
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.ico/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/x-icon');
     }
 
     /**
@@ -100,5 +128,47 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
         $this->assertMime($thumb, 'image/png');
+    }
+
+    /**
+     * Test for `save()` method, using a psd file
+     * @test
+     */
+    public function testSavePsd()
+    {
+        $thumb = (new ThumbCreator('400x400.psd'))->resize(200)->save();
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.psd/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
+    }
+
+    /**
+     * Test for `save()` method, using a tif file
+     * @test
+     */
+    public function testSaveTif()
+    {
+        $thumb = (new ThumbCreator('400x400.tif'))->resize(200)->save();
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.tiff/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/tiff');
+    }
+
+    /**
+     * Test for `save()` method, using a tiff file
+     * @test
+     */
+    public function testSaveTiff()
+    {
+        $thumb = (new ThumbCreator('400x400.tiff'))->resize(200)->save();
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.tiff/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/tiff');
     }
 }
