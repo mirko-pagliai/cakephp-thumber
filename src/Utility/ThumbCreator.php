@@ -65,10 +65,10 @@ class ThumbCreator
     protected $path;
 
     /**
-     * Valid formats for output
+     * Supported formats
      * @var array
      */
-    protected $validFormats = ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
+    protected $supportedFormats = ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
 
     /**
      * Construct.
@@ -281,7 +281,7 @@ class ThumbCreator
      * @uses $callbacks
      * @uses $extension
      * @uses $path
-     * @uses $validFormats
+     * @uses $supportedFormats
      */
     public function save(array $options = [])
     {
@@ -308,7 +308,7 @@ class ThumbCreator
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
-            if (!in_array($options['format'], $this->validFormats)) {
+            if (!in_array($options['format'], $this->supportedFormats)) {
                 throw new InternalErrorException(
                     __d('thumber', 'Invalid `{0}` format', $options['format'])
                 );
