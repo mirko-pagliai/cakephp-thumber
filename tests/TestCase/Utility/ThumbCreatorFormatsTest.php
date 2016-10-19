@@ -58,6 +58,19 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
         $this->assertMime($thumb, 'image/x-ms-bmp');
+
+        //Using `format` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'bmp']);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.bmp/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/x-ms-bmp');
+
+        //Using `target` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.bmp']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.bmp', $thumb);
+        $this->assertMime($thumb, 'image/x-ms-bmp');
     }
 
     /**
@@ -71,6 +84,19 @@ class ThumbCreatorFormatsTest extends TestCase
             sprintf('/^%s[a-z0-9]{32}\.gif/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
         );
+        $this->assertMime($thumb, 'image/gif');
+
+        //Using `format` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'gif']);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.gif/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/gif');
+
+        //Using `target` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.gif']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.gif', $thumb);
         $this->assertMime($thumb, 'image/gif');
     }
 
@@ -86,6 +112,19 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
         $this->assertMime($thumb, 'image/x-icon');
+
+        //Using `format` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'ico']);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.ico/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/x-icon');
+
+        //Using `target` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.ico']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.ico', $thumb);
+        $this->assertMime($thumb, 'image/x-icon');
     }
 
     /**
@@ -99,6 +138,11 @@ class ThumbCreatorFormatsTest extends TestCase
             sprintf('/^%s[a-z0-9]{32}\.jpg$/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
         );
+        $this->assertMime($thumb, 'image/jpeg');
+
+        //Using `target` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.jpeg']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.jpeg', $thumb);
         $this->assertMime($thumb, 'image/jpeg');
     }
 
@@ -114,6 +158,19 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
         $this->assertMime($thumb, 'image/jpeg');
+
+        //Using `format` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpg']);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.jpg/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/jpeg');
+
+        //Using `target` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.jpg']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.jpg', $thumb);
+        $this->assertMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -127,6 +184,19 @@ class ThumbCreatorFormatsTest extends TestCase
             sprintf('/^%s[a-z0-9]{32}\.png/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
         );
+        $this->assertMime($thumb, 'image/png');
+
+        //Using `format` option
+        $thumb = (new ThumbCreator('400x400.gif'))->resize(200)->save(['format' => 'png']);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.png/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/png');
+
+        //Using `target` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.png']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.png', $thumb);
         $this->assertMime($thumb, 'image/png');
     }
 
@@ -142,6 +212,19 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
         $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
+
+        //Using `format` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'psd']);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.psd/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
+
+        //Using `target` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.psd']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.psd', $thumb);
+        $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
     }
 
     /**
@@ -156,6 +239,11 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
         $this->assertMime($thumb, 'image/tiff');
+
+        //Using `target` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.tif']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.tif', $thumb);
+        $this->assertMime($thumb, 'image/tiff');
     }
 
     /**
@@ -169,6 +257,19 @@ class ThumbCreatorFormatsTest extends TestCase
             sprintf('/^%s[a-z0-9]{32}\.tiff/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
         );
+        $this->assertMime($thumb, 'image/tiff');
+
+        //Using `format` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'tiff']);
+        $this->assertRegExp(
+            sprintf('/^%s[a-z0-9]{32}\.tiff/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            $thumb
+        );
+        $this->assertMime($thumb, 'image/tiff');
+
+        //Using `target` option
+        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.tiff']);
+        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.tiff', $thumb);
         $this->assertMime($thumb, 'image/tiff');
     }
 }

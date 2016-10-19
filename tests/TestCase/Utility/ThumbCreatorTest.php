@@ -643,29 +643,6 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
-     * Test for `save()` method, using the `format` option
-     * @ŧest
-     */
-    public function testSaveWithFormat()
-    {
-        //From png to jpg
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpg']);
-        $this->assertRegExp(
-            sprintf('/^%s[a-z0-9]{32}\.jpg/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
-            $thumb
-        );
-        $this->assertMime($thumb, 'image/jpeg');
-
-        //From jpeg to png
-        $thumb = (new ThumbCreator('400x400.jpeg'))->resize(200)->save(['format' => 'png']);
-        $this->assertRegExp(
-            sprintf('/^%s[a-z0-9]{32}\.png/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
-            $thumb
-        );
-        $this->assertMime($thumb, 'image/png');
-    }
-
-    /**
      * Test for `save()` method, using the `format` option with an invalid file
      *  format
      * @expectedException Cake\Network\Exception\InternalErrorException
@@ -714,33 +691,15 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
-     * Test for `save()` method, using the `target` option with a different
-     *  file formats (eg., from png to jpg)
-     * @test
-     */
-    public function testSaveWithTargetAndDifferentFormat()
-    {
-        //From png to jpg
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'from_png_to_jpg.jpg']);
-        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'from_png_to_jpg.jpg', $thumb);
-        $this->assertMime($thumb, 'image/jpeg');
-
-        //From jpeg to png
-        $thumb = (new ThumbCreator('400x400.jpeg'))->resize(200)->save(['target' => 'from_jpeg_to_png.png']);
-        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'from_jpeg_to_png.png', $thumb);
-        $this->assertMime($thumb, 'image/png');
-    }
-
-    /**
      * Test for `save()` method, using the `target` option with an invalid file
      *  format
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage Invalid `txt` format
      * @test
      */
-    public function testSaveWithTargetAndInvalidFormat()
+    public function testSaveWithInvalidTarget()
     {
-        (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'from_png_to_txt.txt']);
+        (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.txt']);
     }
 
     /**
