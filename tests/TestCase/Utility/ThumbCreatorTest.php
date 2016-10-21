@@ -71,11 +71,6 @@ class ThumbCreatorTest extends TestCase
         parent::tearDown();
 
         Plugin::unload('TestPlugin');
-
-        //Deletes all thumbnails
-        foreach (glob(Configure::read('Thumbs.target') . DS . '*') as $file) {
-            unlink($file);
-        }
     }
 
     /**
@@ -183,111 +178,5 @@ class ThumbCreatorTest extends TestCase
 
         $thumber = new ThumbCreator($file);
         $this->assertEquals($thumber->getPath(), $file);
-    }
-
-    /**
-     * Test for `save()` method, passing a no existing directory target
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Can't write the file `/tmp/noExistingDir/thumb.jpg`
-     * @test
-     */
-    public function testSaveNoExistingDir()
-    {
-        (new ThumbCreator('400x400.png'))->resize(200)
-            ->save(['target' => TMP . 'noExistingDir' . DS . 'thumb.jpg']);
-    }
-
-    /**
-     * Test for `save()` method. It tests the thumbnails is created only if it
-     *  does not exist
-     * @test
-     */
-    public function testSaveReturnsExistingThumb()
-    {
-        //Creates the thumbnail and gets the creation time
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
-        $time = filemtime($thumb);
-
-        //Tries to create again the same thumbnail. Now the creation time is the same
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
-        $this->assertEquals($time, filemtime($thumb));
-
-        //Deletes the thumbnail and wait 1 second
-        unlink($thumb);
-        sleep(1);
-
-        //Tries to create again the same thumbnail. Now the creation time is different
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
-        $this->assertNotEquals($time, filemtime($thumb));
-    }
-
-    /**
-     * Test for `save()` method, using the `format` option with an invalid file
-     *  format
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Invalid `txt` format
-     * @ŧest
-     */
-    public function testSaveWithInvalidFormat()
-    {
-        (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'txt']);
-    }
-
-    /**
-     * Test for `save()` method, using the `quality` option
-     * @ŧest
-     */
-    public function testSaveWithQuality()
-    {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
-        $this->assertRegExp(
-            sprintf('/^%s[a-z0-9]{32}\.jpg/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
-            $thumb
-        );
-        $this->assertMime($thumb, 'image/jpeg');
-    }
-
-    /**
-     * Test for `save()` method, using the `quality` option, equating images
-     * @group imageEquals
-     * @ŧest
-     */
-    public function testSaveWithQualityImageEquals()
-    {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
-        $this->assertImageFileEquals(Configure::read('Thumbs.comparingDir') . 'resize_w200_h200_quality_10.jpg', $thumb);
-    }
-
-    /**
-     * Test for `save()` method, using the `target` option
-     * @ŧest
-     */
-    public function testSaveWithTarget()
-    {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['target' => 'thumb.jpg']);
-        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'thumb.jpg', $thumb);
-        $this->assertMime($thumb, 'image/jpeg');
-    }
-
-    /**
-     * Test for `save()` method, using the `target` option with an invalid file
-     *  format
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Invalid `txt` format
-     * @test
-     */
-    public function testSaveWithInvalidTarget()
-    {
-        (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.txt']);
-    }
-
-    /**
-     * Test for `save()` method, without a valid method called before
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage No valid method called before the `save` method
-     */
-    public function testSaveWithoutCallbacks()
-    {
-        (new ThumbCreator('400x400.jpg'))->save();
     }
 }

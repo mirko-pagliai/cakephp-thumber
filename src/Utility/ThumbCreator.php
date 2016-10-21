@@ -322,6 +322,8 @@ class ThumbCreator
                 );
             }
 
+            $this->arguments[] = Configure::read('Thumbs.driver');
+
             $imageInstance = (new ImageManager([
                 'driver' => Configure::read('Thumbs.driver'),
             ]))->make($this->path);

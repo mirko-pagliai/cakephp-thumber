@@ -27,7 +27,7 @@ use Cake\Core\Configure;
 use Thumber\Test\TestCase\Utility\ThumbCreatorFormatsTest as BaseThumbCreatorFormatsTest;
 
 /**
- * ThumbCreatorFormatsTestWithGd class.
+ * ThumbCreatorFormatsTest class.
  *
  * These tests use the GD library.
  */
