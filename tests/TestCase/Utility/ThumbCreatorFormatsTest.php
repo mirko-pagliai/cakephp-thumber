@@ -57,7 +57,10 @@ class ThumbCreatorFormatsTest extends TestCase
             sprintf('/^%s[a-z0-9]{32}\.bmp/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
         );
-        $this->assertMime($thumb, 'image/x-ms-bmp');
+
+        if (version_compare(PHP_VERSION, '5.6', '>')) {
+            $this->assertMime($thumb, 'image/x-ms-bmp');
+        }
 
         //Using `format` option
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'bmp']);
@@ -65,12 +68,18 @@ class ThumbCreatorFormatsTest extends TestCase
             sprintf('/^%s[a-z0-9]{32}\.bmp/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
         );
-        $this->assertMime($thumb, 'image/x-ms-bmp');
+
+        if (version_compare(PHP_VERSION, '5.6', '>')) {
+            $this->assertMime($thumb, 'image/x-ms-bmp');
+        }
 
         //Using `target` option
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.bmp']);
         $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.bmp', $thumb);
-        $this->assertMime($thumb, 'image/x-ms-bmp');
+
+        if (version_compare(PHP_VERSION, '5.6', '>')) {
+            $this->assertMime($thumb, 'image/x-ms-bmp');
+        }
     }
 
     /**
@@ -211,7 +220,10 @@ class ThumbCreatorFormatsTest extends TestCase
             sprintf('/^%s[a-z0-9]{32}\.psd/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
         );
-        $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
+
+        if (version_compare(PHP_VERSION, '5.6', '>')) {
+            $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
+        }
 
         //Using `format` option
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'psd']);
@@ -219,12 +231,18 @@ class ThumbCreatorFormatsTest extends TestCase
             sprintf('/^%s[a-z0-9]{32}\.psd/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
         );
-        $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
+
+        if (version_compare(PHP_VERSION, '5.6', '>')) {
+            $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
+        }
 
         //Using `target` option
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.psd']);
         $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.psd', $thumb);
-        $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
+
+        if (version_compare(PHP_VERSION, '5.6', '>')) {
+            $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
+        }
     }
 
     /**
