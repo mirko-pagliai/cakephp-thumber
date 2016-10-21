@@ -96,6 +96,6 @@ abstract class TestCase extends CakeTestCase
     public static function assertMime($filename, $mime, $message = '')
     {
         self::assertFileExists($filename, $message);
-        self::assertEquals(mime_content_type($filename), $mime, $message);
+        self::assertEquals($mime, mime_content_type($filename), $message);
     }
 }

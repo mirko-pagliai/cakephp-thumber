@@ -97,10 +97,9 @@ Cache::config([
     ],
 ]);
 
-define('COMPARING_DIR', TESTS . DS . 'comparing_files' . DS);
-
 Configure::write('Thumbs.driver', 'imagick');
 Configure::write('Thumbs.target', TMP . 'thumbs');
+Configure::write('Thumbs.comparingDir', TESTS . DS . 'comparing_files' . DS . 'imagick' . DS);
 
 //@codingStandardsIgnoreStart
 @mkdir(Configure::read('Thumbs.target'));

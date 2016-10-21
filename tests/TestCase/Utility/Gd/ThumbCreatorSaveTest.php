@@ -20,28 +20,42 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace Thumber\Controller;
 
-use Cake\Controller\Controller;
+namespace Thumber\Test\TestCase\Utility\Gd;
+
 use Cake\Core\Configure;
+use Thumber\Test\TestCase\Utility\ThumbCreatorSaveTest as BaseThumbCreatorSaveTest;
 
 /**
- * Thumbs controller class
+ * ThumbCreatorSaveTest class.
+ *
+ * These tests use the GD library.
  */
-class ThumbsController extends Controller
+class ThumbCreatorSaveTest extends BaseThumbCreatorSaveTest
 {
     /**
-     * Renders a thumbnail
-     * @param string $basename Encoded thumbnail basename
-     * @return Cake\Network\Response|null
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
      */
-    public function thumb($basename)
+    public function setUp()
     {
-        $file = Configure::read('Thumbs.target') . DS . base64_decode($basename);
+        parent::setUp();
 
-        $this->response->file($file);
-        $this->response->type(mime_content_type($file));
+        Configure::write('Thumbs.driver', 'gd');
+        Configure::write('Thumbs.comparingDir', TESTS . DS . 'comparing_files' . DS . 'gd' . DS);
+    }
 
-        return $this->response;
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        Configure::write('Thumbs.driver', 'imagick');
+        Configure::write('Thumbs.comparingDir', TESTS . DS . 'comparing_files' . DS . 'imagick' . DS);
     }
 }

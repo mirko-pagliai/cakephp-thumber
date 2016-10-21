@@ -65,6 +65,12 @@ class ThumbCreator
     protected $path;
 
     /**
+     * Supported formats
+     * @var array
+     */
+    protected $supportedFormats = ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
+
+    /**
      * Construct.
      * It sets the file path and extension.
      *
@@ -97,6 +103,8 @@ class ThumbCreator
 
         if ($extension === 'jpeg') {
             return 'jpg';
+        } elseif ($extension === 'tif') {
+            return 'tiff';
         }
 
         return $extension;
@@ -273,6 +281,7 @@ class ThumbCreator
      * @uses $callbacks
      * @uses $extension
      * @uses $path
+     * @uses $supportedFormats
      */
     public function save(array $options = [])
     {
@@ -299,11 +308,21 @@ class ThumbCreator
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
-            if (!in_array($options['format'], ['gif', 'jpg', 'jpeg', 'png'])) {
+            //Checks for supported formats
+            if (!in_array($options['format'], $this->supportedFormats)) {
                 throw new InternalErrorException(
                     __d('thumber', 'Invalid `{0}` format', $options['format'])
                 );
             }
+
+            //Checks for formats supported by GD driver
+            if (Configure::read('Thumbs.driver') === 'gd' && !in_array($options['format'], ['gif', 'jpg', 'png'])) {
+                throw new InternalErrorException(
+                    __d('thumber', 'The {0} driver can\'t decode the `{1}` format', 'GD', $options['format'])
+                );
+            }
+
+            $this->arguments[] = Configure::read('Thumbs.driver');
 
             $imageInstance = (new ImageManager([
                 'driver' => Configure::read('Thumbs.driver'),

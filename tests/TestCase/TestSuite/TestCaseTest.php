@@ -23,6 +23,7 @@
 
 namespace Thumber\Test\TestCase\TestSuite;
 
+use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
 
 /**
@@ -36,7 +37,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertImageFileEquals()
     {
-        $original = COMPARING_DIR . 'resize_w200_h200.jpg';
+        $original = Configure::read('Thumbs.comparingDir') . 'resize_w200_h200.jpg';
         $copy = tempnam(sys_get_temp_dir(), $original);
 
         copy($original, $copy);
@@ -50,7 +51,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertImageSize()
     {
-        $file = COMPARING_DIR . 'resize_w200_h300_noAspectRatio.jpg';
+        $file = Configure::read('Thumbs.comparingDir') . 'resize_w200_h300_noAspectRatio.jpg';
 
         $this->assertImageSize($file, 200, 300);
         $this->assertImageSize(
