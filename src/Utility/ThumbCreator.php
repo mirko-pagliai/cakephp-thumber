@@ -308,9 +308,17 @@ class ThumbCreator
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
+            //Checks for supported formats
             if (!in_array($options['format'], $this->supportedFormats)) {
                 throw new InternalErrorException(
                     __d('thumber', 'Invalid `{0}` format', $options['format'])
+                );
+            }
+
+            //Checks for formats supported by GD driver
+            if (Configure::read('Thumbs.driver') === 'gd' && !in_array($options['format'], ['gif', 'jpg', 'png'])) {
+                throw new InternalErrorException(
+                    __d('thumber', 'The {0} driver can\'t decode the `{1}` format', 'GD', $options['format'])
                 );
             }
 

@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.0 branch
 ### 1.0.2
-* support for `bmp`, `ico`, `psd` and `tiff` formats.
+* support for `bmp`, `ico`, `psd` and `tiff` formats;
+* checks for formats supported by GD driver.
 
 ### 1.0.1
 * added `fit()` method for `ThumbCreator` and `ThumbHelper` classes;
