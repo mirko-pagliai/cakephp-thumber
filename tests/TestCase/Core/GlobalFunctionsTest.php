@@ -68,40 +68,29 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testThumbUrl()
     {
-        $path = 'mypath';
-        $this->assertEquals(
-            sprintf('http://localhost/thumb/%s', base64_encode(basename($path))),
-            thumbUrl($path)
-        );
+        if (!function_exists('getUrlFromPath')) {
+            function getUrlFromPath($path)
+            {
+                return sprintf('http://localhost/thumb/%s', base64_encode(basename($path)));
+            }
+        }
 
-        $path = 'mypath.ext';
-        $this->assertEquals(
-            sprintf('http://localhost/thumb/%s', base64_encode(basename($path))),
-            thumbUrl($path)
-        );
+        $path = 'mypath';
+        $this->assertEquals(getUrlFromPath($path), thumbUrl($path));
+
+        $path = 'mypath.gif';
+        $this->assertEquals(getUrlFromPath($path), thumbUrl($path));
 
         $path = 'dir/mypath';
-        $this->assertEquals(
-            sprintf('http://localhost/thumb/%s', base64_encode(basename($path))),
-            thumbUrl($path)
-        );
+        $this->assertEquals(getUrlFromPath($path), thumbUrl($path));
 
-        $path = 'dir/mypath.ext';
-        $this->assertEquals(
-            sprintf('http://localhost/thumb/%s', base64_encode(basename($path))),
-            thumbUrl($path)
-        );
+        $path = 'dir/mypath.gif';
+        $this->assertEquals(getUrlFromPath($path), thumbUrl($path));
 
         $path = '/dir/mypath';
-        $this->assertEquals(
-            sprintf('http://localhost/thumb/%s', base64_encode(basename($path))),
-            thumbUrl($path)
-        );
+        $this->assertEquals(getUrlFromPath($path), thumbUrl($path));
 
-        $path = '/dir/mypath.ext';
-        $this->assertEquals(
-            sprintf('http://localhost/thumb/%s', base64_encode(basename($path))),
-            thumbUrl($path)
-        );
+        $path = '/dir/mypath.gif';
+        $this->assertEquals(getUrlFromPath($path), thumbUrl($path));
     }
 }

@@ -73,6 +73,23 @@ class ThumbsControllerTest extends IntegrationTestCase
     }
 
     /**
+     * Test for `thumb()` method, with a bmp file
+     * @return void
+     * @test
+     */
+    public function testThumbWithBmp()
+    {
+        $file = '400x400.bmp';
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $url = $this->Thumb->resizeUrl($file, ['format' => 'bmp', 'width' => 200], ['fullBase' => false]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertContentType('image/x-ms-bmp');
+        $this->assertFileResponse($thumb);
+    }
+
+    /**
      * Test for `thumb()` method, with a gif file
      * @return void
      * @test
@@ -80,27 +97,29 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithGif()
     {
         $file = '400x400.gif';
-        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $url = $this->Thumb->resizeUrl($file, ['format' => 'gif', 'width' => 200], ['fullBase' => false]);
 
-        $this->get($this->Thumb->resizeUrl($file, ['width' => 200], ['fullBase' => false]));
+        $this->get($url);
         $this->assertResponseOk();
-        $this->assertContentType('image/jpeg');
+        $this->assertContentType('image/gif');
         $this->assertFileResponse($thumb);
     }
 
     /**
-     * Test for `thumb()` method, with a gif file saved as gif
+     * Test for `thumb()` method, with a ico file
      * @return void
      * @test
      */
-    public function testThumbWithGifSavedAsGif()
+    public function testThumbWithIco()
     {
-        $file = '400x400.gif';
-        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'gif']);
+        $file = '400x400.ico';
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $url = $this->Thumb->resizeUrl($file, ['format' => 'ico', 'width' => 200], ['fullBase' => false]);
 
-        $this->get($this->Thumb->resizeUrl($file, ['format' => 'gif', 'width' => 200], ['fullBase' => false]));
+        $this->get($url);
         $this->assertResponseOk();
-        $this->assertContentType('image/gif');
+        $this->assertContentType('image/x-icon');
         $this->assertFileResponse($thumb);
     }
 
@@ -112,9 +131,10 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithJpeg()
     {
         $file = '400x400.jpeg';
-        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $url = $this->Thumb->resizeUrl($file, ['format' => 'jpg', 'width' => 200], ['fullBase' => false]);
 
-        $this->get($this->Thumb->resizeUrl($file, ['width' => 200], ['fullBase' => false]));
+        $this->get($url);
         $this->assertResponseOk();
         $this->assertContentType('image/jpeg');
         $this->assertFileResponse($thumb);
@@ -128,9 +148,10 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithJpg()
     {
         $file = '400x400.jpg';
-        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $url = $this->Thumb->resizeUrl($file, ['format' => 'jpg', 'width' => 200], ['fullBase' => false]);
 
-        $this->get($this->Thumb->resizeUrl($file, ['width' => 200], ['fullBase' => false]));
+        $this->get($url);
         $this->assertResponseOk();
         $this->assertContentType('image/jpeg');
         $this->assertFileResponse($thumb);
@@ -144,27 +165,63 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumbWithPng()
     {
         $file = '400x400.png';
-        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'jpg']);
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $url = $this->Thumb->resizeUrl($file, ['format' => 'png', 'width' => 200], ['fullBase' => false]);
 
-        $this->get($this->Thumb->resizeUrl($file, ['width' => 200], ['fullBase' => false]));
+        $this->get($url);
         $this->assertResponseOk();
-        $this->assertContentType('image/jpeg');
+        $this->assertContentType('image/png');
         $this->assertFileResponse($thumb);
     }
 
     /**
-     * Test for `thumb()` method, with a png file saved as png
+     * Test for `thumb()` method, with a psd file
      * @return void
      * @test
      */
-    public function testThumbWithPngSavedAsPng()
+    public function testThumbWithPsd()
     {
-        $file = '400x400.png';
-        $thumb = (new ThumbCreator($file))->resize(200)->save(['format' => 'png']);
+        $file = '400x400.psd';
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $url = $this->Thumb->resizeUrl($file, ['format' => 'psd', 'width' => 200], ['fullBase' => false]);
 
-        $this->get($this->Thumb->resizeUrl($file, ['format' => 'png', 'width' => 200], ['fullBase' => false]));
+        $this->get($url);
         $this->assertResponseOk();
-        $this->assertContentType('image/png');
+        $this->assertContentType('image/vnd.adobe.photoshop');
+        $this->assertFileResponse($thumb);
+    }
+
+    /**
+     * Test for `thumb()` method, with a tif file
+     * @return void
+     * @test
+     */
+    public function testThumbWithTif()
+    {
+        $file = '400x400.tif';
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $url = $this->Thumb->resizeUrl($file, ['format' => 'tiff', 'width' => 200], ['fullBase' => false]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertContentType('image/tiff');
+        $this->assertFileResponse($thumb);
+    }
+
+    /**
+     * Test for `thumb()` method, with a tiff file
+     * @return void
+     * @test
+     */
+    public function testThumbWithTiff()
+    {
+        $file = '400x400.tiff';
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $url = $this->Thumb->resizeUrl($file, ['format' => 'tiff', 'width' => 200], ['fullBase' => false]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertContentType('image/tiff');
         $this->assertFileResponse($thumb);
     }
 }
