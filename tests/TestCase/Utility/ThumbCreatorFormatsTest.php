@@ -58,7 +58,7 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
 
-        if (version_compare(PHP_VERSION, '5.6', '>')) {
+        if (version_compare(PHP_VERSION, '7.0', '>')) {
             $this->assertMime($thumb, 'image/x-ms-bmp');
         }
 
@@ -69,7 +69,7 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
 
-        if (version_compare(PHP_VERSION, '5.6', '>')) {
+        if (version_compare(PHP_VERSION, '7.0', '>')) {
             $this->assertMime($thumb, 'image/x-ms-bmp');
         }
 
@@ -77,7 +77,7 @@ class ThumbCreatorFormatsTest extends TestCase
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.bmp']);
         $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.bmp', $thumb);
 
-        if (version_compare(PHP_VERSION, '5.6', '>')) {
+        if (version_compare(PHP_VERSION, '7.0', '>')) {
             $this->assertMime($thumb, 'image/x-ms-bmp');
         }
     }
@@ -221,7 +221,7 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
 
-        if (version_compare(PHP_VERSION, '5.6', '>')) {
+        if (version_compare(PHP_VERSION, '7.0', '>')) {
             $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
         }
 
@@ -232,7 +232,7 @@ class ThumbCreatorFormatsTest extends TestCase
             $thumb
         );
 
-        if (version_compare(PHP_VERSION, '5.6', '>')) {
+        if (version_compare(PHP_VERSION, '7.0', '>')) {
             $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
         }
 
@@ -240,7 +240,7 @@ class ThumbCreatorFormatsTest extends TestCase
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.psd']);
         $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.psd', $thumb);
 
-        if (version_compare(PHP_VERSION, '5.6', '>')) {
+        if (version_compare(PHP_VERSION, '7.0', '>')) {
             $this->assertMime($thumb, 'image/vnd.adobe.photoshop');
         }
     }

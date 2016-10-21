@@ -86,7 +86,7 @@ class ThumbsControllerTest extends IntegrationTestCase
         $this->get($url);
         $this->assertResponseOk();
 
-        if (version_compare(PHP_VERSION, '5.6', '>')) {
+        if (version_compare(PHP_VERSION, '7.0', '>')) {
             $this->assertContentType('image/x-ms-bmp');
         }
 
@@ -192,7 +192,7 @@ class ThumbsControllerTest extends IntegrationTestCase
         $this->get($url);
         $this->assertResponseOk();
 
-        if (version_compare(PHP_VERSION, '5.6', '>')) {
+        if (version_compare(PHP_VERSION, '7.0', '>')) {
             $this->assertContentType('image/vnd.adobe.photoshop');
         }
 
