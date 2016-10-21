@@ -255,7 +255,7 @@ class ThumbCreatorTest extends TestCase
     public function testSaveWithQualityImageEquals()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
-        $this->assertImageFileEquals(COMPARING_DIR . 'resize_w200_h200_quality_10.jpg', $thumb);
+        $this->assertImageFileEquals(Configure::read('Thumbs.comparingDir') . 'resize_w200_h200_quality_10.jpg', $thumb);
     }
 
     /**
