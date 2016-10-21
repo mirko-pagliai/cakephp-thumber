@@ -57,35 +57,19 @@ class ThumbCreatorFormatsTest extends TestCase
             sprintf('/^%s[a-z0-9]{32}\.bmp/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
         );
-
-        if (version_compare(PHP_VERSION, '5.5', '>')) {
-            $this->assertMime($thumb, 'image/x-ms-bmp');
-        } else {
-            $this->assertMime($thumb, 'application/octet-stream');
-        }
+        $this->assertMime($thumb, 'image/x-ms-bmp');
 
         //Using `format` option
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'bmp']);
         $this->assertRegExp(
             sprintf('/^%s[a-z0-9]{32}\.bmp/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
-        );
-
-        if (version_compare(PHP_VERSION, '5.5', '>')) {
-            $this->assertMime($thumb, 'image/x-ms-bmp');
-        } else {
-            $this->assertMime($thumb, 'application/octet-stream');
-        }
+        );$this->assertMime($thumb, 'image/x-ms-bmp');
 
         //Using `target` option
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.bmp']);
         $this->assertEquals(Configure::read('Thumbs.target') . DS . 'image.bmp', $thumb);
-
-        if (version_compare(PHP_VERSION, '5.5', '>')) {
-            $this->assertMime($thumb, 'image/x-ms-bmp');
-        } else {
-            $this->assertMime($thumb, 'application/octet-stream');
-        }
+        $this->assertMime($thumb, 'image/x-ms-bmp');
     }
 
     /**

@@ -85,12 +85,7 @@ class ThumbsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOk();
-
-        if (version_compare(PHP_VERSION, '5.5', '>')) {
-            $this->assertContentType('image/x-ms-bmp');
-        } else {
-            $this->assertContentType('application/octet-stream');
-        }
+        $this->assertContentType('image/x-ms-bmp');
 
         $this->assertFileResponse($thumb);
     }
