@@ -21,17 +21,17 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-namespace Thumber\Test\TestCase\Utility;
+namespace Thumber\Test\TestCase\Utility\Gd;
 
 use Cake\Core\Configure;
-use Thumber\Test\TestCase\Utility\ThumbCreatorFormatsTest;
+use Thumber\Test\TestCase\Utility\ThumbCreatorFormatsTest as BaseThumbCreatorFormatsTest;
 
 /**
  * ThumbCreatorFormatsTestWithGd class.
  *
  * These tests use the GD library.
  */
-class ThumbCreatorFormatsWithGdTest extends ThumbCreatorFormatsTest
+class ThumbCreatorFormatsTest extends BaseThumbCreatorFormatsTest
 {
     /**
      * Setup the test case, backup the static object values so they can be
@@ -61,7 +61,6 @@ class ThumbCreatorFormatsWithGdTest extends ThumbCreatorFormatsTest
      * Test for `save()` method, using a bmp file
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage The GD driver can't decode the `bmp` format
-     * @group gd
      * @test
      */
     public function testSaveBmp()
@@ -70,20 +69,9 @@ class ThumbCreatorFormatsWithGdTest extends ThumbCreatorFormatsTest
     }
 
     /**
-     * Test for `save()` method, using a gif file
-     * @group gd
-     * @test
-     */
-    public function testSaveGif()
-    {
-        parent::testSaveGif();
-    }
-
-    /**
      * Test for `save()` method, using a ico file
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage The GD driver can't decode the `ico` format
-     * @group gd
      * @test
      */
     public function testSaveIco()
@@ -92,40 +80,9 @@ class ThumbCreatorFormatsWithGdTest extends ThumbCreatorFormatsTest
     }
 
     /**
-     * Test for `save()` method, using jpeg file
-     * @group gd
-     * @test
-     */
-    public function testSaveJpeg()
-    {
-        parent::testSaveJpeg();
-    }
-
-    /**
-     * Test for `save()` method, using jpeg file
-     * @group gd
-     * @test
-     */
-    public function testSaveJpg()
-    {
-        parent::testSaveJpg();
-    }
-
-    /**
-     * Test for `save()` method, using a png file
-     * @group gd
-     * @test
-     */
-    public function testSavePng()
-    {
-        parent::testSavePng();
-    }
-
-    /**
      * Test for `save()` method, using a psd file
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage The GD driver can't decode the `psd` format
-     * @group gd
      * @test
      */
     public function testSavePsd()
@@ -137,7 +94,6 @@ class ThumbCreatorFormatsWithGdTest extends ThumbCreatorFormatsTest
      * Test for `save()` method, using a tif file
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage The GD driver can't decode the `tiff` format
-     * @group gd
      * @test
      */
     public function testSaveTif()
@@ -149,7 +105,6 @@ class ThumbCreatorFormatsWithGdTest extends ThumbCreatorFormatsTest
      * Test for `save()` method, using a tiff file
      * @expectedException Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage The GD driver can't decode the `tiff` format
-     * @group gd
      * @test
      */
     public function testSaveTiff()
