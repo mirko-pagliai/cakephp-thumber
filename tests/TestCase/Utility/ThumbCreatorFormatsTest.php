@@ -64,7 +64,8 @@ class ThumbCreatorFormatsTest extends TestCase
         $this->assertRegExp(
             sprintf('/^%s[a-z0-9]{32}\.bmp/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
             $thumb
-        );$this->assertMime($thumb, 'image/x-ms-bmp');
+        );
+        $this->assertMime($thumb, 'image/x-ms-bmp');
 
         //Using `target` option
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.bmp']);
