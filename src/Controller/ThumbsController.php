@@ -37,7 +37,10 @@ class ThumbsController extends Controller
      */
     public function thumb($basename)
     {
-        $this->response->file(Configure::read('Thumbs.target') . DS . base64_decode($basename));
+        $file = Configure::read('Thumbs.target') . DS . base64_decode($basename);
+
+        $this->response->file($file);
+        $this->response->type(mime_content_type($file));
 
         return $this->response;
     }
