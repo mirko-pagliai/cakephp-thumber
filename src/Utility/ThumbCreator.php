@@ -316,7 +316,9 @@ class ThumbCreator
             }
 
             //Checks for formats supported by GD driver
-            if (Configure::read('Thumbs.driver') === 'gd' && !in_array($options['format'], ['gif', 'jpg', 'png'])) {
+            if (Configure::read('Thumbs.driver') === 'gd' &&
+                !in_array($options['format'], ['gif', 'jpg', 'png'])
+            ) {
                 throw new InternalErrorException(
                     __d('thumber', 'The {0} driver can\'t decode the `{1}` format', 'GD', $options['format'])
                 );
@@ -324,9 +326,16 @@ class ThumbCreator
 
             $this->arguments[] = Configure::read('Thumbs.driver');
 
-            $imageInstance = (new ImageManager([
-                'driver' => Configure::read('Thumbs.driver'),
-            ]))->make($this->path);
+            //Tries to create the image instance
+            try {
+                $imageInstance = (new ImageManager([
+                    'driver' => Configure::read('Thumbs.driver'),
+                ]))->make($this->path);
+            } catch (\Intervention\Image\Exception\NotReadableException $e) {
+                throw new InternalErrorException(
+                    __d('thumber', 'Unable to read image from file `{0}`', str_replace(APP, null, $this->path))
+                );
+            }
 
             //Calls each callback
             foreach ($this->callbacks as $callback) {
@@ -336,12 +345,14 @@ class ThumbCreator
             $content = $imageInstance->encode($options['format'], $options['quality']);
             $imageInstance->destroy();
 
-            //@codingStandardsIgnoreLine
-            if (!@file_put_contents($target, $content)) {
+            if (!is_writable(dirname($target))) {
                 throw new InternalErrorException(
-                    __d('thumber', 'Can\'t write the file `{0}`', str_replace(APP, null, $target))
+                    __d('thumber', 'The directory `{0}` is not writeable', str_replace(APP, null, dirname($target)))
                 );
             }
+
+            //Writes
+            file_put_contents($target, $content);
         }
 
         //Resets arguments and callbacks

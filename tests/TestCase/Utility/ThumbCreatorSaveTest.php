@@ -47,6 +47,18 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, using an invalid file as input
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage File `config/bootstrap.php` not readable
+     * @ŧest
+     */
+    public function testSaveFromInvalidFile()
+    {
+        (new ThumbCreator(APP . 'config' . DS . 'bootstrap.php'))
+            ->resize(200)->save(['format' => 'jpg']);
+    }
+
+    /**
      * Test for `save()` method. It tests the thumbnails is created only if it
      *  does not exist
      * @test
@@ -134,7 +146,7 @@ class ThumbCreatorSaveTest extends TestCase
      * Test for `save()` method, using the `target` option with a no existing
      *  directory target
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Can't write the file `/tmp/noExistingDir/thumb.jpg`
+     * @expectedExceptionMessage The directory `/tmp/noExistingDir` is not writeable
      * @test
      */
     public function testSaveInvalidTargetDir()
