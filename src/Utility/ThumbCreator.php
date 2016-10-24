@@ -276,6 +276,7 @@ class ThumbCreator
      * You can use `format`, `quality` and `target` options.
      * @param array $options Options for saving
      * @return string Thumbnail path
+     * @throws InternalErrorException
      * @uses _getExtension()
      * @uses $arguments
      * @uses $callbacks

@@ -4,8 +4,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-10-13 19:31+0200\n"
+"POT-Creation-Date: 2016-10-24 18:54+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -13,19 +12,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:135
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:143
 msgid "File `{0}` not readable"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:159;195
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:167;206;247
 msgid "Missing parameters for the `{0}` method"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:234
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:291
 msgid "No valid method called before the `{0}` method"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:260
-msgid "Can't write the file `{0}`"
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:315
+msgid "Invalid `{0}` format"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:324
+msgid "The {0} driver can't decode the `{1}` format"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:337
+msgid "Unable to read image from file `{0}`"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:351
+msgid "The directory `{0}` is not writeable"
 msgstr ""
 
