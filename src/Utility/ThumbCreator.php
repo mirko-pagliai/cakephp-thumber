@@ -316,7 +316,9 @@ class ThumbCreator
             }
 
             //Checks for formats supported by GD driver
-            if (Configure::read('Thumbs.driver') === 'gd' && !in_array($options['format'], ['gif', 'jpg', 'png'])) {
+            if (Configure::read('Thumbs.driver') === 'gd' &&
+                !in_array($options['format'], ['gif', 'jpg', 'png'])
+            ) {
                 throw new InternalErrorException(
                     __d('thumber', 'The {0} driver can\'t decode the `{1}` format', 'GD', $options['format'])
                 );
@@ -324,9 +326,16 @@ class ThumbCreator
 
             $this->arguments[] = Configure::read('Thumbs.driver');
 
-            $imageInstance = (new ImageManager([
-                'driver' => Configure::read('Thumbs.driver'),
-            ]))->make($this->path);
+            //Tries to create the image instance
+            try {
+                $imageInstance = (new ImageManager([
+                    'driver' => Configure::read('Thumbs.driver'),
+                ]))->make($this->path);
+            } catch (\Intervention\Image\Exception\NotReadableException $e) {
+                throw new InternalErrorException(
+                    __d('thumber', 'Unable to read image from file `{0}`', str_replace(APP, null, $this->path))
+                );
+            }
 
             //Calls each callback
             foreach ($this->callbacks as $callback) {

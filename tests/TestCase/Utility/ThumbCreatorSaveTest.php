@@ -47,6 +47,18 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, using an invalid file as input
+     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage File `config/bootstrap.php` not readable
+     * @ŧest
+     */
+    public function testSaveFromInvalidFile()
+    {
+        (new ThumbCreator(APP . 'config' . DS . 'bootstrap.php'))
+            ->resize(200)->save(['format' => 'jpg']);
+    }
+
+    /**
      * Test for `save()` method. It tests the thumbnails is created only if it
      *  does not exist
      * @test
