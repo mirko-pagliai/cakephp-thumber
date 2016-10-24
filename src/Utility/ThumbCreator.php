@@ -345,12 +345,14 @@ class ThumbCreator
             $content = $imageInstance->encode($options['format'], $options['quality']);
             $imageInstance->destroy();
 
-            //@codingStandardsIgnoreLine
-            if (!@file_put_contents($target, $content)) {
+            if (!is_writable(dirname($target))) {
                 throw new InternalErrorException(
-                    __d('thumber', 'Can\'t write the file `{0}`', str_replace(APP, null, $target))
+                    __d('thumber', 'The directory `{0}` is not writeable', str_replace(APP, null, dirname($target)))
                 );
             }
+
+            //Writes
+            file_put_contents($target, $content);
         }
 
         //Resets arguments and callbacks
