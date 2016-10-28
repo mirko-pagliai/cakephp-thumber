@@ -158,20 +158,13 @@ class ThumbCreator
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#crop
-     * @throws InternalErrorException
      * @uses $arguments
      * @uses $callbacks
      */
     public function crop($width = null, $heigth = null, array $options = [])
     {
-        if (empty($width) && empty($heigth)) {
-            throw new InternalErrorException(
-                __d('thumber', 'Missing parameters for the `{0}` method', __FUNCTION__)
-            );
-        } else {
-            $heigth = empty($heigth) ? $width : $heigth;
-            $width = empty($width) ? $heigth : $width;
-        }
+        $heigth = empty($heigth) ? $width : $heigth;
+        $width = empty($width) ? $heigth : $width;
 
         //Sets default options
         $options += ['x' => null, 'y' => null];
@@ -196,20 +189,13 @@ class ThumbCreator
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#fit
-     * @throws InternalErrorException
      * @uses $arguments
      * @uses $callbacks
      */
     public function fit($width = null, $heigth = null, array $options = [])
     {
-        if (empty($width) && empty($heigth)) {
-            throw new InternalErrorException(
-                __d('thumber', 'Missing parameters for the `{0}` method', __FUNCTION__)
-            );
-        } else {
-            $heigth = empty($heigth) ? $width : $heigth;
-            $width = empty($width) ? $heigth : $width;
-        }
+        $heigth = empty($heigth) ? $width : $heigth;
+        $width = empty($width) ? $heigth : $width;
 
         //Sets default options
         $options += ['position' => 'center', 'upsize' => true];
@@ -236,18 +222,11 @@ class ThumbCreator
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#resize
-     * @throws InternalErrorException
      * @uses $arguments
      * @uses $callbacks
      */
     public function resize($width = null, $heigth = null, array $options = [])
     {
-        if (empty($width) && empty($heigth)) {
-            throw new InternalErrorException(
-                __d('thumber', 'Missing parameters for the `{0}` method', __FUNCTION__)
-            );
-        }
-
         //Sets default options
         $options += ['aspectRatio' => true, 'upsize' => true];
 
@@ -310,22 +289,6 @@ class ThumbCreator
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
-            //Checks for supported formats
-            if (!in_array($options['format'], $this->supportedFormats)) {
-                throw new InternalErrorException(
-                    __d('thumber', 'Invalid `{0}` format', $options['format'])
-                );
-            }
-
-            //Checks for formats supported by GD driver
-            if (Configure::read('Thumbs.driver') === 'gd' &&
-                !in_array($options['format'], ['gif', 'jpg', 'png'])
-            ) {
-                throw new InternalErrorException(
-                    __d('thumber', 'The {0} driver can\'t decode the `{1}` format', 'GD', $options['format'])
-                );
-            }
-
             //Tries to create the image instance
             try {
                 $imageInstance = (new ImageManager([

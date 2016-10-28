@@ -112,8 +112,8 @@ class ThumbCreatorOperationsTest extends TestCase
 
     /**
      * Test for `crop()` method, called without parameters
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Missing parameters for the `crop` method
+     * @expectedException Intervention\Image\Exception\InvalidArgumentException
+     * @expectedExceptionMessage Width and height of cutout needs to be defined
      * @test
      */
     public function testCropWithoutParameters()
@@ -237,8 +237,8 @@ class ThumbCreatorOperationsTest extends TestCase
 
     /**
      * Test for `fit()` method, called without parameters
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Missing parameters for the `fit` method
+     * @expectedException Intervention\Image\Exception\InvalidArgumentException
+     * @expectedExceptionMessage Width or height needs to be defined
      * @test
      */
     public function testFitWithoutParameters()
@@ -434,8 +434,8 @@ class ThumbCreatorOperationsTest extends TestCase
 
     /**
      * Test for `resize()` method, called without parameters
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Missing parameters for the `resize` method
+     * @expectedException Intervention\Image\Exception\InvalidArgumentException
+     * @expectedExceptionMessage Width or height needs to be defined
      * @test
      */
     public function testResizeWithoutParameters()
