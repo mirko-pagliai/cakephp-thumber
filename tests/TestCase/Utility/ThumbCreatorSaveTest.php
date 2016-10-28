@@ -109,6 +109,17 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, using the `quality` option with an invalid value
+     * @expectedException Intervention\Image\Exception\InvalidArgumentException
+     * @expectedExceptionMessage Quality must range from 0 to 100
+     * @ŧest
+     */
+    public function testSaveWithQualityInvalidValue()
+    {
+        (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 101]);
+    }
+
+    /**
      * Test for `save()` method, using the `quality` option, equating images
      * @group imageEquals
      * @ŧest
