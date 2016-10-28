@@ -38,7 +38,7 @@ class TestCaseTest extends TestCase
     public function testAssertImageFileEquals()
     {
         $original = Configure::read('Thumbs.comparingDir') . 'resize_w200_h200.jpg';
-        $copy = tempnam(sys_get_temp_dir(), $original);
+        $copy = tempnam(TMP, $original);
 
         copy($original, $copy);
 
@@ -67,7 +67,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertMime()
     {
-        $file = tempnam(sys_get_temp_dir(), 'test_file.txt');
+        $file = tempnam(TMP, 'test_file.txt');
 
         file_put_contents($file, 'this is a test file');
 

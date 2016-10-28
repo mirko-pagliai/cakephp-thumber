@@ -49,12 +49,12 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using an invalid file as input
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage File `config/bootstrap.php` not readable
+     * @expectedExceptionMessage Unable to read image from file `config/routes.php`
      * @ŧest
      */
     public function testSaveFromInvalidFile()
     {
-        (new ThumbCreator(APP . 'config' . DS . 'bootstrap.php'))
+        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))
             ->resize(200)->save(['format' => 'jpg']);
     }
 
