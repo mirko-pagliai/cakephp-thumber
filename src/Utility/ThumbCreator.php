@@ -296,10 +296,12 @@ class ThumbCreator
 
         $target = $options['target'];
 
-        if ($target) {
-            $options['format'] = $this->_getExtension($target);
-        } else {
+        if (empty($target)) {
+            $this->arguments[] = [Configure::read('Thumbs.driver'), $options['format'], $options['quality']];
+
             $target = md5(serialize($this->arguments)) . '.' . $options['format'];
+        } else {
+            $options['format'] = $this->_getExtension($target);
         }
 
         if (!Folder::isAbsolute($target)) {
@@ -323,8 +325,6 @@ class ThumbCreator
                     __d('thumber', 'The {0} driver can\'t decode the `{1}` format', 'GD', $options['format'])
                 );
             }
-
-            $this->arguments[] = Configure::read('Thumbs.driver');
 
             //Tries to create the image instance
             try {
