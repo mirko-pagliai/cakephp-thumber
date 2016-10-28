@@ -19,6 +19,7 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
  */
 namespace Thumber\View\Helper;
 
@@ -39,13 +40,18 @@ class ThumbHelper extends Helper
     public $helpers = ['Html'];
 
     /**
-     * Creates a cropped thumbnail and returns a formatted `img` element.
+     * Creates a thumbnail, cutting out a rectangular part of the image, and
+     *  returns a formatted `img` element.
      *
-     * You can use `width`, `height` and `format` parameters.
-     * @param string $path File path
+     * You can define optional coordinates to move the top-left corner of the
+     *  cutout to a certain position.
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url.
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#crop-and-cropurl
      * @uses cropUrl()
      */
     public function crop($path, array $params = [], array $options = [])
@@ -54,13 +60,18 @@ class ThumbHelper extends Helper
     }
 
     /**
-     * Creates a cropped thumbnail and returns its url.
+     * Creates a thumbnail, cutting out a rectangular part of the image, and
+     *  returns its url.
      *
-     * You can use `width`, `height` and `format` parameters.
-     * @param string $path File path
+     * You can define optional coordinates to move the top-left corner of the
+     *  cutout to a certain position.
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url.
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#crop-and-cropurl
      */
     public function cropUrl($path, array $params = [], array $options = [])
     {
@@ -78,11 +89,15 @@ class ThumbHelper extends Helper
      * Creates a thumbnail, combining cropping and resizing to format image in
      *   a smart way, and returns a formatted `img` element.
      *
-     * You can use `width`, `height` and `format` parameters.
-     * @param string $path File path
+     * This method will find the best fitting aspect ratio on the current image
+     *  automatically, cuts it out and resizes it to the given dimension.
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url.
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#fit-and-fiturl
      * @uses fitUrl()
      */
     public function fit($path, array $params = [], array $options = [])
@@ -94,10 +109,14 @@ class ThumbHelper extends Helper
      * Creates a thumbnail, combining cropping and resizing to format image in
      *   a smart way, and returns its url.
      *
-     * You can use `width`, `height` and `format` parameters.
-     * @param string $path File path
+     * This method will find the best fitting aspect ratio on the current image
+     *  automatically, cuts it out and resizes it to the given dimension.
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url.
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#fit-and-fiturl
      * @return string
      */
     public function fitUrl($path, array $params = [], array $options = [])
@@ -114,12 +133,13 @@ class ThumbHelper extends Helper
 
     /**
      * Creates a resized thumbnail and returns a formatted `img` element.
-     *
-     * You can use `width`, `height` and `format` parameters.
-     * @param string $path File path
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url.
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#resize-and-resizeurl
      * @uses resizeUrl()
      */
     public function resize($path, array $params = [], array $options = [])
@@ -129,12 +149,13 @@ class ThumbHelper extends Helper
 
     /**
      * Creates a resizes thumbnail and returns its url.
-     *
-     * You can use `width`, `height` and `format` parameters.
-     * @param string $path File path
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url.
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#resize-and-resizeurl
      */
     public function resizeUrl($path, array $params = [], array $options = [])
     {
