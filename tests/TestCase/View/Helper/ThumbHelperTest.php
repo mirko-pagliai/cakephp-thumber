@@ -97,7 +97,6 @@ class ThumbHelperTest extends TestCase
     /**
      * Test for `crop()` method, called without parameters
      * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Width and height of cutout needs to be defined
      * @test
      */
     public function testCropWithoutParameters()
@@ -139,7 +138,6 @@ class ThumbHelperTest extends TestCase
     /**
      * Test for `fit()` method, called without parameters
      * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Width or height needs to be defined
      * @test
      */
     public function testFitWithoutParameters()
@@ -181,7 +179,6 @@ class ThumbHelperTest extends TestCase
     /**
      * Test for `resize()` method, called without parameters
      * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Width or height needs to be defined
      * @test
      */
     public function testResizeWithoutParameters()

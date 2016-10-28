@@ -99,7 +99,6 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using the `quality` option with an invalid value
      * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Quality must range from 0 to 100
      * @ŧest
      */
     public function testSaveWithQualityInvalidValue()
@@ -133,7 +132,6 @@ class ThumbCreatorSaveTest extends TestCase
      * Test for `save()` method, using the `format` option with an invalid file
      *  format
      * @expectedException Intervention\Image\Exception\NotSupportedException
-     * @expectedExceptionMessage Encoding format (txt) is not supported
      * @ŧest
      */
     public function testSaveWithInvalidFormat()
@@ -145,7 +143,6 @@ class ThumbCreatorSaveTest extends TestCase
      * Test for `save()` method, using the `target` option with an invalid file
      *  format
      * @expectedException Intervention\Image\Exception\NotSupportedException
-     * @expectedExceptionMessage Encoding format (txt) is not supported
      * @test
      */
     public function testSaveInvalidTargetFormat()
