@@ -19,6 +19,7 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @see         https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility
  */
 namespace Thumber\Utility;
 
@@ -73,9 +74,9 @@ class ThumbCreator
     /**
      * Construct.
      * It sets the file path and extension.
-     *
-     * If the path is relative, it will be relative to  `APP/webroot/img`.
-     * @param string $path File path
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url
      * @return \Thumber\Utility\ThumbCreator
      * @uses _getExtension()
      * @uses _resolveFilePath()
@@ -148,14 +149,15 @@ class ThumbCreator
     }
 
     /**
-     * Crops the image (cuts out a rectangular part).
+     * Crops the image, cutting out a rectangular part of the image.
      *
-     * You can use `x` and `y` options to move the top-left corner of the
-     * cutout to a certain position.
-     * @param int $width Width of the thumbnail
-     * @param int $heigth Height of the thumbnail
+     * You can define optional coordinates to move the top-left corner of the
+     *  cutout to a certain position.
+     * @param int $width Required width
+     * @param int $heigth Required heigth
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#crop
      * @throws InternalErrorException
      * @uses $arguments
      * @uses $callbacks
@@ -186,15 +188,14 @@ class ThumbCreator
     }
 
     /**
-     * Combines cropping and resizing to format image in a smart way. It will
-     *  find the best fitting aspect ratio on the current image automatically,
-     *  cut it out and resize it to the given dimension.
-     *
-     * You can use `position` and `upsize` options.
-     * @param int $width Width of the thumbnail
-     * @param int $heigth Height of the thumbnail
+     * Resizes the image, combining cropping and resizing to format image in a
+     *  smart way. It will find the best fitting aspect ratio on the current
+     *  image automatically, cut it out and resize it to the given dimension
+     * @param int $width Required width
+     * @param int $heigth Required heigth
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#fit
      * @throws InternalErrorException
      * @uses $arguments
      * @uses $callbacks
@@ -229,13 +230,12 @@ class ThumbCreator
     }
 
     /**
-     * Resizes the image.
-     *
-     * You can use `aspectRatio` and `upsize` options.
-     * @param int $width Width of the thumbnail
-     * @param int $heigth Height of the thumbnail
+     * Resizes the image
+     * @param int $width Required width
+     * @param int $heigth Required heigth
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#resize
      * @throws InternalErrorException
      * @uses $arguments
      * @uses $callbacks
@@ -271,11 +271,10 @@ class ThumbCreator
     }
 
     /**
-     * Saves the thumbnail.
-     *
-     * You can use `format`, `quality` and `target` options.
+     * Saves the thumbnail and returns its path
      * @param array $options Options for saving
      * @return string Thumbnail path
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
      * @throws InternalErrorException
      * @uses _getExtension()
      * @uses $arguments

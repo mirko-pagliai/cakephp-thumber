@@ -47,7 +47,7 @@ class ThumbHelper extends Helper
      *  cutout to a certain position.
      * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url.
+     *  or a remote url
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
@@ -67,7 +67,7 @@ class ThumbHelper extends Helper
      *  cutout to a certain position.
      * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url.
+     *  or a remote url
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
@@ -93,7 +93,7 @@ class ThumbHelper extends Helper
      *  automatically, cuts it out and resizes it to the given dimension.
      * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url.
+     *  or a remote url
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
@@ -113,7 +113,7 @@ class ThumbHelper extends Helper
      *  automatically, cuts it out and resizes it to the given dimension.
      * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url.
+     *  or a remote url
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#fit-and-fiturl
@@ -135,7 +135,7 @@ class ThumbHelper extends Helper
      * Creates a resized thumbnail and returns a formatted `img` element.
      * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url.
+     *  or a remote url
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
@@ -151,7 +151,7 @@ class ThumbHelper extends Helper
      * Creates a resizes thumbnail and returns its url.
      * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url.
+     *  or a remote url
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
