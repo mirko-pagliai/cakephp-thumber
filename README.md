@@ -9,11 +9,19 @@ It uses [intervention/image](https://github.com/Intervention/image) and provides
 * `ThumbCreator`, an utility to create thumbnails;
 * `ThumbHelper`, a convenient helper that allows you to create thumbnails on the fly from your templates.
 
-Supported formats are [here](https://github.com/mirko-pagliai/cakephp-thumber/wiki/Supported-formats).
-
 ## Requirements
 *cakephp-thumber* requires GD Library (>=2.0) **or** Imagick PHP extension (>=6.5.7).  
 It's **highly preferable** to use Imagick, because It provides better performance and a greater number of supported formats.
+
+## Supported formats
+Supported formats may vary depending on the library used.
+
+|         | JPEG | PNG | GIF | TIF | BMP | ICO | PSD |
+|---------|------|-----|-----|-----|-----|-----|-----|
+| GD      | Yes  | Yes | Yes | No  | No  | No  | No  |
+| Imagick | Yes  | Yes | Yes | Yes | Yes | Yes | Yes |
+
+For more information about supported format, please refer to the [Intervention Image documentation](http://image.intervention.io/getting_started/formats).
 
 ## Installation
 You can install the plugin via composer:
