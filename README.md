@@ -9,10 +9,20 @@ It uses [intervention/image](https://github.com/Intervention/image) and provides
 * `ThumbCreator`, an utility to create thumbnails;
 * `ThumbHelper`, a convenient helper that allows you to create thumbnails on the fly from your templates.
 
-## Requirements
-*cakephp-thumber* requires GD Library (>=2.0) **or** Imagick PHP extension (>=6.5.7).
+***
 
-## Supported formats
+
+  * [Requirements and supported formats](#requirements-and-supported-formats)
+  * [Installation](#installation)
+  * [Configuration](#configuration)
+    + [Configuration values](#configuration-values)
+  * [How to use](#how-to-use)
+  * [Versioning](#versioning)
+
+## Requirements and supported formats
+*cakephp-thumber* requires GD Library (>=2.0) **or** Imagick PHP extension (>=6.5.7).  
+It's **highly preferable** to use Imagick, because It provides better performance and a greater number of supported formats.
+
 Supported formats may vary depending on the library used.
 
 |         | JPEG | PNG | GIF | TIF | BMP | ICO | PSD |
@@ -51,12 +61,16 @@ of your application.
 
     Configure::write('Thumbs.driver', 'imagick');
     
-Setting `Thumbs.driver`, you can choose which driver to use for the creation of thumbnails. Valid values are `imagick` or `gd`.  
-It's **highly preferable** to use Imagick, because It provides better performance and a greater number of supported formats.
+Setting `Thumbs.driver`, you can choose which driver to use for the creation of thumbnails. Valid values are `imagick` or `gd`.
 
     Configure::write('Thumbs.target', TMP . 'thumbs');
     
 Setting `Thumbs.target`, you can use another directory where the plugin will save thumbnails.
+
+## How to use
+See our wiki:
+* [How to use the helper](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper)
+* [How to uses the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility)
 
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward 

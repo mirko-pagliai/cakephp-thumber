@@ -83,18 +83,6 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
-     * Test for `save()` method, using the `format` option with an invalid file
-     *  format
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Invalid `txt` format
-     * @ŧest
-     */
-    public function testSaveWithInvalidFormat()
-    {
-        (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'txt']);
-    }
-
-    /**
      * Test for `save()` method, using the `quality` option
      * @ŧest
      */
@@ -106,6 +94,16 @@ class ThumbCreatorSaveTest extends TestCase
             $thumb
         );
         $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for `save()` method, using the `quality` option with an invalid value
+     * @expectedException Intervention\Image\Exception\InvalidArgumentException
+     * @ŧest
+     */
+    public function testSaveWithQualityInvalidValue()
+    {
+        (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 101]);
     }
 
     /**
@@ -131,10 +129,20 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, using the `format` option with an invalid file
+     *  format
+     * @expectedException Intervention\Image\Exception\NotSupportedException
+     * @ŧest
+     */
+    public function testSaveWithInvalidFormat()
+    {
+        (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'txt']);
+    }
+
+    /**
      * Test for `save()` method, using the `target` option with an invalid file
      *  format
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Invalid `txt` format
+     * @expectedException Intervention\Image\Exception\NotSupportedException
      * @test
      */
     public function testSaveInvalidTargetFormat()

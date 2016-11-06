@@ -23,7 +23,6 @@
 
 namespace Thumber\Test\TestCase\Utility;
 
-use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator as BaseThumbCreator;
