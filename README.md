@@ -1,4 +1,4 @@
-# Thumbs
+# Thumber
 
 [![Build Status](https://travis-ci.org/mirko-pagliai/cakephp-thumber.svg?branch=master)](https://travis-ci.org/mirko-pagliai/cakephp-thumber)
 [![Coverage Status](https://img.shields.io/codecov/c/github/mirko-pagliai/cakephp-thumber.svg?style=flat-square)](https://codecov.io/github/mirko-pagliai/cakephp-thumber)
