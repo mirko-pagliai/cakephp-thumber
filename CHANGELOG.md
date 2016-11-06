@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.3
+* little code fixes;
+* improved tests.
+
 ### 1.0.2
 * support for `bmp`, `ico`, `psd` and `tiff` formats;
 * checks for formats supported by GD driver.
