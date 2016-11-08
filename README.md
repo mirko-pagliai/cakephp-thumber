@@ -11,7 +11,6 @@ It uses [intervention/image](https://github.com/Intervention/image) and provides
 
 ***
 
-
   * [Requirements and supported formats](#requirements-and-supported-formats)
   * [Installation](#installation)
   * [Configuration](#configuration)
