@@ -57,7 +57,7 @@ If you want to use a different directory, read below.
 
 ## Configuration
 The plugin uses some configuration parameters and you can set them using the 
-`\Cake\Core\Configure` class. It does not matter if you do it *before* loading 
+`\Cake\Core\Configure` class. It does not matter if you do it **before** loading 
 the plugin.
 
 For example, you can do this at the bottom of the file `APP/config/app.php`
