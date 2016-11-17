@@ -82,5 +82,5 @@ See our wiki:
 
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward 
-compatibility, *Thumbs* will be maintained under the 
+compatibility, *Thumber* will be maintained under the 
 [Semantic Versioning guidelines](http://semver.org).
