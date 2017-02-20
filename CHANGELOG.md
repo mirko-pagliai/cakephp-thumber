@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.4
+* updated for CakePHP 3.4.
+
 ### 1.0.3
 * little code fixes;
 * improved tests.
