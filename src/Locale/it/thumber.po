@@ -1,10 +1,10 @@
-# LANGUAGE translation of cakephp-thumber plugin
-# Copyright 2016 Mirko Pagliai <mirko.pagliai@gmail.com>
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-10-24 18:54+0200\n"
-"PO-Revision-Date: 2016-10-24 18:58+0100\n"
+"POT-Creation-Date: 2017-03-17 21:00+0100\n"
+"PO-Revision-Date: 2017-03-17 21:01+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,31 +13,23 @@ msgstr ""
 "Language-Team: Italian <>\n"
 "Language: it\n"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:143
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Controller/ThumbsController.php:45
+msgid "File `{0}` doesn't exist"
+msgstr "Il file `{0}` non esiste"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:144
 msgid "File `{0}` not readable"
 msgstr "File `{0}` non leggibile"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:167;206;247
-msgid "Missing parameters for the `{0}` method"
-msgstr "Parametri mancanti per il metodo `{0}`"
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:291
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:269
 msgid "No valid method called before the `{0}` method"
 msgstr "Nessun metodo valido chiamato prima del metodo `{0}`"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:315
-msgid "Invalid `{0}` format"
-msgstr "Formato `{0}` invalido"
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:324
-msgid "The {0} driver can't decode the `{1}` format"
-msgstr "Il driver {0} non può decodificare il formato `{1}`"
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:337
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:299
 msgid "Unable to read image from file `{0}`"
 msgstr "Impossibile leggere l'immagine dal file `{0}`"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:351
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:313
 msgid "The directory `{0}` is not writeable"
 msgstr "La directory `{0}` non è scrivibile"
 
