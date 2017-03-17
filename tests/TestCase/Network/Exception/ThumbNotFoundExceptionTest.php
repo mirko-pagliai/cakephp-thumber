@@ -20,34 +20,38 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-namespace Thumber\Controller;
+namespace Thumber\Test\TestCase\Network\Exception;
 
-use Cake\Controller\Controller;
-use Cake\Core\Configure;
+use Cake\TestSuite\TestCase;
 use Thumber\Network\Exception\ThumbNotFoundException;
 
 /**
- * Thumbs controller class
+ * ThumbNotFoundExceptionTest class
  */
-class ThumbsController extends Controller
+class ThumbNotFoundExceptionTest extends TestCase
 {
     /**
-     * Renders a thumbnail
-     * @param string $basename Encoded thumbnail basename
-     * @return Cake\Network\Response|null
+     * Test for the exception
+     * @expectedException Thumber\Network\Exception\ThumbNotFoundException
+     * @expectedExceptionCode 404
+     * @test
      * @throws ThumbNotFoundException
      */
-    public function thumb($basename)
+    public function testException()
     {
-        $file = Configure::read('Thumbs.target') . DS . base64_decode($basename);
+        throw new ThumbNotFoundException;
+    }
 
-        if (!is_readable($file)) {
-            throw new ThumbNotFoundException(__d('thumber', 'File `{0}` doesn\'t exist', $file));
-        }
-
-        $this->response->file($file);
-        $this->response->type(mime_content_type($file));
-
-        return $this->response;
+    /**
+     * Test for the exception, with a message
+     * @expectedException Thumber\Network\Exception\ThumbNotFoundException
+     * @expectedExceptionCode 404
+     * @expectedExceptionMessage Thumb not found!
+     * @test
+     * @throws ThumbNotFoundException
+     */
+    public function testExceptionWithMessage()
+    {
+        throw new ThumbNotFoundException('Thumb not found!');
     }
 }
