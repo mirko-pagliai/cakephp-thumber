@@ -19,35 +19,16 @@
  * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @since       1.0.4
  */
-namespace Thumber\Controller;
+namespace Thumber\Network\Exception;
 
-use Cake\Controller\Controller;
-use Cake\Core\Configure;
-use Thumber\Network\Exception\ThumbNotFoundException;
+use Cake\Network\Exception\NotFoundException;
 
 /**
- * Thumbs controller class
+ * ThumbNotFoundException
  */
-class ThumbsController extends Controller
+class ThumbNotFoundException extends NotFoundException
 {
-    /**
-     * Renders a thumbnail
-     * @param string $basename Encoded thumbnail basename
-     * @return Cake\Network\Response|null
-     * @throws ThumbNotFoundException
-     */
-    public function thumb($basename)
-    {
-        $file = Configure::read('Thumbs.target') . DS . base64_decode($basename);
 
-        if (!is_readable($file)) {
-            throw new ThumbNotFoundException(__d('thumber', 'File `{0}` doesn\'t exist', $file));
-        }
-
-        $this->response->file($file);
-        $this->response->type(mime_content_type($file));
-
-        return $this->response;
-    }
 }

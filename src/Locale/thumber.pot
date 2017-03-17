@@ -1,10 +1,11 @@
-# LANGUAGE translation of cakephp-thumber plugin
-# Copyright 2016 Mirko Pagliai <mirko.pagliai@gmail.com>
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-10-24 18:54+0200\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2017-03-17 21:00+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -12,31 +13,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:143
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Controller/ThumbsController.php:45
+msgid "File `{0}` doesn't exist"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:144
 msgid "File `{0}` not readable"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:167;206;247
-msgid "Missing parameters for the `{0}` method"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:291
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:269
 msgid "No valid method called before the `{0}` method"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:315
-msgid "Invalid `{0}` format"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:324
-msgid "The {0} driver can't decode the `{1}` format"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:337
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:299
 msgid "Unable to read image from file `{0}`"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:351
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:313
 msgid "The directory `{0}` is not writeable"
 msgstr ""
 
