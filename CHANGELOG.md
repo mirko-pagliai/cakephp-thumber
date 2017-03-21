@@ -3,6 +3,7 @@
 ### 1.0.4
 * added `ThumbNotFoundException` class. This exception is thrown when you
     request a thumb that is not available;
+* methods that have been deprecated with CakePHP 3.4 have been replaced;
 * updated for CakePHP 3.4.
 
 ### 1.0.3
