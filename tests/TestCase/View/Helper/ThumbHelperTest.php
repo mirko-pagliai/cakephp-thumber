@@ -58,7 +58,7 @@ class ThumbHelperTest extends TestCase
         unset($this->Thumb, $this->View);
 
         //Deletes all thumbnails
-        foreach (glob(Configure::read('Thumbs.target') . DS . '*') as $file) {
+        foreach (glob(Configure::read(THUMBER . '.target') . DS . '*') as $file) {
             unlink($file);
         }
     }

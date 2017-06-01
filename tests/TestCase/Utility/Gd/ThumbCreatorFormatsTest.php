@@ -43,7 +43,7 @@ class ThumbCreatorFormatsTest extends BaseThumbCreatorFormatsTest
     {
         parent::setUp();
 
-        Configure::write('Thumbs.driver', 'gd');
+        Configure::write(THUMBER . '.driver', 'gd');
     }
 
     /**
@@ -54,7 +54,7 @@ class ThumbCreatorFormatsTest extends BaseThumbCreatorFormatsTest
     {
         parent::tearDown();
 
-        Configure::write('Thumbs.driver', 'imagick');
+        Configure::write(THUMBER . '.driver', 'imagick');
     }
 
     /**

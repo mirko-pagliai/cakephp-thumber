@@ -20,29 +20,33 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 use Cake\Core\Configure;
 
+//Sets the default Thumber name
+if (!defined('THUMBER')) {
+    define('THUMBER', 'Thumbs');
+}
+
 //Default thumbnails driver
-if (!Configure::check('Thumbs.driver')) {
-    Configure::write('Thumbs.driver', 'imagick');
+if (!Configure::check(THUMBER . '.driver')) {
+    Configure::write(THUMBER . '.driver', 'imagick');
 }
 
 //Default thumbnails directory
-if (!Configure::check('Thumbs.target')) {
-    Configure::write('Thumbs.target', TMP . 'thumbs');
+if (!Configure::check(THUMBER . '.target')) {
+    Configure::write(THUMBER . '.target', TMP . 'thumbs');
 }
 
-if (!in_array(Configure::read('Thumbs.driver'), ['imagick', 'gd'])) {
+if (!in_array(Configure::read(THUMBER . '.driver'), ['imagick', 'gd'])) {
     trigger_error(
-        sprintf('The driver %s is not supported', Configure::read('Thumbs.driver')),
+        sprintf('The driver %s is not supported', Configure::read(THUMBER . '.driver')),
         E_USER_ERROR
     );
 }
 
-if (!is_writeable(Configure::read('Thumbs.target'))) {
+if (!is_writeable(Configure::read(THUMBER . '.target'))) {
     trigger_error(
-        sprintf('Directory %s not writeable', Configure::read('Thumbs.target')),
+        sprintf('Directory %s not writeable', Configure::read(THUMBER . '.target')),
         E_USER_ERROR
     );
 }

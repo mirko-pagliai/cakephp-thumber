@@ -39,7 +39,7 @@ class ThumbsController extends Controller
      */
     public function thumb($basename)
     {
-        $file = Configure::read('Thumbs.target') . DS . base64_decode($basename);
+        $file = Configure::read(THUMBER . '.target') . DS . base64_decode($basename);
 
         if (!is_readable($file)) {
             throw new ThumbNotFoundException(__d('thumber', 'File `{0}` doesn\'t exist', $file));

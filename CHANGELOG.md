@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.5
+* added `THUMBER` constant.
+
 ### 1.0.4
 * added `ThumbNotFoundException` class. This exception is thrown when you
     request a thumb that is not available;

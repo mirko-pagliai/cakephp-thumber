@@ -276,7 +276,7 @@ class ThumbCreator
         $target = $options['target'];
 
         if (empty($target)) {
-            $this->arguments[] = [Configure::read('Thumbs.driver'), $options['format'], $options['quality']];
+            $this->arguments[] = [Configure::read(THUMBER . '.driver'), $options['format'], $options['quality']];
 
             $target = md5(serialize($this->arguments)) . '.' . $options['format'];
         } else {
@@ -284,7 +284,7 @@ class ThumbCreator
         }
 
         if (!Folder::isAbsolute($target)) {
-            $target = Configure::read('Thumbs.target') . DS . $target;
+            $target = Configure::read(THUMBER . '.target') . DS . $target;
         }
 
         //Creates the thumbnail, if this does not exist
@@ -292,7 +292,7 @@ class ThumbCreator
             //Tries to create the image instance
             try {
                 $imageInstance = (new ImageManager([
-                    'driver' => Configure::read('Thumbs.driver'),
+                    'driver' => Configure::read(THUMBER . '.driver'),
                 ]))->make($this->path);
             } catch (\Intervention\Image\Exception\NotReadableException $e) {
                 throw new InternalErrorException(

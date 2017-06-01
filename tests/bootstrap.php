@@ -97,12 +97,12 @@ Cache::setConfig([
     ],
 ]);
 
-Configure::write('Thumbs.driver', 'imagick');
-Configure::write('Thumbs.target', TMP . 'thumbs');
-Configure::write('Thumbs.comparingDir', TESTS . DS . 'comparing_files' . DS . 'imagick' . DS);
+Configure::write(THUMBER . '.driver', 'imagick');
+Configure::write(THUMBER . '.target', TMP . 'thumbs');
+Configure::write(THUMBER . '.comparingDir', TESTS . DS . 'comparing_files' . DS . 'imagick' . DS);
 
 //@codingStandardsIgnoreLine
-@mkdir(Configure::read('Thumbs.target'));
+@mkdir(Configure::read(THUMBER . '.target'));
 
 Plugin::load('Thumber', [
     'bootstrap' => true,

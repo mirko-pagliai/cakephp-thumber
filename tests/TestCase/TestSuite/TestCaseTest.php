@@ -37,7 +37,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertImageFileEquals()
     {
-        $original = Configure::read('Thumbs.comparingDir') . 'resize_w200_h200.jpg';
+        $original = Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg';
         $copy = tempnam(TMP, $original);
 
         copy($original, $copy);
@@ -51,7 +51,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertImageSize()
     {
-        $file = Configure::read('Thumbs.comparingDir') . 'resize_w200_h300_noAspectRatio.jpg';
+        $file = Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h300_noAspectRatio.jpg';
 
         $this->assertImageSize($file, 200, 300);
         $this->assertImageSize(

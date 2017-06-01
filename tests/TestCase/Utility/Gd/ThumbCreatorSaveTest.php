@@ -43,8 +43,8 @@ class ThumbCreatorSaveTest extends BaseThumbCreatorSaveTest
     {
         parent::setUp();
 
-        Configure::write('Thumbs.driver', 'gd');
-        Configure::write('Thumbs.comparingDir', TESTS . DS . 'comparing_files' . DS . 'gd' . DS);
+        Configure::write(THUMBER . '.driver', 'gd');
+        Configure::write(THUMBER . '.comparingDir', TESTS . DS . 'comparing_files' . DS . 'gd' . DS);
     }
 
     /**
@@ -55,7 +55,7 @@ class ThumbCreatorSaveTest extends BaseThumbCreatorSaveTest
     {
         parent::tearDown();
 
-        Configure::write('Thumbs.driver', 'imagick');
-        Configure::write('Thumbs.comparingDir', TESTS . DS . 'comparing_files' . DS . 'imagick' . DS);
+        Configure::write(THUMBER . '.driver', 'imagick');
+        Configure::write(THUMBER . '.comparingDir', TESTS . DS . 'comparing_files' . DS . 'imagick' . DS);
     }
 }
