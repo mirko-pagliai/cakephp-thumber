@@ -22,7 +22,7 @@
  */
 use Cake\Routing\Router;
 
-Router::plugin('Thumber', ['path' => '/thumb'], function ($routes) {
+Router::plugin(THUMBER, ['path' => '/thumb'], function ($routes) {
     $routes->connect(
         '/:basename',
         ['controller' => 'Thumbs', 'action' => 'thumb'],

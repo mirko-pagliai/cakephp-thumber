@@ -64,14 +64,14 @@ of your application.
 
 ### Configuration values
 
-    Configure::write('Thumbs.driver', 'imagick');
+    Configure::write('Thumber.driver', 'imagick');
     
-Setting `Thumbs.driver`, you can choose which driver to use for the creation of 
+Setting `Thumber.driver`, you can choose which driver to use for the creation of 
 thumbnails. Valid values are `imagick` or `gd`.
 
-    Configure::write('Thumbs.target', TMP . 'thumbs');
+    Configure::write('Thumber.target', TMP . 'thumbs');
     
-Setting `Thumbs.target`, you can use another directory where the plugin will 
+Setting `Thumber.target`, you can use another directory where the plugin will 
 save thumbnails.
 
 ## How to use
@@ -81,5 +81,5 @@ See our wiki:
 
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward 
-compatibility, *Thumbs* will be maintained under the 
+compatibility, *Thumber* will be maintained under the 
 [Semantic Versioning guidelines](http://semver.org).

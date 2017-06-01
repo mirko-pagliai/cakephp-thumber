@@ -97,7 +97,7 @@ Cache::setConfig([
     ],
 ]);
 
-Configure::write('Thumbs.comparingDir', TESTS . DS . 'comparing_files' . DS . 'imagick' . DS);
+Configure::write('Thumber.comparingDir', TESTS . DS . 'comparing_files' . DS . 'imagick' . DS);
 
 Plugin::load('Thumber', [
     'bootstrap' => true,
