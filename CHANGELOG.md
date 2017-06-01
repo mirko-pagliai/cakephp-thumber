@@ -2,6 +2,7 @@
 ## 1.0 branch
 ### 1.0.5
 * the target directory is created automatically, if it does not exist;
+* added `rtr()` global function;
 * added `THUMBER` constant.
 
 ### 1.0.4

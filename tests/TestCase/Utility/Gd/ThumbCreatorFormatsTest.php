@@ -60,7 +60,7 @@ class ThumbCreatorFormatsTest extends BaseThumbCreatorFormatsTest
     /**
      * Test for `save()` method, using a bmp file
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Unable to read image from file `webroot/img/400x400.bmp`
+     * @expectedExceptionMessage Unable to read image from file `tests/test_app/webroot/img/400x400.bmp`
      * @test
      */
     public function testSaveBmp()
@@ -71,7 +71,7 @@ class ThumbCreatorFormatsTest extends BaseThumbCreatorFormatsTest
     /**
      * Test for `save()` method, using a ico file
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Unable to read image from file `webroot/img/400x400.ico`
+     * @expectedExceptionMessage Unable to read image from file `tests/test_app/webroot/img/400x400.ico`
      * @test
      */
     public function testSaveIco()
@@ -82,7 +82,7 @@ class ThumbCreatorFormatsTest extends BaseThumbCreatorFormatsTest
     /**
      * Test for `save()` method, using a psd file
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Unable to read image from file `webroot/img/400x400.psd`
+     * @expectedExceptionMessage Unable to read image from file `tests/test_app/webroot/img/400x400.psd`
      * @test
      */
     public function testSavePsd()
@@ -93,7 +93,7 @@ class ThumbCreatorFormatsTest extends BaseThumbCreatorFormatsTest
     /**
      * Test for `save()` method, using a tif file
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Unable to read image from file `webroot/img/400x400.tif`
+     * @expectedExceptionMessage Unable to read image from file `tests/test_app/webroot/img/400x400.tif`
      * @test
      */
     public function testSaveTif()
@@ -104,7 +104,7 @@ class ThumbCreatorFormatsTest extends BaseThumbCreatorFormatsTest
     /**
      * Test for `save()` method, using a tiff file
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Unable to read image from file `webroot/img/400x400.tiff`
+     * @expectedExceptionMessage Unable to read image from file `tests/test_app/webroot/img/400x400.tiff`
      * @test
      */
     public function testSaveTiff()

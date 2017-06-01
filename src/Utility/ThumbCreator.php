@@ -140,7 +140,7 @@ class ThumbCreator
 
         //Checks if is readable
         if (!is_readable($path)) {
-            throw new InternalErrorException(__d('thumber', 'File `{0}` not readable', str_replace(APP, null, $path)));
+            throw new InternalErrorException(__d('thumber', 'File `{0}` not readable', rtr($path)));
         }
 
         return $path;
@@ -291,7 +291,7 @@ class ThumbCreator
                     'driver' => Configure::read(THUMBER . '.driver'),
                 ]))->make($this->path);
             } catch (\Intervention\Image\Exception\NotReadableException $e) {
-                throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', str_replace(APP, null, $this->path)));
+                throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', rtr($this->path)));
             }
 
             //Calls each callback
@@ -303,7 +303,7 @@ class ThumbCreator
             $imageInstance->destroy();
 
             if (!is_writable(dirname($target))) {
-                throw new InternalErrorException(__d('thumber', 'The directory `{0}` is not writeable', str_replace(APP, null, dirname($target))));
+                throw new InternalErrorException(__d('thumber', 'The directory `{0}` is not writeable', rtr(dirname($target))));
             }
 
             //Writes
