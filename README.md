@@ -62,16 +62,18 @@ The plugin uses some configuration parameters and you can set them using the
 For example, you can do this at the bottom of the file `APP/config/app.php`
 of your application.
 
+**Note**: up to the *1.0.4* version, the configuration parameters had the `Thumbs` name as a prefix. Starting with the *1.1.0* version, they have the plugin name (`Thumber`) as a prefix.
+
 ### Configuration values
 
-    Configure::write('Thumbs.driver', 'imagick');
+    Configure::write('Thumber.driver', 'imagick');
     
-Setting `Thumbs.driver`, you can choose which driver to use for the creation of 
+Setting `Thumber.driver`, you can choose which driver to use for the creation of 
 thumbnails. Valid values are `imagick` or `gd`.
 
-    Configure::write('Thumbs.target', TMP . 'thumbs');
+    Configure::write('Thumber.target', TMP . 'thumbs');
     
-Setting `Thumbs.target`, you can use another directory where the plugin will 
+Setting `Thumber.target`, you can use another directory where the plugin will 
 save thumbnails.
 
 ## How to use

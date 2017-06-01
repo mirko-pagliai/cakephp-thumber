@@ -24,7 +24,7 @@ use Cake\Core\Configure;
 
 //Sets the default Thumber name
 if (!defined('THUMBER')) {
-    define('THUMBER', 'Thumbs');
+    define('THUMBER', 'Thumber');
 }
 
 //Default thumbnails driver

@@ -1,10 +1,13 @@
 # 1.x branch
-## 1.0 branch
-### 1.0.5
+## 1.1 branch
+# 1.1.0
+* configuration parameters have the name of the plugin (`Thumber`) as prefix. So
+    now they are `Thumber.driver` and `Thumber.target`;
 * the target directory is created automatically, if it does not exist;
 * added `rtr()` global function;
 * added `THUMBER` constant.
 
+## 1.0 branch
 ### 1.0.4
 * added `ThumbNotFoundException` class. This exception is thrown when you
     request a thumb that is not available;
