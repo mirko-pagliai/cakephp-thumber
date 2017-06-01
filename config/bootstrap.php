@@ -20,29 +20,38 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
 use Cake\Core\Configure;
 
+//Sets the default Thumber name
+if (!defined('THUMBER')) {
+    define('THUMBER', 'Thumbs');
+}
+
 //Default thumbnails driver
-if (!Configure::check('Thumbs.driver')) {
-    Configure::write('Thumbs.driver', 'imagick');
+if (!Configure::check(THUMBER . '.driver')) {
+    Configure::write(THUMBER . '.driver', 'imagick');
 }
 
 //Default thumbnails directory
-if (!Configure::check('Thumbs.target')) {
-    Configure::write('Thumbs.target', TMP . 'thumbs');
+if (!Configure::check(THUMBER . '.target')) {
+    Configure::write(THUMBER . '.target', TMP . 'thumbs');
 }
 
-if (!in_array(Configure::read('Thumbs.driver'), ['imagick', 'gd'])) {
-    trigger_error(
-        sprintf('The driver %s is not supported', Configure::read('Thumbs.driver')),
-        E_USER_ERROR
-    );
+//Checks for driver
+$driver = Configure::read(THUMBER . '.driver');
+
+if (!in_array($driver, ['imagick', 'gd'])) {
+    trigger_error(sprintf('The driver %s is not supported', $driver), E_USER_ERROR);
 }
 
-if (!is_writeable(Configure::read('Thumbs.target'))) {
-    trigger_error(
-        sprintf('Directory %s not writeable', Configure::read('Thumbs.target')),
-        E_USER_ERROR
-    );
+//Checks for target directory
+$target = Configure::read(THUMBER . '.target');
+
+if (!file_exists($target)) {
+    //@codingStandardsIgnoreLine
+    @mkdir($target, 0777, true);
+}
+
+if (!is_writeable($target)) {
+    trigger_error(sprintf('Directory %s not writeable', $target), E_USER_ERROR);
 }

@@ -140,9 +140,7 @@ class ThumbCreator
 
         //Checks if is readable
         if (!is_readable($path)) {
-            throw new InternalErrorException(
-                __d('thumber', 'File `{0}` not readable', str_replace(APP, null, $path))
-            );
+            throw new InternalErrorException(__d('thumber', 'File `{0}` not readable', rtr($path)));
         }
 
         return $path;
@@ -265,9 +263,7 @@ class ThumbCreator
     public function save(array $options = [])
     {
         if (empty($this->callbacks)) {
-            throw new InternalErrorException(
-                __d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__)
-            );
+            throw new InternalErrorException(__d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__));
         }
 
         //Sets default options
@@ -276,7 +272,7 @@ class ThumbCreator
         $target = $options['target'];
 
         if (empty($target)) {
-            $this->arguments[] = [Configure::read('Thumbs.driver'), $options['format'], $options['quality']];
+            $this->arguments[] = [Configure::read(THUMBER . '.driver'), $options['format'], $options['quality']];
 
             $target = md5(serialize($this->arguments)) . '.' . $options['format'];
         } else {
@@ -284,7 +280,7 @@ class ThumbCreator
         }
 
         if (!Folder::isAbsolute($target)) {
-            $target = Configure::read('Thumbs.target') . DS . $target;
+            $target = Configure::read(THUMBER . '.target') . DS . $target;
         }
 
         //Creates the thumbnail, if this does not exist
@@ -292,12 +288,10 @@ class ThumbCreator
             //Tries to create the image instance
             try {
                 $imageInstance = (new ImageManager([
-                    'driver' => Configure::read('Thumbs.driver'),
+                    'driver' => Configure::read(THUMBER . '.driver'),
                 ]))->make($this->path);
             } catch (\Intervention\Image\Exception\NotReadableException $e) {
-                throw new InternalErrorException(
-                    __d('thumber', 'Unable to read image from file `{0}`', str_replace(APP, null, $this->path))
-                );
+                throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', rtr($this->path)));
             }
 
             //Calls each callback
@@ -309,9 +303,7 @@ class ThumbCreator
             $imageInstance->destroy();
 
             if (!is_writable(dirname($target))) {
-                throw new InternalErrorException(
-                    __d('thumber', 'The directory `{0}` is not writeable', str_replace(APP, null, dirname($target)))
-                );
+                throw new InternalErrorException(__d('thumber', 'The directory `{0}` is not writeable', rtr(dirname($target))));
             }
 
             //Writes

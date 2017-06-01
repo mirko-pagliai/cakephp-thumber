@@ -20,7 +20,7 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-
+use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
 
 if (!function_exists('isUrl')) {
@@ -31,10 +31,19 @@ if (!function_exists('isUrl')) {
      */
     function isUrl($url)
     {
-        return (bool)preg_match(
-            '/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i',
-            $url
-        );
+        return (bool)preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $url);
+    }
+}
+
+if (!function_exists('rtr')) {
+    /**
+     * Returns the relative path (to the APP root) of an absolute path
+     * @param string $path Absolute path
+     * @return string Relativa path
+     */
+    function rtr($path)
+    {
+        return preg_replace(sprintf('/^%s/', preg_quote(Folder::slashTerm(ROOT), DS)), null, $path);
     }
 }
 

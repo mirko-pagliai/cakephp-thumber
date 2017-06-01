@@ -41,7 +41,7 @@ class ThumbCreatorSaveTest extends TestCase
         parent::tearDown();
 
         //Deletes all thumbnails
-        foreach (glob(Configure::read('Thumbs.target') . DS . '*') as $file) {
+        foreach (glob(Configure::read(THUMBER . '.target') . DS . '*') as $file) {
             unlink($file);
         }
     }
@@ -49,7 +49,7 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using an invalid file as input
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Unable to read image from file `config/routes.php`
+     * @expectedExceptionMessage Unable to read image from file `tests/test_app/config/routes.php`
      * @ŧest
      */
     public function testSaveFromInvalidFile()
@@ -90,7 +90,7 @@ class ThumbCreatorSaveTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
         $this->assertRegExp(
-            sprintf('/^%s[a-z0-9]{32}\.jpg/', preg_quote(Configure::read('Thumbs.target') . DS, '/')),
+            sprintf('/^%s[a-z0-9]{32}\.jpg/', preg_quote(Configure::read(THUMBER . '.target') . DS, '/')),
             $thumb
         );
         $this->assertMime($thumb, 'image/jpeg');
@@ -114,7 +114,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithQualityImageEquals()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
-        $this->assertImageFileEquals(Configure::read('Thumbs.comparingDir') . 'resize_w200_h200_quality_10.jpg', $thumb);
+        $this->assertImageFileEquals(Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200_quality_10.jpg', $thumb);
     }
 
     /**
@@ -124,7 +124,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithTarget()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['target' => 'thumb.jpg']);
-        $this->assertEquals(Configure::read('Thumbs.target') . DS . 'thumb.jpg', $thumb);
+        $this->assertEquals(Configure::read(THUMBER . '.target') . DS . 'thumb.jpg', $thumb);
         $this->assertMime($thumb, 'image/jpeg');
     }
 
