@@ -196,7 +196,7 @@ class ThumbCreator
 
         //Adds the callback
         $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
-            return $imageInstance->fit($width, $heigth, function ($constraint) use ($options) {
+            return $imageInstance->fit($width, $heigth, function (Constraint $constraint) use ($options) {
                 if ($options['upsize']) {
                     $constraint->upsize();
                 }
