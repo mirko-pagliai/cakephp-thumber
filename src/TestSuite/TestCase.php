@@ -17,6 +17,7 @@ use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Imagick;
 use Reflection\ReflectionTrait;
+use Thumber\ThumbTrait;
 
 /**
  * Thumber TestCase class
@@ -24,6 +25,7 @@ use Reflection\ReflectionTrait;
 abstract class TestCase extends CakeTestCase
 {
     use ReflectionTrait;
+    use ThumbTrait;
 
     /**
      * Teardown any static object changes and restore them
@@ -33,7 +35,7 @@ abstract class TestCase extends CakeTestCase
     {
         parent::tearDown();
 
-        foreach (glob(Configure::read(THUMBER . '.target') . DS . '*') as $file) {
+        foreach (glob($this->getPath('*')) as $file) {
             //@codingStandardsIgnoreLine
             unlink($file);
         }
@@ -141,11 +143,11 @@ abstract class TestCase extends CakeTestCase
      * @return void
      * @since 1.1.1
      */
-    public static function assertThumbPath($path, $message = '')
+    public function assertThumbPath($path, $message = '')
     {
         $regex = sprintf(
             '/^%s[a-z0-9]{32}\.(%s)/',
-            preg_quote(Configure::read(THUMBER . '.target') . DS, '/'),
+            preg_quote($this->getPath() . DS, '/'),
             implode('|', ['bmp', 'gif', 'jpg', 'ico', 'png', 'psd', 'tiff'])
         );
         self::assertRegExp($regex, $path, $message);

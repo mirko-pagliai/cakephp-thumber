@@ -4,7 +4,9 @@
 * fixed bug when using similar format name, , as `jpeg` or `tif`;
 * added `TestCase::assertFileExtension()` and `TestCase::assertThumbPath()`
     methods;
+* added `ThumbTrait`;
 * added `Thumber\TestSuite\IntegrationTestCase` class;
+* removed `thumbUrl()` global function. Use instead `ThumbTrait::getUrl()`;
 * significantly improved and simplified all tests;
 * the MIT license has been applied.
 

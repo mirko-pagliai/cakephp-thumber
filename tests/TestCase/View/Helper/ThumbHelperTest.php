@@ -12,9 +12,9 @@
  */
 namespace Thumber\Test\TestCase\View\Helper;
 
-use Cake\Core\Configure;
 use Cake\View\View;
 use Thumber\TestSuite\TestCase;
+use Thumber\ThumbTrait;
 use Thumber\View\Helper\ThumbHelper;
 
 /**
@@ -22,6 +22,8 @@ use Thumber\View\Helper\ThumbHelper;
  */
 class ThumbHelperTest extends TestCase
 {
+    use ThumbTrait;
+
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -32,24 +34,7 @@ class ThumbHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->View = new View();
-        $this->Thumb = new ThumbHelper($this->View);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->Thumb, $this->View);
-
-        //Deletes all thumbnails
-        foreach (glob(Configure::read(THUMBER . '.target') . DS . '*') as $file) {
-            unlink($file);
-        }
+        $this->Thumb = new ThumbHelper(new View);
     }
 
     /**

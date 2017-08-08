@@ -11,7 +11,6 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 use Cake\Filesystem\Folder;
-use Cake\Routing\Router;
 
 if (!function_exists('isUrl')) {
     /**
@@ -34,18 +33,5 @@ if (!function_exists('rtr')) {
     function rtr($path)
     {
         return preg_replace(sprintf('/^%s/', preg_quote(Folder::slashTerm(ROOT), DS)), null, $path);
-    }
-}
-
-if (!function_exists('thumbUrl')) {
-    /**
-     * Returns the url for a thumbnail
-     * @param string $path Thumbnail path
-     * @param bool $full If `true`, the full base URL will be prepended to the result
-     * @return string
-     */
-    function thumbUrl($path, $full = true)
-    {
-        return Router::url(['_name' => 'thumb', base64_encode(basename($path))], $full);
     }
 }

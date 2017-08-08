@@ -14,6 +14,7 @@ namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
+use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -21,6 +22,8 @@ use Thumber\Utility\ThumbCreator;
  */
 class ThumbCreatorSaveTest extends TestCase
 {
+    use ThumbTrait;
+
     /**
      * Test for `save()` method
      * @test
@@ -53,7 +56,7 @@ class ThumbCreatorSaveTest extends TestCase
 
             //Using `target` option
             $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.' . $extension]);
-            $this->assertEquals(Configure::read(THUMBER . '.target') . DS . 'image.' . $extension, $thumb);
+            $this->assertEquals($this->getPath('image.' . $extension), $thumb);
             $this->assertMime($thumb, $expectedMimetype);
         }
     }
@@ -133,7 +136,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithTarget()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['target' => 'thumb.jpg']);
-        $this->assertEquals(Configure::read(THUMBER . '.target') . DS . 'thumb.jpg', $thumb);
+        $this->assertEquals($this->getPath('thumb.jpg'), $thumb);
         $this->assertMime($thumb, 'image/jpeg');
     }
 

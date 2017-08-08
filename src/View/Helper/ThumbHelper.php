@@ -14,6 +14,7 @@
 namespace Thumber\View\Helper;
 
 use Cake\View\Helper;
+use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -23,6 +24,8 @@ use Thumber\Utility\ThumbCreator;
  */
 class ThumbHelper extends Helper
 {
+    use ThumbTrait;
+
     /**
      * Helpers
      * @var array
@@ -72,7 +75,7 @@ class ThumbHelper extends Helper
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->crop($params['width'], $params['height'])->save($params);
 
-        return thumbUrl($thumb, $options['fullBase']);
+        return $this->getUrl($thumb, $options['fullBase']);
     }
 
     /**
@@ -118,7 +121,7 @@ class ThumbHelper extends Helper
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->fit($params['width'], $params['height'])->save($params);
 
-        return thumbUrl($thumb, $options['fullBase']);
+        return $this->getUrl($thumb, $options['fullBase']);
     }
 
     /**
@@ -156,6 +159,6 @@ class ThumbHelper extends Helper
         //Creates the thumbnail
         $thumb = (new ThumbCreator($path))->resize($params['width'], $params['height'])->save($params);
 
-        return thumbUrl($thumb, $options['fullBase']);
+        return $this->getUrl($thumb, $options['fullBase']);
     }
 }

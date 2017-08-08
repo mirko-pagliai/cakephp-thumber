@@ -15,12 +15,15 @@ namespace Thumber\TestSuite;
 
 use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
+use Thumber\ThumbTrait;
 
 /**
  * IntegrationTestCaseTest class
  */
 abstract class IntegrationTestCase extends CakeIntegrationTestCase
 {
+    use ThumbTrait;
+
     /**
      * Teardown any static object changes and restore them
      * @return void
@@ -29,7 +32,7 @@ abstract class IntegrationTestCase extends CakeIntegrationTestCase
     {
         parent::tearDown();
 
-        foreach (glob(Configure::read(THUMBER . '.target') . DS . '*') as $file) {
+        foreach (glob($this->getPath('*')) as $file) {
             //@codingStandardsIgnoreLine
             unlink($file);
         }

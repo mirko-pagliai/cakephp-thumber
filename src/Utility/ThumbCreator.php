@@ -21,6 +21,7 @@ use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
+use Thumber\ThumbTrait;
 
 /**
  * Utility to create a thumb.
@@ -30,6 +31,8 @@ use Intervention\Image\ImageManager;
  */
 class ThumbCreator
 {
+    use ThumbTrait;
+
     /**
      * Arguments that will be used to generate the name of the thumbnail.
      *
@@ -283,7 +286,7 @@ class ThumbCreator
         }
 
         if (!Folder::isAbsolute($target)) {
-            $target = Configure::read(THUMBER . '.target') . DS . $target;
+            $target = $this->getPath($target);
         }
 
         //Creates the thumbnail, if this does not exist

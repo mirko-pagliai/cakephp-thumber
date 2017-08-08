@@ -13,14 +13,16 @@
 namespace Thumber\Controller;
 
 use Cake\Controller\Controller;
-use Cake\Core\Configure;
 use Thumber\Network\Exception\ThumbNotFoundException;
+use Thumber\ThumbTrait;
 
 /**
  * Thumbs controller class
  */
 class ThumbsController extends Controller
 {
+    use ThumbTrait;
+
     /**
      * Renders a thumbnail
      * @param string $basename Encoded thumbnail basename
@@ -29,7 +31,7 @@ class ThumbsController extends Controller
      */
     public function thumb($basename)
     {
-        $file = Configure::read(THUMBER . '.target') . DS . base64_decode($basename);
+        $file = $this->getPath(base64_decode($basename));
 
         if (!is_readable($file)) {
             throw new ThumbNotFoundException(__d('thumber', 'File `{0}` doesn\'t exist', $file));
