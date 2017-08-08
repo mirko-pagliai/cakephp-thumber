@@ -47,12 +47,6 @@ class ThumbCreator
     protected $callbacks = [];
 
     /**
-     * File extension
-     * @var string
-     */
-    protected $extension;
-
-    /**
      * File path
      * @var string
      */
@@ -71,29 +65,28 @@ class ThumbCreator
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
      * @return \Thumber\Utility\ThumbCreator
-     * @uses getExtension()
      * @uses resolveFilePath()
      * @uses $arguments
-     * @uses $extension
      * @uses $path
      */
     public function __construct($path)
     {
         $this->path = $this->resolveFilePath($path);
-        $this->extension = $this->getExtension($this->path);
         $this->arguments[] = $this->path;
 
         return $this;
     }
 
     /**
-     * Internal method to get default options
-     * @return array Options
-     * @uses $extension
+     * Internal method to get default options for the `save()` method
+     * @param array $options Passed options
+     * @return array Passed options added to the default options
+     * @uses getExtension()
+     * @uses $path
      */
-    protected function getDefaultOptions()
+    protected function getDefaultSaveOptions($options)
     {
-        $options += ['format' => $this->extension, 'quality' => 90, 'target' => false];
+        $options += ['format' => $this->getExtension($this->path), 'quality' => 90, 'target' => false];
 
         //Fixes the name of some similar formats
         if ($options['format'] === 'jpeg') {
@@ -265,7 +258,7 @@ class ThumbCreator
      * @return string Thumbnail path
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
      * @throws InternalErrorException
-     * @uses getDefaultOptions()
+     * @uses getDefaultSaveOptions()
      * @uses getExtension()
      * @uses $arguments
      * @uses $callbacks
@@ -278,7 +271,7 @@ class ThumbCreator
             throw new InternalErrorException(__d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__));
         }
 
-        $options = $this->getDefaultOptions();
+        $options = $this->getDefaultSaveOptions($options);
         $target = $options['target'];
 
         if (!$target) {

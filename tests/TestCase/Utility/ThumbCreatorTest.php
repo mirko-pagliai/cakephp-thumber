@@ -68,34 +68,6 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
-     * Test for `$extension` property
-     * @ŧest
-     */
-    public function testExtension()
-    {
-        foreach ([
-            '400x400.bmp' => 'bmp',
-            '400x400.gif' => 'gif',
-            '400x400.ico' => 'ico',
-            '400x400.jpg' => 'jpg',
-            '400x400.jpeg' => 'jpg',
-            '400x400.png' => 'png',
-            '400x400.psd' => 'psd',
-            '400x400.tif' => 'tiff',
-            '400x400.tiff' => 'tiff',
-            WWW_ROOT . 'img' . DS . '400x400.png' => 'png',
-            'TestPlugin.400x400.png' => 'png',
-            'http://example.com.png' => 'png',
-            'http://example.com.png?' => 'png',
-            'http://example.com.png?param' => 'png',
-            'http://example.com.png?param=value' => 'png',
-        ] as $file => $expectedExtension) {
-            $thumber = new ThumbCreator($file);
-            $this->assertEquals($this->getProperty($thumber, 'extension'), $expectedExtension);
-        }
-    }
-
-    /**
      * Test for `$path` property
      * @ŧest
      */
