@@ -71,27 +71,27 @@ class ThumbCreator
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
      * @return \Thumber\Utility\ThumbCreator
-     * @uses _getExtension()
-     * @uses _resolveFilePath()
+     * @uses getExtension()
+     * @uses resolveFilePath()
      * @uses $arguments
      * @uses $extension
      * @uses $path
      */
     public function __construct($path)
     {
-        $this->path = $this->_resolveFilePath($path);
-        $this->extension = $this->_getExtension($this->path);
+        $this->path = $this->resolveFilePath($path);
+        $this->extension = $this->getExtension($this->path);
         $this->arguments[] = $this->path;
 
         return $this;
     }
 
     /**
-     * Gets the extension for a file
+     * Internal method to get the extension for a file
      * @param string $path File path
      * @return string
      */
-    protected function _getExtension($path)
+    protected function getExtension($path)
     {
         $extension = strtolower(pathinfo(explode('?', $path, 2)[0], PATHINFO_EXTENSION));
 
@@ -110,7 +110,7 @@ class ThumbCreator
      * @return string
      * @throws InternalErrorException
      */
-    protected function _resolveFilePath($path)
+    protected function resolveFilePath($path)
     {
         //Returns, if it's a remote file
         if (isUrl($path)) {
@@ -246,7 +246,7 @@ class ThumbCreator
      * @return string Thumbnail path
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
      * @throws InternalErrorException
-     * @uses _getExtension()
+     * @uses getExtension()
      * @uses $arguments
      * @uses $callbacks
      * @uses $extension
@@ -269,7 +269,7 @@ class ThumbCreator
 
             $target = md5(serialize($this->arguments)) . '.' . $options['format'];
         } else {
-            $options['format'] = $this->_getExtension($target);
+            $options['format'] = $this->getExtension($target);
         }
 
         if (!Folder::isAbsolute($target)) {
