@@ -13,7 +13,6 @@
  */
 namespace Thumber\TestSuite;
 
-use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
 use Thumber\ThumbTrait;
 
