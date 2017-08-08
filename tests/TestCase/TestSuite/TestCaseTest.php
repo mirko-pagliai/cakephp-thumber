@@ -31,7 +31,8 @@ class TestCaseTest extends TestCase
 
         copy($original, $copy);
 
-        $this->assertImageFileEquals($original, $copy);
+        $this->assertImageFileEquals(Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg', $copy);
+        $this->assertImageFileEquals('resize_w200_h200.jpg', $copy);
     }
 
     /**
