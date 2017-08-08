@@ -56,12 +56,6 @@ class ThumbCreator
     protected $path;
 
     /**
-     * Supported formats
-     * @var array
-     */
-    protected $supportedFormats = ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
-
-    /**
      * Construct.
      * It sets the file path and extension.
      * @param string $path Path of the image from which to create the
@@ -266,7 +260,6 @@ class ThumbCreator
      * @uses $arguments
      * @uses $callbacks
      * @uses $path
-     * @uses $supportedFormats
      */
     public function save(array $options = [])
     {
