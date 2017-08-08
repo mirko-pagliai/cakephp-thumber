@@ -13,6 +13,7 @@
 namespace Thumber\TestSuite;
 
 use Cake\TestSuite\TestCase as CakeTestCase;
+use Imagick;
 
 /**
  * Thumber TestCase class
@@ -24,11 +25,11 @@ abstract class TestCase extends CakeTestCase
      * @param string $path Image file path
      * @return string
      */
-    protected static function _createCopy($path)
+    protected static function createCopy($path)
     {
         $result = tempnam(sys_get_temp_dir(), $path);
 
-        $imagick = new \Imagick($path);
+        $imagick = new Imagick($path);
         $imagick->stripImage();
         $imagick->writeImage($result);
         $imagick->clear();
@@ -43,15 +44,15 @@ abstract class TestCase extends CakeTestCase
      * @param string $actual Actual file
      * @param string $message Error message
      * @return void
-     * @uses _createCopy()
+     * @uses createCopy()
      */
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
 
-        $expectedCopy = self::_createCopy($expected);
-        $actualCopy = self::_createCopy($actual);
+        $expectedCopy = self::createCopy($expected);
+        $actualCopy = self::createCopy($actual);
 
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
