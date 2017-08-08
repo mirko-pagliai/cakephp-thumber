@@ -87,6 +87,25 @@ class ThumbCreator
     }
 
     /**
+     * Internal method to get default options
+     * @return array Options
+     * @uses $extension
+     */
+    protected function getDefaultOptions()
+    {
+        $options += ['format' => $this->extension, 'quality' => 90, 'target' => false];
+
+        //Fixes the name of some similar formats
+        if ($options['format'] === 'jpeg') {
+            $options['format'] = 'jpg';
+        } elseif ($options['format'] === 'tif') {
+            $options['format'] = 'tiff';
+        }
+
+        return $options;
+    }
+
+    /**
      * Internal method to get the extension for a file
      * @param string $path File path
      * @return string
@@ -246,10 +265,10 @@ class ThumbCreator
      * @return string Thumbnail path
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
      * @throws InternalErrorException
+     * @uses getDefaultOptions()
      * @uses getExtension()
      * @uses $arguments
      * @uses $callbacks
-     * @uses $extension
      * @uses $path
      * @uses $supportedFormats
      */
@@ -259,19 +278,10 @@ class ThumbCreator
             throw new InternalErrorException(__d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__));
         }
 
-        //Sets default options
-        $options += ['format' => $this->extension, 'quality' => 90, 'target' => false];
-
-        //Fixes the name of some similar formats
-        if ($options['format'] === 'jpeg') {
-            $options['format'] = 'jpg';
-        } elseif ($options['format'] === 'tif') {
-            $options['format'] = 'tiff';
-        }
-
+        $options = $this->getDefaultOptions();
         $target = $options['target'];
 
-        if (empty($target)) {
+        if (!$target) {
             $this->arguments[] = [Configure::read(THUMBER . '.driver'), $options['format'], $options['quality']];
 
             $target = md5(serialize($this->arguments)) . '.' . $options['format'];
