@@ -27,6 +27,9 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
+use Intervention\Image\Constraint;
+use Intervention\Image\Exception\NotReadableException;
+use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 
 /**
@@ -171,7 +174,7 @@ class ThumbCreator
         $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
 
         //Adds the callback
-        $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
+        $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
             return $imageInstance->crop($width, $heigth, $options['x'], $options['y']);
         };
 
@@ -202,7 +205,7 @@ class ThumbCreator
         $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
 
         //Adds the callback
-        $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
+        $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
             return $imageInstance->fit($width, $heigth, function ($constraint) use ($options) {
                 if ($options['upsize']) {
                     $constraint->upsize();
@@ -232,8 +235,8 @@ class ThumbCreator
         $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
 
         //Adds the callback
-        $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
-            return $imageInstance->resize($width, $heigth, function ($constraint) use ($options) {
+        $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
+            return $imageInstance->resize($width, $heigth, function (Constraint $constraint) use ($options) {
                 if ($options['aspectRatio']) {
                     $constraint->aspectRatio();
                 }
@@ -290,7 +293,7 @@ class ThumbCreator
                 $imageInstance = (new ImageManager([
                     'driver' => Configure::read(THUMBER . '.driver'),
                 ]))->make($this->path);
-            } catch (\Intervention\Image\Exception\NotReadableException $e) {
+            } catch (NotReadableException $e) {
                 throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', rtr($this->path)));
             }
 
