@@ -22,16 +22,39 @@ use Thumber\Utility\ThumbCreator;
 class ThumbCreatorSaveTest extends TestCase
 {
     /**
-     * Teardown any static object changes and restore them
-     * @return void
+     * Test for `save()` method
+     * @test
      */
-    public function tearDown()
+    public function testSave()
     {
-        parent::tearDown();
+        $extensions = [
+            'bmp' => 'image/x-ms-bmp',
+            'gif' => 'image/gif',
+            'ico' => 'image/x-icon',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'png' => 'image/png',
+            'psd' => 'image/vnd.adobe.photoshop',
+            'tif' => 'image/tiff',
+            'tiff' => 'image/tiff',
+        ];
 
-        //Deletes all thumbnails
-        foreach (glob(Configure::read(THUMBER . '.target') . DS . '*') as $file) {
-            unlink($file);
+        foreach ($extensions as $extension => $expectedMimetype) {
+            $this->skipIf(Configure::read(THUMBER . '.driver') === 'gd' && $extension === 'bmp');
+
+            $thumb = (new ThumbCreator('400x400.' . $extension))->resize(200)->save();
+            $this->assertThumbPath($thumb);
+            $this->assertMime($thumb, $expectedMimetype);
+
+            //Using `format` option
+            $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => $extension]);
+            $this->assertThumbPath($thumb);
+            $this->assertMime($thumb, $expectedMimetype);
+
+            //Using `target` option
+            $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.' . $extension]);
+            $this->assertEquals(Configure::read(THUMBER . '.target') . DS . 'image.' . $extension, $thumb);
+            $this->assertMime($thumb, $expectedMimetype);
         }
     }
 
@@ -43,8 +66,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveFromInvalidFile()
     {
-        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))
-            ->resize(200)->save(['format' => 'jpg']);
+        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
     }
 
     /**
@@ -63,6 +85,7 @@ class ThumbCreatorSaveTest extends TestCase
         $this->assertEquals($time, filemtime($thumb));
 
         //Deletes the thumbnail and wait 1 second
+        //@codingStandardsIgnoreLine
         unlink($thumb);
         sleep(1);
 
@@ -78,10 +101,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithQuality()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
-        $this->assertRegExp(
-            sprintf('/^%s[a-z0-9]{32}\.jpg/', preg_quote(Configure::read(THUMBER . '.target') . DS, '/')),
-            $thumb
-        );
+        $this->assertThumbPath($thumb);
         $this->assertMime($thumb, 'image/jpeg');
     }
 
@@ -103,7 +123,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithQualityImageEquals()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
-        $this->assertImageFileEquals(Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200_quality_10.jpg', $thumb);
+        $this->assertImageFileEquals('resize_w200_h200_quality_10.jpg', $thumb);
     }
 
     /**
@@ -129,16 +149,18 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
-     * Test for `save()` method, using similar format names as `jpeg` or `tif`
+     * Test for `save()` method, using similar format names, as `jpeg` or `tif`
      * @test
      */
     public function testSaveWithSimilarFormat()
     {
         $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpeg']);
-        $this->assertEquals('jpg', pathinfo($file, PATHINFO_EXTENSION));
+        $this->assertFileExtension('jpg', $file);
+
+        $this->skipIf(Configure::read(THUMBER . '.driver') === 'gd');
 
         $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'tif']);
-        $this->assertEquals('tiff', pathinfo($file, PATHINFO_EXTENSION));
+        $this->assertFileExtension('tiff', $file, PATHINFO_EXTENSION);
     }
 
     /**

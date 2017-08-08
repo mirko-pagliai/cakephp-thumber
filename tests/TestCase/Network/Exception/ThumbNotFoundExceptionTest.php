@@ -12,8 +12,8 @@
  */
 namespace Thumber\Test\TestCase\Network\Exception;
 
-use Cake\TestSuite\TestCase;
 use Thumber\Network\Exception\ThumbNotFoundException;
+use Thumber\TestSuite\TestCase;
 
 /**
  * ThumbNotFoundExceptionTest class

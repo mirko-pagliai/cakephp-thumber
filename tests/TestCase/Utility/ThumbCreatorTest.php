@@ -13,7 +13,6 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Plugin;
-use Reflection\ReflectionTrait;
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator;
 
@@ -22,8 +21,6 @@ use Thumber\Utility\ThumbCreator;
  */
 class ThumbCreatorTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -76,53 +73,26 @@ class ThumbCreatorTest extends TestCase
      */
     public function testExtension()
     {
-        $thumber = new ThumbCreator('400x400.bmp');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'bmp');
-
-        $thumber = new ThumbCreator('400x400.gif');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'gif');
-
-        $thumber = new ThumbCreator('400x400.ico');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'ico');
-
-        $thumber = new ThumbCreator('400x400.jpg');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'jpg');
-
-        $thumber = new ThumbCreator('400x400.jpeg');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'jpg');
-
-        $thumber = new ThumbCreator('400x400.png');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'png');
-
-        $thumber = new ThumbCreator('400x400.psd');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'psd');
-
-        $thumber = new ThumbCreator('400x400.tif');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'tiff');
-
-        $thumber = new ThumbCreator('400x400.tiff');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'tiff');
-
-        //Full path
-        $thumber = new ThumbCreator(WWW_ROOT . 'img' . DS . '400x400.png');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'png');
-
-        //From plugin
-        $thumber = new ThumbCreator('TestPlugin.400x400.png');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'png');
-
-        //From remote
-        $thumber = new ThumbCreator('http://example.com.png');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'png');
-
-        $thumber = new ThumbCreator('http://example.com.png?');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'png');
-
-        $thumber = new ThumbCreator('http://example.com.png?param');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'png');
-
-        $thumber = new ThumbCreator('http://example.com.png?param=value');
-        $this->assertEquals($this->getProperty($thumber, 'extension'), 'png');
+        foreach ([
+            '400x400.bmp' => 'bmp',
+            '400x400.gif' => 'gif',
+            '400x400.ico' => 'ico',
+            '400x400.jpg' => 'jpg',
+            '400x400.jpeg' => 'jpg',
+            '400x400.png' => 'png',
+            '400x400.psd' => 'psd',
+            '400x400.tif' => 'tiff',
+            '400x400.tiff' => 'tiff',
+            WWW_ROOT . 'img' . DS . '400x400.png' => 'png',
+            'TestPlugin.400x400.png' => 'png',
+            'http://example.com.png' => 'png',
+            'http://example.com.png?' => 'png',
+            'http://example.com.png?param' => 'png',
+            'http://example.com.png?param=value' => 'png',
+        ] as $file => $expectedExtension) {
+            $thumber = new ThumbCreator($file);
+            $this->assertEquals($this->getProperty($thumber, 'extension'), $expectedExtension);
+        }
     }
 
     /**

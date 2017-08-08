@@ -12,7 +12,7 @@
  */
 namespace Thumber\Test\TestCase;
 
-use Cake\TestSuite\TestCase;
+use Thumber\TestSuite\TestCase;
 
 /**
  * GlobalFunctionsTest class

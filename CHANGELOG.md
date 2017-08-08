@@ -5,6 +5,7 @@
 * added `TestCase::assertFileExtension()` and `TestCase::assertThumbPath()`
     methods;
 * added `Thumber\TestSuite\IntegrationTestCase` class;
+* significantly improved and simplified all tests;
 * the MIT license has been applied.
 
 # 1.1.0
