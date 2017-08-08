@@ -2,6 +2,8 @@
 ## 1.1 branch
 # 1.1.1
 * fixed bug when using similar format name, , as `jpeg` or `tif`;
+* added `TestCase::assertFileExtension()` and `TestCase::assertThumbPath()`
+    methods;
 * the MIT license has been applied.
 
 # 1.1.0
