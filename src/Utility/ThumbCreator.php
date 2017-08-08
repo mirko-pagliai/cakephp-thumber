@@ -262,6 +262,13 @@ class ThumbCreator
         //Sets default options
         $options += ['format' => $this->extension, 'quality' => 90, 'target' => false];
 
+        //Fixes the name of some similar formats
+        if ($options['format'] === 'jpeg') {
+            $options['format'] = 'jpg';
+        } elseif ($options['format'] === 'tif') {
+            $options['format'] = 'tiff';
+        }
+
         $target = $options['target'];
 
         if (empty($target)) {

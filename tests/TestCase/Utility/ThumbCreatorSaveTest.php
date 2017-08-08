@@ -129,6 +129,19 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, using similar format names as `jpeg` or `tif`
+     * @test
+     */
+    public function testSaveWithSimilarFormat()
+    {
+        $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpeg']);
+        $this->assertEquals('jpg', pathinfo($file, PATHINFO_EXTENSION));
+
+        $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'tif']);
+        $this->assertEquals('tiff', pathinfo($file, PATHINFO_EXTENSION));
+    }
+
+    /**
      * Test for `save()` method, using the `target` option with an invalid file
      *  format
      * @expectedException Intervention\Image\Exception\NotSupportedException

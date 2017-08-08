@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.1 branch
 # 1.1.1
+* fixed bug when using similar format name, , as `jpeg` or `tif`;
 * the MIT license has been applied.
 
 # 1.1.0
