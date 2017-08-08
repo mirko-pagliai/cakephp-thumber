@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+# 1.1.1
+* the MIT license has been applied.
+
 # 1.1.0
 * configuration parameters have the name of the plugin (`Thumber`) as prefix. So
     now they are `Thumber.driver` and `Thumber.target`;

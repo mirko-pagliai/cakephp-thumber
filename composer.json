@@ -3,7 +3,7 @@
     "description": "Thumber plugin for CakePHP",
     "homepage": "https://github.com/mirko-pagliai/cakephp-thumber",
     "type": "cakephp-plugin",
-    "license": "AGPL-3.0",
+    "license": "MIT",
     "authors": [{
         "name": "Mirko Pagliai",
         "email": "mirko.pagliai@gmail.com"
