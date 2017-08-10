@@ -24,6 +24,15 @@ class ThumbTraitTest extends TestCase
     use ThumbTrait;
 
     /**
+     * Test for `getDriver()` method
+     * @test
+     */
+    public function testGetDriver()
+    {
+        $this->assertNotEmpty($this->getDriver());
+    }
+
+    /**
      * Test for `getExtension()` method
      * @test
      */

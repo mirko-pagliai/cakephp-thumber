@@ -251,7 +251,7 @@ class ThumbCreator
         $target = $options['target'];
 
         if (!$target) {
-            $this->arguments[] = [Configure::read(THUMBER . '.driver'), $options['format'], $options['quality']];
+            $this->arguments[] = [$this->getDriver(), $options['format'], $options['quality']];
 
             $target = md5(serialize($this->arguments)) . '.' . $options['format'];
         } else {
@@ -267,7 +267,7 @@ class ThumbCreator
             //Tries to create the image instance
             try {
                 $imageInstance = (new ImageManager([
-                    'driver' => Configure::read(THUMBER . '.driver'),
+                    'driver' => $this->getDriver(),
                 ]))->make($this->path);
             } catch (NotReadableException $e) {
                 throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', rtr($this->path)));

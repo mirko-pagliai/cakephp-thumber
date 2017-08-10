@@ -22,6 +22,15 @@ use Cake\Routing\Router;
 trait ThumbTrait
 {
     /**
+     * Gets the current driver
+     * @return string
+     */
+    protected function getDriver()
+    {
+        return Configure::read(THUMBER . '.driver');
+    }
+
+    /**
      * Gets the extension for a file
      * @param string $path File path
      * @return string

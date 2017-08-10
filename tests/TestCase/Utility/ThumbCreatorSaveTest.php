@@ -43,7 +43,7 @@ class ThumbCreatorSaveTest extends TestCase
         ];
 
         foreach ($extensions as $extension => $expectedMimetype) {
-            $this->skipIf(Configure::read(THUMBER . '.driver') === 'gd' && $extension === 'bmp');
+            $this->skipIf($this->getDriver() === 'gd' && $extension === 'bmp');
 
             $thumb = (new ThumbCreator('400x400.' . $extension))->resize(200)->save();
             $this->assertThumbPath($thumb);
@@ -160,7 +160,7 @@ class ThumbCreatorSaveTest extends TestCase
         $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpeg']);
         $this->assertFileExtension('jpg', $file);
 
-        $this->skipIf(Configure::read(THUMBER . '.driver') === 'gd');
+        $this->skipIf($this->getDriver() === 'gd');
 
         $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'tif']);
         $this->assertFileExtension('tiff', $file, PATHINFO_EXTENSION);
