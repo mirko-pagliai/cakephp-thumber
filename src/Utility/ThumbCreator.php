@@ -13,7 +13,6 @@
  */
 namespace Thumber\Utility;
 
-use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
