@@ -22,6 +22,24 @@ use Cake\Routing\Router;
 trait ThumbTrait
 {
     /**
+     * Gets the extension for a file
+     * @param string $path File path
+     * @return string
+     */
+    protected function getExtension($path)
+    {
+        $extension = strtolower(pathinfo(explode('?', $path, 2)[0], PATHINFO_EXTENSION));
+
+        if ($extension === 'jpeg') {
+            return 'jpg';
+        } elseif ($extension === 'tif') {
+            return 'tiff';
+        }
+
+        return $extension;
+    }
+
+    /**
      * Gets a path for a thumbnail
      * @param string|null $file File
      * @return string
@@ -35,6 +53,15 @@ trait ThumbTrait
         }
 
         return $path;
+    }
+
+    /**
+     * Returns the supported formats
+     * @return array Supported formats
+     */
+    protected function getSupportedFormats()
+    {
+        return ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
     }
 
     /**

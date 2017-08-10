@@ -78,7 +78,6 @@ class ThumbCreator
      * Internal method to get default options for the `save()` method
      * @param array $options Passed options
      * @return array Passed options added to the default options
-     * @uses getExtension()
      * @uses $path
      */
     protected function getDefaultSaveOptions($options)
@@ -93,24 +92,6 @@ class ThumbCreator
         }
 
         return $options;
-    }
-
-    /**
-     * Internal method to get the extension for a file
-     * @param string $path File path
-     * @return string
-     */
-    protected function getExtension($path)
-    {
-        $extension = strtolower(pathinfo(explode('?', $path, 2)[0], PATHINFO_EXTENSION));
-
-        if ($extension === 'jpeg') {
-            return 'jpg';
-        } elseif ($extension === 'tif') {
-            return 'tiff';
-        }
-
-        return $extension;
     }
 
     /**
@@ -256,7 +237,6 @@ class ThumbCreator
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
      * @throws InternalErrorException
      * @uses getDefaultSaveOptions()
-     * @uses getExtension()
      * @uses $arguments
      * @uses $callbacks
      * @uses $path
