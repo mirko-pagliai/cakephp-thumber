@@ -1,5 +1,15 @@
 # 1.x branch
 ## 1.1 branch
+# 1.1.1
+* fixed bug when using similar format name, , as `jpeg` or `tif`;
+* added `TestCase::assertFileExtension()` and `TestCase::assertThumbPath()`
+    methods;
+* added `ThumbTrait`;
+* added `Thumber\TestSuite\IntegrationTestCase` class;
+* removed `thumbUrl()` global function. Use instead `ThumbTrait::getUrl()`;
+* significantly improved and simplified all tests;
+* the MIT license has been applied.
+
 # 1.1.0
 * configuration parameters have the name of the plugin (`Thumber`) as prefix. So
     now they are `Thumber.driver` and `Thumber.target`;

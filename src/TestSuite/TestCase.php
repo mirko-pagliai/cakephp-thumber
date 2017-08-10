@@ -2,43 +2,55 @@
 /**
  * This file is part of cakephp-thumber.
  *
- * cakephp-thumber is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * cakephp-thumber is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with cakephp-thumber.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/cakephp-thumber
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace Thumber\TestSuite;
 
+use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
+use Imagick;
+use Reflection\ReflectionTrait;
+use Thumber\ThumbTrait;
 
 /**
  * Thumber TestCase class
  */
 abstract class TestCase extends CakeTestCase
 {
+    use ReflectionTrait;
+    use ThumbTrait;
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        foreach (glob($this->getPath('*')) as $file) {
+            //@codingStandardsIgnoreLine
+            unlink($file);
+        }
+    }
+
     /**
      * Internal method to create a copy of an image file
      * @param string $path Image file path
      * @return string
      */
-    protected static function _createCopy($path)
+    protected static function createCopy($path)
     {
         $result = tempnam(sys_get_temp_dir(), $path);
 
-        $imagick = new \Imagick($path);
+        $imagick = new Imagick($path);
         $imagick->stripImage();
         $imagick->writeImage($result);
         $imagick->clear();
@@ -47,21 +59,40 @@ abstract class TestCase extends CakeTestCase
     }
 
     /**
+     * Asserts for the extension of a file
+     * @param string $expected Expected extension
+     * @param string $file File
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.1.1
+     */
+    public static function assertFileExtension($expected, $file, $message = '')
+    {
+        self::assertEquals($expected, pathinfo($file, PATHINFO_EXTENSION), $message);
+    }
+
+    /**
      * Asserts that the contents of one image file is equal to the contents of
-     * another image file
+     *  another image file
      * @param string $expected Expected file
      * @param string $actual Actual file
-     * @param string $message Error message
+     * @param string $message The failure message that will be appended to the
+     *  generated message
      * @return void
-     * @uses _createCopy()
+     * @uses createCopy()
      */
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
+        if (!Folder::isAbsolute($expected)) {
+            $expected = Configure::read(THUMBER . '.comparingDir') . $expected;
+        }
+
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
 
-        $expectedCopy = self::_createCopy($expected);
-        $actualCopy = self::_createCopy($actual);
+        $expectedCopy = self::createCopy($expected);
+        $actualCopy = self::createCopy($actual);
 
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
@@ -76,7 +107,8 @@ abstract class TestCase extends CakeTestCase
      * @param string $filename Path to the tested file
      * @param int $width Image width
      * @param int $height Image height
-     * @param string $message Error message
+     * @param string $message The failure message that will be appended to the
+     *  generated message
      * @return void
      */
     public static function assertImageSize($filename, $width, $height, $message = '')
@@ -89,13 +121,35 @@ abstract class TestCase extends CakeTestCase
     /**
      * Asserts that a file has a MIME content type
      * @param string $filename Path to the tested file
-     * @param string $mime  MIME content type, like `text/plain` or `application/octet-stream`
-     * @param string $message Error message
+     * @param string $mime MIME content type, like `text/plain` or `application/octet-stream`
+     * @param string $message The failure message that will be appended to the
+     *  generated message
      * @return void
      */
-    public static function assertMime($filename, $mime, $message = '')
+    public function assertMime($filename, $mime, $message = '')
     {
+        parent::skipIf(!version_compare(PHP_VERSION, '7.0', '>') &&
+            in_array($mime, ['image/x-ms-bmp', 'image/vnd.adobe.photoshop']));
+
         self::assertFileExists($filename, $message);
         self::assertEquals($mime, mime_content_type($filename), $message);
+    }
+
+    /**
+     * Asserts for a valid thumbnail path
+     * @param string $path Thumbnail path
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.1.1
+     */
+    public function assertThumbPath($path, $message = '')
+    {
+        $regex = sprintf(
+            '/^%s[a-z0-9]{32}\.(%s)/',
+            preg_quote($this->getPath() . DS, '/'),
+            implode('|', ['bmp', 'gif', 'jpg', 'ico', 'png', 'psd', 'tiff'])
+        );
+        self::assertRegExp($regex, $path, $message);
     }
 }

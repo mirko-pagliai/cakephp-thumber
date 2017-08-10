@@ -2,29 +2,19 @@
 /**
  * This file is part of cakephp-thumber.
  *
- * cakephp-thumber is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * cakephp-thumber is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with cakephp-thumber.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/cakephp-thumber
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
+use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -32,17 +22,42 @@ use Thumber\Utility\ThumbCreator;
  */
 class ThumbCreatorSaveTest extends TestCase
 {
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
+    use ThumbTrait;
 
-        //Deletes all thumbnails
-        foreach (glob(Configure::read(THUMBER . '.target') . DS . '*') as $file) {
-            unlink($file);
+    /**
+     * Test for `save()` method
+     * @test
+     */
+    public function testSave()
+    {
+        $extensions = [
+            'bmp' => 'image/x-ms-bmp',
+            'gif' => 'image/gif',
+            'ico' => 'image/x-icon',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'png' => 'image/png',
+            'psd' => 'image/vnd.adobe.photoshop',
+            'tif' => 'image/tiff',
+            'tiff' => 'image/tiff',
+        ];
+
+        foreach ($extensions as $extension => $expectedMimetype) {
+            $this->skipIf($this->getDriver() === 'gd' && $extension === 'bmp');
+
+            $thumb = (new ThumbCreator('400x400.' . $extension))->resize(200)->save();
+            $this->assertThumbPath($thumb);
+            $this->assertMime($thumb, $expectedMimetype);
+
+            //Using `format` option
+            $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => $extension]);
+            $this->assertThumbPath($thumb);
+            $this->assertMime($thumb, $expectedMimetype);
+
+            //Using `target` option
+            $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.' . $extension]);
+            $this->assertEquals($this->getPath('image.' . $extension), $thumb);
+            $this->assertMime($thumb, $expectedMimetype);
         }
     }
 
@@ -54,8 +69,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveFromInvalidFile()
     {
-        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))
-            ->resize(200)->save(['format' => 'jpg']);
+        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
     }
 
     /**
@@ -74,6 +88,7 @@ class ThumbCreatorSaveTest extends TestCase
         $this->assertEquals($time, filemtime($thumb));
 
         //Deletes the thumbnail and wait 1 second
+        //@codingStandardsIgnoreLine
         unlink($thumb);
         sleep(1);
 
@@ -89,10 +104,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithQuality()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
-        $this->assertRegExp(
-            sprintf('/^%s[a-z0-9]{32}\.jpg/', preg_quote(Configure::read(THUMBER . '.target') . DS, '/')),
-            $thumb
-        );
+        $this->assertThumbPath($thumb);
         $this->assertMime($thumb, 'image/jpeg');
     }
 
@@ -114,7 +126,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithQualityImageEquals()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
-        $this->assertImageFileEquals(Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200_quality_10.jpg', $thumb);
+        $this->assertImageFileEquals('resize_w200_h200_quality_10.jpg', $thumb);
     }
 
     /**
@@ -124,7 +136,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithTarget()
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['target' => 'thumb.jpg']);
-        $this->assertEquals(Configure::read(THUMBER . '.target') . DS . 'thumb.jpg', $thumb);
+        $this->assertEquals($this->getPath('thumb.jpg'), $thumb);
         $this->assertMime($thumb, 'image/jpeg');
     }
 
@@ -137,6 +149,21 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithInvalidFormat()
     {
         (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'txt']);
+    }
+
+    /**
+     * Test for `save()` method, using similar format names, as `jpeg` or `tif`
+     * @test
+     */
+    public function testSaveWithSimilarFormat()
+    {
+        $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpeg']);
+        $this->assertFileExtension('jpg', $file);
+
+        $this->skipIf($this->getDriver() === 'gd');
+
+        $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'tif']);
+        $this->assertFileExtension('tiff', $file, PATHINFO_EXTENSION);
     }
 
     /**

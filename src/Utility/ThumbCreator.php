@@ -2,32 +2,25 @@
 /**
  * This file is part of cakephp-thumber.
  *
- * cakephp-thumber is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
  *
- * cakephp-thumber is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with cakephp-thumber.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @author      Mirko Pagliai <mirko.pagliai@gmail.com>
- * @copyright   Copyright (c) 2016, Mirko Pagliai for Nova Atlantis Ltd
- * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
- * @link        http://git.novatlantis.it Nova Atlantis Ltd
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/cakephp-thumber
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility
  */
 namespace Thumber\Utility;
 
-use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
+use Intervention\Image\Constraint;
+use Intervention\Image\Exception\NotReadableException;
+use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
+use Thumber\ThumbTrait;
 
 /**
  * Utility to create a thumb.
@@ -37,6 +30,8 @@ use Intervention\Image\ImageManager;
  */
 class ThumbCreator
 {
+    use ThumbTrait;
+
     /**
      * Arguments that will be used to generate the name of the thumbnail.
      *
@@ -54,22 +49,10 @@ class ThumbCreator
     protected $callbacks = [];
 
     /**
-     * File extension
-     * @var string
-     */
-    protected $extension;
-
-    /**
      * File path
      * @var string
      */
     protected $path;
-
-    /**
-     * Supported formats
-     * @var array
-     */
-    protected $supportedFormats = ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
 
     /**
      * Construct.
@@ -78,37 +61,55 @@ class ThumbCreator
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
      * @return \Thumber\Utility\ThumbCreator
-     * @uses _getExtension()
-     * @uses _resolveFilePath()
+     * @uses resolveFilePath()
      * @uses $arguments
-     * @uses $extension
      * @uses $path
      */
     public function __construct($path)
     {
-        $this->path = $this->_resolveFilePath($path);
-        $this->extension = $this->_getExtension($this->path);
+        $this->path = $this->resolveFilePath($path);
         $this->arguments[] = $this->path;
 
         return $this;
     }
 
     /**
-     * Gets the extension for a file
-     * @param string $path File path
-     * @return string
+     * Internal method to get default options for the `save()` method
+     * @param array $options Passed options
+     * @return array Passed options added to the default options
+     * @uses $path
      */
-    protected function _getExtension($path)
+    protected function getDefaultSaveOptions($options)
     {
-        $extension = strtolower(pathinfo(explode('?', $path, 2)[0], PATHINFO_EXTENSION));
+        $options += ['format' => $this->getExtension($this->path), 'quality' => 90, 'target' => false];
 
-        if ($extension === 'jpeg') {
-            return 'jpg';
-        } elseif ($extension === 'tif') {
-            return 'tiff';
+        //Fixes the name of some similar formats
+        if ($options['format'] === 'jpeg') {
+            $options['format'] = 'jpg';
+        } elseif ($options['format'] === 'tif') {
+            $options['format'] = 'tiff';
         }
 
-        return $extension;
+        return $options;
+    }
+
+    /**
+     * Gets an `Image` instance
+     * @return \Intervention\Image\Image
+     * @throws InternalErrorException
+     * @uses $path
+     */
+    protected function getImageInstance()
+    {
+        //Tries to create the image instance
+        try {
+            $imageInstance = (new ImageManager(['driver' => $this->getDriver()]))
+                ->make($this->path);
+        } catch (NotReadableException $e) {
+            throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', rtr($this->path)));
+        }
+
+        return $imageInstance;
     }
 
     /**
@@ -117,7 +118,7 @@ class ThumbCreator
      * @return string
      * @throws InternalErrorException
      */
-    protected function _resolveFilePath($path)
+    protected function resolveFilePath($path)
     {
         //Returns, if it's a remote file
         if (isUrl($path)) {
@@ -171,7 +172,7 @@ class ThumbCreator
         $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
 
         //Adds the callback
-        $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
+        $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
             return $imageInstance->crop($width, $heigth, $options['x'], $options['y']);
         };
 
@@ -202,8 +203,8 @@ class ThumbCreator
         $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
 
         //Adds the callback
-        $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
-            return $imageInstance->fit($width, $heigth, function ($constraint) use ($options) {
+        $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
+            return $imageInstance->fit($width, $heigth, function (Constraint $constraint) use ($options) {
                 if ($options['upsize']) {
                     $constraint->upsize();
                 }
@@ -232,8 +233,8 @@ class ThumbCreator
         $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
 
         //Adds the callback
-        $this->callbacks[] = function ($imageInstance) use ($width, $heigth, $options) {
-            return $imageInstance->resize($width, $heigth, function ($constraint) use ($options) {
+        $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
+            return $imageInstance->resize($width, $heigth, function (Constraint $constraint) use ($options) {
                 if ($options['aspectRatio']) {
                     $constraint->aspectRatio();
                 }
@@ -253,12 +254,11 @@ class ThumbCreator
      * @return string Thumbnail path
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
      * @throws InternalErrorException
-     * @uses _getExtension()
+     * @uses getDefaultSaveOptions()
+     * @uses getImageInstance()
      * @uses $arguments
      * @uses $callbacks
-     * @uses $extension
      * @uses $path
-     * @uses $supportedFormats
      */
     public function save(array $options = [])
     {
@@ -266,33 +266,24 @@ class ThumbCreator
             throw new InternalErrorException(__d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__));
         }
 
-        //Sets default options
-        $options += ['format' => $this->extension, 'quality' => 90, 'target' => false];
-
+        $options = $this->getDefaultSaveOptions($options);
         $target = $options['target'];
 
-        if (empty($target)) {
-            $this->arguments[] = [Configure::read(THUMBER . '.driver'), $options['format'], $options['quality']];
+        if (!$target) {
+            $this->arguments[] = [$this->getDriver(), $options['format'], $options['quality']];
 
             $target = md5(serialize($this->arguments)) . '.' . $options['format'];
         } else {
-            $options['format'] = $this->_getExtension($target);
+            $options['format'] = $this->getExtension($target);
         }
 
         if (!Folder::isAbsolute($target)) {
-            $target = Configure::read(THUMBER . '.target') . DS . $target;
+            $target = $this->getPath($target);
         }
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
-            //Tries to create the image instance
-            try {
-                $imageInstance = (new ImageManager([
-                    'driver' => Configure::read(THUMBER . '.driver'),
-                ]))->make($this->path);
-            } catch (\Intervention\Image\Exception\NotReadableException $e) {
-                throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', rtr($this->path)));
-            }
+            $imageInstance = $this->getImageInstance();
 
             //Calls each callback
             foreach ($this->callbacks as $callback) {

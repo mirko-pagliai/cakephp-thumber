@@ -3,7 +3,7 @@
     "description": "Thumber plugin for CakePHP",
     "homepage": "https://github.com/mirko-pagliai/cakephp-thumber",
     "type": "cakephp-plugin",
-    "license": "AGPL",
+    "license": "MIT",
     "authors": [{
         "name": "Mirko Pagliai",
         "email": "mirko.pagliai@gmail.com"
@@ -14,7 +14,8 @@
         "intervention/image": "^2.3"
     },
     "require-dev": {
-        "cakephp/cakephp-codesniffer": "2.*",
+        "cakephp/cakephp-codesniffer": "^3.0",
+        "mirko-pagliai/reflection": "^1.0",
         "phpunit/phpunit": "^5.7|^6.0"
     },
     "autoload": {
