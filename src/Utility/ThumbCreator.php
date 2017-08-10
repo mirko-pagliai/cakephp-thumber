@@ -94,6 +94,25 @@ class ThumbCreator
     }
 
     /**
+     * Gets an `Image` instance
+     * @return \Intervention\Image\Image
+     * @throws InternalErrorException
+     * @uses $path
+     */
+    protected function getImageInstance()
+    {
+        //Tries to create the image instance
+        try {
+            $imageInstance = (new ImageManager(['driver' => $this->getDriver()]))
+                ->make($this->path);
+        } catch (NotReadableException $e) {
+            throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', rtr($this->path)));
+        }
+
+        return $imageInstance;
+    }
+
+    /**
      * Internal method to resolve a partial path, returning its full path
      * @param string $path Partial path
      * @return string
@@ -236,6 +255,7 @@ class ThumbCreator
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
      * @throws InternalErrorException
      * @uses getDefaultSaveOptions()
+     * @uses getImageInstance()
      * @uses $arguments
      * @uses $callbacks
      * @uses $path
@@ -263,14 +283,7 @@ class ThumbCreator
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
-            //Tries to create the image instance
-            try {
-                $imageInstance = (new ImageManager([
-                    'driver' => $this->getDriver(),
-                ]))->make($this->path);
-            } catch (NotReadableException $e) {
-                throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', rtr($this->path)));
-            }
+            $imageInstance = $this->getImageInstance();
 
             //Calls each callback
             foreach ($this->callbacks as $callback) {
