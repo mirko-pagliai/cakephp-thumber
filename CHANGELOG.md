@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+# 1.1.2
+* updated for intervention/image 2.4.
+
 # 1.1.1
 * fixed bug when using similar format name, , as `jpeg` or `tif`;
 * added `TestCase::assertFileExtension()` and `TestCase::assertThumbPath()`
