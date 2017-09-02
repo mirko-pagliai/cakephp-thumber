@@ -1,4 +1,9 @@
 # 1.x branch
+## 1.2 branch
+# 1.2.0
+* updated for intervention/image 2.4;
+* some little fixes. This package requires at least CakePHP 3.4.
+
 ## 1.1 branch
 # 1.1.1
 * fixed bug when using similar format name, , as `jpeg` or `tif`;
