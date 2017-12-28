@@ -5,7 +5,8 @@
     prefix with the checksum of the path of the original image and a suffix with
     the checksum of all the arguments used to create the thumbnail. Using the
     prefix of a thumbnail, it will be possible to identify the original image
-    from which it was generated.
+    from which it was generated;
+* all methods provided by the `ThumbTrait` are now static.
 
 ## 1.2 branch
 # 1.2.0

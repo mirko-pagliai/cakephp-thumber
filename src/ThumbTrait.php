@@ -25,7 +25,7 @@ trait ThumbTrait
      * Gets the current driver
      * @return string
      */
-    protected function getDriver()
+    protected static function getDriver()
     {
         return Configure::read(THUMBER . '.driver');
     }
@@ -35,7 +35,7 @@ trait ThumbTrait
      * @param string $path File path
      * @return string
      */
-    protected function getExtension($path)
+    protected static function getExtension($path)
     {
         $extension = strtolower(pathinfo(explode('?', $path, 2)[0], PATHINFO_EXTENSION));
 
@@ -53,7 +53,7 @@ trait ThumbTrait
      * @param string|null $file File
      * @return string
      */
-    protected function getPath($file = null)
+    protected static function getPath($file = null)
     {
         $path = Configure::read(THUMBER . '.target');
 
@@ -68,7 +68,7 @@ trait ThumbTrait
      * Returns the supported formats
      * @return array Supported formats
      */
-    protected function getSupportedFormats()
+    protected static function getSupportedFormats()
     {
         return ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
     }
@@ -80,7 +80,7 @@ trait ThumbTrait
      *  result
      * @return string
      */
-    protected function getUrl($path, $full = true)
+    protected static function getUrl($path, $full = true)
     {
         return Router::url(['_name' => 'thumb', base64_encode(basename($path))], $full);
     }
