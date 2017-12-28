@@ -272,7 +272,7 @@ class ThumbCreator
         if (!$target) {
             $this->arguments[] = [$this->getDriver(), $options['format'], $options['quality']];
 
-            $target = md5(serialize($this->arguments)) . '.' . $options['format'];
+            $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
         } else {
             $options['format'] = $this->getExtension($target);
         }

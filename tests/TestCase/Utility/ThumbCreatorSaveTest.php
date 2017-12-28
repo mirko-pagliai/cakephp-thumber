@@ -73,6 +73,22 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, using the same file with different arguments.
+     *
+     * So the two thumbnails will have the same prefix in the name, but a
+     *  different suffix
+     * @test
+     */
+    public function testSaveSameFileDifferentArguments()
+    {
+        $firstThumb = explode('_', basename((new ThumbCreator('400x400.png'))->resize(200)->save()));
+        $secondThumb = explode('_', basename((new ThumbCreator('400x400.png'))->resize(300)->save()));
+
+        $this->assertEquals($firstThumb[0], $secondThumb[0]);
+        $this->assertNotEquals($firstThumb[1], $secondThumb[1]);
+    }
+
+    /**
      * Test for `save()` method. It tests the thumbnails is created only if it
      *  does not exist
      * @test
