@@ -148,7 +148,7 @@ abstract class TestCase extends CakeTestCase
         $regex = sprintf(
             '/^%s[a-z0-9]{32}_[a-z0-9]{32}\.(%s)/',
             preg_quote($this->getPath() . DS, '/'),
-            implode('|', ['bmp', 'gif', 'jpg', 'ico', 'png', 'psd', 'tiff'])
+            self::getSupportedFormats()
         );
         self::assertRegExp($regex, $path, $message);
     }
