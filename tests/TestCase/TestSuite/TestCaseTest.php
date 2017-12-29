@@ -14,12 +14,32 @@ namespace Thumber\Test\TestCase\TestSuite;
 
 use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
+use Thumber\ThumbTrait;
 
 /**
  * TestCaseTest class
  */
 class TestCaseTest extends TestCase
 {
+    use ThumbTrait;
+
+    /**
+     * Test for `assertFileExtension()` method
+     * @ŧest
+     */
+    public function testAssertFileExtension()
+    {
+        foreach ([
+            'jpg' => 'file.jpg',
+            'jpg' => 'file.JPG',
+            'jpeg' => 'file.jpeg',
+            'jpg' => 'path/to/file.jpg',
+            'jpg' => '/full/path/to/file.jpg',
+        ] as $extension => $filename) {
+            $this->assertFileExtension($extension, $filename);
+        }
+    }
+
     /**
      * Test for `assertImageFileEquals()` method
      * @ŧest
@@ -65,5 +85,16 @@ class TestCaseTest extends TestCase
         $this->assertMime($file, 'text/plain');
 
         unlink($file);
+    }
+
+    /**
+     * Test for `assertThumbPath()` method
+     * @ŧest
+     */
+    public function testAssertThumbPath()
+    {
+        foreach ($this->getSupportedFormats() as $extension) {
+            $this->assertThumbPath($this->getPath() . DS . md5(time()) . '_' . md5(time()) . '.' . $extension);
+        }
     }
 }
