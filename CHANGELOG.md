@@ -6,7 +6,7 @@
     the checksum of all the arguments used to create the thumbnail. Using the
     prefix of a thumbnail, it will be possible to identify the original image
     from which it was generated;
-* added the `ThumbManager` class;
+* added `ThumbManager` and `ThumbShell` classes;
 * all methods provided by the `ThumbTrait` are now static;
 * `resolveFilePath()` method moved from `ThumbCreator` to `ThumbTrait`, because
     this method can be used in different contexts.
