@@ -12,7 +12,6 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
-use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
 use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
@@ -70,6 +69,22 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveFromInvalidFile()
     {
         (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
+    }
+
+    /**
+     * Test for `save()` method, using the same file with different arguments.
+     *
+     * So the two thumbnails will have the same prefix in the name, but a
+     *  different suffix
+     * @test
+     */
+    public function testSaveSameFileDifferentArguments()
+    {
+        $firstThumb = explode('_', basename((new ThumbCreator('400x400.png'))->resize(200)->save()));
+        $secondThumb = explode('_', basename((new ThumbCreator('400x400.png'))->resize(300)->save()));
+
+        $this->assertEquals($firstThumb[0], $secondThumb[0]);
+        $this->assertNotEquals($firstThumb[1], $secondThumb[1]);
     }
 
     /**

@@ -13,7 +13,6 @@
  */
 namespace Thumber\Utility;
 
-use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Intervention\Image\Constraint;
@@ -61,7 +60,6 @@ class ThumbCreator
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
      * @return \Thumber\Utility\ThumbCreator
-     * @uses resolveFilePath()
      * @uses $arguments
      * @uses $path
      */
@@ -110,41 +108,6 @@ class ThumbCreator
         }
 
         return $imageInstance;
-    }
-
-    /**
-     * Internal method to resolve a partial path, returning its full path
-     * @param string $path Partial path
-     * @return string
-     * @throws InternalErrorException
-     */
-    protected function resolveFilePath($path)
-    {
-        //Returns, if it's a remote file
-        if (isUrl($path)) {
-            return $path;
-        }
-
-        //If it a relative path, it can be a file from a plugin or a file
-        //  relative to `APP/webroot/img/`
-        if (!Folder::isAbsolute($path)) {
-            $pluginSplit = pluginSplit($path);
-
-            //Note that using `pluginSplit()` is not sufficient, because
-            //  `$path` may still contain a dot
-            if (!empty($pluginSplit[0]) && in_array($pluginSplit[0], Plugin::loaded())) {
-                $path = Plugin::path($pluginSplit[0]) . 'webroot' . DS . 'img' . DS . $pluginSplit[1];
-            } else {
-                $path = WWW_ROOT . 'img' . DS . $path;
-            }
-        }
-
-        //Checks if is readable
-        if (!is_readable($path)) {
-            throw new InternalErrorException(__d('thumber', 'File `{0}` not readable', rtr($path)));
-        }
-
-        return $path;
     }
 
     /**
@@ -272,7 +235,7 @@ class ThumbCreator
         if (!$target) {
             $this->arguments[] = [$this->getDriver(), $options['format'], $options['quality']];
 
-            $target = md5(serialize($this->arguments)) . '.' . $options['format'];
+            $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
         } else {
             $options['format'] = $this->getExtension($target);
         }

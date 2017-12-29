@@ -37,6 +37,12 @@ class ThumbsController extends Controller
             throw new ThumbNotFoundException(__d('thumber', 'File `{0}` doesn\'t exist', $file));
         }
 
-        return $this->response->withFile($file)->withType(mime_content_type($file));
+        $response = $this->response->withModified(filemtime($file));
+
+        if ($response->checkNotModified($this->request)) {
+            return $response;
+        }
+
+        return $response->withFile($file)->withType(mime_content_type($file));
     }
 }

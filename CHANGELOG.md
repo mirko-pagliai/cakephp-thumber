@@ -1,4 +1,17 @@
 # 1.x branch
+## 1.3 branch
+# 1.3.0
+* the name of the thumbnails (when automatically generated) now contains a
+    prefix with the checksum of the path of the original image and a suffix with
+    the checksum of all the arguments used to create the thumbnail. Using the
+    prefix of a thumbnail, it will be possible to identify the original image
+    from which it was generated;
+* the `Last-Modified` header is set up and sent to the client. It indicates the
+    date and time at which the thumbnail file was modified for the last time;
+* added `ThumbManager` and `ThumbShell` classes;
+* `resolveFilePath()` method moved from `ThumbCreator` to `ThumbTrait`, because
+    this method can be used in different contexts.
+
 ## 1.2 branch
 # 1.2.0
 * updated for intervention/image 2.4;
