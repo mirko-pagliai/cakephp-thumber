@@ -25,11 +25,11 @@ class ThumbManager
     use ThumbTrait;
 
     /**
-     * Internal method to delete thumbnails
+     * Internal method to clear thumbnails
      * @param array $filenames Filenames
      * @return bool
      */
-    protected static function delete($filenames)
+    protected static function _clear($filenames)
     {
         $success = true;
 
@@ -48,7 +48,7 @@ class ThumbManager
      * @param bool $sort Whether results should be sorted
      * @return array
      */
-    protected static function find($regexpPattern = null, $sort = false)
+    protected static function _find($regexpPattern = null, $sort = false)
     {
         if (!$regexpPattern) {
             $regexpPattern = sprintf('[a-z0-9]{32}_[a-z0-9]{32}\.(%s)', implode('|', self::getSupportedFormats()));
@@ -58,50 +58,50 @@ class ThumbManager
     }
 
     /**
-     * Deletes all thumbnails
+     * Clears all thumbnails that have been generated from an image path
+     * @param string $path Path of the original image
      * @return bool
-     * @uses delete()
-     * @uses getAll()
+     * @uses _clear()
+     * @uses get()
      */
-    public static function deleteAll()
+    public static function clear($path)
     {
-        return self::delete(self::getAll());
+        return self::_clear(self::get($path));
     }
 
     /**
-     * Deletes all thumbnails from a path of an original image
-     * @param string $path Path of the original image
+     * Clears all thumbnails
      * @return bool
-     * @uses delete()
-     * @uses getFromPath()
+     * @uses _clear()
+     * @uses getAll()
      */
-    public static function deleteFromPath($path)
+    public static function clearAll()
     {
-        return self::delete(self::getFromPath($path));
+        return self::_clear(self::getAll());
+    }
+
+    /**
+     * Gets all thumbnails that have been generated from an image path
+     * @param string $path Path of the original image
+     * @param bool $sort Whether results should be sorted
+     * @return array
+     * @uses _find()
+     */
+    public static function get($path, $sort = false)
+    {
+        $regexpPattern = sprintf('%s_[a-z0-9]{32}\.(%s)', md5(self::resolveFilePath($path)), implode('|', self::getSupportedFormats()));
+
+        return self::_find($regexpPattern, $sort);
     }
 
     /**
      * Gets all thumbnails
      * @param bool $sort Whether results should be sorted
      * @return array
-     * @uses find()
+     * @uses _find()
      */
     public static function getAll($sort = false)
     {
-        return self::find(null, $sort);
-    }
-
-    /**
-     * Gets all thumbnails from a path of an original image
-     * @param string $path Path of the original image
-     * @param bool $sort Whether results should be sorted
-     * @return array
-     * @uses find()
-     */
-    public static function getFromPath($path, $sort = false)
-    {
-        $regexpPattern = sprintf('%s_[a-z0-9]{32}\.(%s)', md5(self::resolveFilePath($path)), implode('|', self::getSupportedFormats()));
-
-        return self::find($regexpPattern, $sort);
+        return self::_find(null, $sort);
     }
 }
