@@ -84,6 +84,17 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
     }
 
     /**
+     * Tests for `clear()` method with error
+     * @test
+     */
+    public function testClearWithError()
+    {
+        $this->exec('thumber.thumber clear /noExisting -v');
+        $this->assertExitCode(1);
+        $this->assertErrorContains('<error>Error deleting thumbnails</error>');
+    }
+
+    /**
      * Tests for `clearAll()` method
      * @test
      */

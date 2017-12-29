@@ -31,7 +31,11 @@ class ThumberShell extends Shell
      */
     protected function _clear($method, $args = [])
     {
-        $count = call_user_func_array([new ThumbManager, $method], (array)$args);
+        try {
+            $count = call_user_func_array([new ThumbManager, $method], (array)$args);
+        } catch (\Exception $e) {
+            $count = false;
+        }
 
         if ($count === false) {
             $this->err(__d('thumber', 'Error deleting thumbnails'));
