@@ -7,7 +7,6 @@
     prefix of a thumbnail, it will be possible to identify the original image
     from which it was generated;
 * added `ThumbManager` and `ThumbShell` classes;
-* all methods provided by the `ThumbTrait` are now static;
 * `resolveFilePath()` method moved from `ThumbCreator` to `ThumbTrait`, because
     this method can be used in different contexts.
 

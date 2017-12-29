@@ -29,12 +29,12 @@ class ThumbManager
      * @param array $filenames Filenames
      * @return int|bool Number of thumbnails deleted otherwise `false` in case of error
      */
-    protected static function _clear($filenames)
+    protected function _clear($filenames)
     {
         $count = 0;
 
         foreach ($filenames as $filename) {
-            if (!(new File(self::getPath($filename)))->delete()) {
+            if (!(new File($this->getPath($filename)))->delete()) {
                 return false;
             }
 
@@ -50,13 +50,13 @@ class ThumbManager
      * @param bool $sort Whether results should be sorted
      * @return array
      */
-    protected static function _find($regexpPattern = null, $sort = false)
+    protected function _find($regexpPattern = null, $sort = false)
     {
         if (!$regexpPattern) {
-            $regexpPattern = sprintf('[a-z0-9]{32}_[a-z0-9]{32}\.(%s)', implode('|', self::getSupportedFormats()));
+            $regexpPattern = sprintf('[a-z0-9]{32}_[a-z0-9]{32}\.(%s)', implode('|', $this->getSupportedFormats()));
         }
 
-        return (new Folder(self::getPath()))->find($regexpPattern, $sort);
+        return (new Folder($this->getPath()))->find($regexpPattern, $sort);
     }
 
     /**
@@ -66,9 +66,9 @@ class ThumbManager
      * @uses _clear()
      * @uses get()
      */
-    public static function clear($path)
+    public function clear($path)
     {
-        return self::_clear(self::get($path));
+        return $this->_clear($this->get($path));
     }
 
     /**
@@ -77,9 +77,9 @@ class ThumbManager
      * @uses _clear()
      * @uses getAll()
      */
-    public static function clearAll()
+    public function clearAll()
     {
-        return self::_clear(self::getAll());
+        return $this->_clear($this->getAll());
     }
 
     /**
@@ -89,11 +89,11 @@ class ThumbManager
      * @return array
      * @uses _find()
      */
-    public static function get($path, $sort = false)
+    public function get($path, $sort = false)
     {
-        $regexpPattern = sprintf('%s_[a-z0-9]{32}\.(%s)', md5(self::resolveFilePath($path)), implode('|', self::getSupportedFormats()));
+        $regexpPattern = sprintf('%s_[a-z0-9]{32}\.(%s)', md5($this->resolveFilePath($path)), implode('|', $this->getSupportedFormats()));
 
-        return self::_find($regexpPattern, $sort);
+        return $this->_find($regexpPattern, $sort);
     }
 
     /**
@@ -102,8 +102,8 @@ class ThumbManager
      * @return array
      * @uses _find()
      */
-    public static function getAll($sort = false)
+    public function getAll($sort = false)
     {
-        return self::_find(null, $sort);
+        return $this->_find(null, $sort);
     }
 }
