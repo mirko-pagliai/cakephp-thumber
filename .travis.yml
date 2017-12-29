@@ -25,8 +25,8 @@ install:
   - if [[ ! -z "$CAKEPHP_VERSION" ]]; then composer require --update-with-dependencies cakephp/cakephp:${CAKEPHP_VERSION}; fi
 
 script:
-  - if [[ $PHPCS != '1' && $COVERAGE != '1' && $COVERAGE != '3.4.*' ]]; then vendor/bin/phpunit --exclude-group imageEquals; fi
-  - if [[ $PHPCS != '1' && $COVERAGE != '1' && $COVERAGE = '3.4.*' ]]; then vendor/bin/phpunit --testsuite cakephp3.4 --exclude-group imageEquals; fi
+  - if [[ $PHPCS != '1' && $COVERAGE != '1' && $CAKEPHP_VERSION != '3.4.*' ]]; then vendor/bin/phpunit --exclude-group imageEquals; fi
+  - if [[ $PHPCS != '1' && $COVERAGE != '1' && $CAKEPHP_VERSION = '3.4.*' ]]; then vendor/bin/phpunit --testsuite cakephp3.4 --exclude-group imageEquals; fi
   - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --extensions=php,ctp,js,css --standard=vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=*.min.css,*.min.js ./config ./src ./tests; fi
   - if [[ $COVERAGE = 1 ]]; then vendor/bin/phpunit --exclude-group imageEquals --coverage-clover=clover.xml; fi
   
