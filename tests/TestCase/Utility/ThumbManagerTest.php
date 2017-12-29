@@ -25,6 +25,12 @@ class ThumbManagerTest extends TestCase
     use ThumbTrait;
 
     /**
+     *
+     * @var type
+     */
+    protected $ThumbManager;
+
+    /**
      * Internal method to create some thumbs
      */
     protected function createSomeThumbs()
@@ -44,6 +50,8 @@ class ThumbManagerTest extends TestCase
     {
         parent::setUp();
 
+        $this->ThumbManager = new ThumbManager;
+
         $this->createSomeThumbs();
     }
 
@@ -53,11 +61,25 @@ class ThumbManagerTest extends TestCase
      */
     public function testClear()
     {
-        $this->assertEquals(2, ThumbManager::clear('400x400.jpg'));
+        $this->assertEquals(2, $this->ThumbManager->clear('400x400.jpg'));
 
         $this->createSomeThumbs();
 
-        $this->assertEquals(1, ThumbManager::clear('400x400.png'));
+        $this->assertEquals(1, $this->ThumbManager->clear('400x400.png'));
+    }
+
+    /**
+     * Test for `clear()` method, with error
+     * @ŧest
+     */
+    public function testClearWithError()
+    {
+        $class = $this->getMockBuilder(get_class($this->ThumbManager))
+            ->setMethods(['get'])
+            ->getMock();
+        $class->method('get')->will($this->returnValue(['/noExisting']));
+
+        $this->assertFalse($class->clear('/noExisting'));
     }
 
     /**
@@ -66,8 +88,8 @@ class ThumbManagerTest extends TestCase
      */
     public function testClearAll()
     {
-        $this->assertEquals(3, ThumbManager::clearAll());
-        $this->assertEmpty(ThumbManager::getAll());
+        $this->assertEquals(3, $this->ThumbManager->clearAll());
+        $this->assertEmpty($this->ThumbManager->getAll());
     }
 
     /**
@@ -76,8 +98,8 @@ class ThumbManagerTest extends TestCase
      */
     public function testGet()
     {
-        $this->assertCount(2, ThumbManager::get('400x400.jpg'));
-        $this->assertCount(1, ThumbManager::get('400x400.png'));
+        $this->assertCount(2, $this->ThumbManager->get('400x400.jpg'));
+        $this->assertCount(1, $this->ThumbManager->get('400x400.png'));
     }
 
     /**
@@ -86,6 +108,6 @@ class ThumbManagerTest extends TestCase
      */
     public function testGetAll()
     {
-        $this->assertCount(3, ThumbManager::getAll());
+        $this->assertCount(3, $this->ThumbManager->getAll());
     }
 }
