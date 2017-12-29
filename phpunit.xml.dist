@@ -11,6 +11,11 @@
 		<testsuite name="cakephp-thumber Test Cases">
 			<directory>./tests/TestCase</directory>
 		</testsuite>
+        
+        <testsuite name="cakephp3.4">
+			<directory>./tests/TestCase</directory>
+            <exclude>./tests/TestCase/Shell/ThumberShellTest.php</exclude>
+        </testsuite>
 	</testsuites>
     
 	<!-- configure code coverage -->
