@@ -12,7 +12,6 @@
 * `resolveFilePath()` method moved from `ThumbCreator` to `ThumbTrait`, because
     this method can be used in different contexts.
 
-
 ## 1.2 branch
 # 1.2.0
 * updated for intervention/image 2.4;
