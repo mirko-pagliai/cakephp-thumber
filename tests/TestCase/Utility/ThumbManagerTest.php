@@ -53,14 +53,14 @@ class ThumbManagerTest extends TestCase
      */
     public function testClear()
     {
-        $this->assertTrue(ThumbManager::clear('400x400.jpg'));
+        $this->assertEquals(2, ThumbManager::clear('400x400.jpg'));
         $this->assertEquals([
             '5426d23e4b4cb4fff73345b634542ba6_05a9a45566939047c4880be9c21a04b2.png',
         ], ThumbManager::getAll());
 
         $this->createSomeThumbs();
 
-        $this->assertTrue(ThumbManager::clear('400x400.png'));
+        $this->assertEquals(1, ThumbManager::clear('400x400.png'));
         $this->assertEquals([
             '57ad18ce32980e0e5ec6cac848f61bc5_2bbdbd92db066a07672ffbfbdc09e9f7.jpg',
             '57ad18ce32980e0e5ec6cac848f61bc5_bf2a4de9d7436dd52c3968bdbc714701.jpg',
@@ -73,7 +73,7 @@ class ThumbManagerTest extends TestCase
      */
     public function testClearAll()
     {
-        $this->assertTrue(ThumbManager::clearAll());
+        $this->assertEquals(3, ThumbManager::clearAll());
         $this->assertEmpty(ThumbManager::getAll());
     }
 

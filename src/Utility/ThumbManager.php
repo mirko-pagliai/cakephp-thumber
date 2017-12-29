@@ -27,19 +27,21 @@ class ThumbManager
     /**
      * Internal method to clear thumbnails
      * @param array $filenames Filenames
-     * @return bool
+     * @return int|bool Number of thumbnails deleted otherwise `false` in case of error
      */
     protected static function _clear($filenames)
     {
-        $success = true;
+        $count = 0;
 
         foreach ($filenames as $filename) {
             if (!(new File(self::getPath($filename)))->delete()) {
-                $success = false;
+                return false;
             }
+
+            $count++;
         }
 
-        return $success;
+        return $count;
     }
 
     /**
@@ -60,7 +62,7 @@ class ThumbManager
     /**
      * Clears all thumbnails that have been generated from an image path
      * @param string $path Path of the original image
-     * @return bool
+     * @return int|bool Number of thumbnails deleted otherwise `false` in case of error
      * @uses _clear()
      * @uses get()
      */
@@ -71,7 +73,7 @@ class ThumbManager
 
     /**
      * Clears all thumbnails
-     * @return bool
+     * @return int|bool Number of thumbnails deleted otherwise `false` in case of error
      * @uses _clear()
      * @uses getAll()
      */
