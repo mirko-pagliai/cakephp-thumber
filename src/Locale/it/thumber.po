@@ -1,10 +1,10 @@
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
+# LANGUAGE translation of cakephp-thumber
+# Copyright 2017 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-03-17 21:00+0100\n"
-"PO-Revision-Date: 2017-03-17 21:01+0100\n"
+"POT-Creation-Date: 2017-12-29 15:18+0100\n"
+"PO-Revision-Date: 2017-12-29 15:27+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,23 +13,48 @@ msgstr ""
 "Language-Team: Italian <>\n"
 "Language: it\n"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Controller/ThumbsController.php:45
-msgid "File `{0}` doesn't exist"
-msgstr "Il file `{0}` non esiste"
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:144
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/ThumbTrait.php:120
 msgid "File `{0}` not readable"
 msgstr "File `{0}` non leggibile"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:269
-msgid "No valid method called before the `{0}` method"
-msgstr "Nessun metodo valido chiamato prima del metodo `{0}`"
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Controller/ThumbsController.php:37
+msgid "File `{0}` doesn't exist"
+msgstr "Il file `{0}` non esiste"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:299
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:41
+msgid "Error deleting thumbnails"
+msgstr "Errore cancellando le miniature"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:46
+msgid "Thumbnails deleted: {0}"
+msgstr "Miniature cancellate: {0}"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:80
+msgid "Clears all thumbnails that have been generated from an image path"
+msgstr ""
+"Cancella tutte le miniature che sono state generate dalla path di un'immagine"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:84
+msgid "Path of the original image"
+msgstr "Path dell'immagine originale"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:90
+msgid "Clears all thumbnails"
+msgstr "Cancella tutte le miniature"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:91
+msgid "A shell to manage thumbnails"
+msgstr "Una shell per gestire le miniature"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:107
 msgid "Unable to read image from file `{0}`"
 msgstr "Impossibile leggere l'immagine dal file `{0}`"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:313
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:229
+msgid "No valid method called before the `{0}` method"
+msgstr "Nessun metodo valido chiamato prima del metodo `{0}`"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:260
 msgid "The directory `{0}` is not writeable"
 msgstr "La directory `{0}` non è scrivibile"
 
