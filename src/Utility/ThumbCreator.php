@@ -210,6 +210,32 @@ class ThumbCreator
 
         return $this;
     }
+    
+    /**
+     * Resizes the canvas
+     * @param int $width Required width
+     * @param int $heigth Required heigth
+     * @param array $options Options for the thumbnail
+     * @return \Thumber\Utility\ThumbCreator
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#resizeCanvas
+     * @uses $arguments
+     * @uses $callbacks
+     */
+    public function resizeCanvas($width = null, $heigth = null, array $options = [])
+    {
+        //Sets default options
+        $options += ['anchor' => 'center', 'relative' => 'false', 'bgcolor' => 'ffffff'];
+
+        //Adds arguments
+        $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
+
+        //Adds the callback
+        $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
+            return $imageInstance->resizeCanvas($width, $heigth, $options['anchor'], $options['relative'], $options['bgcolor']);
+        };
+
+        return $this;
+    }
 
     /**
      * Saves the thumbnail and returns its path
