@@ -141,7 +141,7 @@ class ThumbHelper extends Helper
     }
 
     /**
-     * Creates a resizes thumbnail and returns its url.
+     * Creates a resized thumbnail and returns its url.
      * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
