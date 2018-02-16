@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.3 branch
+# 1.3.1
+* added `ThumbCreator::resizeCanvas()` method;
+* added `ThumbHelper::resizeCanvas()` and `ThumbHelper::resizeCanvasUrl()` methods. 
+
 # 1.3.0
 * the name of the thumbnails (when automatically generated) now contains a
     prefix with the checksum of the path of the original image and a suffix with
