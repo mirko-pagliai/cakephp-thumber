@@ -39,7 +39,6 @@ class ThumbHelperTest extends TestCase
 
     /**
      * Test for `crop()` and `cropUrl()` methods
-     * @return void
      * @test
      */
     public function testCrop()
@@ -55,7 +54,6 @@ class ThumbHelperTest extends TestCase
     /**
      * Test for `crop()` and `cropUrl()` methods, with the `fullBase` option as
      *  `false`
-     * @return void
      * @test
      */
     public function testCropFullBaseFalse()
@@ -80,7 +78,6 @@ class ThumbHelperTest extends TestCase
 
     /**
      * Test for `fit()` and `fitUrl()` methods
-     * @return void
      * @test
      */
     public function testFit()
@@ -96,7 +93,6 @@ class ThumbHelperTest extends TestCase
     /**
      * Test for `fit()` and `fitUrl()` methods, with the `fullBase` option as
      *  `false`
-     * @return void
      * @test
      */
     public function testFitFullBaseFalse()
@@ -121,7 +117,6 @@ class ThumbHelperTest extends TestCase
 
     /**
      * Test for `resize()` and `resizeUrl()` methods
-     * @return void
      * @test
      */
     public function testResize()
@@ -137,7 +132,6 @@ class ThumbHelperTest extends TestCase
     /**
      * Test for `resize()` and `resizeUrl()` methods, with the `fullBase` option
      *  as `false`
-     * @return void
      * @test
      */
     public function testResizeFullBaseFalse()
@@ -162,7 +156,6 @@ class ThumbHelperTest extends TestCase
 
     /**
      * Test for `url` option
-     * @return void
      * @test
      */
     public function testUrlOption()

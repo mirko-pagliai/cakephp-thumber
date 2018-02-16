@@ -21,7 +21,6 @@ class GlobalFunctionsTest extends TestCase
 {
     /**
      * Test for `isUrl()` global function
-     * @return void
      * @test
      */
     public function testIsUrl()
@@ -53,7 +52,6 @@ class GlobalFunctionsTest extends TestCase
 
     /**
      * Test for `rtr()` global function
-     * @return void
      * @test
      */
     public function testRtr()

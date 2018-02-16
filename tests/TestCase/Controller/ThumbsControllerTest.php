@@ -100,7 +100,6 @@ class ThumbsControllerTest extends IntegrationTestCase
 
     /**
      * Test for `thumb()` method, with a a no existing file
-     * @return void
      * @test
      */
     public function testThumbNoExistingFileResponse()
