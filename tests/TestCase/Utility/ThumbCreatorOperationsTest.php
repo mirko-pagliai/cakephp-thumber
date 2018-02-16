@@ -371,6 +371,79 @@ class ThumbCreatorOperationsTest extends TestCase
     }
 
     /**
+     * Test for `resizeCanvas()` method
+     * @ŧest
+     */
+    public function testResizeCanvas()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(200, 100)->save();
+        $this->assertImageSize($thumb, 200, 100);
+        $this->assertMime($thumb, 'image/jpeg');
+
+        $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(null, 200)->save();
+        $this->assertImageSize($thumb, 400, 200);
+        $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for `resizeCanvas()` method, equating images
+     * @group imageEquals
+     * @test
+     */
+    public function testResizeCanvasImageEquals()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(300, 200)->save();
+        $this->assertImageFileEquals('resize_canvas_w300_h200.jpg', $thumb);
+
+        $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(null, 100)->save();
+        $this->assertImageFileEquals('resize_canvas_w400_h100.jpg', $thumb);
+    }
+
+    /**
+     * Test for `resizeCanvas()` method, using  the `anchor` option
+     * @ŧest
+     */
+    public function testResizeCanvasAnchor()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(300, 300, ['anchor' => 'bottom'])->save();
+        $this->assertImageSize($thumb, 300, 300);
+        $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for `resizeCanvas()` method, using  the `anchor` option, equating images
+     * @group imageEquals
+     * @test
+     */
+    public function testResizeCanvasAnchorImageEquals()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(300, 300, ['anchor' => 'bottom'])->save();
+        $this->assertImageFileEquals('resize_canvas_w300_h300_anchor_bottom.jpg', $thumb);
+    }
+
+    /**
+     * Test for `resizeCanvas()` method, using  the `relative` and `bgcolor` options
+     * @ŧest
+     */
+    public function testResizeCanvasRelativeAndBgcolor()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(300, 300, ['relative' => true, 'bgcolor' => '#000000'])->save();
+        $this->assertImageSize($thumb, 700, 700);
+        $this->assertMime($thumb, 'image/jpeg');
+    }
+
+    /**
+     * Test for `resizeCanvas()` method, using  the `relative` and `bgcolor` options, equating images
+     * @group imageEquals
+     * @test
+     */
+    public function testResizeCanvasRelativeAndBgcolorImageEquals()
+    {
+        $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(300, 300, ['relative' => true, 'bgcolor' => '#000000'])->save();
+        $this->assertImageFileEquals('resize_canvas_w700_h700_relative_and_black.jpg', $thumb);
+    }
+
+    /**
      * Test for several methods called in sequence on the same image (eg.,
      *  `crop()` and `resize()`
      * @test

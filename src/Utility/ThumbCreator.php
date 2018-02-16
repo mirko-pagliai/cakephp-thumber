@@ -212,6 +212,37 @@ class ThumbCreator
     }
 
     /**
+     * Resizes the boundaries of the current image to given width and height. An
+     *  anchor can be defined to determine from what point of the image the
+     *  resizing is going to happen. Set the mode to relative to add or subtract
+     *  the given width or height to the actual image dimensions. You can also
+     *  pass a background color for the emerging area of the image
+     * @param int $width Required width
+     * @param int $heigth Required heigth
+     * @param array $options Options for the thumbnail
+     * @return \Thumber\Utility\ThumbCreator
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#resizecanvas
+     * @since 1.3.1
+     * @uses $arguments
+     * @uses $callbacks
+     */
+    public function resizeCanvas($width, $heigth = null, array $options = [])
+    {
+        //Sets default options
+        $options += ['anchor' => 'center', 'relative' => false, 'bgcolor' => '#ffffff'];
+
+        //Adds arguments
+        $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
+
+        //Adds the callback
+        $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
+            return $imageInstance->resizeCanvas($width, $heigth, $options['anchor'], $options['relative'], $options['bgcolor']);
+        };
+
+        return $this;
+    }
+
+    /**
      * Saves the thumbnail and returns its path
      * @param array $options Options for saving
      * @return string Thumbnail path
