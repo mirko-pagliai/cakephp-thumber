@@ -221,7 +221,7 @@ class ThumbCreator
      * @param int $heigth Required heigth
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
-     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#resizeCanvas
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#resizecanvas
      * @since 1.3.1
      * @uses $arguments
      * @uses $callbacks

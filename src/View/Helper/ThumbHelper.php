@@ -170,6 +170,7 @@ class ThumbHelper extends Helper
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#resizecanvas-and-resizecanvasurl
      * @since 1.3.1
      * @uses resizeCanvasUrl()
      */
@@ -186,6 +187,7 @@ class ThumbHelper extends Helper
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#resizecanvas-and-resizecanvasurl
      * @since 1.3.1
      */
     public function resizeCanvasUrl($path, array $params = [], array $options = [])
