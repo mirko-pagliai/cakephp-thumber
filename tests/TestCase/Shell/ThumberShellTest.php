@@ -13,8 +13,10 @@
 namespace Thumber\Test\TestCase\Shell;
 
 use Cake\Console\ConsoleIo;
+use Cake\Core\Configure;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use Cake\TestSuite\TestCase;
+use Cake\Utility\Inflector;
 use Reflection\ReflectionTrait;
 use Thumber\Shell\ThumberShell;
 use Thumber\Utility\ThumbCreator;
@@ -158,7 +160,15 @@ class ThumberShellTest extends TestCase
         $parser = (new ThumberShell)->getOptionParser();
 
         $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
-        $this->assertEquals(['clear', 'clearAll'], array_keys($parser->subcommands()));
+
+        $subCommands = ['clear', 'clear_all'];
+
+        if (version_compare(Configure::version(), '3.5', '<')) {
+            $subCommands = array_map([Inflector::class, 'variable'], $subCommands);
+        }
+
+        $this->assertEquals($subCommands, array_keys($parser->subcommands()));
+
         $this->assertEquals('A shell to manage thumbnails', $parser->description());
     }
 }
