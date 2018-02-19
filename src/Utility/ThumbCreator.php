@@ -13,7 +13,6 @@
  */
 namespace Thumber\Utility;
 
-use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
 use Intervention\Image\Constraint;
@@ -61,7 +60,6 @@ class ThumbCreator
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
      * @return \Thumber\Utility\ThumbCreator
-     * @uses resolveFilePath()
      * @uses $arguments
      * @uses $path
      */
@@ -110,41 +108,6 @@ class ThumbCreator
         }
 
         return $imageInstance;
-    }
-
-    /**
-     * Internal method to resolve a partial path, returning its full path
-     * @param string $path Partial path
-     * @return string
-     * @throws InternalErrorException
-     */
-    protected function resolveFilePath($path)
-    {
-        //Returns, if it's a remote file
-        if (isUrl($path)) {
-            return $path;
-        }
-
-        //If it a relative path, it can be a file from a plugin or a file
-        //  relative to `APP/webroot/img/`
-        if (!Folder::isAbsolute($path)) {
-            $pluginSplit = pluginSplit($path);
-
-            //Note that using `pluginSplit()` is not sufficient, because
-            //  `$path` may still contain a dot
-            if (!empty($pluginSplit[0]) && in_array($pluginSplit[0], Plugin::loaded())) {
-                $path = Plugin::path($pluginSplit[0]) . 'webroot' . DS . 'img' . DS . $pluginSplit[1];
-            } else {
-                $path = WWW_ROOT . 'img' . DS . $path;
-            }
-        }
-
-        //Checks if is readable
-        if (!is_readable($path)) {
-            throw new InternalErrorException(__d('thumber', 'File `{0}` not readable', rtr($path)));
-        }
-
-        return $path;
     }
 
     /**
@@ -249,6 +212,37 @@ class ThumbCreator
     }
 
     /**
+     * Resizes the boundaries of the current image to given width and height. An
+     *  anchor can be defined to determine from what point of the image the
+     *  resizing is going to happen. Set the mode to relative to add or subtract
+     *  the given width or height to the actual image dimensions. You can also
+     *  pass a background color for the emerging area of the image
+     * @param int $width Required width
+     * @param int $heigth Required heigth
+     * @param array $options Options for the thumbnail
+     * @return \Thumber\Utility\ThumbCreator
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#resizecanvas
+     * @since 1.3.1
+     * @uses $arguments
+     * @uses $callbacks
+     */
+    public function resizeCanvas($width, $heigth = null, array $options = [])
+    {
+        //Sets default options
+        $options += ['anchor' => 'center', 'relative' => false, 'bgcolor' => '#ffffff'];
+
+        //Adds arguments
+        $this->arguments[] = [__FUNCTION__, $width, $heigth, $options];
+
+        //Adds the callback
+        $this->callbacks[] = function (Image $imageInstance) use ($width, $heigth, $options) {
+            return $imageInstance->resizeCanvas($width, $heigth, $options['anchor'], $options['relative'], $options['bgcolor']);
+        };
+
+        return $this;
+    }
+
+    /**
      * Saves the thumbnail and returns its path
      * @param array $options Options for saving
      * @return string Thumbnail path
@@ -272,7 +266,7 @@ class ThumbCreator
         if (!$target) {
             $this->arguments[] = [$this->getDriver(), $options['format'], $options['quality']];
 
-            $target = md5(serialize($this->arguments)) . '.' . $options['format'];
+            $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
         } else {
             $options['format'] = $this->getExtension($target);
         }

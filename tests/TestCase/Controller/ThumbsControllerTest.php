@@ -66,7 +66,25 @@ class ThumbsControllerTest extends IntegrationTestCase
             $this->assertResponseOk();
             $this->assertFileResponse($thumb);
             $this->assertContentType($expectedMimeType);
+
+            //Gets the `Last-Modified` header
+            $lastModified = $this->_response->header()['Last-Modified'];
+            $this->assertNotEmpty($lastModified);
         }
+
+        //It still requires the last thumbnail file. It gets the 304 status code
+        sleep(1);
+        $this->configRequest(['headers' => ['If-Modified-Since' => $lastModified]]);
+        $this->get($url);
+        $this->assertResponseCode(304);
+
+        //Deletes the last thumbnail file. Now the `Last-Modified` header is different
+        unlink($thumb);
+        sleep(1);
+        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        $this->get($url);
+        $this->assertResponseOk();
+        $this->assertNotEquals($lastModified, $this->_response->header()['Last-Modified']);
     }
 
     /**
@@ -82,7 +100,6 @@ class ThumbsControllerTest extends IntegrationTestCase
 
     /**
      * Test for `thumb()` method, with a a no existing file
-     * @return void
      * @test
      */
     public function testThumbNoExistingFileResponse()
