@@ -19,6 +19,7 @@ use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
+use RuntimeException;
 use Thumber\ThumbTrait;
 
 /**
@@ -94,7 +95,7 @@ class ThumbCreator
     /**
      * Gets an `Image` instance
      * @return \Intervention\Image\Image
-     * @throws InternalErrorException
+     * @throws RuntimeException
      * @uses $path
      */
     protected function getImageInstance()
@@ -104,7 +105,13 @@ class ThumbCreator
             $imageInstance = (new ImageManager(['driver' => $this->getDriver()]))
                 ->make($this->path);
         } catch (NotReadableException $e) {
-            throw new InternalErrorException(__d('thumber', 'Unable to read image from file `{0}`', rtr($this->path)));
+            $message = __d('thumber', 'Unable to read image from file `{0}`', rtr($this->path));
+
+            if ($e->getMessage() == 'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.') {
+                $message = __d('thumber', 'Image type `{0}` is not supported by this driver', mime_content_type($this->path));
+            }
+
+            throw new RuntimeException($message);
         }
 
         return $imageInstance;

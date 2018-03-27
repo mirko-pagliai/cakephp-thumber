@@ -30,20 +30,24 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSave()
     {
         $extensions = [
-            'bmp' => 'image/x-ms-bmp',
             'gif' => 'image/gif',
-            'ico' => 'image/x-icon',
             'jpeg' => 'image/jpeg',
             'jpg' => 'image/jpeg',
             'png' => 'image/png',
-            'psd' => 'image/vnd.adobe.photoshop',
-            'tif' => 'image/tiff',
-            'tiff' => 'image/tiff',
         ];
 
-        foreach ($extensions as $extension => $expectedMimetype) {
-            $this->skipIf($this->getDriver() === 'gd' && $extension === 'bmp');
+        //Adds some extensions only for the `imagick` driver
+        if ($this->getDriver() == 'imagick') {
+            $extensions += [
+                'bmp' => 'image/x-ms-bmp',
+                'ico' => 'image/x-icon',
+                'psd' => 'image/vnd.adobe.photoshop',
+                'tif' => 'image/tiff',
+                'tiff' => 'image/tiff',
+            ];
+        }
 
+        foreach ($extensions as $extension => $expectedMimetype) {
             $thumb = (new ThumbCreator('400x400.' . $extension))->resize(200)->save();
             $this->assertThumbPath($thumb);
             $this->assertMime($thumb, $expectedMimetype);
@@ -61,13 +65,32 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
-     * Test for `save()` method, using an invalid file as input
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * Test for `save()` method, using an invalid file as input.
+     *
+     * This test runs only for the `gd` driver.
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Image type `text/x-php` is not supported by this driver
+     * @ŧest
+     */
+    public function testSaveFromInvalidFileGd()
+    {
+        $this->skipIf($this->getDriver() != 'gd');
+
+        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
+    }
+
+    /**
+     * Test for `save()` method, using an invalid file as input.
+     *
+     * This test runs only for the `imagick` driver.
+     * @expectedException RuntimeException
      * @expectedExceptionMessage Unable to read image from file `tests/test_app/config/routes.php`
      * @ŧest
      */
-    public function testSaveFromInvalidFile()
+    public function testSaveFromInvalidFileImagick()
     {
+        $this->skipIf($this->getDriver() != 'imagick');
+
         (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
     }
 

@@ -43,16 +43,22 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function testThumb()
     {
         $extensions = [
-            'bmp' => 'image/x-ms-bmp',
             'gif' => 'image/gif',
-            'ico' => 'image/x-icon',
             'jpeg' => 'image/jpeg',
             'jpg' => 'image/jpeg',
             'png' => 'image/png',
-            'psd' => 'image/vnd.adobe.photoshop',
-            'tif' => 'image/tiff',
-            'tiff' => 'image/tiff',
         ];
+
+        //Adds some extensions only for the `imagick` driver
+        if ($this->getDriver() == 'imagick') {
+            $extensions += [
+                'bmp' => 'image/x-ms-bmp',
+                'ico' => 'image/x-icon',
+                'psd' => 'image/vnd.adobe.photoshop',
+                'tif' => 'image/tiff',
+                'tiff' => 'image/tiff',
+            ];
+        }
 
         foreach ($extensions as $extension => $expectedMimeType) {
             $file = '400x400.' . $extension;
