@@ -96,7 +96,7 @@ if (!getenv('driver')) {
 Configure::write('Thumber.driver', getenv('driver'));
 Configure::write('Thumber.comparingDir', TESTS . DS . 'comparing_files' . DS . getenv('driver') . DS);
 
-echo 'Running tests for "' . getenv('driver') . '" driver '. PHP_EOL;
+echo 'Running tests for "' . getenv('driver') . '" driver ' . PHP_EOL;
 
 Plugin::load('Thumber', [
     'bootstrap' => true,
