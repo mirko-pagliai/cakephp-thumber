@@ -20,5 +20,4 @@ use Cake\Network\Exception\NotFoundException;
  */
 class ThumbNotFoundException extends NotFoundException
 {
-
 }

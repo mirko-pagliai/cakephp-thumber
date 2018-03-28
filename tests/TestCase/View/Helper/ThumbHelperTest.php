@@ -47,8 +47,7 @@ class ThumbHelperTest extends TestCase
         $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
 
         $html = $this->Thumb->crop('400x400.png', ['width' => 200]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
     }
 
     /**
@@ -62,8 +61,7 @@ class ThumbHelperTest extends TestCase
         $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
 
         $html = $this->Thumb->crop('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
     }
 
     /**
@@ -86,8 +84,7 @@ class ThumbHelperTest extends TestCase
         $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
 
         $html = $this->Thumb->fit('400x400.png', ['width' => 200]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
     }
 
     /**
@@ -101,8 +98,7 @@ class ThumbHelperTest extends TestCase
         $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
 
         $html = $this->Thumb->fit('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
     }
 
     /**
@@ -125,8 +121,7 @@ class ThumbHelperTest extends TestCase
         $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
 
         $html = $this->Thumb->resize('400x400.png', ['width' => 200]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
     }
 
     /**
@@ -140,8 +135,7 @@ class ThumbHelperTest extends TestCase
         $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
 
         $html = $this->Thumb->resize('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
     }
 
     /**
@@ -164,8 +158,7 @@ class ThumbHelperTest extends TestCase
         $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
 
         $html = $this->Thumb->resizeCanvas('400x400.png', ['width' => 200]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
     }
 
     /**
@@ -179,8 +172,7 @@ class ThumbHelperTest extends TestCase
         $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
 
         $html = $this->Thumb->resizeCanvas('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
     }
 
     /**
@@ -190,13 +182,11 @@ class ThumbHelperTest extends TestCase
     public function testUrlOption()
     {
         $url = $this->Thumb->resizeUrl('400x400.png', ['width' => 200]);
-
         $html = $this->Thumb->resize('400x400.png', ['width' => 200], ['url' => 'http://example']);
-        $expected = [
+        $this->assertHtml([
             'a' => ['href' => 'http://example'],
             'img' => ['src' => $url, 'alt' => ''],
             '/a',
-        ];
-        $this->assertHtml($expected, $html);
+        ], $html);
     }
 }

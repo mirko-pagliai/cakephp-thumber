@@ -15,7 +15,6 @@
 
     <exclude-pattern>*.min.css</exclude-pattern>
     <exclude-pattern>*.min.js</exclude-pattern>
-    <exclude-pattern>/config/ckeditor/build-config.js</exclude-pattern>
     <exclude-pattern>/config/Migrations</exclude-pattern>
     <exclude-pattern>/coverage</exclude-pattern>
     <exclude-pattern>/vendor</exclude-pattern>

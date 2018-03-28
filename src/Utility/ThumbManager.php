@@ -52,9 +52,7 @@ class ThumbManager
      */
     protected function _find($regexpPattern = null, $sort = false)
     {
-        if (!$regexpPattern) {
-            $regexpPattern = sprintf('[a-z0-9]{32}_[a-z0-9]{32}\.(%s)', implode('|', $this->getSupportedFormats()));
-        }
+        $regexpPattern = $regexpPattern ?: sprintf('[a-z0-9]{32}_[a-z0-9]{32}\.(%s)', implode('|', $this->getSupportedFormats()));
 
         return (new Folder($this->getPath()))->find($regexpPattern, $sort);
     }

@@ -25,8 +25,7 @@ class ThumbManagerTest extends TestCase
     use ThumbTrait;
 
     /**
-     *
-     * @var type
+     * @var \Thumber\Utility\ThumbManager
      */
     protected $ThumbManager;
 

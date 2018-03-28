@@ -13,6 +13,9 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Plugin;
+use Intervention\Image\Exception\NotReadableException;
+use Intervention\Image\ImageManager;
+use Reflection\ReflectionTrait;
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator;
 
@@ -21,6 +24,8 @@ use Thumber\Utility\ThumbCreator;
  */
 class ThumbCreatorTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -65,6 +70,23 @@ class ThumbCreatorTest extends TestCase
     public function testConstructNoExistingFileFromPlugin()
     {
         new ThumbCreator('TestPlugin.noExistingFile.gif');
+    }
+
+    /**
+     * Test for `getImageInstance()` method, with unsupported image type for. GD driver
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Image type `image/png` is not supported by this driver
+     * @ŧest
+     */
+    public function testGetImageInstanceUnsupportedImageType()
+    {
+        $thumber = new ThumbCreator('400x400.png');
+
+        $message = 'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.';
+        $thumber->ImageManager = $this->getMockBuilder(ImageManager::class)->getMock();
+        $thumber->ImageManager->method('make')->will($this->throwException(new NotReadableException($message)));
+
+        $this->invokeMethod($thumber, 'getImageInstance');
     }
 
     /**

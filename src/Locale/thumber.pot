@@ -1,11 +1,11 @@
 # LANGUAGE translation of cakephp-thumber
-# Copyright 2017 Mirko Pagliai <mirko.pagliai@gmail.com>
+# Copyright 2018 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2017-12-29 15:18+0100\n"
+"POT-Creation-Date: 2018-03-28 14:11+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -45,15 +45,19 @@ msgstr ""
 msgid "A shell to manage thumbnails"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:107
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:116
 msgid "Unable to read image from file `{0}`"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:229
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:119
+msgid "Image type `{0}` is not supported by this driver"
+msgstr ""
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:275
 msgid "No valid method called before the `{0}` method"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:260
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:306
 msgid "The directory `{0}` is not writeable"
 msgstr ""
 

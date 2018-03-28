@@ -1,5 +1,11 @@
 # 1.x branch
 ## 1.3 branch
+# 1.3.2
+* tests have been simplified. The library to be tested is set by the
+    `tests/bootstrap.php` file, using the `THUMBER_DRIVER` environment variable.
+    By default, Imagick is used;
+* full support for Windows, added tests for Appveyor.
+
 # 1.3.1
 * added `ThumbCreator::resizeCanvas()` method;
 * added `ThumbHelper::resizeCanvas()` and `ThumbHelper::resizeCanvasUrl()` methods. 

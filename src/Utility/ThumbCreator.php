@@ -33,6 +33,12 @@ class ThumbCreator
     use ThumbTrait;
 
     /**
+     * `ImageManager` instance
+     * @var Intervention\Image\ImageManager
+     */
+    public $ImageManager;
+
+    /**
      * Arguments that will be used to generate the name of the thumbnail.
      *
      * Every time you call a method that alters the final thumbnail, its
@@ -61,11 +67,13 @@ class ThumbCreator
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
      * @return \Thumber\Utility\ThumbCreator
+     * @uses $ImageManager
      * @uses $arguments
      * @uses $path
      */
     public function __construct($path)
     {
+        $this->ImageManager = new ImageManager(['driver' => $this->getDriver()]);
         $this->path = $this->resolveFilePath($path);
         $this->arguments[] = $this->path;
 
@@ -96,14 +104,14 @@ class ThumbCreator
      * Gets an `Image` instance
      * @return \Intervention\Image\Image
      * @throws RuntimeException
+     * @uses $ImageManager
      * @uses $path
      */
     protected function getImageInstance()
     {
         //Tries to create the image instance
         try {
-            $imageInstance = (new ImageManager(['driver' => $this->getDriver()]))
-                ->make($this->path);
+            $imageInstance = $this->ImageManager->make($this->path);
         } catch (NotReadableException $e) {
             $message = __d('thumber', 'Unable to read image from file `{0}`', rtr($this->path));
 
@@ -132,8 +140,8 @@ class ThumbCreator
      */
     public function crop($width = null, $heigth = null, array $options = [])
     {
-        $heigth = empty($heigth) ? $width : $heigth;
-        $width = empty($width) ? $heigth : $width;
+        $heigth = $heigth ?: $width;
+        $width = $width ?: $heigth;
 
         //Sets default options
         $options += ['x' => null, 'y' => null];
@@ -163,8 +171,8 @@ class ThumbCreator
      */
     public function fit($width = null, $heigth = null, array $options = [])
     {
-        $heigth = empty($heigth) ? $width : $heigth;
-        $width = empty($width) ? $heigth : $width;
+        $heigth = $heigth ?: $width;
+        $width = $width ?: $heigth;
 
         //Sets default options
         $options += ['position' => 'center', 'upsize' => true];
