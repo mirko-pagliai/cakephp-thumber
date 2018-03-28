@@ -3,7 +3,7 @@ clone_folder: C:\projects\cakephp-thumber
 platform: x86
 
 environment:
-  driver: "gd"
+  thumberDriver: "gd"
   global:
     PHP: "C:/PHP"
 

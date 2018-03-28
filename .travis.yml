@@ -13,7 +13,7 @@ matrix:
       env: PHPCS=1
       
     - php: 7.0
-      env: driver=gd
+      env: thumberDriver=gd
 
     - php: 7.0
       env: COVERAGE=1

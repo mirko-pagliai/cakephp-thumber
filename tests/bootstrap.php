@@ -89,11 +89,11 @@ Cache::setConfig([
     ],
 ]);
 
-if (!getenv('driver')) {
-    putenv('driver=imagick');
+if (!getenv('thumberDriver')) {
+    putenv('thumberDriver=imagick');
 }
 
-Configure::write('Thumber.driver', getenv('driver'));
+Configure::write('Thumber.driver', getenv('thumberDriver'));
 Configure::write('Thumber.comparingDir', TESTS . DS . 'comparing_files' . DS . Configure::read('Thumber.driver') . DS);
 
 echo 'Running tests for "' . Configure::read('Thumber.driver') . '" driver ' . PHP_EOL;
