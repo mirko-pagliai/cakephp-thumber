@@ -71,7 +71,9 @@ The plugin uses some configuration parameters and you can set them using the
 For example, you can do this at the bottom of the file `APP/config/app.php`
 of your application.
 
-**Note**: up to the *1.0.4* version, the configuration parameters had the `Thumbs` name as a prefix. Starting with the *1.1.0* version, they have the plugin name (`Thumber`) as a prefix.
+**Note**: up to the *1.0.4* version, the configuration parameters had the
+`Thumbs` name as a prefix. Starting with the *1.1.0* version, they have the
+plugin name (`Thumber`) as a prefix.
 
 ### Configuration values
 
