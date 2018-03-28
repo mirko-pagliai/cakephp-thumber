@@ -96,7 +96,7 @@ class ThumbsControllerTest extends IntegrationTestCase
     /**
      * Test for `asset()` method, with a a no existing file
      * @expectedException Thumber\Network\Exception\ThumbNotFoundException
-     * @expectedExceptionMessage File `/tmp/thumbs/noExistingFile` doesn't exist
+     * @expectedExceptionMessageRegExp /^File `[\w\/:\\]+` doesn't exist$/
      * @test
      */
     public function testThumbNoExistingFile()

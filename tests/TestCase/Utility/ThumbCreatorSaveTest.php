@@ -219,7 +219,7 @@ class ThumbCreatorSaveTest extends TestCase
      * Test for `save()` method, using the `target` option with a no existing
      *  directory target
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage The directory `/tmp/noExistingDir` is not writeable
+     * @expectedExceptionMessageRegExp /^The directory `[\w\/:\\]+` is not writeable$/
      * @test
      */
     public function testSaveInvalidTargetDir()
