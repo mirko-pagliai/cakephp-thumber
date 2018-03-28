@@ -15,7 +15,6 @@ namespace Thumber\TestSuite;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Imagick;
 use Reflection\ReflectionTrait;
 use Thumber\ThumbTrait;
 
@@ -50,10 +49,7 @@ abstract class TestCase extends CakeTestCase
     {
         $result = tempnam(sys_get_temp_dir(), $path);
 
-        $imagick = new Imagick($path);
-        $imagick->stripImage();
-        $imagick->writeImage($result);
-        $imagick->clear();
+        copy($path, $result);
 
         return $result;
     }
