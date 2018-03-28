@@ -140,8 +140,8 @@ class ThumbCreator
      */
     public function crop($width = null, $heigth = null, array $options = [])
     {
-        $heigth = empty($heigth) ? $width : $heigth;
-        $width = empty($width) ? $heigth : $width;
+        $heigth = $heigth ?: $width;
+        $width = $width ?: $heigth;
 
         //Sets default options
         $options += ['x' => null, 'y' => null];
@@ -171,8 +171,8 @@ class ThumbCreator
      */
     public function fit($width = null, $heigth = null, array $options = [])
     {
-        $heigth = empty($heigth) ? $width : $heigth;
-        $width = empty($width) ? $heigth : $width;
+        $heigth = $heigth ?: $width;
+        $width = $width ?: $heigth;
 
         //Sets default options
         $options += ['position' => 'center', 'upsize' => true];
