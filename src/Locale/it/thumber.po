@@ -1,10 +1,10 @@
 # LANGUAGE translation of cakephp-thumber
-# Copyright 2017 Mirko Pagliai <mirko.pagliai@gmail.com>
+# Copyright 2018 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-12-29 15:18+0100\n"
-"PO-Revision-Date: 2017-12-29 15:27+0100\n"
+"POT-Creation-Date: 2018-03-28 14:11+0200\n"
+"PO-Revision-Date: 2018-03-28 14:13+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,15 +46,19 @@ msgstr "Cancella tutte le miniature"
 msgid "A shell to manage thumbnails"
 msgstr "Una shell per gestire le miniature"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:107
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:116
 msgid "Unable to read image from file `{0}`"
 msgstr "Impossibile leggere l'immagine dal file `{0}`"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:229
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:119
+msgid "Image type `{0}` is not supported by this driver"
+msgstr "Il tipo di immagine `{0}` non è supportato da questo driver"
+
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:275
 msgid "No valid method called before the `{0}` method"
 msgstr "Nessun metodo valido chiamato prima del metodo `{0}`"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:260
+#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:306
 msgid "The directory `{0}` is not writeable"
 msgstr "La directory `{0}` non è scrivibile"
 
