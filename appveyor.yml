@@ -32,4 +32,4 @@ install:
 
 test_script:
   - cd C:\projects\cakephp-thumber
-  - vendor\bin\phpunit.bat
+  - vendor\bin\phpunit.bat --exclude-group imageEquals
