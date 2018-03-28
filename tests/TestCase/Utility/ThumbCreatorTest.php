@@ -48,7 +48,7 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `__construct()` method, passing a no existing file
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage File `tests/test_app/webroot/img/noExistingFile.gif` not readable
+     * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFile()
@@ -59,7 +59,7 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `__construct()` method, passing a no existing file from plugin
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage File `tests/test_app/Plugin/TestPlugin/webroot/img/noExistingFile.gif` not readable
+     * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFileFromPlugin()

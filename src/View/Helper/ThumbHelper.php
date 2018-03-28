@@ -161,4 +161,44 @@ class ThumbHelper extends Helper
 
         return $this->getUrl($thumb, $options['fullBase']);
     }
+
+    /**
+     * Creates a resized canvas thumbnail and returns a formatted `img` element.
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url
+     * @param array $params Parameters for creating the thumbnail
+     * @param array $options Array of HTML attributes for the `img` element
+     * @return string
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#resizecanvas-and-resizecanvasurl
+     * @since 1.3.1
+     * @uses resizeCanvasUrl()
+     */
+    public function resizeCanvas($path, array $params = [], array $options = [])
+    {
+        return $this->Html->image($this->resizeCanvasUrl($path, $params, $options), $options);
+    }
+
+    /**
+     * Creates a resized canvas thumbnail and returns its url.
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url
+     * @param array $params Parameters for creating the thumbnail
+     * @param array $options Array of HTML attributes for the `img` element
+     * @return string
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#resizecanvas-and-resizecanvasurl
+     * @since 1.3.1
+     */
+    public function resizeCanvasUrl($path, array $params = [], array $options = [])
+    {
+        //Sets default parameters and options
+        $params += ['format' => 'jpg', 'height' => null, 'width' => null];
+        $options += ['fullBase' => true];
+
+        //Creates the thumbnail
+        $thumb = (new ThumbCreator($path))->resizeCanvas($params['width'], $params['height'])->save($params);
+
+        return $this->getUrl($thumb, $options['fullBase']);
+    }
 }
