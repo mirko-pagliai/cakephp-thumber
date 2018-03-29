@@ -33,23 +33,32 @@ class ThumbHelper extends Helper
     public $helpers = ['Html'];
 
     /**
-     * Creates a thumbnail, cutting out a rectangular part of the image, and
-     *  returns a formatted `img` element.
+     * Magic method.
      *
-     * You can define optional coordinates to move the top-left corner of the
-     *  cutout to a certain position.
-     * @param string $path Path of the image from which to create the
-     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url
-     * @param array $params Parameters for creating the thumbnail
-     * @param array $options Array of HTML attributes for the `img` element
+     * It dynamically calls `crop()`, `fit()`, `resize()` and `resizeCanvas()`
+     *  methods.
+     *
+     * Each method takes these arguments:
+     *  - $path Path of the image from which to create the thumbnail. It can be
+     *      a relative path (to APP/webroot/img), a full path or a remote url;
+     *  - $params Parameters for creating the thumbnail;
+     *  - $options Array of HTML attributes for the `img` element.
+     * @param string $name Method to invoke
+     * @param array $params Array of params for the method
      * @return string
-     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#crop-and-cropurl
-     * @uses cropUrl()
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
+     * @since 1.4.0
      */
-    public function crop($path, array $params = [], array $options = [])
+    public function __call($name, $params)
     {
-        return $this->Html->image($this->cropUrl($path, $params, $options), $options);
+        $methodToCall = sprintf('%sUrl', $name);
+        if (method_exists($this, $methodToCall)) {
+            $url = call_user_func_array([$this, $methodToCall], $params);
+
+            return $this->Html->image($url, empty($params[2]) ? [] : $params[2]);
+        }
+
+        return parent::__call($name, $params);
     }
 
     /**
@@ -80,26 +89,6 @@ class ThumbHelper extends Helper
 
     /**
      * Creates a thumbnail, combining cropping and resizing to format image in
-     *   a smart way, and returns a formatted `img` element.
-     *
-     * This method will find the best fitting aspect ratio on the current image
-     *  automatically, cuts it out and resizes it to the given dimension.
-     * @param string $path Path of the image from which to create the
-     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url
-     * @param array $params Parameters for creating the thumbnail
-     * @param array $options Array of HTML attributes for the `img` element
-     * @return string
-     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#fit-and-fiturl
-     * @uses fitUrl()
-     */
-    public function fit($path, array $params = [], array $options = [])
-    {
-        return $this->Html->image($this->fitUrl($path, $params, $options), $options);
-    }
-
-    /**
-     * Creates a thumbnail, combining cropping and resizing to format image in
      *   a smart way, and returns its url.
      *
      * This method will find the best fitting aspect ratio on the current image
@@ -125,22 +114,6 @@ class ThumbHelper extends Helper
     }
 
     /**
-     * Creates a resized thumbnail and returns a formatted `img` element.
-     * @param string $path Path of the image from which to create the
-     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url
-     * @param array $params Parameters for creating the thumbnail
-     * @param array $options Array of HTML attributes for the `img` element
-     * @return string
-     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#resize-and-resizeurl
-     * @uses resizeUrl()
-     */
-    public function resize($path, array $params = [], array $options = [])
-    {
-        return $this->Html->image($this->resizeUrl($path, $params, $options), $options);
-    }
-
-    /**
      * Creates a resized thumbnail and returns its url.
      * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
@@ -160,23 +133,6 @@ class ThumbHelper extends Helper
         $thumb = (new ThumbCreator($path))->resize($params['width'], $params['height'])->save($params);
 
         return $this->getUrl($thumb, $options['fullBase']);
-    }
-
-    /**
-     * Creates a resized canvas thumbnail and returns a formatted `img` element.
-     * @param string $path Path of the image from which to create the
-     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
-     *  or a remote url
-     * @param array $params Parameters for creating the thumbnail
-     * @param array $options Array of HTML attributes for the `img` element
-     * @return string
-     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper#resizecanvas-and-resizecanvasurl
-     * @since 1.3.1
-     * @uses resizeCanvasUrl()
-     */
-    public function resizeCanvas($path, array $params = [], array $options = [])
-    {
-        return $this->Html->image($this->resizeCanvasUrl($path, $params, $options), $options);
     }
 
     /**
