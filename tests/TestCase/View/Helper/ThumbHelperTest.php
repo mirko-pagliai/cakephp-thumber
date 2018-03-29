@@ -13,6 +13,7 @@
 namespace Thumber\Test\TestCase\View\Helper;
 
 use Cake\View\View;
+use Reflection\ReflectionTrait;
 use Thumber\TestSuite\TestCase;
 use Thumber\ThumbTrait;
 use Thumber\View\Helper\ThumbHelper;
@@ -22,6 +23,7 @@ use Thumber\View\Helper\ThumbHelper;
  */
 class ThumbHelperTest extends TestCase
 {
+    use ReflectionTrait;
     use ThumbTrait;
 
     /**
@@ -75,11 +77,49 @@ class ThumbHelperTest extends TestCase
 
     /**
      * Test for magic `_call()` method, called without parameters
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Method Thumber\View\Helper\ThumbHelper::noExisting does not exist
+     * @test
+     */
+    public function testMagicCallNoExistingMethod()
+    {
+        $this->Thumb->noExisting('400x400.png');
+    }
+
+    /**
+     * Test for magic `_call()` method, called without parameters
      * @expectedException Intervention\Image\Exception\InvalidArgumentException
      * @test
      */
     public function testMagicCallWithoutParameters()
     {
         $this->Thumb->crop('400x400.png');
+    }
+
+    /**
+     * Test for magic `_call()` method, called without path
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Thumbnail path is missing
+     * @test
+     */
+    public function testMagicCallWithoutPath()
+    {
+        $this->Thumb->crop();
+    }
+
+    /**
+     * Test for magic `isUrlMethod()` method
+     * @test
+     */
+    public function testIsUrlMethod()
+    {
+        $isUrlMethod = function () {
+            return $this->invokeMethod($this->Thumb, 'isUrlMethod', func_get_args());
+        };
+
+        $this->assertFalse($isUrlMethod('method'));
+        $this->assertTrue($isUrlMethod('methodUrl'));
+        $this->assertTrue($isUrlMethod('Url'));
+        $this->assertFalse($isUrlMethod('method_url'));
     }
 }

@@ -1,9 +1,8 @@
 # 1.x branch
 ## 1.4 branch
 # 1.4.0
-* removed `crop()`, `fit()`, `resize()` and `resizeCanvas()` provided by the
-    `ThumbHelper`. These methods are called dynamically by the `__call()` magic
-    method;
+* removed all methods provided previously by the `ThumbHelper`. These methods
+    are now called dynamically by the `__call()` magic method;
 * tests have been simplified. The library to be tested is set by the
     `tests/bootstrap.php` file, using the `THUMBER_DRIVER` environment variable.
     By default, Imagick is used;
