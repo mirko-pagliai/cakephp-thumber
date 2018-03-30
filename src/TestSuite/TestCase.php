@@ -148,4 +148,17 @@ abstract class TestCase extends CakeTestCase
         );
         self::assertRegExp($regex, $path, $message);
     }
+
+    /**
+     * Asserts for a valid thumbnail url
+     * @param string $url Thumbnail url
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.4.0
+     */
+    public function assertThumbUrl($url, $message = '')
+    {
+        self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[A-z0-9]+/', $url, $message);
+    }
 }

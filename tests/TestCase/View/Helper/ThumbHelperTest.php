@@ -58,7 +58,7 @@ class ThumbHelperTest extends TestCase
 
             foreach ([[], ['fullBase' => false]] as $options) {
                 $url = $this->Thumb->$urlMethod($path, $params, $options);
-                $this->assertRegExp('/^(http:\/\/localhost)?\/thumb\/[A-z0-9]+/', $url);
+                $this->assertThumbUrl($url);
 
                 $html = $this->Thumb->$method($path, $params, $options);
                 $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
