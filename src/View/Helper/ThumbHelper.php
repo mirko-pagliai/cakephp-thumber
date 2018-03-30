@@ -23,6 +23,14 @@ use Thumber\Utility\ThumbCreator;
  * Thumb Helper.
  *
  * This helper allows you to generate thumbnails.
+ * @method string crop()
+ * @method string cropUrl()
+ * @method string fit()
+ * @method string fitUrl()
+ * @method string resize()
+ * @method string resizeUrl()
+ * @method string resizeCanvas()
+ * @method string resizeCanvasUrl()
  */
 class ThumbHelper extends Helper
 {
