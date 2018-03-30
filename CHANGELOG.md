@@ -6,7 +6,8 @@
 * tests have been simplified. The library to be tested is set by the
     `tests/bootstrap.php` file, using the `THUMBER_DRIVER` environment variable.
     By default, Imagick is used;
-* full support for Windows, added tests for Appveyor.
+* full support for Windows, added tests for Appveyor;
+* added `Thumber\TestSuite\TestCase::assertThumbUrl()` method.
 
 ## 1.3 branch
 # 1.3.1

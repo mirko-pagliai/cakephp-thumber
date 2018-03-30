@@ -78,6 +78,6 @@ class ThumbTraitTest extends TestCase
      */
     public function testGetUrl()
     {
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/.+$/', $this->getUrl('file.jpg'));
+        $this->assertThumbUrl($this->getUrl('file.jpg'));
     }
 }
