@@ -12,7 +12,7 @@
         "php": ">=5.5.9",
         "cakephp/cakephp": ">=3.4 <4.0",
         "intervention/image": "^2.4",
-        "mirko-pagliai/php-tools": "dev-master"
+        "mirko-pagliai/php-tools": "^1.0"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^3.0",
