@@ -15,8 +15,8 @@ namespace Thumber\TestSuite;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Tools\ReflectionTrait;
 use Thumber\ThumbTrait;
+use Tools\ReflectionTrait;
 
 /**
  * Thumber TestCase class
