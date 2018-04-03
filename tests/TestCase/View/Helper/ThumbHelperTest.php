@@ -13,7 +13,7 @@
 namespace Thumber\Test\TestCase\View\Helper;
 
 use Cake\View\View;
-use Reflection\ReflectionTrait;
+use Tools\ReflectionTrait;
 use Thumber\TestSuite\TestCase;
 use Thumber\ThumbTrait;
 use Thumber\View\Helper\ThumbHelper;

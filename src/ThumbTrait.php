@@ -94,7 +94,7 @@ trait ThumbTrait
     protected function resolveFilePath($path)
     {
         //Returns, if it's a remote file
-        if (isUrl($path)) {
+        if (is_url($path)) {
             return $path;
         }
 

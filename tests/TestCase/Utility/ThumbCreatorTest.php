@@ -15,7 +15,7 @@ namespace Thumber\Test\TestCase\Utility;
 use Cake\Core\Plugin;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\ImageManager;
-use Reflection\ReflectionTrait;
+use Tools\ReflectionTrait;
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator;
 
