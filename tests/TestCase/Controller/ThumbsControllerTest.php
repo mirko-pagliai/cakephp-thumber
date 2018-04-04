@@ -85,7 +85,8 @@ class ThumbsControllerTest extends IntegrationTestCase
         $this->assertResponseCode(304);
 
         //Deletes the last thumbnail file. Now the `Last-Modified` header is different
-        unlink($thumb);
+        //@codingStandardsIgnoreLine
+        @unlink($thumb);
         sleep(1);
         $thumb = (new ThumbCreator($file))->resize(200)->save();
         $this->get($url);
