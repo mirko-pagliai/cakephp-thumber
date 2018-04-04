@@ -129,7 +129,7 @@ class ThumberShellTest extends TestCase
      */
     public function testClearWithError()
     {
-        $this->ThumberShell->clear('/noExisting');
+        $this->ThumberShell->clear(DS . 'noExisting');
         $this->assertEmpty($this->out->messages());
         $this->assertCount(1, $this->err->messages());
         $this->assertContains('Error deleting thumbnails', $this->err->messages()[0]);

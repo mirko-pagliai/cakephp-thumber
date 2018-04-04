@@ -84,7 +84,8 @@ class TestCaseTest extends TestCase
         $this->assertMime($file, mime_content_type($file));
         $this->assertMime($file, 'text/plain');
 
-        unlink($file);
+        //@codingStandardsIgnoreLine
+        @unlink($file);
     }
 
     /**

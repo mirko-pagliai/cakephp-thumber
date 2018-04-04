@@ -33,7 +33,7 @@ abstract class IntegrationTestCase extends CakeIntegrationTestCase
 
         foreach (glob($this->getPath('*')) as $file) {
             //@codingStandardsIgnoreLine
-            unlink($file);
+            @unlink($file);
         }
     }
 
