@@ -17,9 +17,9 @@ use Cake\Core\Configure;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
-use Reflection\ReflectionTrait;
 use Thumber\Shell\ThumberShell;
 use Thumber\Utility\ThumbCreator;
+use Tools\ReflectionTrait;
 
 /**
  * ThumbManagerTest class
