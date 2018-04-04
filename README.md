@@ -2,6 +2,7 @@
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 [![Build Status](https://travis-ci.org/mirko-pagliai/cakephp-thumber.svg?branch=master)](https://travis-ci.org/mirko-pagliai/cakephp-thumber)
+[![Build status](https://ci.appveyor.com/api/projects/status/kmo1kmgqg34y4g87?svg=true)](https://ci.appveyor.com/project/mirko-pagliai/cakephp-thumber)
 [![Coverage Status](https://img.shields.io/codecov/c/github/mirko-pagliai/cakephp-thumber.svg?style=flat-square)](https://codecov.io/github/mirko-pagliai/cakephp-thumber)
 
 *cakephp-thumber* is a CakePHP plugin to create thumbnails.  
@@ -19,6 +20,7 @@ the fly from your templates.
   * [Configuration](#configuration)
     + [Configuration values](#configuration-values)
   * [How to use](#how-to-use)
+  * [Testing](#testing)
   * [Versioning](#versioning)
 
 ## Requirements and supported formats
@@ -70,7 +72,9 @@ The plugin uses some configuration parameters and you can set them using the
 For example, you can do this at the bottom of the file `APP/config/app.php`
 of your application.
 
-**Note**: up to the *1.0.4* version, the configuration parameters had the `Thumbs` name as a prefix. Starting with the *1.1.0* version, they have the plugin name (`Thumber`) as a prefix.
+**Note**: up to the *1.0.4* version, the configuration parameters had the
+`Thumbs` name as a prefix. Starting with the *1.1.0* version, they have the
+plugin name (`Thumber`) as a prefix.
 
 ### Configuration values
 
@@ -88,6 +92,25 @@ save thumbnails.
 See our wiki:
 * [How to use the helper](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper)
 * [How to uses the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility)
+
+## Testing
+The library (`GD` or `Imagick`) to be tested is set by the `tests/bootstrap.php` file, using the
+`THUMBER_DRIVER` environment variable. By default, `Imagick` is used.
+
+For example:
+
+    if (!getenv('THUMBER_DRIVER')) {
+        putenv('THUMBER_DRIVER=imagick');
+    }
+
+    Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
+    
+Moreover, some tests belong to the `imageEquals` group. These tests generate thubnails and compare them with pre-loaded thumbnails (inside `tests/comparing_files/`).  
+By default, these tests are not performed, because the images may be different if generated from different environments and systems.
+
+To exclude these tests, you should run:
+
+    vendor/bin/phpunit --exclude-group imageEquals
 
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward 

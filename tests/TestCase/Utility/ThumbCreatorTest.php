@@ -13,14 +13,19 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Plugin;
+use Intervention\Image\Exception\NotReadableException;
+use Intervention\Image\ImageManager;
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator;
+use Tools\ReflectionTrait;
 
 /**
  * ThumbCreatorTest class
  */
 class ThumbCreatorTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -48,7 +53,7 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `__construct()` method, passing a no existing file
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage File `tests/test_app/webroot/img/noExistingFile.gif` not readable
+     * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFile()
@@ -59,12 +64,29 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `__construct()` method, passing a no existing file from plugin
      * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage File `tests/test_app/Plugin/TestPlugin/webroot/img/noExistingFile.gif` not readable
+     * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFileFromPlugin()
     {
         new ThumbCreator('TestPlugin.noExistingFile.gif');
+    }
+
+    /**
+     * Test for `getImageInstance()` method, with unsupported image type for. GD driver
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Image type `image/png` is not supported by this driver
+     * @ŧest
+     */
+    public function testGetImageInstanceUnsupportedImageType()
+    {
+        $thumber = new ThumbCreator('400x400.png');
+
+        $message = 'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.';
+        $thumber->ImageManager = $this->getMockBuilder(ImageManager::class)->getMock();
+        $thumber->ImageManager->method('make')->will($this->throwException(new NotReadableException($message)));
+
+        $this->invokeMethod($thumber, 'getImageInstance');
     }
 
     /**

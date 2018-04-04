@@ -15,9 +15,8 @@ namespace Thumber\TestSuite;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Imagick;
-use Reflection\ReflectionTrait;
 use Thumber\ThumbTrait;
+use Tools\ReflectionTrait;
 
 /**
  * Thumber TestCase class
@@ -50,10 +49,7 @@ abstract class TestCase extends CakeTestCase
     {
         $result = tempnam(sys_get_temp_dir(), $path);
 
-        $imagick = new Imagick($path);
-        $imagick->stripImage();
-        $imagick->writeImage($result);
-        $imagick->clear();
+        copy($path, $result);
 
         return $result;
     }
@@ -151,5 +147,18 @@ abstract class TestCase extends CakeTestCase
             implode('|', self::getSupportedFormats())
         );
         self::assertRegExp($regex, $path, $message);
+    }
+
+    /**
+     * Asserts for a valid thumbnail url
+     * @param string $url Thumbnail url
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.4.0
+     */
+    public function assertThumbUrl($url, $message = '')
+    {
+        self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[A-z0-9]+/', $url, $message);
     }
 }

@@ -14,6 +14,7 @@
 namespace Thumber\Shell;
 
 use Cake\Console\Shell;
+use Exception;
 use Thumber\Utility\ThumbManager;
 
 /**
@@ -33,7 +34,7 @@ class ThumberShell extends Shell
     {
         try {
             $count = call_user_func_array([new ThumbManager, $method], (array)$args);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $count = false;
         }
 

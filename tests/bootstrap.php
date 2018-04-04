@@ -89,7 +89,14 @@ Cache::config([
     ],
 ]);
 
-Configure::write('Thumber.comparingDir', TESTS . DS . 'comparing_files' . DS . 'imagick' . DS);
+if (!getenv('THUMBER_DRIVER')) {
+    putenv('THUMBER_DRIVER=imagick');
+}
+
+Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
+Configure::write('Thumber.comparingDir', TESTS . DS . 'comparing_files' . DS . Configure::read('Thumber.driver') . DS);
+
+echo 'Running tests for "' . Configure::read('Thumber.driver') . '" driver ' . PHP_EOL;
 
 Plugin::load('Thumber', [
     'bootstrap' => true,

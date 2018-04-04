@@ -16,12 +16,14 @@ use Cake\View\View;
 use Thumber\TestSuite\TestCase;
 use Thumber\ThumbTrait;
 use Thumber\View\Helper\ThumbHelper;
+use Tools\ReflectionTrait;
 
 /**
  * ThumbHelperTest class
  */
 class ThumbHelperTest extends TestCase
 {
+    use ReflectionTrait;
     use ThumbTrait;
 
     /**
@@ -38,165 +40,86 @@ class ThumbHelperTest extends TestCase
     }
 
     /**
-     * Test for `crop()` and `cropUrl()` methods
+     * Test for magic `__call()` method
      * @test
      */
-    public function testCrop()
+    public function testMagicCall()
     {
-        $url = $this->Thumb->cropUrl('400x400.png', ['width' => 200]);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
+        $path = '400x400.png';
+        $params = ['width' => 200];
 
-        $html = $this->Thumb->crop('400x400.png', ['width' => 200]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        foreach ([
+            'crop',
+            'fit',
+            'resize',
+            'resizeCanvas',
+        ] as $method) {
+            $urlMethod = $method . 'Url';
+
+            foreach ([[], ['fullBase' => false]] as $options) {
+                $url = $this->Thumb->$urlMethod($path, $params, $options);
+                $this->assertThumbUrl($url);
+
+                $html = $this->Thumb->$method($path, $params, $options);
+                $this->assertHtml(['img' => ['src' => $url, 'alt' => '']], $html);
+            }
+
+            //With `url` option
+            $url = $this->Thumb->$urlMethod($path, $params);
+            $expected = [
+                'a' => ['href' => 'http://example'],
+                'img' => ['src' => $url, 'alt' => ''],
+                '/a',
+            ];
+            $this->assertHtml($expected, $this->Thumb->$method($path, $params, ['url' => 'http://example']));
+        }
     }
 
     /**
-     * Test for `crop()` and `cropUrl()` methods, with the `fullBase` option as
-     *  `false`
+     * Test for magic `_call()` method, called without parameters
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Method Thumber\View\Helper\ThumbHelper::noExisting does not exist
      * @test
      */
-    public function testCropFullBaseFalse()
+    public function testMagicCallNoExistingMethod()
     {
-        $url = $this->Thumb->cropUrl('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
-
-        $html = $this->Thumb->crop('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->Thumb->noExisting('400x400.png');
     }
 
     /**
-     * Test for `crop()` method, called without parameters
+     * Test for magic `_call()` method, called without parameters
      * @expectedException Intervention\Image\Exception\InvalidArgumentException
      * @test
      */
-    public function testCropWithoutParameters()
+    public function testMagicCallWithoutParameters()
     {
         $this->Thumb->crop('400x400.png');
     }
 
     /**
-     * Test for `fit()` and `fitUrl()` methods
+     * Test for magic `_call()` method, called without path
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Thumbnail path is missing
      * @test
      */
-    public function testFit()
+    public function testMagicCallWithoutPath()
     {
-        $url = $this->Thumb->fitUrl('400x400.png', ['width' => 200]);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
-
-        $html = $this->Thumb->fit('400x400.png', ['width' => 200]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
+        $this->Thumb->crop();
     }
 
     /**
-     * Test for `fit()` and `fitUrl()` methods, with the `fullBase` option as
-     *  `false`
+     * Test for magic `isUrlMethod()` method
      * @test
      */
-    public function testFitFullBaseFalse()
+    public function testIsUrlMethod()
     {
-        $url = $this->Thumb->fitUrl('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
+        $isUrlMethod = function () {
+            return $this->invokeMethod($this->Thumb, 'isUrlMethod', func_get_args());
+        };
 
-        $html = $this->Thumb->fit('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
-    }
-
-    /**
-     * Test for `fit()` method, called without parameters
-     * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @test
-     */
-    public function testFitWithoutParameters()
-    {
-        $this->Thumb->fit('400x400.png');
-    }
-
-    /**
-     * Test for `resize()` and `resizeUrl()` methods
-     * @test
-     */
-    public function testResize()
-    {
-        $url = $this->Thumb->resizeUrl('400x400.png', ['width' => 200]);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
-
-        $html = $this->Thumb->resize('400x400.png', ['width' => 200]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
-    }
-
-    /**
-     * Test for `resize()` and `resizeUrl()` methods, with the `fullBase` option
-     *  as `false`
-     * @test
-     */
-    public function testResizeFullBaseFalse()
-    {
-        $url = $this->Thumb->resizeUrl('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
-
-        $html = $this->Thumb->resize('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
-    }
-
-    /**
-     * Test for `resize()` method, called without parameters
-     * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @test
-     */
-    public function testResizeWithoutParameters()
-    {
-        $this->Thumb->resize('400x400.png');
-    }
-
-    /**
-     * Test for `resizeCanvas()` and `resizeCanvasUrl()` methods
-     * @test
-     */
-    public function testResizeCanvas()
-    {
-        $url = $this->Thumb->resizeCanvasUrl('400x400.png', ['width' => 200]);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $url);
-
-        $html = $this->Thumb->resizeCanvas('400x400.png', ['width' => 200]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
-    }
-
-    /**
-     * Test for `resizeCanvas()` and `resizeCanvasUrl()` methods, with the
-     *  `fullBase` option as `false`
-     * @test
-     */
-    public function testResizeCanvasFullBaseFalse()
-    {
-        $url = $this->Thumb->resizeCanvasUrl('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $this->assertRegExp('/^\/thumb\/[A-z0-9]+/', $url);
-
-        $html = $this->Thumb->resizeCanvas('400x400.png', ['width' => 200], ['fullBase' => false]);
-        $expected = ['img' => ['src' => $url, 'alt' => '']];
-        $this->assertHtml($expected, $html);
-    }
-
-    /**
-     * Test for `url` option
-     * @test
-     */
-    public function testUrlOption()
-    {
-        $url = $this->Thumb->resizeUrl('400x400.png', ['width' => 200]);
-
-        $html = $this->Thumb->resize('400x400.png', ['width' => 200], ['url' => 'http://example']);
-        $expected = [
-            'a' => ['href' => 'http://example'],
-            'img' => ['src' => $url, 'alt' => ''],
-            '/a',
-        ];
-        $this->assertHtml($expected, $html);
+        $this->assertFalse($isUrlMethod('method'));
+        $this->assertTrue($isUrlMethod('methodUrl'));
+        $this->assertTrue($isUrlMethod('Url'));
+        $this->assertFalse($isUrlMethod('method_url'));
     }
 }
