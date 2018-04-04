@@ -127,7 +127,7 @@ class ThumbCreatorSaveTest extends TestCase
 
         //Deletes the thumbnail and wait 1 second
         //@codingStandardsIgnoreLine
-        unlink($thumb);
+        @unlink($thumb);
         sleep(1);
 
         //Tries to create again the same thumbnail. Now the creation time is different
