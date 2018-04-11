@@ -40,7 +40,7 @@ trait ThumbTrait
      */
     protected function getExtension($path)
     {
-        $extension = strtolower(pathinfo(explode('?', $path, 2)[0], PATHINFO_EXTENSION));
+        $extension = get_extension($path);
 
         switch ($extension) {
             case 'jpeg':
