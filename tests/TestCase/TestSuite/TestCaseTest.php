@@ -24,23 +24,6 @@ class TestCaseTest extends TestCase
     use ThumbTrait;
 
     /**
-     * Test for `assertFileExtension()` method
-     * @ŧest
-     */
-    public function testAssertFileExtension()
-    {
-        foreach ([
-            'jpg' => 'file.jpg',
-            'jpg' => 'file.JPG',
-            'jpeg' => 'file.jpeg',
-            'jpg' => 'path/to/file.jpg',
-            'jpg' => '/full/path/to/file.jpg',
-        ] as $extension => $filename) {
-            $this->assertFileExtension($extension, $filename);
-        }
-    }
-
-    /**
      * Test for `assertImageFileEquals()` method
      * @ŧest
      */
@@ -53,39 +36,6 @@ class TestCaseTest extends TestCase
 
         $this->assertImageFileEquals(Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg', $copy);
         $this->assertImageFileEquals('resize_w200_h200.jpg', $copy);
-    }
-
-    /**
-     * Test for `assertImageSize()` method
-     * @ŧest
-     */
-    public function testAssertImageSize()
-    {
-        $file = Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h300_noAspectRatio.jpg';
-
-        $this->assertImageSize($file, 200, 300);
-        $this->assertImageSize(
-            $file,
-            array_values(getimagesize($file))[0],
-            array_values(getimagesize($file))[1]
-        );
-    }
-
-    /**
-     * Test for `assertMime()` method
-     * @ŧest
-     */
-    public function testAssertMime()
-    {
-        $file = tempnam(TMP, 'test_file.txt');
-
-        file_put_contents($file, 'this is a test file');
-
-        $this->assertMime($file, mime_content_type($file));
-        $this->assertMime($file, 'text/plain');
-
-        //@codingStandardsIgnoreLine
-        @unlink($file);
     }
 
     /**

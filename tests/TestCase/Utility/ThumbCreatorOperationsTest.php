@@ -28,17 +28,17 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->crop(200, 200)->save();
         $this->assertImageSize($thumb, 200, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         //Only width
         $thumb = (new ThumbCreator('400x400.jpg'))->crop(200)->save();
         $this->assertImageSize($thumb, 200, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         //In this case, the width will be the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->crop(400, 200)->save();
         $this->assertImageSize($thumb, 400, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -64,7 +64,7 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->crop(200, 200, ['x' => 50, 'y' => 50])->save();
         $this->assertImageSize($thumb, 200, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -96,11 +96,11 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200)->save();
         $this->assertImageSize($thumb, 200, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200, 400)->save();
         $this->assertImageSize($thumb, 200, 400);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -125,7 +125,7 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         $thumb = (new ThumbCreator('example_pic.jpg'))->fit(200, 200, ['position' => 'top'])->save();
         $this->assertImageSize($thumb, 200, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -151,17 +151,17 @@ class ThumbCreatorOperationsTest extends TestCase
         //In this case, the thumbnail will keep the original dimensions
         $thumb = (new ThumbCreator('400x400.jpg'))->fit(450, 450, ['upsize' => true])->save();
         $this->assertImageSize($thumb, 400, 400);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will exceed the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->fit(450, 450, ['upsize' => false])->save();
         $this->assertImageSize($thumb, 450, 450);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will exceed the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->fit(null, 450, ['upsize' => false])->save();
         $this->assertImageSize($thumb, 450, 450);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -202,11 +202,11 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save();
         $this->assertImageSize($thumb, 200, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(null, 200)->save();
         $this->assertImageSize($thumb, 200, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -232,12 +232,12 @@ class ThumbCreatorOperationsTest extends TestCase
         //In this case, the thumbnail will keep the ratio
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200, 300, ['aspectRatio' => true])->save();
         $this->assertImageSize($thumb, 200, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will not maintain the ratio
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200, 300, ['aspectRatio' => false])->save();
         $this->assertImageSize($thumb, 200, 300);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -266,17 +266,17 @@ class ThumbCreatorOperationsTest extends TestCase
         //In this case, the thumbnail will keep the original dimensions
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(450, 450, ['upsize' => true])->save();
         $this->assertImageSize($thumb, 400, 400);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will exceed the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(450, 450, ['upsize' => false])->save();
         $this->assertImageSize($thumb, 450, 450);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will exceed the original size
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(null, 450, ['upsize' => false])->save();
         $this->assertImageSize($thumb, 450, 450);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -311,7 +311,7 @@ class ThumbCreatorOperationsTest extends TestCase
             'upsize' => true,
         ])->save();
         $this->assertImageSize($thumb, 400, 400);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will not keep the ratio and the original dimensions
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(500, 600, [
@@ -319,7 +319,7 @@ class ThumbCreatorOperationsTest extends TestCase
             'upsize' => false,
         ])->save();
         $this->assertImageSize($thumb, 500, 600);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         //In this case, the thumbnail will not keep the ratio and the original dimensions
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(null, 600, [
@@ -327,7 +327,7 @@ class ThumbCreatorOperationsTest extends TestCase
             'upsize' => false,
         ])->save();
         $this->assertImageSize($thumb, 400, 600);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -378,11 +378,11 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(200, 100)->save();
         $this->assertImageSize($thumb, 200, 100);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
 
         $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(null, 200)->save();
         $this->assertImageSize($thumb, 400, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -407,7 +407,7 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(300, 300, ['anchor' => 'bottom'])->save();
         $this->assertImageSize($thumb, 300, 300);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -429,7 +429,7 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resizeCanvas(300, 300, ['relative' => true, 'bgcolor' => '#000000'])->save();
         $this->assertImageSize($thumb, 700, 700);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -452,7 +452,7 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         $thumb = (new ThumbCreator('example_pic.jpg'))->crop(600)->resize(200)->save();
         $this->assertImageSize($thumb, 200, 200);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**

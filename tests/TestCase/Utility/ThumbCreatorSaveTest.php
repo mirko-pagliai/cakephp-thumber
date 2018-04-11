@@ -50,17 +50,17 @@ class ThumbCreatorSaveTest extends TestCase
         foreach ($extensions as $extension => $expectedMimetype) {
             $thumb = (new ThumbCreator('400x400.' . $extension))->resize(200)->save();
             $this->assertThumbPath($thumb);
-            $this->assertMime($thumb, $expectedMimetype);
+            $this->assertFileMime($thumb, $expectedMimetype);
 
             //Using `format` option
             $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => $extension]);
             $this->assertThumbPath($thumb);
-            $this->assertMime($thumb, $expectedMimetype);
+            $this->assertFileMime($thumb, $expectedMimetype);
 
             //Using `target` option
             $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.' . $extension]);
             $this->assertEquals($this->getPath('image.' . $extension), $thumb);
-            $this->assertMime($thumb, $expectedMimetype);
+            $this->assertFileMime($thumb, $expectedMimetype);
         }
     }
 
@@ -143,7 +143,7 @@ class ThumbCreatorSaveTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
         $this->assertThumbPath($thumb);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -175,7 +175,7 @@ class ThumbCreatorSaveTest extends TestCase
     {
         $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['target' => 'thumb.jpg']);
         $this->assertEquals($this->getPath('thumb.jpg'), $thumb);
-        $this->assertMime($thumb, 'image/jpeg');
+        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
