@@ -17,6 +17,7 @@ use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Thumber\ThumbTrait;
 use Tools\ReflectionTrait;
+use Tools\TestSuite\TestCaseTrait;
 
 /**
  * Thumber TestCase class
@@ -24,6 +25,9 @@ use Tools\ReflectionTrait;
 abstract class TestCase extends CakeTestCase
 {
     use ReflectionTrait;
+    use TestCaseTrait {
+        assertFileMime as baseAssertFileMime;
+    }
     use ThumbTrait;
 
     /**
@@ -52,20 +56,6 @@ abstract class TestCase extends CakeTestCase
         copy($path, $result);
 
         return $result;
-    }
-
-    /**
-     * Asserts for the extension of a file
-     * @param string $expected Expected extension
-     * @param string $file File
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     * @since 1.1.1
-     */
-    public static function assertFileExtension($expected, $file, $message = '')
-    {
-        self::assertEquals($expected, pathinfo($file, PATHINFO_EXTENSION), $message);
     }
 
     /**
@@ -99,36 +89,19 @@ abstract class TestCase extends CakeTestCase
     }
 
     /**
-     * Asserts that an image file has size
-     * @param string $filename Path to the tested file
-     * @param int $width Image width
-     * @param int $height Image height
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    public static function assertImageSize($filename, $width, $height, $message = '')
-    {
-        self::assertFileExists($filename, $message);
-        self::assertEquals(array_values(getimagesize($filename))[0], $width);
-        self::assertEquals(array_values(getimagesize($filename))[1], $height);
-    }
-
-    /**
      * Asserts that a file has a MIME content type
      * @param string $filename Path to the tested file
-     * @param string $mime MIME content type, like `text/plain` or `application/octet-stream`
+     * @param string $expectedMime MIME content type, like `text/plain` or `application/octet-stream`
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
-    public function assertMime($filename, $mime, $message = '')
+    public function assertFileMime($filename, $expectedMime, $message = '')
     {
         parent::skipIf(!version_compare(PHP_VERSION, '7.0', '>') &&
-            in_array($mime, ['image/x-ms-bmp', 'image/vnd.adobe.photoshop']));
+            in_array($expectedMime, ['image/x-ms-bmp', 'image/vnd.adobe.photoshop']));
 
-        self::assertFileExists($filename, $message);
-        self::assertEquals($mime, mime_content_type($filename), $message);
+        self::baseAssertFileMime($filename, $expectedMime, $message);
     }
 
     /**

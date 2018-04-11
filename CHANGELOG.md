@@ -1,5 +1,10 @@
 # 1.x branch
 ## 1.4 branch
+# 1.4.1
+* removed `Thumber\TestSuite\TestCase::assertFileExtension()` method;
+* removed `Thumber\TestSuite\TestCase::assertImageSize()` method;
+* `Thumber\TestSuite\TestCase::assertMime()` method renamed as `assertFileMime()`.
+
 # 1.4.0
 * removed all methods provided previously by the `ThumbHelper`. These methods
     are now called dynamically by the `__call()` magic method;
