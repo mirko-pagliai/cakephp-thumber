@@ -14,11 +14,9 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
 Router::plugin(THUMBER, ['path' => '/thumb'], function (RouteBuilder $routes) {
-    if (!$routes->nameExists('thumb')) {
-        $routes->connect(
-            '/:basename',
-            ['controller' => 'Thumbs', 'action' => 'thumb'],
-            ['_name' => 'thumb', 'basename' => '[A-z0-9=]+', 'pass' => ['basename']]
-        );
-    }
+    $routes->connect(
+        '/:basename',
+        ['controller' => 'Thumbs', 'action' => 'thumb'],
+        ['_name' => 'thumb', 'basename' => '[A-z0-9=]+', 'pass' => ['basename']]
+    );
 });
