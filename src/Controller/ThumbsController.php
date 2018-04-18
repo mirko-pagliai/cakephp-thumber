@@ -13,7 +13,7 @@
 namespace Thumber\Controller;
 
 use Cake\Controller\Controller;
-use Thumber\Network\Exception\ThumbNotFoundException;
+use Thumber\Http\Exception\ThumbNotFoundException;
 use Thumber\ThumbTrait;
 
 /**

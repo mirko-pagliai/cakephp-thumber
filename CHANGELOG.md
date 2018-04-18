@@ -1,5 +1,10 @@
 # 1.x branch
 ## 1.4 branch
+# 1.4.2
+* `ThumbNotFoundException` extends the `RuntimeException` and now is located
+    below the `Thumber\Http\Exception` namespace. This ensures compability with
+    CakePHP 3.6.
+
 # 1.4.1
 * removed `Thumber\TestSuite\TestCase::assertFileExtension()` method;
 * removed `Thumber\TestSuite\TestCase::assertImageSize()` method;

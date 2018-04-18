@@ -9,15 +9,15 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.0.4
+ * @since       1.4.2
  */
-namespace Thumber\Network\Exception;
+namespace Thumber\Http\Exception;
 
-use Cake\Network\Exception\NotFoundException;
+use RuntimeException;
 
 /**
  * ThumbNotFoundException
  */
-class ThumbNotFoundException extends NotFoundException
+class ThumbNotFoundException extends RuntimeException
 {
 }
