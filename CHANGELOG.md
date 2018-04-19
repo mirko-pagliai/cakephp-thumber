@@ -1,9 +1,11 @@
 # 1.x branch
 ## 1.4 branch
 # 1.4.1
-* removed `Thumber\TestSuite\TestCase::assertFileExtension()` method;
-* removed `Thumber\TestSuite\TestCase::assertImageSize()` method;
-* `Thumber\TestSuite\TestCase::assertMime()` method renamed as `assertFileMime()`.
+* `ThumbNotFoundException` extends the `RuntimeException` and now is located
+    below the `Thumber\Http\Exception` namespace. This ensures compability with
+    CakePHP 3.6.
+* removed `assertFileExtension()`, `assertImageSize()` and `assertMime()`
+    methods provided by `Thumber\TestSuite\TestCase` class.
 
 # 1.4.0
 * removed all methods provided previously by the `ThumbHelper`. These methods
