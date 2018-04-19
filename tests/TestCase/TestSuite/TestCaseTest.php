@@ -15,6 +15,7 @@ namespace Thumber\Test\TestCase\TestSuite;
 use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
 use Thumber\ThumbTrait;
+use Thumber\Utility\ThumbManager;
 
 /**
  * TestCaseTest class
@@ -44,7 +45,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertThumbPath()
     {
-        foreach ($this->getSupportedFormats() as $extension) {
+        foreach (ThumbManager::$supportedFormats as $extension) {
             $this->assertThumbPath($this->getPath() . DS . md5(time()) . '_' . md5(time()) . '.' . $extension);
         }
     }

@@ -61,14 +61,4 @@ class ThumbTraitTest extends TestCase
         $this->assertEquals(Configure::read(THUMBER . '.target'), $this->getPath());
         $this->assertEquals(Configure::read(THUMBER . '.target') . DS . 'file.jpg', $this->getPath('file.jpg'));
     }
-
-    /**
-     * Test for `getSupportedFormats()` method
-     * @test
-     */
-    public function testGetSupportedFormats()
-    {
-        $this->assertNotEmpty($this->getSupportedFormats());
-        $this->assertIsArray($this->getSupportedFormats());
-    }
 }

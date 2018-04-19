@@ -17,7 +17,6 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
-use Cake\Routing\Router;
 
 /**
  * This trait provides several methods used by other classes
@@ -62,15 +61,6 @@ trait ThumbTrait
         $path = Configure::readOrFail(THUMBER . '.target');
 
         return $file ? $path . DS . $file : $path;
-    }
-
-    /**
-     * Returns the supported formats
-     * @return array Supported formats
-     */
-    protected function getSupportedFormats()
-    {
-        return ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
     }
 
     /**

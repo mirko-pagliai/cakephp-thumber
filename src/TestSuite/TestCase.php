@@ -99,9 +99,8 @@ abstract class TestCase extends CakeTestCase
     public function assertThumbPath($path, $message = '')
     {
         $regex = sprintf(
-            '/^%s[a-z0-9]{32}_[a-z0-9]{32}\.(%s)/',
-            preg_quote($this->getPath() . DS, '/'),
-            implode('|', self::getSupportedFormats())
+            '/^%s[\w\d]{32}_[\w\d]{32}\.\w{3,4}/',
+            preg_quote($this->getPath() . DS, '/')
         );
         self::assertRegExp($regex, $path, $message);
     }

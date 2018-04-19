@@ -2,7 +2,9 @@
 ## 1.4 branch
 # 1.5.0
 * the plugin has been migrated to CakePHP 3.6;
-* removed `Thumber\ThumbTrait::getUrl()` method.
+* removed `Thumber\ThumbTrait::getUrl()` method;
+* removed `Thumber\ThumbTrait::getSupportedFormats()` method, added 
+    `Thumber\Utility\ThumbManager::$supportedFormats` static property.
 
 # 1.4.1
 * `ThumbNotFoundException` extends the `RuntimeException` and now is located
