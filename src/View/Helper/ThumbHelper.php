@@ -40,7 +40,7 @@ class ThumbHelper extends Helper
      * Helpers
      * @var array
      */
-    public $helpers = ['Html'];
+    public $helpers = ['Html', 'Url'];
 
     /**
      * Magic method.
@@ -121,6 +121,6 @@ class ThumbHelper extends Helper
 
         $thumb = $thumb->$name($params['width'], $params['height'])->save($params);
 
-        return $this->getUrl($thumb, $options['fullBase']);
+        return $this->Url->build(['_name' => 'thumb', base64_encode(basename($thumb))], $options['fullBase']);
     }
 }

@@ -71,13 +71,4 @@ class ThumbTraitTest extends TestCase
         $this->assertNotEmpty($this->getSupportedFormats());
         $this->assertTrue(is_array($this->getSupportedFormats()));
     }
-
-    /**
-     * Test for `getUrl()` method
-     * @test
-     */
-    public function testGetUrl()
-    {
-        $this->assertThumbUrl($this->getUrl('file.jpg'));
-    }
 }

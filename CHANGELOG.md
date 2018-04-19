@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.4 branch
 # 1.5.0
-* the plugin has been migrated to CakePHP 3.6.
+* the plugin has been migrated to CakePHP 3.6;
+* removed `Thumber\ThumbTrait::getUrl()` method.
 
 # 1.4.1
 * `ThumbNotFoundException` extends the `RuntimeException` and now is located

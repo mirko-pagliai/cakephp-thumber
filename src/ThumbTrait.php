@@ -74,18 +74,6 @@ trait ThumbTrait
     }
 
     /**
-     * Gets the url for a thumbnail
-     * @param string $path Thumbnail path
-     * @param bool $full If `true`, the full base URL will be prepended to the
-     *  result
-     * @return string
-     */
-    protected function getUrl($path, $full = true)
-    {
-        return Router::url(['_name' => 'thumb', base64_encode(basename($path))], $full);
-    }
-
-    /**
      * Internal method to resolve a partial path, returning its full path
      * @param string $path Partial path
      * @return string
