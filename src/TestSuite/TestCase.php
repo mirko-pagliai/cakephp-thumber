@@ -89,22 +89,6 @@ abstract class TestCase extends CakeTestCase
     }
 
     /**
-     * Asserts that a file has a MIME content type
-     * @param string $filename Path to the tested file
-     * @param string $expectedMime MIME content type, like `text/plain` or `application/octet-stream`
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    public function assertFileMime($filename, $expectedMime, $message = '')
-    {
-        parent::skipIf(!version_compare(PHP_VERSION, '7.0', '>') &&
-            in_array($expectedMime, ['image/x-ms-bmp', 'image/vnd.adobe.photoshop']));
-
-        self::baseAssertFileMime($filename, $expectedMime, $message);
-    }
-
-    /**
      * Asserts for a valid thumbnail path
      * @param string $path Thumbnail path
      * @param string $message The failure message that will be appended to the
