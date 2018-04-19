@@ -69,6 +69,6 @@ class ThumbTraitTest extends TestCase
     public function testGetSupportedFormats()
     {
         $this->assertNotEmpty($this->getSupportedFormats());
-        $this->assertTrue(is_array($this->getSupportedFormats()));
+        $this->assertIsArray($this->getSupportedFormats());
     }
 }
