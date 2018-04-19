@@ -9,7 +9,6 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.4.2
  */
 namespace Thumber\Http\Exception;
 
