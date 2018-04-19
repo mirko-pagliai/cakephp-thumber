@@ -9,12 +9,15 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @since       1.5.0
  */
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
+namespace Thumber;
 
-Router::plugin(THUMBER, ['path' => '/thumb'], function (RouteBuilder $routes) {
-    $routes->get('/:basename', ['controller' => 'Thumbs', 'action' => 'thumb'], 'thumb')
-        ->setPatterns(['basename' => '[\w\d=]+'])
-        ->setPass(['basename']);
-});
+use Cake\Core\BasePlugin;
+
+/**
+ * Plugin class
+ */
+class Plugin extends BasePlugin
+{
+}

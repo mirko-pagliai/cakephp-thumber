@@ -13,7 +13,6 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Routing\DispatcherFactory;
 
 ini_set('intl.default_locale', 'en_US');
 
@@ -65,10 +64,7 @@ Configure::write('App', [
     'imageBaseUrl' => 'img/',
     'jsBaseUrl' => 'js/',
     'cssBaseUrl' => 'css/',
-    'paths' => [
-        'plugins' => [APP . 'Plugin' . DS],
-        'templates' => [APP . 'TestApp' . DS . 'Template' . DS],
-    ]
+    'paths' => ['plugins' => [APP . 'Plugin' . DS]]
 ]);
 
 Cache::setConfig([
@@ -104,5 +100,4 @@ Plugin::load('Thumber', [
     'routes' => true,
 ]);
 
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
+$_SERVER['PHP_SELF'] = '/';
