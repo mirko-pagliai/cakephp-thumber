@@ -36,7 +36,7 @@ abstract class TestCase extends CakeTestCase
     {
         parent::tearDown();
 
-        foreach (glob($this->getPath('*')) as $file) {
+        foreach (glob($this->getPath() . DS . '*') as $file) {
             //@codingStandardsIgnoreLine
             @unlink($file);
         }
