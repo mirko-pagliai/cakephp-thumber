@@ -30,12 +30,12 @@ class TestCaseTest extends TestCase
      */
     public function testAssertImageFileEquals()
     {
-        $original = Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg';
+        $original = Configure::readOrFail(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg';
         $copy = tempnam(TMP, $original);
 
         copy($original, $copy);
 
-        $this->assertImageFileEquals(Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg', $copy);
+        $this->assertImageFileEquals(Configure::readOrFail(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg', $copy);
         $this->assertImageFileEquals('resize_w200_h200.jpg', $copy);
     }
 
