@@ -17,15 +17,12 @@ use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\ImageManager;
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator;
-use Tools\ReflectionTrait;
 
 /**
  * ThumbCreatorTest class
  */
 class ThumbCreatorTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in

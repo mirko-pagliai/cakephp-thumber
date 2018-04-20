@@ -13,7 +13,6 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 use Thumber\Utility\ThumbManager;
 
@@ -22,8 +21,6 @@ use Thumber\Utility\ThumbManager;
  */
 class ThumbManagerTest extends TestCase
 {
-    use ThumbsPathTrait;
-
     /**
      * @var \Thumber\Utility\ThumbManager
      */
