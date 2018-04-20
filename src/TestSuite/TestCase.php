@@ -25,9 +25,7 @@ use Tools\TestSuite\TestCaseTrait;
 abstract class TestCase extends CakeTestCase
 {
     use ReflectionTrait;
-    use TestCaseTrait {
-        assertFileMime as baseAssertFileMime;
-    }
+    use TestCaseTrait;
     use ThumbTrait;
 
     /**
@@ -98,10 +96,7 @@ abstract class TestCase extends CakeTestCase
      */
     public function assertThumbPath($path, $message = '')
     {
-        $regex = sprintf(
-            '/^%s[\w\d]{32}_[\w\d]{32}\.\w{3,4}/',
-            preg_quote($this->getPath() . DS, '/')
-        );
+        $regex = sprintf('/^%s[\w\d]{32}_[\w\d]{32}\.\w{3,4}/', preg_quote($this->getPath() . DS, '/'));
         self::assertRegExp($regex, $path, $message);
     }
 
@@ -115,6 +110,6 @@ abstract class TestCase extends CakeTestCase
      */
     public function assertThumbUrl($url, $message = '')
     {
-        self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[A-z0-9]+/', $url, $message);
+        self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[\w\d]+/', $url, $message);
     }
 }
