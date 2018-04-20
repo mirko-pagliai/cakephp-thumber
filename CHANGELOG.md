@@ -1,4 +1,16 @@
 # 1.x branch
+## 1.5 branch
+# 1.5.0
+* the plugin has been migrated to CakePHP 3.6;
+* added `TestCase::skipIfDriverIs()` method;
+* `ThumbTrait` becomes `ThumbsPathTrait` and it has no more `getDriver()`,
+    `getExtension()` and `getUrl()` methods;
+* the `ThumbCreator::getDefaultSaveOptions()` method now can take the `$path`
+    optional argument;
+* removed `ThumbTrait::getSupportedFormats()` method, added 
+    `ThumbManager::$supportedFormats` static property;
+* `InternalErrorException` exception has been replaced with `RuntimeException`.
+
 ## 1.4 branch
 # 1.4.1
 * `ThumbNotFoundException` extends the `RuntimeException` and now is located

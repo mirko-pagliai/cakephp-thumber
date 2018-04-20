@@ -15,14 +15,20 @@ namespace Thumber\Utility;
 
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 
 /**
  * A utility to manage thumbnails
  */
 class ThumbManager
 {
-    use ThumbTrait;
+    use ThumbsPathTrait;
+
+    /**
+     * Supported formats
+     * @var array
+     */
+    public static $supportedFormats = ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
 
     /**
      * Internal method to clear thumbnails
@@ -52,7 +58,7 @@ class ThumbManager
      */
     protected function _find($regexpPattern = null, $sort = false)
     {
-        $regexpPattern = $regexpPattern ?: sprintf('[a-z0-9]{32}_[a-z0-9]{32}\.(%s)', implode('|', $this->getSupportedFormats()));
+        $regexpPattern = $regexpPattern ?: sprintf('[a-z0-9]{32}_[a-z0-9]{32}\.(%s)', implode('|', self::$supportedFormats));
 
         return (new Folder($this->getPath()))->find($regexpPattern, $sort);
     }
@@ -89,7 +95,7 @@ class ThumbManager
      */
     public function get($path, $sort = false)
     {
-        $regexpPattern = sprintf('%s_[a-z0-9]{32}\.(%s)', md5($this->resolveFilePath($path)), implode('|', $this->getSupportedFormats()));
+        $regexpPattern = sprintf('%s_[a-z0-9]{32}\.(%s)', md5($this->resolveFilePath($path)), implode('|', self::$supportedFormats));
 
         return $this->_find($regexpPattern, $sort);
     }

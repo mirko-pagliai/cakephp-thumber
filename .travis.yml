@@ -18,18 +18,13 @@ matrix:
     - php: 7.0
       env: COVERAGE=1
 
-    - php: 7.0
-      env: CAKEPHP_VERSION="3.4.*"
-
 install:
   - printf "\n" | pecl install imagick
   - composer self-update
   - composer install --prefer-dist --no-interaction
-  - if [[ ! -z "$CAKEPHP_VERSION" ]]; then composer require --update-with-dependencies cakephp/cakephp:${CAKEPHP_VERSION}; fi
 
 script:
-  - if [[ $PHPCS != '1' && $COVERAGE != '1' && $CAKEPHP_VERSION != '3.4.*' ]]; then vendor/bin/phpunit --exclude-group imageEquals; fi
-  - if [[ $PHPCS != '1' && $COVERAGE != '1' && $CAKEPHP_VERSION = '3.4.*' ]]; then vendor/bin/phpunit --testsuite cakephp3.4 --exclude-group imageEquals; fi
+  - if [[ $PHPCS != '1' && $COVERAGE != '1' ]]; then vendor/bin/phpunit --exclude-group imageEquals; fi
   - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs --standard=phpcs.xml.dist; fi
   - if [[ $COVERAGE = 1 ]]; then vendor/bin/phpunit --exclude-group imageEquals --coverage-clover=clover.xml; fi
   

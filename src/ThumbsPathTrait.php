@@ -9,52 +9,26 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.1.1
+ * @since       1.5.0
  */
 namespace Thumber;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
-use Cake\Routing\Router;
+use RuntimeException;
 
 /**
- * This trait provides several methods used by other classes
+ * This trait provides some methods to get and resolve thumbnails paths.
  */
-trait ThumbTrait
+trait ThumbsPathTrait
 {
     /**
-     * Gets the current driver
-     * @return string
-     */
-    protected function getDriver()
-    {
-        return Configure::read(THUMBER . '.driver');
-    }
-
-    /**
-     * Gets the extension for a file
-     * @param string $path File path
-     * @return string
-     */
-    protected function getExtension($path)
-    {
-        $extension = get_extension($path);
-
-        switch ($extension) {
-            case 'jpeg':
-                return 'jpg';
-            case 'tif':
-                return 'tiff';
-            default:
-                return $extension;
-        }
-    }
-
-    /**
-     * Gets a path for a thumbnail
-     * @param string $file File
+     * Gets a path for a thumbnail.
+     *
+     * Called with the `$file` argument, returns the file absolute path.
+     * Otherwise, called with `null`, returns the path of the target directory.
+     * @param string|null $file File
      * @return string
      */
     protected function getPath($file = null)
@@ -65,31 +39,10 @@ trait ThumbTrait
     }
 
     /**
-     * Returns the supported formats
-     * @return array Supported formats
-     */
-    protected function getSupportedFormats()
-    {
-        return ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
-    }
-
-    /**
-     * Gets the url for a thumbnail
-     * @param string $path Thumbnail path
-     * @param bool $full If `true`, the full base URL will be prepended to the
-     *  result
-     * @return string
-     */
-    protected function getUrl($path, $full = true)
-    {
-        return Router::url(['_name' => 'thumb', base64_encode(basename($path))], $full);
-    }
-
-    /**
-     * Internal method to resolve a partial path, returning its full path
+     * Internal method to resolve a partial path, returning a full path
      * @param string $path Partial path
      * @return string
-     * @throws InternalErrorException
+     * @throws RuntimeException
      */
     protected function resolveFilePath($path)
     {
@@ -113,7 +66,7 @@ trait ThumbTrait
 
         //Checks if is readable
         if (!is_readable($path)) {
-            throw new InternalErrorException(__d('thumber', 'File `{0}` not readable', rtr($path)));
+            throw new RuntimeException(__d('thumber', 'File `{0}` not readable', rtr($path)));
         }
 
         return $path;

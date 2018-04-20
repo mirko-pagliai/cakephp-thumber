@@ -15,7 +15,7 @@ namespace Thumber\TestSuite;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 use Tools\ReflectionTrait;
 use Tools\TestSuite\TestCaseTrait;
 
@@ -25,10 +25,8 @@ use Tools\TestSuite\TestCaseTrait;
 abstract class TestCase extends CakeTestCase
 {
     use ReflectionTrait;
-    use TestCaseTrait {
-        assertFileMime as baseAssertFileMime;
-    }
-    use ThumbTrait;
+    use TestCaseTrait;
+    use ThumbsPathTrait;
 
     /**
      * Teardown any static object changes and restore them
@@ -38,7 +36,7 @@ abstract class TestCase extends CakeTestCase
     {
         parent::tearDown();
 
-        foreach (glob($this->getPath('*')) as $file) {
+        foreach (glob($this->getPath() . DS . '*') as $file) {
             //@codingStandardsIgnoreLine
             @unlink($file);
         }
@@ -98,11 +96,7 @@ abstract class TestCase extends CakeTestCase
      */
     public function assertThumbPath($path, $message = '')
     {
-        $regex = sprintf(
-            '/^%s[a-z0-9]{32}_[a-z0-9]{32}\.(%s)/',
-            preg_quote($this->getPath() . DS, '/'),
-            implode('|', self::getSupportedFormats())
-        );
+        $regex = sprintf('/^%s[\w\d]{32}_[\w\d]{32}\.\w{3,4}/', preg_quote($this->getPath() . DS, '/'));
         self::assertRegExp($regex, $path, $message);
     }
 
@@ -116,6 +110,18 @@ abstract class TestCase extends CakeTestCase
      */
     public function assertThumbUrl($url, $message = '')
     {
-        self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[A-z0-9]+/', $url, $message);
+        self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[\w\d]+/', $url, $message);
+    }
+
+    /**
+     * Skips the test if you running the designated driver
+     * @param string $driver Driver name
+     * @param string $message The message to display
+     * @return bool
+     * @since 1.5.0
+     */
+    public function skipIfDriverIs($driver, $message = '')
+    {
+        return parent::skipIf(Configure::readOrFail(THUMBER . '.driver') == $driver, $message);
     }
 }

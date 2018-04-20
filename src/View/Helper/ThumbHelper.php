@@ -16,7 +16,6 @@ namespace Thumber\View\Helper;
 use Cake\View\Helper;
 use InvalidArgumentException;
 use RuntimeException;
-use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -34,13 +33,11 @@ use Thumber\Utility\ThumbCreator;
  */
 class ThumbHelper extends Helper
 {
-    use ThumbTrait;
-
     /**
      * Helpers
      * @var array
      */
-    public $helpers = ['Html'];
+    public $helpers = ['Html', 'Url'];
 
     /**
      * Magic method.
@@ -121,6 +118,6 @@ class ThumbHelper extends Helper
 
         $thumb = $thumb->$name($params['width'], $params['height'])->save($params);
 
-        return $this->getUrl($thumb, $options['fullBase']);
+        return $this->Url->build(['_name' => 'thumb', base64_encode(basename($thumb))], $options['fullBase']);
     }
 }

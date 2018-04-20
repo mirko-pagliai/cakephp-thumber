@@ -12,6 +12,7 @@
  */
 namespace Thumber\Test\TestCase\Controller;
 
+use Cake\Core\Configure;
 use Cake\View\View;
 use Thumber\Controller\ThumbsController;
 use Thumber\TestSuite\IntegrationTestCase;
@@ -50,7 +51,7 @@ class ThumbsControllerTest extends IntegrationTestCase
         ];
 
         //Adds some extensions only for the `imagick` driver
-        if ($this->getDriver() == 'imagick') {
+        if (Configure::readOrFail(THUMBER . '.driver') == 'imagick') {
             $extensions += [
                 'bmp' => 'image/x-ms-bmp',
                 'ico' => 'image/x-icon',

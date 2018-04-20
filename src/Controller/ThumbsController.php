@@ -14,14 +14,14 @@ namespace Thumber\Controller;
 
 use Cake\Controller\Controller;
 use Thumber\Http\Exception\ThumbNotFoundException;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 
 /**
  * Thumbs controller class
  */
 class ThumbsController extends Controller
 {
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
      * Renders a thumbnail

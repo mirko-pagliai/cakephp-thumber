@@ -13,14 +13,14 @@
  */
 namespace Thumber\Utility;
 
+use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
 use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use RuntimeException;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 
 /**
  * Utility to create a thumb.
@@ -30,7 +30,7 @@ use Thumber\ThumbTrait;
  */
 class ThumbCreator
 {
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
      * `ImageManager` instance
@@ -55,6 +55,12 @@ class ThumbCreator
     protected $callbacks = [];
 
     /**
+     * Driver name
+     * @var string
+     */
+    protected $driver;
+
+    /**
      * File path
      * @var string
      */
@@ -69,11 +75,13 @@ class ThumbCreator
      * @return \Thumber\Utility\ThumbCreator
      * @uses $ImageManager
      * @uses $arguments
+     * @uses $driver
      * @uses $path
      */
     public function __construct($path)
     {
-        $this->ImageManager = new ImageManager(['driver' => $this->getDriver()]);
+        $this->driver = Configure::readOrFail(THUMBER . '.driver');
+        $this->ImageManager = new ImageManager(['driver' => $this->driver]);
         $this->path = $this->resolveFilePath($path);
         $this->arguments[] = $this->path;
 
@@ -83,19 +91,22 @@ class ThumbCreator
     /**
      * Internal method to get default options for the `save()` method
      * @param array $options Passed options
+     * @param string|null $path Path to use
      * @return array Passed options added to the default options
      * @uses $path
      */
-    protected function getDefaultSaveOptions($options)
+    protected function getDefaultSaveOptions($options, $path = null)
     {
-        $options += ['format' => $this->getExtension($this->path), 'quality' => 90, 'target' => false];
+        $path = $path ?: $this->path;
 
-        //Fixes the name of some similar formats
-        if ($options['format'] === 'jpeg') {
-            $options['format'] = 'jpg';
-        } elseif ($options['format'] === 'tif') {
-            $options['format'] = 'tiff';
-        }
+        $options += [
+            'format' => get_extension($path),
+            'quality' => 90,
+            'target' => false,
+        ];
+
+        //Fixes some formats
+        $options['format'] = preg_replace(['/^jpeg$/', '/^tif$/'], ['jpg', 'tiff'], $options['format']);
 
         return $options;
     }
@@ -262,33 +273,33 @@ class ThumbCreator
      * @param array $options Options for saving
      * @return string Thumbnail path
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
-     * @throws InternalErrorException
+     * @throws RuntimeException
      * @uses getDefaultSaveOptions()
      * @uses getImageInstance()
      * @uses $arguments
      * @uses $callbacks
+     * @uses $driver
      * @uses $path
      */
     public function save(array $options = [])
     {
         if (empty($this->callbacks)) {
-            throw new InternalErrorException(__d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__));
+            throw new RuntimeException(__d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__));
         }
 
         $options = $this->getDefaultSaveOptions($options);
         $target = $options['target'];
 
         if (!$target) {
-            $this->arguments[] = [$this->getDriver(), $options['format'], $options['quality']];
+            $this->arguments[] = [$this->driver, $options['format'], $options['quality']];
 
             $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
         } else {
-            $options['format'] = $this->getExtension($target);
+            $optionsFromTarget = $this->getDefaultSaveOptions([], $target);
+            $options['format'] = $optionsFromTarget['format'];
         }
 
-        if (!Folder::isAbsolute($target)) {
-            $target = $this->getPath($target);
-        }
+        $target = Folder::isAbsolute($target) ? $target : $this->getPath($target);
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
@@ -303,7 +314,7 @@ class ThumbCreator
             $imageInstance->destroy();
 
             if (!is_writable(dirname($target))) {
-                throw new InternalErrorException(__d('thumber', 'The directory `{0}` is not writeable', rtr(dirname($target))));
+                throw new RuntimeException(__d('thumber', 'The directory `{0}` is not writeable', rtr(dirname($target))));
             }
 
             //Writes
