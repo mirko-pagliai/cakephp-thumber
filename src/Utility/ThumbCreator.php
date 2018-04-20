@@ -13,6 +13,7 @@
  */
 namespace Thumber\Utility;
 
+use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
@@ -54,6 +55,12 @@ class ThumbCreator
     protected $callbacks = [];
 
     /**
+     * Driver name
+     * @var string
+     */
+    protected $driver;
+
+    /**
      * File path
      * @var string
      */
@@ -68,11 +75,13 @@ class ThumbCreator
      * @return \Thumber\Utility\ThumbCreator
      * @uses $ImageManager
      * @uses $arguments
+     * @uses $driver
      * @uses $path
      */
     public function __construct($path)
     {
-        $this->ImageManager = new ImageManager(['driver' => $this->getDriver()]);
+        $this->driver = Configure::readOrFail(THUMBER . '.driver');
+        $this->ImageManager = new ImageManager(['driver' => $this->driver]);
         $this->path = $this->resolveFilePath($path);
         $this->arguments[] = $this->path;
 
@@ -269,6 +278,7 @@ class ThumbCreator
      * @uses getImageInstance()
      * @uses $arguments
      * @uses $callbacks
+     * @uses $driver
      * @uses $path
      */
     public function save(array $options = [])
@@ -281,7 +291,7 @@ class ThumbCreator
         $target = $options['target'];
 
         if (!$target) {
-            $this->arguments[] = [$this->getDriver(), $options['format'], $options['quality']];
+            $this->arguments[] = [$this->driver, $options['format'], $options['quality']];
 
             $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
         } else {

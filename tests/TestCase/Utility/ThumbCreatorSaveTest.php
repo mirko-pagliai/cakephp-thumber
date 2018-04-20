@@ -12,6 +12,7 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
 use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
@@ -37,7 +38,7 @@ class ThumbCreatorSaveTest extends TestCase
         ];
 
         //Adds some extensions only for the `imagick` driver
-        if ($this->getDriver() == 'imagick') {
+        if (Configure::readOrFail(THUMBER . '.driver') == 'imagick') {
             $extensions += [
                 'bmp' => 'image/x-ms-bmp',
                 'ico' => 'image/x-icon',
@@ -74,7 +75,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveFromInvalidFileGd()
     {
-        $this->skipIf($this->getDriver() != 'gd');
+        $this->skipIfDriverIs('imagick');
 
         (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
     }
@@ -89,7 +90,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveFromInvalidFileImagick()
     {
-        $this->skipIf($this->getDriver() != 'imagick');
+        $this->skipIfDriverIs('gd');
 
         (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
     }
@@ -198,7 +199,7 @@ class ThumbCreatorSaveTest extends TestCase
         $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpeg']);
         $this->assertFileExtension('jpg', $file);
 
-        $this->skipIf($this->getDriver() === 'gd');
+        $this->skipIfDriverIs('gd');
 
         $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'tif']);
         $this->assertFileExtension('tiff', $file, PATHINFO_EXTENSION);

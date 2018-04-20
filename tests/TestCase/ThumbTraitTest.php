@@ -24,21 +24,12 @@ class ThumbTraitTest extends TestCase
     use ThumbTrait;
 
     /**
-     * Test for `getDriver()` method
-     * @test
-     */
-    public function testGetDriver()
-    {
-        $this->assertNotEmpty($this->getDriver());
-    }
-
-    /**
      * Test for `getPath()` method
      * @test
      */
     public function testGetPath()
     {
-        $this->assertEquals(Configure::read(THUMBER . '.target'), $this->getPath());
-        $this->assertEquals(Configure::read(THUMBER . '.target') . DS . 'file.jpg', $this->getPath('file.jpg'));
+        $this->assertEquals(Configure::readOrFail(THUMBER . '.target'), $this->getPath());
+        $this->assertEquals(Configure::readOrFail(THUMBER . '.target') . DS . 'file.jpg', $this->getPath('file.jpg'));
     }
 }

@@ -112,4 +112,16 @@ abstract class TestCase extends CakeTestCase
     {
         self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[\w\d]+/', $url, $message);
     }
+
+    /**
+     * Skips the test if you running the designated driver
+     * @param string $driver Driver name
+     * @param string $message The message to display
+     * @return bool
+     * @since 1.5.0
+     */
+    public function skipIfDriverIs($driver, $message = '')
+    {
+        return parent::skipIf(Configure::readOrFail(THUMBER . '.driver') == $driver, $message);
+    }
 }

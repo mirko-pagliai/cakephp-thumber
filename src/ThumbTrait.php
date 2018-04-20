@@ -24,15 +24,6 @@ use RuntimeException;
 trait ThumbTrait
 {
     /**
-     * Gets the current driver
-     * @return string
-     */
-    protected function getDriver()
-    {
-        return Configure::read(THUMBER . '.driver');
-    }
-
-    /**
      * Gets a path for a thumbnail
      * @param string $file File
      * @return string
