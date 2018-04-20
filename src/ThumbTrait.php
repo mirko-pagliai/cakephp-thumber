@@ -39,16 +39,7 @@ trait ThumbTrait
      */
     protected function getExtension($path)
     {
-        $extension = get_extension($path);
-
-        switch ($extension) {
-            case 'jpeg':
-                return 'jpg';
-            case 'tif':
-                return 'tiff';
-            default:
-                return $extension;
-        }
+        return preg_replace(['/^jpeg$/', '/^tif$/'], ['jpg', 'tiff'], get_extension($path));
     }
 
     /**

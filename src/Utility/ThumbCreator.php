@@ -89,12 +89,7 @@ class ThumbCreator
     {
         $options += ['format' => $this->getExtension($this->path), 'quality' => 90, 'target' => false];
 
-        //Fixes the name of some similar formats
-        if ($options['format'] === 'jpeg') {
-            $options['format'] = 'jpg';
-        } elseif ($options['format'] === 'tif') {
-            $options['format'] = 'tiff';
-        }
+        $options['format'] = preg_replace(['/^jpeg$/', '/^tif$/'], ['jpg', 'tiff'], $options['format']);
 
         return $options;
     }
