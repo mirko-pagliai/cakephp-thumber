@@ -33,26 +33,6 @@ class ThumbTraitTest extends TestCase
     }
 
     /**
-     * Test for `getExtension()` method
-     * @test
-     */
-    public function testGetExtension()
-    {
-        foreach ([
-            'file.jpg',
-            'file.jpg?',
-            'file.jpg?param',
-            'file.jpg?param=value',
-            'file.jpeg',
-        ] as $filename) {
-            $this->assertEquals('jpg', $this->getExtension($filename));
-        }
-
-        $this->assertEquals('tiff', $this->getExtension('file.tiff'));
-        $this->assertEquals('tiff', $this->getExtension('file.tif'));
-    }
-
-    /**
      * Test for `getPath()` method
      * @test
      */

@@ -33,16 +33,6 @@ trait ThumbTrait
     }
 
     /**
-     * Gets the extension for a file
-     * @param string $path File path
-     * @return string
-     */
-    protected function getExtension($path)
-    {
-        return preg_replace(['/^jpeg$/', '/^tif$/'], ['jpg', 'tiff'], get_extension($path));
-    }
-
-    /**
      * Gets a path for a thumbnail
      * @param string $file File
      * @return string

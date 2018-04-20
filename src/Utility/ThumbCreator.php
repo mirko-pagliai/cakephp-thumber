@@ -87,8 +87,13 @@ class ThumbCreator
      */
     protected function getDefaultSaveOptions($options)
     {
-        $options += ['format' => $this->getExtension($this->path), 'quality' => 90, 'target' => false];
+        $options += [
+            'format' => get_extension($this->path),
+            'quality' => 90,
+            'target' => false,
+        ];
 
+        //Fixes some formats
         $options['format'] = preg_replace(['/^jpeg$/', '/^tif$/'], ['jpg', 'tiff'], $options['format']);
 
         return $options;
@@ -277,7 +282,7 @@ class ThumbCreator
 
             $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
         } else {
-            $options['format'] = $this->getExtension($target);
+            $options['format'] = $this->getDefaultSaveOptions(['format' => get_extension($target)])['format'];
         }
 
         if (!Folder::isAbsolute($target)) {
