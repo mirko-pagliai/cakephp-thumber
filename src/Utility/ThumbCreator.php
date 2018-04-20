@@ -285,12 +285,11 @@ class ThumbCreator
 
             $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
         } else {
-            $options['format'] = $this->getDefaultSaveOptions([], $target)['format'];
+            $optionsFromTarget = $this->getDefaultSaveOptions([], $target);
+            $options['format'] = $optionsFromTarget['format'];
         }
 
-        if (!Folder::isAbsolute($target)) {
-            $target = $this->getPath($target);
-        }
+        $target = Folder::isAbsolute($target) ? $target : $this->getPath($target);
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
