@@ -1,5 +1,5 @@
 # 1.x branch
-## 1.4 branch
+## 1.5 branch
 # 1.5.0
 * the plugin has been migrated to CakePHP 3.6;
 * added `TestCase::skipIfDriverIs()` method;
@@ -11,6 +11,7 @@
     `ThumbManager::$supportedFormats` static property;
 * `InternalErrorException` exception has been replaced with `RuntimeException`.
 
+## 1.4 branch
 # 1.4.1
 * `ThumbNotFoundException` extends the `RuntimeException` and now is located
     below the `Thumber\Http\Exception` namespace. This ensures compability with
