@@ -2,6 +2,8 @@
 ## 1.4 branch
 # 1.5.0
 * the plugin has been migrated to CakePHP 3.6;
+* the `ThumbCreator::getDefaultSaveOptions()` method now can take the `$path`
+    optional argument;
 * removed `getExtension()` and `getUrl()` methods provided by the
     `Thumber\ThumbTrait` trait class;
 * removed `Thumber\ThumbTrait::getSupportedFormats()` method, added 

@@ -82,13 +82,16 @@ class ThumbCreator
     /**
      * Internal method to get default options for the `save()` method
      * @param array $options Passed options
+     * @param string|null $path Path to use
      * @return array Passed options added to the default options
      * @uses $path
      */
-    protected function getDefaultSaveOptions($options)
+    protected function getDefaultSaveOptions($options, $path = null)
     {
+        $path = $path ?: $this->path;
+
         $options += [
-            'format' => get_extension($this->path),
+            'format' => get_extension($path),
             'quality' => 90,
             'target' => false,
         ];
@@ -282,7 +285,7 @@ class ThumbCreator
 
             $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
         } else {
-            $options['format'] = $this->getDefaultSaveOptions(['format' => get_extension($target)])['format'];
+            $options['format'] = $this->getDefaultSaveOptions([], $target)['format'];
         }
 
         if (!Folder::isAbsolute($target)) {
