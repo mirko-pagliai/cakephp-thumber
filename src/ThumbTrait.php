@@ -24,8 +24,11 @@ use RuntimeException;
 trait ThumbTrait
 {
     /**
-     * Gets a path for a thumbnail
-     * @param string $file File
+     * Gets a path for a thumbnail.
+     *
+     * Called with the `$file` argument, returns the file absolute path.
+     * Otherwise, called with `null`, returns the path of the target directory.
+     * @param string|null $file File
      * @return string
      */
     protected function getPath($file = null)
@@ -36,7 +39,7 @@ trait ThumbTrait
     }
 
     /**
-     * Internal method to resolve a partial path, returning its full path
+     * Internal method to resolve a partial path, returning a full path
      * @param string $path Partial path
      * @return string
      * @throws RuntimeException
