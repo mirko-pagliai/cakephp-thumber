@@ -14,7 +14,6 @@
 namespace Thumber\Utility;
 
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
 use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Image;
@@ -262,7 +261,7 @@ class ThumbCreator
      * @param array $options Options for saving
      * @return string Thumbnail path
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
-     * @throws InternalErrorException
+     * @throws RuntimeException
      * @uses getDefaultSaveOptions()
      * @uses getImageInstance()
      * @uses $arguments
@@ -272,7 +271,7 @@ class ThumbCreator
     public function save(array $options = [])
     {
         if (empty($this->callbacks)) {
-            throw new InternalErrorException(__d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__));
+            throw new RuntimeException(__d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__));
         }
 
         $options = $this->getDefaultSaveOptions($options);
@@ -303,7 +302,7 @@ class ThumbCreator
             $imageInstance->destroy();
 
             if (!is_writable(dirname($target))) {
-                throw new InternalErrorException(__d('thumber', 'The directory `{0}` is not writeable', rtr(dirname($target))));
+                throw new RuntimeException(__d('thumber', 'The directory `{0}` is not writeable', rtr(dirname($target))));
             }
 
             //Writes

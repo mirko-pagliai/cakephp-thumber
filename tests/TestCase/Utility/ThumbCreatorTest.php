@@ -52,7 +52,7 @@ class ThumbCreatorTest extends TestCase
 
     /**
      * Test for `__construct()` method, passing a no existing file
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException RuntimeException
      * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
@@ -63,7 +63,7 @@ class ThumbCreatorTest extends TestCase
 
     /**
      * Test for `__construct()` method, passing a no existing file from plugin
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException RuntimeException
      * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */

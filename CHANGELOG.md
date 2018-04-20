@@ -4,7 +4,9 @@
 * the plugin has been migrated to CakePHP 3.6;
 * removed `Thumber\ThumbTrait::getUrl()` method;
 * removed `Thumber\ThumbTrait::getSupportedFormats()` method, added 
-    `Thumber\Utility\ThumbManager::$supportedFormats` static property.
+    `Thumber\Utility\ThumbManager::$supportedFormats` static property;
+* `Cake\Network\Exception\InternalErrorException` exception has been replaced
+    with `RuntimeException`.
 
 # 1.4.1
 * `ThumbNotFoundException` extends the `RuntimeException` and now is located

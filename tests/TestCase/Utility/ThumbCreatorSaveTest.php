@@ -218,7 +218,7 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using the `target` option with a no existing
      *  directory target
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException RuntimeException
      * @expectedExceptionMessageRegExp /^The directory `[\w\/:\\]+` is not writeable$/
      * @test
      */
@@ -230,7 +230,7 @@ class ThumbCreatorSaveTest extends TestCase
 
     /**
      * Test for `save()` method, without a valid method called before
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException RuntimeException
      * @expectedExceptionMessage No valid method called before the `save` method
      */
     public function testSaveWithoutCallbacks()

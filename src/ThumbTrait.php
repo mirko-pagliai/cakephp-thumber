@@ -16,7 +16,7 @@ namespace Thumber;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
+use RuntimeException;
 
 /**
  * This trait provides several methods used by other classes
@@ -67,7 +67,7 @@ trait ThumbTrait
      * Internal method to resolve a partial path, returning its full path
      * @param string $path Partial path
      * @return string
-     * @throws InternalErrorException
+     * @throws RuntimeException
      */
     protected function resolveFilePath($path)
     {
@@ -91,7 +91,7 @@ trait ThumbTrait
 
         //Checks if is readable
         if (!is_readable($path)) {
-            throw new InternalErrorException(__d('thumber', 'File `{0}` not readable', rtr($path)));
+            throw new RuntimeException(__d('thumber', 'File `{0}` not readable', rtr($path)));
         }
 
         return $path;
