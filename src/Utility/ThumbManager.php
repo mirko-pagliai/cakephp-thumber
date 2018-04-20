@@ -15,14 +15,14 @@ namespace Thumber\Utility;
 
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 
 /**
  * A utility to manage thumbnails
  */
 class ThumbManager
 {
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
      * Supported formats

@@ -14,14 +14,14 @@ namespace Thumber\Test\TestCase;
 
 use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 
 /**
- * ThumbTraitTest class
+ * ThumbsPathTraitTest class
  */
-class ThumbTraitTest extends TestCase
+class ThumbsPathTraitTest extends TestCase
 {
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
      * Test for `getPath()` method

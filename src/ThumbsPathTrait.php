@@ -9,7 +9,7 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.1.1
+ * @since       1.5.0
  */
 namespace Thumber;
 
@@ -19,9 +19,9 @@ use Cake\Filesystem\Folder;
 use RuntimeException;
 
 /**
- * This trait provides several methods used by other classes
+ * This trait provides some methods to get and resolve thumbnails paths.
  */
-trait ThumbTrait
+trait ThumbsPathTrait
 {
     /**
      * Gets a path for a thumbnail.

@@ -14,7 +14,7 @@ namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -22,7 +22,7 @@ use Thumber\Utility\ThumbCreator;
  */
 class ThumbCreatorSaveTest extends TestCase
 {
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
      * Test for `save()` method

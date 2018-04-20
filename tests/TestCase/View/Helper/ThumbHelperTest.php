@@ -14,7 +14,7 @@ namespace Thumber\Test\TestCase\View\Helper;
 
 use Cake\View\View;
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 use Thumber\View\Helper\ThumbHelper;
 use Tools\ReflectionTrait;
 
@@ -24,7 +24,7 @@ use Tools\ReflectionTrait;
 class ThumbHelperTest extends TestCase
 {
     use ReflectionTrait;
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
      * Setup the test case, backup the static object values so they can be

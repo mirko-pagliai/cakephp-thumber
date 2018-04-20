@@ -15,7 +15,7 @@ namespace Thumber\TestSuite;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 use Tools\ReflectionTrait;
 use Tools\TestSuite\TestCaseTrait;
 
@@ -26,7 +26,7 @@ abstract class TestCase extends CakeTestCase
 {
     use ReflectionTrait;
     use TestCaseTrait;
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
      * Teardown any static object changes and restore them

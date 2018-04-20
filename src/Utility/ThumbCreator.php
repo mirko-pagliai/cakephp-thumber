@@ -20,7 +20,7 @@ use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use RuntimeException;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 
 /**
  * Utility to create a thumb.
@@ -30,7 +30,7 @@ use Thumber\ThumbTrait;
  */
 class ThumbCreator
 {
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
      * `ImageManager` instance

@@ -16,7 +16,7 @@ namespace Thumber\View\Helper;
 use Cake\View\Helper;
 use InvalidArgumentException;
 use RuntimeException;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -34,7 +34,7 @@ use Thumber\Utility\ThumbCreator;
  */
 class ThumbHelper extends Helper
 {
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
      * Helpers
