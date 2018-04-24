@@ -37,8 +37,7 @@ abstract class TestCase extends CakeTestCase
         parent::tearDown();
 
         foreach (glob($this->getPath() . DS . '*') as $file) {
-            //@codingStandardsIgnoreLine
-            @unlink($file);
+            safe_unlink($file);
         }
     }
 
@@ -51,7 +50,7 @@ abstract class TestCase extends CakeTestCase
     {
         $result = tempnam(sys_get_temp_dir(), $path);
 
-        copy($path, $result);
+        safe_copy($path, $result);
 
         return $result;
     }
@@ -80,10 +79,8 @@ abstract class TestCase extends CakeTestCase
 
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
-        //@codingStandardsIgnoreStart
-        @unlink($expectedCopy);
-        @unlink($actualCopy);
-        //@codingStandardsIgnoreEnd
+        safe_unlink($expectedCopy);
+        safe_unlink($actualCopy);
     }
 
     /**
