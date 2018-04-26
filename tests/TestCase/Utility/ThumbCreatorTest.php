@@ -87,6 +87,27 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
+     * Test for `getUrl()` method
+     * @ŧest
+     */
+    public function testGetUrl()
+    {
+        $thumber = new ThumbCreator('400x400.png');
+        $thumber->resize(200)->save();
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[\w\d]+$/', $thumber->getUrl());
+    }
+
+    /**
+     * Test for `getUrl()` method, without the `$target` property
+     * @expectedException InvalidArgumentException
+     * @ŧest
+     */
+    public function testGetUrlMissingTarget()
+    {
+        (new ThumbCreator('400x400.png'))->getUrl();
+    }
+
+    /**
      * Test for `$path` property
      * @ŧest
      */

@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.5 branch
+# 1.5.1
+* added `ThumbCreator::getUrl()` method.
+
 # 1.5.0
 * the plugin has been migrated to CakePHP 3.6;
 * added `TestCase::skipIfDriverIs()` method;
