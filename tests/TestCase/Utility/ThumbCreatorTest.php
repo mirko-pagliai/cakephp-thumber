@@ -14,9 +14,7 @@ namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Plugin;
 use Intervention\Image\Exception\NotReadableException;
-use Intervention\Image\ImageManager;
 use Thumber\TestSuite\TestCase;
-use Thumber\Utility\ThumbCreator;
 
 /**
  * ThumbCreatorTest class
@@ -55,7 +53,7 @@ class ThumbCreatorTest extends TestCase
      */
     public function testConstructNoExistingFile()
     {
-        new ThumbCreator('noExistingFile.gif');
+        $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
     /**
@@ -66,24 +64,25 @@ class ThumbCreatorTest extends TestCase
      */
     public function testConstructNoExistingFileFromPlugin()
     {
-        new ThumbCreator('TestPlugin.noExistingFile.gif');
+        $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 
     /**
      * Test for `getImageInstance()` method, with unsupported image type for. GD driver
      * @expectedException RuntimeException
-     * @expectedExceptionMessage Image type `image/png` is not supported by this driver
+     * @expectedExceptionMessage Image type `image/jpeg` is not supported by this driver
      * @ŧest
      */
     public function testGetImageInstanceUnsupportedImageType()
     {
-        $thumber = new ThumbCreator('400x400.png');
+        $thumbCreator = $this->getThumbCreatorInstance();
 
-        $message = 'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.';
-        $thumber->ImageManager = $this->getMockBuilder(ImageManager::class)->getMock();
-        $thumber->ImageManager->method('make')->will($this->throwException(new NotReadableException($message)));
+        $thumbCreator->ImageManager = $this->getMockBuilder(get_class($thumbCreator->ImageManager))->getMock();
+        $thumbCreator->ImageManager->method('make')->will($this->throwException(new NotReadableException(
+            'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.'
+        )));
 
-        $this->invokeMethod($thumber, 'getImageInstance');
+        $this->invokeMethod($thumbCreator, 'getImageInstance');
     }
 
     /**
@@ -92,9 +91,7 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetUrl()
     {
-        $thumber = new ThumbCreator('400x400.png');
-        $thumber->resize(200)->save();
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[\w\d]+$/', $thumber->getUrl());
+        $this->assertThumbUrl($this->getThumbCreatorInstanceWithSave()->getUrl());
     }
 
     /**
@@ -104,7 +101,7 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetUrlMissingTarget()
     {
-        (new ThumbCreator('400x400.png'))->getUrl();
+        $this->getThumbCreatorInstance()->getUrl();
     }
 
     /**
@@ -113,27 +110,27 @@ class ThumbCreatorTest extends TestCase
      */
     public function testPath()
     {
-        $file = WWW_ROOT . 'img' . DS . '400x400.png';
+        $file = WWW_ROOT . 'img' . DS . '400x400.jpg';
 
-        $thumber = new ThumbCreator('400x400.png');
+        $thumber = $this->getThumbCreatorInstance();
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
-        $thumber = new ThumbCreator($file);
+        $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
         //From plugin
         $file = Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . '400x400.png';
 
-        $thumber = new ThumbCreator('TestPlugin.400x400.png');
+        $thumber = $this->getThumbCreatorInstance('TestPlugin.400x400.png');
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
-        $thumber = new ThumbCreator($file);
+        $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
         //From remote
         $file = 'http://example.com.png';
 
-        $thumber = new ThumbCreator($file);
+        $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
     }
 }

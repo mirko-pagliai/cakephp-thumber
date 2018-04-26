@@ -1,7 +1,9 @@
 # 1.x branch
 ## 1.5 branch
 # 1.5.1
-* added `ThumbCreator::getUrl()` method.
+* added `ThumbCreator::getUrl()` method;
+* added `getThumbCreatorInstance()` and `getThumbCreatorInstanceWithSave()`
+    methods to the `Thumber\TestSuite\TestCase` class. This simplifies tests.
 
 # 1.5.0
 * the plugin has been migrated to CakePHP 3.6;
