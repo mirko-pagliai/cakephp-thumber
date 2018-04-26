@@ -16,6 +16,7 @@ use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Thumber\ThumbsPathTrait;
+use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
 use Tools\TestSuite\TestCaseTrait;
 
@@ -37,8 +38,7 @@ abstract class TestCase extends CakeTestCase
         parent::tearDown();
 
         foreach (glob($this->getPath() . DS . '*') as $file) {
-            //@codingStandardsIgnoreLine
-            @unlink($file);
+            safe_unlink($file);
         }
     }
 
@@ -51,7 +51,7 @@ abstract class TestCase extends CakeTestCase
     {
         $result = tempnam(sys_get_temp_dir(), $path);
 
-        copy($path, $result);
+        safe_copy($path, $result);
 
         return $result;
     }
@@ -80,10 +80,8 @@ abstract class TestCase extends CakeTestCase
 
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
-        //@codingStandardsIgnoreStart
-        @unlink($expectedCopy);
-        @unlink($actualCopy);
-        //@codingStandardsIgnoreEnd
+        safe_unlink($expectedCopy);
+        safe_unlink($actualCopy);
     }
 
     /**
@@ -96,7 +94,7 @@ abstract class TestCase extends CakeTestCase
      */
     public function assertThumbPath($path, $message = '')
     {
-        $regex = sprintf('/^%s[\w\d]{32}_[\w\d]{32}\.\w{3,4}/', preg_quote($this->getPath() . DS, '/'));
+        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote($this->getPath() . DS, '/'));
         self::assertRegExp($regex, $path, $message);
     }
 
@@ -111,6 +109,45 @@ abstract class TestCase extends CakeTestCase
     public function assertThumbUrl($url, $message = '')
     {
         self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[\w\d]+/', $url, $message);
+    }
+
+    /**
+     * Returns an instance of `ThumbCreator`
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url
+     * @return ThumbCreator
+     * @since 1.5.1
+     */
+    protected function getThumbCreatorInstance($path = null)
+    {
+        return new ThumbCreator($path ?: '400x400.jpg');
+    }
+
+    /**
+     * Returns an instance of `ThumbCreator`, after calling `resize()` and
+     *  `save()` methods.
+     *
+     * It can be called passing only the array of options as first argument.
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url
+     * @param array $options Options for saving
+     * @return ThumbCreator
+     * @since 1.5.1
+     * @uses getThumbCreatorInstance()
+     */
+    protected function getThumbCreatorInstanceWithSave($path = null, array $options = [])
+    {
+        if (is_array($path) && func_num_args() < 2) {
+            $options = $path;
+            $path = null;
+        }
+
+        $thumbCreator = $this->getThumbCreatorInstance($path);
+        $thumbCreator->resize(200)->save($options);
+
+        return $thumbCreator;
     }
 
     /**

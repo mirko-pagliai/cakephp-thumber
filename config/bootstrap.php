@@ -38,8 +38,7 @@ if (!in_array($driver, ['imagick', 'gd'])) {
 $target = Configure::read(THUMBER . '.target');
 
 if (!file_exists($target)) {
-    //@codingStandardsIgnoreLine
-    @mkdir($target, 0777, true);
+    safe_mkdir($target, 0777, true);
 }
 
 if (!is_writeable($target)) {

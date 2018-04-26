@@ -32,8 +32,7 @@ abstract class IntegrationTestCase extends CakeIntegrationTestCase
         parent::tearDown();
 
         foreach (glob($this->getPath() . DS . '*') as $file) {
-            //@codingStandardsIgnoreLine
-            @unlink($file);
+            safe_unlink($file);
         }
     }
 

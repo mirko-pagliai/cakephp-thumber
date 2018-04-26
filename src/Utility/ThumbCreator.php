@@ -15,10 +15,12 @@ namespace Thumber\Utility;
 
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
+use Cake\Routing\Router;
 use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
+use InvalidArgumentException;
 use RuntimeException;
 use Thumber\ThumbsPathTrait;
 
@@ -61,10 +63,16 @@ class ThumbCreator
     protected $driver;
 
     /**
-     * File path
+     * Path of the file from which the thumbnail will be generated
      * @var string
      */
     protected $path;
+
+    /**
+     * Path of the generated thumbnail
+     * @var string
+     */
+    protected $target;
 
     /**
      * Construct.
@@ -134,6 +142,28 @@ class ThumbCreator
         }
 
         return $imageInstance;
+    }
+
+    /**
+     * Builds and returns the url for the generated thumbnail
+     * @param bool $fullBase If `true`, the full base URL will be prepended to
+     *  the result
+     * @return string
+     * @since 1.5.1
+     * @throws InvalidArgumentException
+     * @uses $target
+     */
+    public function getUrl($fullBase = true)
+    {
+        if (empty($this->target)) {
+            throw new InvalidArgumentException(__d(
+                'thumber',
+                'Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked',
+                'save()'
+            ));
+        }
+
+        return Router::url(['_name' => 'thumb', base64_encode(basename($this->target))], $fullBase);
     }
 
     /**
@@ -280,6 +310,7 @@ class ThumbCreator
      * @uses $callbacks
      * @uses $driver
      * @uses $path
+     * @uses $target
      */
     public function save(array $options = [])
     {
@@ -324,6 +355,6 @@ class ThumbCreator
         //Resets arguments and callbacks
         $this->arguments = $this->callbacks = [];
 
-        return $target;
+        return $this->target = $target;
     }
 }

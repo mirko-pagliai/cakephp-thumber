@@ -38,13 +38,11 @@ define('CACHE', TMP);
 define('LOGS', TMP);
 define('SESSIONS', TMP . 'sessions' . DS);
 
-//@codingStandardsIgnoreStart
-@mkdir(LOGS);
-@mkdir(SESSIONS);
-@mkdir(CACHE);
-@mkdir(CACHE . 'views');
-@mkdir(CACHE . 'models');
-//@codingStandardsIgnoreEnd
+safe_mkdir(LOGS);
+safe_mkdir(SESSIONS);
+safe_mkdir(CACHE);
+safe_mkdir(CACHE . 'views');
+safe_mkdir(CACHE . 'models');
 
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
@@ -89,10 +87,12 @@ if (!getenv('THUMBER_DRIVER')) {
     putenv('THUMBER_DRIVER=imagick');
 }
 
-Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
-Configure::write('Thumber.comparingDir', TESTS . DS . 'comparing_files' . DS . Configure::read('Thumber.driver') . DS);
+Configure::write('Thumber', [
+    'driver' => getenv('THUMBER_DRIVER'),
+    'comparingDir' => TESTS . DS . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS,
+]);
 
-echo 'Running tests for "' . Configure::read('Thumber.driver') . '" driver ' . PHP_EOL;
+echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
 
 Plugin::load('Thumber', [
     'bootstrap' => true,
