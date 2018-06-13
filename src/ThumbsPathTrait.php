@@ -14,7 +14,7 @@
 namespace Thumber;
 
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
+use Cake\Core\Plugin as CorePlugin;
 use Cake\Filesystem\Folder;
 use RuntimeException;
 
@@ -59,8 +59,8 @@ trait ThumbsPathTrait
             //Note that using `pluginSplit()` is not sufficient, because
             //  `$path` may still contain a dot
             $path = WWW_ROOT . 'img' . DS . $path;
-            if (!empty($pluginSplit[0]) && in_array($pluginSplit[0], Plugin::loaded())) {
-                $path = Plugin::path($pluginSplit[0]) . 'webroot' . DS . 'img' . DS . $pluginSplit[1];
+            if (!empty($pluginSplit[0]) && in_array($pluginSplit[0], CorePlugin::loaded())) {
+                $path = CorePlugin::path($pluginSplit[0]) . 'webroot' . DS . 'img' . DS . $pluginSplit[1];
             }
         }
 
