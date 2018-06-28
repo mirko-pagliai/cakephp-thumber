@@ -10,20 +10,22 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Test\TestCase\Controller;
+namespace Thumber\Test\TestCase\Routing\Middleware;
 
 use Cake\Core\Configure;
 use Cake\View\View;
-use Thumber\Controller\ThumbsController;
 use Thumber\TestSuite\IntegrationTestCase;
+use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 use Thumber\View\Helper\ThumbHelper;
 
 /**
- * ThumbsControllerTest class
+ * ThumbnailMiddlewareTest class
  */
-class ThumbsControllerTest extends IntegrationTestCase
+class ThumbnailMiddlewareTest extends IntegrationTestCase
 {
+    use ThumbsPathTrait;
+
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -33,6 +35,8 @@ class ThumbsControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->disableErrorHandlerMiddleware();
 
         $this->Thumb = new ThumbHelper(new View);
     }
@@ -102,16 +106,6 @@ class ThumbsControllerTest extends IntegrationTestCase
      */
     public function testThumbNoExistingFile()
     {
-        (new ThumbsController)->thumb(base64_encode('noExistingFile'));
-    }
-
-    /**
-     * Test for `thumb()` method, with a a no existing file
-     * @test
-     */
-    public function testThumbNoExistingFileResponse()
-    {
-        $this->get(base64_encode('noExistingFile'));
-        $this->assertResponseError();
+        $this->get('/thumb/' . base64_encode('noExistingFile'));
     }
 }

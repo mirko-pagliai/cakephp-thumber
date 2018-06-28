@@ -12,9 +12,10 @@
  */
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
+use Thumber\Routing\Middleware\ThumbnailMiddleware;
 
 Router::plugin(THUMBER, ['path' => '/thumb'], function (RouteBuilder $routes) {
-    $routes->get('/:basename', ['controller' => 'Thumbs', 'action' => 'thumb'], 'thumb')
-        ->setPatterns(['basename' => '[\w\d=]+'])
-        ->setPass(['basename']);
+    $routes->registerMiddleware('thumbnail', new ThumbnailMiddleware);
+    $routes->applyMiddleware('thumbnail');
+    $routes->get('/:basename', [], 'thumb')->setPatterns(['basename' => '[\w\d=]+']);
 });

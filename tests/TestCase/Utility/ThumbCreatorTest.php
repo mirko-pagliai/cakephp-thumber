@@ -13,6 +13,7 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Plugin;
+use Cake\Routing\Router;
 use Intervention\Image\Exception\NotReadableException;
 use Thumber\TestSuite\TestCase;
 
@@ -91,7 +92,17 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetUrl()
     {
-        $this->assertThumbUrl($this->getThumbCreatorInstanceWithSave()->getUrl());
+        $fullBase = rtrim(Router::fullBaseUrl(), '/');
+
+        //With full base
+        $result = $this->getThumbCreatorInstanceWithSave()->getUrl();
+        $this->assertThumbUrl($result);
+        $this->assertTrue(substr($result, 0, strlen($fullBase)) === $fullBase);
+
+        //Without full base
+        $result = $this->getThumbCreatorInstanceWithSave()->getUrl(false);
+        $this->assertThumbUrl($result);
+        $this->assertFalse(substr($result, 0, strlen($fullBase)) === $fullBase);
     }
 
     /**
