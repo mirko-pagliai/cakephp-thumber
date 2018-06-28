@@ -62,7 +62,13 @@ Configure::write('App', [
     'imageBaseUrl' => 'img/',
     'jsBaseUrl' => 'js/',
     'cssBaseUrl' => 'css/',
-    'paths' => ['plugins' => [APP . 'Plugin' . DS]]
+    'paths' => [
+        'plugins' => [APP . 'Plugin' . DS],
+        'templates' => [
+            APP . 'TestApp' . DS . 'Template' . DS,
+            ROOT . 'src' . DS . 'Template' . DS,
+        ],
+    ],
 ]);
 
 Cache::setConfig([
