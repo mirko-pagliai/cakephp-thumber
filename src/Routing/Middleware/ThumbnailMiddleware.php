@@ -9,37 +9,41 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @since       1.6.0
  */
-namespace Thumber\Controller;
+namespace Thumber\Routing\Middleware;
 
-use Cake\Controller\Controller;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Thumber\Http\Exception\ThumbNotFoundException;
 use Thumber\ThumbsPathTrait;
 
 /**
- * Thumbs controller class
+ * Handles serving thumbnailsù
  */
-class ThumbsController extends Controller
+class ThumbnailMiddleware
 {
     use ThumbsPathTrait;
 
     /**
-     * Renders a thumbnail
-     * @param string $basename Encoded thumbnail basename
-     * @return Cake\Network\Response|null
+     * Serves thumbnail if the request matches one
+     * @param ServerRequestInterface $request The request
+     * @param ResponseInterface $response The response
+     * @param callable $next Callback to invoke the next middleware
+     * @return ResponseInterface A response
      * @throws ThumbNotFoundException
      */
-    public function thumb($basename)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
-        $file = $this->getPath(base64_decode($basename));
+        $file = $this->getPath(base64_decode($request->getParam('basename')));
 
         if (!is_readable($file)) {
             throw new ThumbNotFoundException(__d('thumber', 'File `{0}` doesn\'t exist', $file));
         }
 
-        $response = $this->response->withModified(filemtime($file));
+        $response = $response->withModified(filemtime($file));
 
-        if ($response->checkNotModified($this->request)) {
+        if ($response->checkNotModified($request)) {
             return $response;
         }
 

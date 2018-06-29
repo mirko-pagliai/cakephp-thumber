@@ -1,4 +1,9 @@
 # 1.x branch
+## 1.6 branch
+# 1.6.0
+* the plugin now uses the `ThumbnailMiddleware` instead of a controller to
+    "serve" thumbnails. The `ThumbsController` has therefore been deleted.
+
 ## 1.5 branch
 # 1.5.2
 * fixed little bug for PHP 5.6.
