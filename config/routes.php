@@ -16,6 +16,8 @@ use Thumber\Routing\Middleware\ThumbnailMiddleware;
 
 Router::plugin(THUMBER, ['path' => '/thumb'], function (RouteBuilder $routes) {
     $routes->registerMiddleware('thumbnail', new ThumbnailMiddleware);
-    $routes->applyMiddleware('thumbnail');
-    $routes->get('/:basename', [], 'thumb')->setPatterns(['basename' => '[\w\d=]+']);
+
+    $routes->get('/:basename', [], 'thumb')
+        ->setPatterns(['basename' => '[\w\d=]+'])
+        ->setMiddleware(['thumbnail']);
 });

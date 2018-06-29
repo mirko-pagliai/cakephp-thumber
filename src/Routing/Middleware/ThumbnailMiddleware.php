@@ -35,10 +35,6 @@ class ThumbnailMiddleware
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
-        if ($request->getParam('_name') !== 'thumb' || !$request->getParam('basename')) {
-            return $next($request, $response);
-        }
-
         $file = $this->getPath(base64_decode($request->getParam('basename')));
 
         if (!is_readable($file)) {
