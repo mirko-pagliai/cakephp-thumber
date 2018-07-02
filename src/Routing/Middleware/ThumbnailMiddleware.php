@@ -19,7 +19,7 @@ use Thumber\Http\Exception\ThumbNotFoundException;
 use Thumber\ThumbsPathTrait;
 
 /**
- * Handles serving thumbnailsù
+ * Handles serving thumbnails
  */
 class ThumbnailMiddleware
 {
