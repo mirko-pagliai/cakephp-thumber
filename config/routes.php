@@ -19,5 +19,6 @@ Router::plugin(THUMBER, ['path' => '/thumb'], function (RouteBuilder $routes) {
 
     $routes->get('/:basename', [], 'thumb')
         ->setPatterns(['basename' => '[\w\d=]+'])
+        ->setPass(['basename'])
         ->setMiddleware(['thumbnail']);
 });

@@ -163,7 +163,7 @@ class ThumbCreator
             ));
         }
 
-        return Router::url(['_name' => 'thumb', 'basename' => base64_encode(basename($this->target))], $fullBase);
+        return Router::url(['_name' => 'thumb', base64_encode(basename($this->target))], $fullBase);
     }
 
     /**
