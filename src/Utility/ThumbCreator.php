@@ -163,13 +163,7 @@ class ThumbCreator
             ));
         }
 
-        $url = '/thumb/' . base64_encode(basename($this->target));
-
-        if ($fullBase) {
-            $url = rtrim(Router::fullBaseUrl(), '/') . $url;
-        }
-
-        return $url;
+        return Router::url(['_name' => 'thumb', 'basename' => base64_encode(basename($this->target))], $fullBase);
     }
 
     /**
