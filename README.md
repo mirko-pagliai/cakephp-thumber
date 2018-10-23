@@ -13,6 +13,11 @@ provides:
 * `ThumbHelper`, a convenient helper that allows you to create thumbnails on 
 the fly from your templates.
 
+Did you like this plugin? Its development requires a lot of time for me.  
+Please consider the possibility of making [a donation](//paypal.me/mirkopagliai): even a coffee is enough! Thank you.
+
+[![Make a donation](https://www.paypalobjects.com/webstatic/mktg/logo-center/logo_paypal_carte.jpg)](//paypal.me/mirkopagliai)
+
 ***
 
   * [Requirements and supported formats](#requirements-and-supported-formats)
