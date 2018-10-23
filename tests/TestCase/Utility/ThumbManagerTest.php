@@ -13,7 +13,6 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 use Thumber\Utility\ThumbManager;
 
@@ -22,8 +21,6 @@ use Thumber\Utility\ThumbManager;
  */
 class ThumbManagerTest extends TestCase
 {
-    use ThumbTrait;
-
     /**
      * @var \Thumber\Utility\ThumbManager
      */
@@ -73,12 +70,12 @@ class ThumbManagerTest extends TestCase
      */
     public function testClearWithError()
     {
-        $class = $this->getMockBuilder(get_class($this->ThumbManager))
+        $ThumbManager = $this->getMockBuilder(ThumbManager::class)
             ->setMethods(['get'])
             ->getMock();
-        $class->method('get')->will($this->returnValue([DS . 'noExisting']));
+        $ThumbManager->method('get')->will($this->returnValue([DS . 'noExisting']));
 
-        $this->assertFalse($class->clear(DS . 'noExisting'));
+        $this->assertFalse($ThumbManager->clear(DS . 'noExisting'));
     }
 
     /**

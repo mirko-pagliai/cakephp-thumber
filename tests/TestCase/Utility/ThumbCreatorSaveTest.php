@@ -12,17 +12,14 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbTrait;
-use Thumber\Utility\ThumbCreator;
 
 /**
  * ThumbCreatorSaveTest class
  */
 class ThumbCreatorSaveTest extends TestCase
 {
-    use ThumbTrait;
-
     /**
      * Test for `save()` method
      * @test
@@ -37,28 +34,26 @@ class ThumbCreatorSaveTest extends TestCase
         ];
 
         //Adds some extensions only for the `imagick` driver
-        if ($this->getDriver() == 'imagick') {
-            $extensions += [
-                'bmp' => 'image/x-ms-bmp',
-                'ico' => 'image/x-icon',
-                'psd' => 'image/vnd.adobe.photoshop',
-                'tif' => 'image/tiff',
-                'tiff' => 'image/tiff',
-            ];
-        }
+        $extensions += Configure::readOrFail(THUMBER . '.driver') == 'imagick' ? [
+            'bmp' => 'image/x-ms-bmp',
+            'ico' => 'image/x-icon',
+            'psd' => 'image/vnd.adobe.photoshop',
+            'tif' => 'image/tiff',
+            'tiff' => 'image/tiff',
+        ] : [];
 
         foreach ($extensions as $extension => $expectedMimetype) {
-            $thumb = (new ThumbCreator('400x400.' . $extension))->resize(200)->save();
+            $thumb = $this->getThumbCreatorInstance('400x400.' . $extension)->resize(200)->save();
             $this->assertThumbPath($thumb);
             $this->assertFileMime($thumb, $expectedMimetype);
 
             //Using `format` option
-            $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => $extension]);
+            $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['format' => $extension]);
             $this->assertThumbPath($thumb);
             $this->assertFileMime($thumb, $expectedMimetype);
 
             //Using `target` option
-            $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.' . $extension]);
+            $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['target' => 'image.' . $extension]);
             $this->assertEquals($this->getPath('image.' . $extension), $thumb);
             $this->assertFileMime($thumb, $expectedMimetype);
         }
@@ -74,9 +69,9 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveFromInvalidFileGd()
     {
-        $this->skipIf($this->getDriver() != 'gd');
+        $this->skipIfDriverIs('imagick');
 
-        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
+        $this->getThumbCreatorInstanceWithSave(APP . 'config' . DS . 'routes.php');
     }
 
     /**
@@ -89,9 +84,9 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveFromInvalidFileImagick()
     {
-        $this->skipIf($this->getDriver() != 'imagick');
+        $this->skipIfDriverIs('gd');
 
-        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
+        $this->getThumbCreatorInstanceWithSave(APP . 'config' . DS . 'routes.php');
     }
 
     /**
@@ -103,8 +98,8 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveSameFileDifferentArguments()
     {
-        $firstThumb = explode('_', basename((new ThumbCreator('400x400.png'))->resize(200)->save()));
-        $secondThumb = explode('_', basename((new ThumbCreator('400x400.png'))->resize(300)->save()));
+        $firstThumb = explode('_', basename($this->getThumbCreatorInstance()->resize(200)->save()));
+        $secondThumb = explode('_', basename($this->getThumbCreatorInstance()->resize(300)->save()));
 
         $this->assertEquals($firstThumb[0], $secondThumb[0]);
         $this->assertNotEquals($firstThumb[1], $secondThumb[1]);
@@ -118,21 +113,19 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveReturnsExistingThumb()
     {
         //Creates the thumbnail and gets the creation time
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
-        $time = filemtime($thumb);
+        $time = filemtime($this->getThumbCreatorInstance()->resize(200)->save());
 
         //Tries to create again the same thumbnail. Now the creation time is the same
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
+        $thumb = $this->getThumbCreatorInstance()->resize(200)->save();
         $this->assertEquals($time, filemtime($thumb));
 
         //Deletes the thumbnail and wait 1 second
-        //@codingStandardsIgnoreLine
-        @unlink($thumb);
+        safe_unlink($thumb);
         sleep(1);
 
         //Tries to create again the same thumbnail. Now the creation time is different
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
-        $this->assertNotEquals($time, filemtime($thumb));
+        $newTime = filemtime($this->getThumbCreatorInstance()->resize(200)->save());
+        $this->assertNotEquals($time, $newTime);
     }
 
     /**
@@ -141,9 +134,8 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithQuality()
     {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
+        $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['quality' => 10]);
         $this->assertThumbPath($thumb);
-        $this->assertFileMime($thumb, 'image/jpeg');
     }
 
     /**
@@ -153,7 +145,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithQualityInvalidValue()
     {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 101]);
+        $this->getThumbCreatorInstanceWithSave(['quality' => 101]);
     }
 
     /**
@@ -163,7 +155,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithQualityImageEquals()
     {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
+        $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['quality' => 10]);
         $this->assertImageFileEquals('resize_w200_h200_quality_10.jpg', $thumb);
     }
 
@@ -173,9 +165,9 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithTarget()
     {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['target' => 'thumb.jpg']);
-        $this->assertEquals($this->getPath('thumb.jpg'), $thumb);
-        $this->assertFileMime($thumb, 'image/jpeg');
+        $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['target' => 'thumb.png']);
+        $this->assertEquals($this->getPath('thumb.png'), $thumb);
+        $this->assertFileMime($thumb, 'image/png');
     }
 
     /**
@@ -186,7 +178,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithInvalidFormat()
     {
-        (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'txt']);
+        $this->getThumbCreatorInstanceWithSave(['format' => 'txt']);
     }
 
     /**
@@ -195,12 +187,12 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithSimilarFormat()
     {
-        $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpeg']);
+        $file = $this->getThumbCreatorInstance()->resize(200)->save(['format' => 'jpeg']);
         $this->assertFileExtension('jpg', $file);
 
-        $this->skipIf($this->getDriver() === 'gd');
+        $this->skipIfDriverIs('gd');
 
-        $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'tif']);
+        $file = $this->getThumbCreatorInstance()->resize(200)->save(['format' => 'tif']);
         $this->assertFileExtension('tiff', $file, PATHINFO_EXTENSION);
     }
 
@@ -212,29 +204,28 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveInvalidTargetFormat()
     {
-        (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.txt']);
+        $this->getThumbCreatorInstanceWithSave(['target' => 'image.txt']);
     }
 
     /**
      * Test for `save()` method, using the `target` option with a no existing
      *  directory target
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessageRegExp /^The directory `[\w\/:\\]+` is not writeable$/
+     * @expectedException ErrorException
+     * @expectedExceptionMessageRegExp /^File or directory `[\w\/:\\]+` is not writable$/
      * @test
      */
     public function testSaveInvalidTargetDir()
     {
-        (new ThumbCreator('400x400.png'))->resize(200)
-            ->save(['target' => TMP . 'noExistingDir' . DS . 'thumb.jpg']);
+        $this->getThumbCreatorInstanceWithSave(['target' => TMP . 'noExistingDir' . DS . 'thumb.jpg']);
     }
 
     /**
      * Test for `save()` method, without a valid method called before
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException RuntimeException
      * @expectedExceptionMessage No valid method called before the `save` method
      */
     public function testSaveWithoutCallbacks()
     {
-        (new ThumbCreator('400x400.jpg'))->save();
+        $this->getThumbCreatorInstance()->save();
     }
 }

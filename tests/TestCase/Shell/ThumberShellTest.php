@@ -12,6 +12,7 @@
  */
 namespace Thumber\Test\TestCase\Shell;
 
+use Cake\Http\BaseApplication;
 use Cake\TestSuite\ConsoleIntegrationTestCase;
 use Thumber\Shell\ThumberShell;
 use Thumber\Utility\ThumbCreator;
@@ -41,6 +42,9 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
     public function setUp()
     {
         parent::setUp();
+
+        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
+        $app->addPlugin('Thumber')->pluginBootstrap();
 
         $this->createSomeThumbs();
     }
@@ -91,7 +95,7 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
     {
         $this->exec('thumber.thumber clear ' . DS . 'noExisting -v');
         $this->assertExitCode(1);
-        $this->assertErrorContains('<error>Error deleting thumbnails</error>');
+        $this->assertErrorContains('Error deleting thumbnails');
     }
 
     /**

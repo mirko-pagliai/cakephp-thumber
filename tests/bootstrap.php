@@ -12,8 +12,6 @@
  */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
-use Cake\Routing\DispatcherFactory;
 
 ini_set('intl.default_locale', 'en_US');
 
@@ -39,13 +37,11 @@ define('CACHE', TMP);
 define('LOGS', TMP);
 define('SESSIONS', TMP . 'sessions' . DS);
 
-//@codingStandardsIgnoreStart
-@mkdir(LOGS);
-@mkdir(SESSIONS);
-@mkdir(CACHE);
-@mkdir(CACHE . 'views');
-@mkdir(CACHE . 'models');
-//@codingStandardsIgnoreEnd
+safe_mkdir(LOGS);
+safe_mkdir(SESSIONS);
+safe_mkdir(CACHE);
+safe_mkdir(CACHE . 'views');
+safe_mkdir(CACHE . 'models');
 
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
@@ -67,8 +63,11 @@ Configure::write('App', [
     'cssBaseUrl' => 'css/',
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
-        'templates' => [APP . 'TestApp' . DS . 'Template' . DS],
-    ]
+        'templates' => [
+            APP . 'TestApp' . DS . 'Template' . DS,
+            ROOT . 'src' . DS . 'Template' . DS,
+        ],
+    ],
 ]);
 
 Cache::setConfig([
@@ -93,16 +92,11 @@ if (!getenv('THUMBER_DRIVER')) {
     putenv('THUMBER_DRIVER=imagick');
 }
 
-Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
-Configure::write('Thumber.comparingDir', TESTS . DS . 'comparing_files' . DS . Configure::read('Thumber.driver') . DS);
-
-echo 'Running tests for "' . Configure::read('Thumber.driver') . '" driver ' . PHP_EOL;
-
-Plugin::load('Thumber', [
-    'bootstrap' => true,
-    'path' => ROOT,
-    'routes' => true,
+Configure::write('Thumber', [
+    'driver' => getenv('THUMBER_DRIVER'),
+    'comparingDir' => TESTS . DS . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS,
 ]);
 
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
+echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
+
+$_SERVER['PHP_SELF'] = '/';

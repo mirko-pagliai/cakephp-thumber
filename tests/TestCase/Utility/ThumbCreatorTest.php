@@ -12,20 +12,17 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Http\BaseApplication;
 use Intervention\Image\Exception\NotReadableException;
-use Intervention\Image\ImageManager;
 use Thumber\TestSuite\TestCase;
-use Thumber\Utility\ThumbCreator;
-use Tools\ReflectionTrait;
 
 /**
  * ThumbCreatorTest class
  */
 class ThumbCreatorTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -36,57 +33,75 @@ class ThumbCreatorTest extends TestCase
     {
         parent::setUp();
 
-        Plugin::load('TestPlugin');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        Plugin::unload('TestPlugin');
+        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
+        $app->addPlugin('TestPlugin')->pluginBootstrap();
     }
 
     /**
      * Test for `__construct()` method, passing a no existing file
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException RuntimeException
      * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFile()
     {
-        new ThumbCreator('noExistingFile.gif');
+        $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
     /**
      * Test for `__construct()` method, passing a no existing file from plugin
-     * @expectedException Cake\Network\Exception\InternalErrorException
+     * @expectedException RuntimeException
      * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFileFromPlugin()
     {
-        new ThumbCreator('TestPlugin.noExistingFile.gif');
+        $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 
     /**
      * Test for `getImageInstance()` method, with unsupported image type for. GD driver
      * @expectedException RuntimeException
-     * @expectedExceptionMessage Image type `image/png` is not supported by this driver
+     * @expectedExceptionMessage Image type `image/jpeg` is not supported by this driver
      * @ŧest
      */
     public function testGetImageInstanceUnsupportedImageType()
     {
-        $thumber = new ThumbCreator('400x400.png');
+        $thumbCreator = $this->getThumbCreatorInstance();
 
-        $message = 'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.';
-        $thumber->ImageManager = $this->getMockBuilder(ImageManager::class)->getMock();
-        $thumber->ImageManager->method('make')->will($this->throwException(new NotReadableException($message)));
+        $thumbCreator->ImageManager = $this->getMockBuilder(get_class($thumbCreator->ImageManager))->getMock();
+        $thumbCreator->ImageManager->method('make')->will($this->throwException(new NotReadableException(
+            'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.'
+        )));
 
-        $this->invokeMethod($thumber, 'getImageInstance');
+        $this->invokeMethod($thumbCreator, 'getImageInstance');
+    }
+
+    /**
+     * Test for `getUrl()` method
+     * @ŧest
+     */
+    public function testGetUrl()
+    {
+        //With full base
+        $result = $this->getThumbCreatorInstanceWithSave()->getUrl();
+        $this->assertThumbUrl($result);
+        $this->assertTextStartsWith(Configure::read('App.fullBaseUrl'), $result);
+
+        //Without full base
+        $result = $this->getThumbCreatorInstanceWithSave()->getUrl(false);
+        $this->assertThumbUrl($result);
+        $this->assertTextStartsNotWith(Configure::read('App.fullBaseUrl'), $result);
+    }
+
+    /**
+     * Test for `getUrl()` method, without the `$target` property
+     * @expectedException InvalidArgumentException
+     * @ŧest
+     */
+    public function testGetUrlMissingTarget()
+    {
+        $this->getThumbCreatorInstance()->getUrl();
     }
 
     /**
@@ -95,27 +110,27 @@ class ThumbCreatorTest extends TestCase
      */
     public function testPath()
     {
-        $file = WWW_ROOT . 'img' . DS . '400x400.png';
+        $file = WWW_ROOT . 'img' . DS . '400x400.jpg';
 
-        $thumber = new ThumbCreator('400x400.png');
+        $thumber = $this->getThumbCreatorInstance();
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
-        $thumber = new ThumbCreator($file);
+        $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
         //From plugin
         $file = Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . '400x400.png';
 
-        $thumber = new ThumbCreator('TestPlugin.400x400.png');
+        $thumber = $this->getThumbCreatorInstance('TestPlugin.400x400.png');
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
-        $thumber = new ThumbCreator($file);
+        $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
         //From remote
         $file = 'http://example.com.png';
 
-        $thumber = new ThumbCreator($file);
+        $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
     }
 }

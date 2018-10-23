@@ -36,11 +36,7 @@ if (!in_array($driver, ['imagick', 'gd'])) {
 
 //Checks for target directory
 $target = Configure::read(THUMBER . '.target');
-
-if (!file_exists($target)) {
-    //@codingStandardsIgnoreLine
-    @mkdir($target, 0777, true);
-}
+safe_mkdir($target, 0777, true);
 
 if (!is_writeable($target)) {
     trigger_error(sprintf('Directory %s not writeable', $target), E_USER_ERROR);

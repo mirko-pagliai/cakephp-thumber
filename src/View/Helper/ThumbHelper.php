@@ -16,7 +16,6 @@ namespace Thumber\View\Helper;
 use Cake\View\Helper;
 use InvalidArgumentException;
 use RuntimeException;
-use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -34,8 +33,6 @@ use Thumber\Utility\ThumbCreator;
  */
 class ThumbHelper extends Helper
 {
-    use ThumbTrait;
-
     /**
      * Helpers
      * @var array
@@ -112,15 +109,14 @@ class ThumbHelper extends Helper
         $params += ['format' => 'jpg', 'height' => null, 'width' => null];
         $options += ['fullBase' => true];
 
-        //Creates the thumbnail
-        $thumb = new ThumbCreator($path);
+        $thumber = new ThumbCreator($path);
 
-        if (!method_exists($thumb, $name)) {
+        if (!method_exists($thumber, $name)) {
             throw new RuntimeException(__d('thumber', 'Method {0}::{1} does not exist', get_class($this), $name));
         }
 
-        $thumb = $thumb->$name($params['width'], $params['height'])->save($params);
+        $thumber->$name($params['width'], $params['height'])->save($params);
 
-        return $this->getUrl($thumb, $options['fullBase']);
+        return $thumber->getUrl($options['fullBase']);
     }
 }
