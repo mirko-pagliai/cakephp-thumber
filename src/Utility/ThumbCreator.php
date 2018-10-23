@@ -344,11 +344,8 @@ class ThumbCreator
             $content = $imageInstance->encode($options['format'], $options['quality']);
             $imageInstance->destroy();
 
-            if (!is_writable(dirname($target))) {
-                throw new RuntimeException(__d('thumber', 'The directory `{0}` is not writeable', rtr(dirname($target))));
-            }
-
             //Writes
+            is_writable_or_fail(dirname($target));
             file_put_contents($target, $content);
         }
 

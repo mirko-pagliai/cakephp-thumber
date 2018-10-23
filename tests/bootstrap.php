@@ -12,7 +12,6 @@
  */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 
 ini_set('intl.default_locale', 'en_US');
 
@@ -99,11 +98,5 @@ Configure::write('Thumber', [
 ]);
 
 echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
-
-Plugin::load('Thumber', [
-    'bootstrap' => true,
-    'path' => ROOT,
-    'routes' => true,
-]);
 
 $_SERVER['PHP_SELF'] = '/';

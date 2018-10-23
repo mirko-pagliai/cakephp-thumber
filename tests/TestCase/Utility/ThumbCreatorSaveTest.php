@@ -210,8 +210,8 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using the `target` option with a no existing
      *  directory target
-     * @expectedException RuntimeException
-     * @expectedExceptionMessageRegExp /^The directory `[\w\/:\\]+` is not writeable$/
+     * @expectedException ErrorException
+     * @expectedExceptionMessageRegExp /^File or directory `[\w\/:\\]+` is not writable$/
      * @test
      */
     public function testSaveInvalidTargetDir()

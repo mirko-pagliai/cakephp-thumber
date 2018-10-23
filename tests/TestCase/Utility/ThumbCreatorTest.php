@@ -12,8 +12,9 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Routing\Router;
+use Cake\Http\BaseApplication;
 use Intervention\Image\Exception\NotReadableException;
 use Thumber\TestSuite\TestCase;
 
@@ -32,18 +33,8 @@ class ThumbCreatorTest extends TestCase
     {
         parent::setUp();
 
-        Plugin::load('TestPlugin');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        Plugin::unload('TestPlugin');
+        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
+        $app->addPlugin('TestPlugin')->pluginBootstrap();
     }
 
     /**
@@ -92,17 +83,15 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetUrl()
     {
-        $fullBase = rtrim(Router::fullBaseUrl(), '/');
-
         //With full base
         $result = $this->getThumbCreatorInstanceWithSave()->getUrl();
         $this->assertThumbUrl($result);
-        $this->assertTrue(substr($result, 0, strlen($fullBase)) === $fullBase);
+        $this->assertTextStartsWith(Configure::read('App.fullBaseUrl'), $result);
 
         //Without full base
         $result = $this->getThumbCreatorInstanceWithSave()->getUrl(false);
         $this->assertThumbUrl($result);
-        $this->assertFalse(substr($result, 0, strlen($fullBase)) === $fullBase);
+        $this->assertTextStartsNotWith(Configure::read('App.fullBaseUrl'), $result);
     }
 
     /**

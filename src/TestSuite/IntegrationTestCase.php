@@ -13,6 +13,8 @@
  */
 namespace Thumber\TestSuite;
 
+use Cake\Core\Configure;
+use Cake\Http\BaseApplication;
 use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
 use Thumber\ThumbsPathTrait;
 
@@ -24,16 +26,28 @@ abstract class IntegrationTestCase extends CakeIntegrationTestCase
     use ThumbsPathTrait;
 
     /**
+     * Setup the test case, backup the static object values so they can be
+     * restored. Specifically backs up the contents of Configure and paths in
+     *  App if they have not already been backed up
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
+        $app->addPlugin('Thumber')->pluginBootstrap();
+    }
+
+    /**
      * Teardown any static object changes and restore them
      * @return void
      */
     public function tearDown()
     {
-        parent::tearDown();
+        safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
 
-        foreach (glob($this->getPath() . DS . '*') as $file) {
-            safe_unlink($file);
-        }
+        parent::tearDown();
     }
 
     /**
