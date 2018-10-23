@@ -30,6 +30,9 @@ matrix:
     - php: 7.0
       env: CAKEPHP_VERSION="3.5.*"
 
+    - php: 7.0
+      env: CAKEPHP_VERSION="3.6.*"
+
 install:
   - printf "\n" | pecl install imagick
   - composer self-update
