@@ -126,8 +126,7 @@ class ThumbCreatorSaveTest extends TestCase
         $this->assertEquals($time, filemtime($thumb));
 
         //Deletes the thumbnail and wait 1 second
-        //@codingStandardsIgnoreLine
-        @unlink($thumb);
+        safe_unlink($thumb);
         sleep(1);
 
         //Tries to create again the same thumbnail. Now the creation time is different

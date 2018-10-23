@@ -36,12 +36,9 @@ abstract class TestCase extends CakeTestCase
      */
     public function tearDown()
     {
-        parent::tearDown();
+        safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
 
-        foreach (glob($this->getPath('*')) as $file) {
-            //@codingStandardsIgnoreLine
-            @unlink($file);
-        }
+        parent::tearDown();
     }
 
     /**
@@ -82,10 +79,8 @@ abstract class TestCase extends CakeTestCase
 
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
-        //@codingStandardsIgnoreStart
-        @unlink($expectedCopy);
-        @unlink($actualCopy);
-        //@codingStandardsIgnoreEnd
+        safe_unlink($expectedCopy);
+        safe_unlink($actualCopy);
     }
 
     /**
