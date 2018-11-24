@@ -14,9 +14,9 @@
 namespace Thumber\Command;
 
 use Cake\Console\Arguments;
+use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Console\Command;
 use Exception;
 use Thumber\Utility\ThumbManager;
 
@@ -53,10 +53,6 @@ class ClearCommand extends Command
         try {
             $count = (new ThumbManager)->clear($args->getArgument('path'));
         } catch (Exception $e) {
-            $count = false;
-        }
-
-        if ($count === false) {
             $io->err(__d('thumber', 'Error deleting thumbnails'));
             $this->abort();
         }
