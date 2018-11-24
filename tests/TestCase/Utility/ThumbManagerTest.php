@@ -13,7 +13,6 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Thumber\TestSuite\TestCase;
-use Thumber\Utility\ThumbCreator;
 use Thumber\Utility\ThumbManager;
 
 /**
@@ -27,19 +26,7 @@ class ThumbManagerTest extends TestCase
     protected $ThumbManager;
 
     /**
-     * Internal method to create some thumbs
-     */
-    protected function createSomeThumbs()
-    {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
-        (new ThumbCreator('400x400.png'))->resize(200)->save();
-    }
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -60,7 +47,6 @@ class ThumbManagerTest extends TestCase
         $this->assertEquals(2, $this->ThumbManager->clear('400x400.jpg'));
 
         $this->createSomeThumbs();
-
         $this->assertEquals(1, $this->ThumbManager->clear('400x400.png'));
     }
 

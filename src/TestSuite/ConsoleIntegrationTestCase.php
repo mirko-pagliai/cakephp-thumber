@@ -13,30 +13,19 @@
  */
 namespace Thumber\TestSuite;
 
-use Cake\Core\Configure;
 use Cake\Http\BaseApplication;
 use Cake\TestSuite\ConsoleIntegrationTestCase as CakeConsoleIntegrationTestCase;
-use Thumber\Utility\ThumbCreator;
+use Thumber\TestSuite\Traits\TestCaseTrait;
 
 /**
  * Thumber TestCase class
  */
 abstract class ConsoleIntegrationTestCase extends CakeConsoleIntegrationTestCase
 {
-    /**
-     * Internal method to create some thumbs
-     */
-    protected function createSomeThumbs()
-    {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
-        (new ThumbCreator('400x400.png'))->resize(200)->save();
-    }
+    use TestCaseTrait;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -50,12 +39,12 @@ abstract class ConsoleIntegrationTestCase extends CakeConsoleIntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
     {
-        safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
+        $this->deleteAll();
 
         parent::tearDown();
     }
