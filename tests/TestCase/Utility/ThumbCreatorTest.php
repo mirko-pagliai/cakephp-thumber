@@ -24,18 +24,6 @@ use Thumber\TestSuite\TestCase;
 class ThumbCreatorTest extends TestCase
 {
     /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
-        $app->addPlugin('TestPlugin')->pluginBootstrap();
-    }
-
-    /**
      * Test for `__construct()` method, passing a no existing file
      * @expectedException RuntimeException
      * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
@@ -108,8 +96,10 @@ class ThumbCreatorTest extends TestCase
      */
     public function testPath()
     {
-        $file = WWW_ROOT . 'img' . DS . '400x400.jpg';
+        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
+        $app->addPlugin('TestPlugin')->pluginBootstrap();
 
+        $file = WWW_ROOT . 'img' . DS . '400x400.jpg';
         $thumber = $this->getThumbCreatorInstance();
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
@@ -118,7 +108,6 @@ class ThumbCreatorTest extends TestCase
 
         //From plugin
         $file = Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . '400x400.png';
-
         $thumber = $this->getThumbCreatorInstance('TestPlugin.400x400.png');
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
@@ -127,7 +116,6 @@ class ThumbCreatorTest extends TestCase
 
         //From remote
         $file = 'http://example.com.png';
-
         $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
     }

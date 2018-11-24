@@ -58,7 +58,6 @@ class ThumbManagerTest extends TestCase
         $this->assertEquals(2, $this->ThumbManager->clear('400x400.jpg'));
 
         $this->createSomeThumbs();
-
         $this->assertEquals(1, $this->ThumbManager->clear('400x400.png'));
     }
 
@@ -72,7 +71,7 @@ class ThumbManagerTest extends TestCase
             ->setMethods(['get'])
             ->getMock();
         $ThumbManager->method('get')->will($this->returnValue([DS . 'noExisting']));
-
+        
         $this->assertFalse($ThumbManager->clear(DS . 'noExisting'));
     }
 

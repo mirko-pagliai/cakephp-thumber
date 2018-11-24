@@ -15,12 +15,15 @@ namespace Thumber\Test\TestCase\Shell;
 use Cake\Console\ConsoleOptionParser;
 use Thumber\Shell\ThumberShell;
 use Thumber\TestSuite\ConsoleIntegrationTestCase;
+use Tools\TestSuite\TestCaseTrait;
 
 /**
  * ThumbManagerTest class
  */
 class ThumberShellTest extends ConsoleIntegrationTestCase
 {
+    use TestCaseTrait;
+
     /**
      * Tests for `clear()` method
      * @test
@@ -94,7 +97,7 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
         $parser = (new ThumberShell)->getOptionParser();
 
         $this->assertInstanceOf(ConsoleOptionParser::class, $parser);
-        $this->assertEquals(['clear', 'clear_all'], array_keys($parser->subcommands()));
+        $this->assertArrayKeysEqual(['clear', 'clear_all'], $parser->subcommands());
         $this->assertEquals('A shell to manage thumbnails', $parser->getDescription());
     }
 }
