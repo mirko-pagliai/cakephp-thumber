@@ -44,5 +44,18 @@ abstract class ConsoleIntegrationTestCase extends CakeConsoleIntegrationTestCase
 
         $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
         $app->addPlugin('Thumber')->pluginBootstrap();
+
+        $this->useCommandRunner();
+    }
+
+    /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
+
+        parent::tearDown();
     }
 }
