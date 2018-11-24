@@ -16,10 +16,10 @@ use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\Http\BaseApplication;
 use Cake\TestSuite\TestCase as CakeTestCase;
+use Thumber\TestSuite\Traits\TestCaseTrait;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
-use Tools\TestSuite\TestCaseTrait;
 
 /**
  * Thumber TestCase class
@@ -48,7 +48,7 @@ abstract class TestCase extends CakeTestCase
      */
     public function tearDown()
     {
-        safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
+        $this->deleteAll();
 
         parent::tearDown();
     }

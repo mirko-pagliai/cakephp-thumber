@@ -15,23 +15,14 @@ namespace Thumber\TestSuite;
 
 use Cake\Http\BaseApplication;
 use Cake\TestSuite\ConsoleIntegrationTestCase as CakeConsoleIntegrationTestCase;
-use Thumber\Utility\ThumbCreator;
+use Thumber\TestSuite\Traits\TestCaseTrait;
 
 /**
  * Thumber TestCase class
  */
 abstract class ConsoleIntegrationTestCase extends CakeConsoleIntegrationTestCase
 {
-    /**
-     * Internal method to create some thumbs
-     * @return void
-     */
-    protected function createSomeThumbs()
-    {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
-        (new ThumbCreator('400x400.png'))->resize(200)->save();
-    }
+    use TestCaseTrait;
 
     /**
      * Called before every test method
@@ -43,5 +34,16 @@ abstract class ConsoleIntegrationTestCase extends CakeConsoleIntegrationTestCase
 
         $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
         $app->addPlugin('Thumber')->pluginBootstrap();
+    }
+
+    /**
+     * Called after every test method
+     * @return void
+     */
+    public function tearDown()
+    {
+        $this->deleteAll();
+
+        parent::tearDown();
     }
 }

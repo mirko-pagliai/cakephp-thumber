@@ -15,7 +15,7 @@ namespace Thumber\Test\TestCase\Shell;
 use Cake\Console\ConsoleOptionParser;
 use Thumber\Shell\ThumberShell;
 use Thumber\TestSuite\ConsoleIntegrationTestCase;
-use Tools\TestSuite\TestCaseTrait;
+use Thumver\TestSuite\TestCaseTrait;
 
 /**
  * ThumbManagerTest class

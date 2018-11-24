@@ -13,9 +13,9 @@
  */
 namespace Thumber\TestSuite;
 
-use Cake\Core\Configure;
 use Cake\Http\BaseApplication;
 use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
+use Thumber\TestSuite\Traits\TestCaseTrait;
 use Thumber\ThumbsPathTrait;
 
 /**
@@ -23,6 +23,7 @@ use Thumber\ThumbsPathTrait;
  */
 abstract class IntegrationTestCase extends CakeIntegrationTestCase
 {
+    use TestCaseTrait;
     use ThumbsPathTrait;
 
     /**
@@ -43,7 +44,7 @@ abstract class IntegrationTestCase extends CakeIntegrationTestCase
      */
     public function tearDown()
     {
-        safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
+        $this->deleteAll();
 
         parent::tearDown();
     }

@@ -13,7 +13,6 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Thumber\TestSuite\TestCase;
-use Thumber\Utility\ThumbCreator;
 use Thumber\Utility\ThumbManager;
 
 /**
@@ -25,16 +24,6 @@ class ThumbManagerTest extends TestCase
      * @var \Thumber\Utility\ThumbManager
      */
     protected $ThumbManager;
-
-    /**
-     * Internal method to create some thumbs
-     */
-    protected function createSomeThumbs()
-    {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
-        (new ThumbCreator('400x400.png'))->resize(200)->save();
-    }
 
     /**
      * Called before every test method
@@ -71,7 +60,7 @@ class ThumbManagerTest extends TestCase
             ->setMethods(['get'])
             ->getMock();
         $ThumbManager->method('get')->will($this->returnValue([DS . 'noExisting']));
-        
+
         $this->assertFalse($ThumbManager->clear(DS . 'noExisting'));
     }
 
