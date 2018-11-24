@@ -13,6 +13,7 @@
  */
 namespace Thumber\TestSuite;
 
+use Cake\Core\Configure;
 use Cake\Http\BaseApplication;
 use Cake\TestSuite\ConsoleIntegrationTestCase as CakeConsoleIntegrationTestCase;
 use Thumber\Utility\ThumbCreator;
