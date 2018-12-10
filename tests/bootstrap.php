@@ -100,3 +100,5 @@ Configure::write('Thumber', [
 echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
 
 $_SERVER['PHP_SELF'] = '/';
+
+loadPHPUnitAliases();

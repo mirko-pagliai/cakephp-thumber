@@ -6,7 +6,8 @@
 
 ## 1.6 branch
 # 1.6.1
-* added `ConsoleIntegrationTestCase` class.
+* added `ConsoleIntegrationTestCase` class;
+* updated for CakePHP 3.7.
 
 # 1.6.0
 * the plugin now uses the `ThumbnailMiddleware` instead of a controller to
