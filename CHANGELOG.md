@@ -11,6 +11,9 @@
 * fixed little bug for PHP 5.6.
 
 ## 1.5 branch
+# 1.5.2
+* fixed little bug for PHP 5.6.
+
 # 1.5.1
 * added `ThumbCreator::getUrl()` method;
 * added `getThumbCreatorInstance()` and `getThumbCreatorInstanceWithSave()`
