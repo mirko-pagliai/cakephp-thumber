@@ -5,7 +5,8 @@
     previous class is now a `Command` class;
 * `ConsoleIntegrationTestCase` and `IntegrationTestCase` have been replaced by
     `ConsoleIntegrationTestTrait` and `IntegrationTestTrait`;
-* `TestCaseTrait` has been removed and its methods moved to `TestCase`.
+* `TestCaseTrait` has been removed and its methods moved to `TestCase`;
+* updated for CakePHP 3.7.
 
 ## 1.6 branch
 # 1.6.1
