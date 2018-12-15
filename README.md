@@ -13,6 +13,12 @@ provides:
 * `ThumbHelper`, a convenient helper that allows you to create thumbnails on 
 the fly from your templates.
 
+Did you like this plugin? Its development requires a lot of time for me.  
+Please consider the possibility of making [a donation](//paypal.me/mirkopagliai):
+even a coffee is enough! Thank you.
+
+[![Make a donation](https://www.paypalobjects.com/webstatic/mktg/logo-center/logo_paypal_carte.jpg)](//paypal.me/mirkopagliai)
+
 ***
 
   * [Requirements and supported formats](#requirements-and-supported-formats)
@@ -44,9 +50,13 @@ You can install the plugin via composer:
 
     $ composer require --prefer-dist mirko-pagliai/cakephp-thumber
 
-**NOTE**: the package may require one of the latest versions version of CakePHP.  
+**NOTE: the latest version available requires at least CakePHP 3.7**.
+
 Instead, the [cakephp3.2](//github.com/mirko-pagliai/cakephp-thumber/tree/cakephp3.2)
-branch is compatible with CakePHP versions from 3.2 onwards.  
+branch is compatible with all previous versions of CakePHP from version 3.2.  
+This branch coincides with the 1.4.1 version of *cakephp-thumber* and in any
+case it will no longer receive new features but only bugfixes.
+ 
 In this case, you can install the package as well:
 
     $ composer require --prefer-dist mirko-pagliai/cakephp-thumber:dev-cakephp3.2
