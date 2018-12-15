@@ -27,21 +27,6 @@ class ThumbnailMiddlewareTest extends IntegrationTestCase
     use ThumbsPathTrait;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->disableErrorHandlerMiddleware();
-
-        $this->Thumb = new ThumbHelper(new View);
-    }
-
-    /**
      * Test for `thumb()` method, with some files
      * @test
      */
@@ -65,10 +50,12 @@ class ThumbnailMiddlewareTest extends IntegrationTestCase
             ];
         }
 
+        $ThumbHelper = new ThumbHelper(new View);
+
         foreach ($extensions as $extension => $expectedMimeType) {
             $file = '400x400.' . $extension;
             $thumb = (new ThumbCreator($file))->resize(200)->save();
-            $url = $this->Thumb->resizeUrl($file, [
+            $url = $ThumbHelper->resizeUrl($file, [
                 'format' => pathinfo($file, PATHINFO_EXTENSION),
                 'width' => 200,
             ], ['fullBase' => false]);
@@ -106,6 +93,7 @@ class ThumbnailMiddlewareTest extends IntegrationTestCase
      */
     public function testThumbNoExistingFile()
     {
+        $this->disableErrorHandlerMiddleware();
         $this->get('/thumb/' . base64_encode('noExistingFile'));
     }
 }

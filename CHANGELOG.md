@@ -1,8 +1,14 @@
 # 1.x branch
 ## 1.6 branch
+# 1.6.1
+* added `ConsoleIntegrationTestCase` class;
+* updated for CakePHP 3.7.
+
 # 1.6.0
 * the plugin now uses the `ThumbnailMiddleware` instead of a controller to
-    "serve" thumbnails. The `ThumbsController` has therefore been deleted.
+    "serve" thumbnails. The `ThumbsController` has therefore been deleted;
+* updated for CakePHP 3.6 and 3.7;
+* fixed little bug for PHP 5.6.
 
 ## 1.5 branch
 # 1.5.2
@@ -20,7 +26,7 @@
     `getExtension()` and `getUrl()` methods;
 * the `ThumbCreator::getDefaultSaveOptions()` method now can take the `$path`
     optional argument;
-* removed `ThumbTrait::getSupportedFormats()` method, added 
+* removed `ThumbTrait::getSupportedFormats()` method, added
     `ThumbManager::$supportedFormats` static property;
 * `InternalErrorException` exception has been replaced with `RuntimeException`.
 
@@ -46,7 +52,7 @@
 ## 1.3 branch
 # 1.3.1
 * added `ThumbCreator::resizeCanvas()` method;
-* added `ThumbHelper::resizeCanvas()` and `ThumbHelper::resizeCanvasUrl()` methods. 
+* added `ThumbHelper::resizeCanvas()` and `ThumbHelper::resizeCanvasUrl()` methods.
 
 # 1.3.0
 * the name of the thumbnails (when automatically generated) now contains a

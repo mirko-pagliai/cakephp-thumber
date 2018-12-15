@@ -12,42 +12,17 @@
  */
 namespace Thumber\Test\TestCase\Shell;
 
-use Cake\Http\BaseApplication;
-use Cake\TestSuite\ConsoleIntegrationTestCase;
+use Cake\Console\ConsoleOptionParser;
 use Thumber\Shell\ThumberShell;
-use Thumber\Utility\ThumbCreator;
+use Thumber\TestSuite\ConsoleIntegrationTestCase;
+use Thumber\TestSuite\Traits\TestCaseTrait;
 
 /**
  * ThumbManagerTest class
  */
 class ThumberShellTest extends ConsoleIntegrationTestCase
 {
-    /**
-     * Internal method to create some thumbs
-     */
-    protected function createSomeThumbs()
-    {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
-        (new ThumbCreator('400x400.png'))->resize(200)->save();
-    }
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     * @uses createSomeThumbs()
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
-        $app->addPlugin('Thumber')->pluginBootstrap();
-
-        $this->createSomeThumbs();
-    }
+    use TestCaseTrait;
 
     /**
      * Tests for `clear()` method
@@ -55,6 +30,7 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
      */
     public function testClear()
     {
+        $this->createSomeThumbs();
         $this->exec('thumber.thumber clear 400x400.jpg -v');
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 2');
@@ -64,7 +40,6 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
         $this->assertOutputContains('Thumbnails deleted: 0');
 
         $this->createSomeThumbs();
-
         $this->exec('thumber.thumber clear 400x400.png -v');
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 1');
@@ -73,11 +48,9 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 0');
 
-        $this->createSomeThumbs();
-
-        $fullPath = WWW_ROOT . 'img' . DS . '400x400.jpg';
-
         //With full path
+        $fullPath = WWW_ROOT . 'img' . DS . '400x400.jpg';
+        $this->createSomeThumbs();
         $this->exec('thumber.thumber clear ' . $fullPath . ' -v');
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 2');
@@ -93,6 +66,7 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
      */
     public function testClearWithError()
     {
+        $this->createSomeThumbs();
         $this->exec('thumber.thumber clear ' . DS . 'noExisting -v');
         $this->assertExitCode(1);
         $this->assertErrorContains('Error deleting thumbnails');
@@ -104,6 +78,7 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
      */
     public function testClearAll()
     {
+        $this->createSomeThumbs();
         $this->exec('thumber.thumber clear_all -v');
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 3');
@@ -121,8 +96,8 @@ class ThumberShellTest extends ConsoleIntegrationTestCase
     {
         $parser = (new ThumberShell)->getOptionParser();
 
-        $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
-        $this->assertEquals(['clear', 'clear_all'], array_keys($parser->subcommands()));
+        $this->assertInstanceOf(ConsoleOptionParser::class, $parser);
+        $this->assertArrayKeysEqual(['clear', 'clear_all'], $parser->subcommands());
         $this->assertEquals('A shell to manage thumbnails', $parser->getDescription());
     }
 }

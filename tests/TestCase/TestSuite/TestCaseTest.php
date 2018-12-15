@@ -32,9 +32,7 @@ class TestCaseTest extends TestCase
     {
         $original = Configure::readOrFail(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg';
         $copy = tempnam(TMP, $original);
-
         copy($original, $copy);
-
         $this->assertImageFileEquals(Configure::readOrFail(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg', $copy);
         $this->assertImageFileEquals('resize_w200_h200.jpg', $copy);
     }
@@ -46,7 +44,7 @@ class TestCaseTest extends TestCase
     public function testAssertThumbPath()
     {
         foreach (ThumbManager::$supportedFormats as $extension) {
-            $this->assertThumbPath($this->getPath() . DS . md5(time()) . '_' . md5(time()) . '.' . $extension);
+            $this->assertThumbPath($this->getPath(md5(time()) . '_' . md5(time()) . '.' . $extension));
         }
     }
 }

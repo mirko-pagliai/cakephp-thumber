@@ -16,13 +16,13 @@ use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\Http\BaseApplication;
 use Cake\TestSuite\TestCase as CakeTestCase;
+use Thumber\TestSuite\Traits\TestCaseTrait;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
-use Tools\TestSuite\TestCaseTrait;
 
 /**
- * Thumber TestCase class
+ * TestCase class
  */
 abstract class TestCase extends CakeTestCase
 {
@@ -31,9 +31,7 @@ abstract class TestCase extends CakeTestCase
     use ThumbsPathTrait;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -45,12 +43,12 @@ abstract class TestCase extends CakeTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
     {
-        safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
+        $this->deleteAll();
 
         parent::tearDown();
     }
