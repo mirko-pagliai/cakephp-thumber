@@ -88,7 +88,7 @@ class ThumbCreator
      */
     public function __construct($path)
     {
-        $this->driver = Configure::readOrFail(THUMBER . '.driver');
+        $this->driver = Configure::readOrFail('Thumber.driver');
         $this->ImageManager = new ImageManager(['driver' => $this->driver]);
         $this->path = $this->resolveFilePath($path);
         $this->arguments[] = $this->path;

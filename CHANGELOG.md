@@ -6,6 +6,7 @@
 * `ConsoleIntegrationTestCase` and `IntegrationTestCase` have been replaced by
     `ConsoleIntegrationTestTrait` and `IntegrationTestTrait`;
 * `TestCaseTrait` has been removed and its methods moved to `TestCase`;
+* removed `THUMBER` constant;
 * updated for CakePHP 3.7.
 
 ## 1.6 branch

@@ -40,7 +40,7 @@ class ThumbnailMiddlewareTest extends TestCase
         ];
 
         //Adds some extensions only for the `imagick` driver
-        if (Configure::readOrFail(THUMBER . '.driver') == 'imagick') {
+        if (Configure::readOrFail('Thumber.driver') == 'imagick') {
             $extensions += [
                 'bmp' => 'image/x-ms-bmp',
                 'ico' => 'image/x-icon',

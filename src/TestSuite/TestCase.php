@@ -82,7 +82,7 @@ abstract class TestCase extends CakeTestCase
      */
     protected function deleteAll()
     {
-        return safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
+        return safe_unlink_recursive(Configure::readOrFail('Thumber.target'));
     }
 
     /**
@@ -97,7 +97,7 @@ abstract class TestCase extends CakeTestCase
      */
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
-        $expected = Folder::isAbsolute($expected) ? $expected : Configure::read(THUMBER . '.comparingDir') . $expected;
+        $expected = Folder::isAbsolute($expected) ? $expected : Configure::read('Thumber.comparingDir') . $expected;
 
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
@@ -186,6 +186,6 @@ abstract class TestCase extends CakeTestCase
      */
     public function skipIfDriverIs($driver, $message = '')
     {
-        return parent::skipIf(Configure::readOrFail(THUMBER . '.driver') == $driver, $message);
+        return parent::skipIf(Configure::readOrFail('Thumber.driver') == $driver, $message);
     }
 }
