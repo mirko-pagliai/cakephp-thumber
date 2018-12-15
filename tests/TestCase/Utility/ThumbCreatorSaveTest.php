@@ -34,7 +34,7 @@ class ThumbCreatorSaveTest extends TestCase
         ];
 
         //Adds some extensions only for the `imagick` driver
-        $extensions += Configure::readOrFail(THUMBER . '.driver') == 'imagick' ? [
+        $extensions += Configure::readOrFail('Thumber.driver') == 'imagick' ? [
             'bmp' => 'image/x-ms-bmp',
             'ico' => 'image/x-icon',
             'psd' => 'image/vnd.adobe.photoshop',
