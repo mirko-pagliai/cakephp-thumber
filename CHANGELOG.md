@@ -1,4 +1,14 @@
 # 1.x branch
+## 1.7 branch
+# 1.7.0
+* `ThumberShell` has been replaced with console commands. Every method of the
+    previous class is now a `Command` class;
+* `ConsoleIntegrationTestCase` and `IntegrationTestCase` have been replaced by
+    `ConsoleIntegrationTestTrait` and `IntegrationTestTrait`;
+* `TestCaseTrait` has been removed and its methods moved to `TestCase`;
+* removed `THUMBER` constant;
+* updated for CakePHP 3.7.
+
 ## 1.6 branch
 # 1.6.1
 * added `ConsoleIntegrationTestCase` class;

@@ -33,7 +33,7 @@ trait ThumbsPathTrait
      */
     protected function getPath($file = null)
     {
-        $path = Configure::readOrFail(THUMBER . '.target');
+        $path = Configure::readOrFail('Thumber.target');
 
         return $file ? $path . DS . $file : $path;
     }

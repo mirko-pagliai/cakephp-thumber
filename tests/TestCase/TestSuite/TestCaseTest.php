@@ -14,7 +14,6 @@ namespace Thumber\Test\TestCase\TestSuite;
 
 use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbManager;
 
 /**
@@ -22,18 +21,16 @@ use Thumber\Utility\ThumbManager;
  */
 class TestCaseTest extends TestCase
 {
-    use ThumbsPathTrait;
-
     /**
      * Test for `assertImageFileEquals()` method
      * @ŧest
      */
     public function testAssertImageFileEquals()
     {
-        $original = Configure::readOrFail(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg';
+        $original = Configure::readOrFail('Thumber.comparingDir') . 'resize_w200_h200.jpg';
         $copy = tempnam(TMP, $original);
         copy($original, $copy);
-        $this->assertImageFileEquals(Configure::readOrFail(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg', $copy);
+        $this->assertImageFileEquals(Configure::readOrFail('Thumber.comparingDir') . 'resize_w200_h200.jpg', $copy);
         $this->assertImageFileEquals('resize_w200_h200.jpg', $copy);
     }
 

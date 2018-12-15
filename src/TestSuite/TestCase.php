@@ -14,12 +14,11 @@ namespace Thumber\TestSuite;
 
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\Http\BaseApplication;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Thumber\TestSuite\Traits\TestCaseTrait;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
+use Tools\TestSuite\TestCaseTrait;
 
 /**
  * TestCase class
@@ -38,8 +37,7 @@ abstract class TestCase extends CakeTestCase
     {
         parent::setUp();
 
-        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
-        $app->addPlugin('Thumber')->pluginBootstrap();
+        $this->loadPlugins(['Thumber']);
     }
 
     /**
@@ -68,6 +66,26 @@ abstract class TestCase extends CakeTestCase
     }
 
     /**
+     * Internal method to create some thumbs
+     * @return void
+     */
+    protected function createSomeThumbs()
+    {
+        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
+        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
+        (new ThumbCreator('400x400.png'))->resize(200)->save();
+    }
+
+    /**
+     * Deletes all thumbnails
+     * @return bool
+     */
+    protected function deleteAll()
+    {
+        return safe_unlink_recursive(Configure::readOrFail('Thumber.target'));
+    }
+
+    /**
      * Asserts that the contents of one image file is equal to the contents of
      *  another image file
      * @param string $expected Expected file
@@ -79,7 +97,7 @@ abstract class TestCase extends CakeTestCase
      */
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
-        $expected = Folder::isAbsolute($expected) ? $expected : Configure::read(THUMBER . '.comparingDir') . $expected;
+        $expected = Folder::isAbsolute($expected) ? $expected : Configure::read('Thumber.comparingDir') . $expected;
 
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
@@ -168,6 +186,6 @@ abstract class TestCase extends CakeTestCase
      */
     public function skipIfDriverIs($driver, $message = '')
     {
-        return parent::skipIf(Configure::readOrFail(THUMBER . '.driver') == $driver, $message);
+        return parent::skipIf(Configure::readOrFail('Thumber.driver') == $driver, $message);
     }
 }

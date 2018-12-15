@@ -14,7 +14,7 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Thumber\Routing\Middleware\ThumbnailMiddleware;
 
-Router::plugin(THUMBER, ['path' => '/thumb'], function (RouteBuilder $routes) {
+Router::plugin('Thumber', ['path' => '/thumb'], function (RouteBuilder $routes) {
     $routes->registerMiddleware('thumbnail', new ThumbnailMiddleware);
 
     if (!$routes->nameExists('thumb')) {
