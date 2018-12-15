@@ -14,7 +14,6 @@ namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Http\BaseApplication;
 use Intervention\Image\Exception\NotReadableException;
 use Thumber\TestSuite\TestCase;
 
@@ -96,9 +95,6 @@ class ThumbCreatorTest extends TestCase
      */
     public function testPath()
     {
-        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
-        $app->addPlugin('TestPlugin')->pluginBootstrap();
-
         $file = WWW_ROOT . 'img' . DS . '400x400.jpg';
         $thumber = $this->getThumbCreatorInstance();
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
@@ -107,6 +103,7 @@ class ThumbCreatorTest extends TestCase
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
         //From plugin
+        $this->loadPlugins(['TestPlugin']);
         $file = Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . '400x400.png';
         $thumber = $this->getThumbCreatorInstance('TestPlugin.400x400.png');
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);

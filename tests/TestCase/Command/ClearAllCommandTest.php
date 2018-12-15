@@ -12,13 +12,16 @@
  */
 namespace Test\TestCase\Command;
 
-use Thumber\TestSuite\ConsoleIntegrationTestCase;
+use Thumber\TestSuite\ConsoleIntegrationTestTrait;
+use Thumber\TestSuite\TestCase;
 
 /**
  * ClearAllCommandTest class
  */
-class ClearAllCommandTest extends ConsoleIntegrationTestCase
+class ClearAllCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
+
     /**
      * Tests for `execute()` method
      * @test

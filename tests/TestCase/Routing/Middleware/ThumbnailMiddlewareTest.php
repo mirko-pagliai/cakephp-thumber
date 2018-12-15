@@ -14,17 +14,17 @@ namespace Thumber\Test\TestCase\Routing\Middleware;
 
 use Cake\Core\Configure;
 use Cake\View\View;
-use Thumber\TestSuite\IntegrationTestCase;
-use Thumber\ThumbsPathTrait;
+use Thumber\TestSuite\IntegrationTestTrait;
+use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator;
 use Thumber\View\Helper\ThumbHelper;
 
 /**
  * ThumbnailMiddlewareTest class
  */
-class ThumbnailMiddlewareTest extends IntegrationTestCase
+class ThumbnailMiddlewareTest extends TestCase
 {
-    use ThumbsPathTrait;
+    use IntegrationTestTrait;
 
     /**
      * Test for `thumb()` method, with some files

@@ -14,7 +14,6 @@ namespace Thumber\Test\TestCase\TestSuite;
 
 use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbManager;
 
 /**
@@ -22,8 +21,6 @@ use Thumber\Utility\ThumbManager;
  */
 class TestCaseTest extends TestCase
 {
-    use ThumbsPathTrait;
-
     /**
      * Test for `assertImageFileEquals()` method
      * @ŧest

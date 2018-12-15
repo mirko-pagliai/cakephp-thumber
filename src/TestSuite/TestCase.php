@@ -14,12 +14,11 @@ namespace Thumber\TestSuite;
 
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\Http\BaseApplication;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Thumber\TestSuite\Traits\TestCaseTrait;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
+use Tools\TestSuite\TestCaseTrait;
 
 /**
  * Thumber TestCase class
@@ -38,8 +37,7 @@ abstract class TestCase extends CakeTestCase
     {
         parent::setUp();
 
-        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
-        $app->addPlugin('Thumber')->pluginBootstrap();
+        $this->loadPlugins(['Thumber']);
     }
 
     /**
@@ -65,6 +63,26 @@ abstract class TestCase extends CakeTestCase
         safe_copy($path, $result);
 
         return $result;
+    }
+
+    /**
+     * Internal method to create some thumbs
+     * @return void
+     */
+    protected function createSomeThumbs()
+    {
+        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
+        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
+        (new ThumbCreator('400x400.png'))->resize(200)->save();
+    }
+
+    /**
+     * Deletes all thumbnails
+     * @return bool
+     */
+    protected function deleteAll()
+    {
+        return safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
     }
 
     /**

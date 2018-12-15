@@ -9,20 +9,18 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.6.1
+ * @since       1.7.0
  */
 namespace Thumber\TestSuite;
 
-use Cake\Http\BaseApplication;
-use Cake\TestSuite\ConsoleIntegrationTestCase as CakeConsoleIntegrationTestCase;
-use Thumber\TestSuite\Traits\TestCaseTrait;
+use Cake\TestSuite\ConsoleIntegrationTestTrait as CakeConsoleIntegrationTestTrait;
 
 /**
- * Thumber TestCase class
+ * A trait intended to make integration tests of cake console commands easier
  */
-abstract class ConsoleIntegrationTestCase extends CakeConsoleIntegrationTestCase
+trait ConsoleIntegrationTestTrait
 {
-    use TestCaseTrait;
+    use CakeConsoleIntegrationTestTrait;
 
     /**
      * Called before every test method
@@ -32,20 +30,6 @@ abstract class ConsoleIntegrationTestCase extends CakeConsoleIntegrationTestCase
     {
         parent::setUp();
 
-        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
-        $app->addPlugin('Thumber')->pluginBootstrap();
-
         $this->useCommandRunner();
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        $this->deleteAll();
-
-        parent::tearDown();
     }
 }
