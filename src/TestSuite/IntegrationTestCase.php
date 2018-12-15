@@ -19,7 +19,7 @@ use Thumber\TestSuite\Traits\TestCaseTrait;
 use Thumber\ThumbsPathTrait;
 
 /**
- * IntegrationTestCaseTest class
+ * IntegrationTestCase class
  */
 abstract class IntegrationTestCase extends CakeIntegrationTestCase
 {

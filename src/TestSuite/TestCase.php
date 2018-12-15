@@ -22,7 +22,7 @@ use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
 
 /**
- * Thumber TestCase class
+ * TestCase class
  */
 abstract class TestCase extends CakeTestCase
 {

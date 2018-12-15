@@ -18,7 +18,7 @@ use Cake\TestSuite\ConsoleIntegrationTestCase as CakeConsoleIntegrationTestCase;
 use Thumber\TestSuite\Traits\TestCaseTrait;
 
 /**
- * Thumber TestCase class
+ * ConsoleIntegrationTestCase class
  */
 abstract class ConsoleIntegrationTestCase extends CakeConsoleIntegrationTestCase
 {
