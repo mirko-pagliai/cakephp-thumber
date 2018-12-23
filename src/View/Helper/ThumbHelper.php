@@ -63,10 +63,7 @@ class ThumbHelper extends Helper
     public function __call($name, $params)
     {
         list($path, $params, $options) = $params + [null, [], []];
-
-        if (!$path) {
-            throw new InvalidArgumentException(__d('thumber', 'Thumbnail path is missing'));
-        }
+        is_true_or_fail($path, __d('thumber', 'Thumbnail path is missing'), InvalidArgumentException::class);
 
         $url = $this->runUrlMethod($name, $path, $params, $options);
 
@@ -110,10 +107,7 @@ class ThumbHelper extends Helper
         $options += ['fullBase' => true];
 
         $thumber = new ThumbCreator($path);
-
-        if (!method_exists($thumber, $name)) {
-            throw new RuntimeException(__d('thumber', 'Method {0}::{1} does not exist', get_class($this), $name));
-        }
+        is_true_or_fail(method_exists($thumber, $name), __d('thumber', 'Method `{0}::{1}()` does not exist', get_class($this), $name), \RuntimeException::class);
 
         $thumber->$name($params['width'], $params['height'])->save($params);
 

@@ -105,10 +105,8 @@ class ThumbCreator
      */
     protected function getDefaultSaveOptions($options, $path = null)
     {
-        $path = $path ?: $this->path;
-
         $options += [
-            'format' => get_extension($path),
+            'format' => get_extension($path ?: $this->path),
             'quality' => 90,
             'target' => false,
         ];
@@ -155,13 +153,11 @@ class ThumbCreator
      */
     public function getUrl($fullBase = true)
     {
-        if (empty($this->target)) {
-            throw new InvalidArgumentException(__d(
-                'thumber',
-                'Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked',
-                'save()'
-            ));
-        }
+        is_true_or_fail(!empty($this->target), __d(
+            'thumber',
+            'Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked',
+            'save()'
+        ), InvalidArgumentException::class);
 
         return Router::url(['_name' => 'thumb', base64_encode(basename($this->target))], $fullBase);
     }
@@ -314,9 +310,7 @@ class ThumbCreator
      */
     public function save(array $options = [])
     {
-        if (empty($this->callbacks)) {
-            throw new RuntimeException(__d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__));
-        }
+        is_true_or_fail(!empty($this->callbacks), __d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__), \RuntimeException::class);
 
         $options = $this->getDefaultSaveOptions($options);
         $target = $options['target'];

@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.7 branch
+# 1.7.1
+* updated for CakePHP 3.7.1 and `php-tools` 1.1.19.
+
 # 1.7.0
 * `ThumberShell` has been replaced with console commands. Every method of the
     previous class is now a `Command` class;

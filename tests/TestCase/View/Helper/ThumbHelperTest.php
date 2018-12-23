@@ -13,6 +13,7 @@
 namespace Thumber\Test\TestCase\View\Helper;
 
 use Cake\View\View;
+use RuntimeException;
 use Thumber\TestSuite\TestCase;
 use Thumber\View\Helper\ThumbHelper;
 
@@ -66,16 +67,10 @@ class ThumbHelperTest extends TestCase
             ];
             $this->assertHtml($expected, $this->Thumb->$method($path, $params, ['url' => 'http://example']));
         }
-    }
 
-    /**
-     * Test for magic `_call()` method, called without parameters
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Method Thumber\View\Helper\ThumbHelper::noExisting does not exist
-     * @test
-     */
-    public function testMagicCallNoExistingMethod()
-    {
+        //Calling a no existing method
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Method `Thumber\View\Helper\ThumbHelper::noExisting()` does not exist');
         $this->Thumb->noExisting('400x400.png');
     }
 

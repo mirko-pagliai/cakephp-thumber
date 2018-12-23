@@ -60,7 +60,6 @@ class ThumbManagerTest extends TestCase
             ->setMethods(['get'])
             ->getMock();
         $ThumbManager->method('get')->will($this->returnValue([DS . 'noExisting']));
-
         $this->assertFalse($ThumbManager->clear(DS . 'noExisting'));
     }
 

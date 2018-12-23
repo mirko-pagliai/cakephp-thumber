@@ -58,7 +58,7 @@ class ThumbManager
      */
     protected function _find($regexpPattern = null, $sort = false)
     {
-        $regexpPattern = $regexpPattern ?: sprintf('[a-z0-9]{32}_[a-z0-9]{32}\.(%s)', implode('|', self::$supportedFormats));
+        $regexpPattern = $regexpPattern ?: sprintf('[\d\w]{32}_[\d\w]{32}\.(%s)', implode('|', self::$supportedFormats));
 
         return (new Folder($this->getPath()))->find($regexpPattern, $sort);
     }
@@ -95,7 +95,7 @@ class ThumbManager
      */
     public function get($path, $sort = false)
     {
-        $regexpPattern = sprintf('%s_[a-z0-9]{32}\.(%s)', md5($this->resolveFilePath($path)), implode('|', self::$supportedFormats));
+        $regexpPattern = sprintf('%s_[\d\w]{32}\.(%s)', md5($this->resolveFilePath($path)), implode('|', self::$supportedFormats));
 
         return $this->_find($regexpPattern, $sort);
     }

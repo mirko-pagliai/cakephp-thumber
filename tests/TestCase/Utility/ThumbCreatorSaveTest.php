@@ -13,6 +13,8 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
+use Intervention\Image\Exception\InvalidArgumentException;
+use Intervention\Image\Exception\NotSupportedException;
 use Thumber\TestSuite\TestCase;
 
 /**
@@ -119,11 +121,10 @@ class ThumbCreatorSaveTest extends TestCase
         $thumb = $this->getThumbCreatorInstance()->resize(200)->save();
         $this->assertEquals($time, filemtime($thumb));
 
-        //Deletes the thumbnail and wait 1 second
+        //Deletes the thumbnail and wait 1 second, then tries to create again
+        //  the same thumbnail. Now the creation time is different
         safe_unlink($thumb);
         sleep(1);
-
-        //Tries to create again the same thumbnail. Now the creation time is different
         $newTime = filemtime($this->getThumbCreatorInstance()->resize(200)->save());
         $this->assertNotEquals($time, $newTime);
     }
@@ -134,17 +135,10 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithQuality()
     {
-        $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['quality' => 10]);
-        $this->assertThumbPath($thumb);
-    }
+        $this->assertThumbPath($this->getThumbCreatorInstance()->resize(200)->save(['quality' => 10]));
 
-    /**
-     * Test for `save()` method, using the `quality` option with an invalid value
-     * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @ŧest
-     */
-    public function testSaveWithQualityInvalidValue()
-    {
+        //With an invalid value
+        $this->expectException(InvalidArgumentException::class);
         $this->getThumbCreatorInstanceWithSave(['quality' => 101]);
     }
 
@@ -168,16 +162,9 @@ class ThumbCreatorSaveTest extends TestCase
         $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['target' => 'thumb.png']);
         $this->assertEquals($this->getPath('thumb.png'), $thumb);
         $this->assertFileMime($thumb, 'image/png');
-    }
 
-    /**
-     * Test for `save()` method, using the `format` option with an invalid file
-     *  format
-     * @expectedException Intervention\Image\Exception\NotSupportedException
-     * @ŧest
-     */
-    public function testSaveWithInvalidFormat()
-    {
+        //With an invalid file format
+        $this->expectException(NotSupportedException::class);
         $this->getThumbCreatorInstanceWithSave(['format' => 'txt']);
     }
 
@@ -210,7 +197,7 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using the `target` option with a no existing
      *  directory target
-     * @expectedException ErrorException
+     * @expectedException Tools\Exception\NotWritableException
      * @expectedExceptionMessageRegExp /^File or directory `[\w\/:\\]+` is not writable$/
      * @test
      */

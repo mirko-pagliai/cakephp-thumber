@@ -58,8 +58,7 @@ abstract class TestCase extends CakeTestCase
      */
     protected static function createCopy($path)
     {
-        $result = tempnam(sys_get_temp_dir(), $path);
-
+        $result = create_tmp_file();
         safe_copy($path, $result);
 
         return $result;
@@ -98,13 +97,11 @@ abstract class TestCase extends CakeTestCase
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
         $expected = Folder::isAbsolute($expected) ? $expected : Configure::read('Thumber.comparingDir') . $expected;
-
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
 
         $expectedCopy = self::createCopy($expected);
         $actualCopy = self::createCopy($actual);
-
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
         safe_unlink($expectedCopy);
@@ -167,8 +164,7 @@ abstract class TestCase extends CakeTestCase
     protected function getThumbCreatorInstanceWithSave($path = null, array $options = [])
     {
         if (is_array($path) && func_num_args() < 2) {
-            $options = $path;
-            $path = null;
+            list($options, $path) = [$path, null];
         }
 
         $thumbCreator = $this->getThumbCreatorInstance($path);

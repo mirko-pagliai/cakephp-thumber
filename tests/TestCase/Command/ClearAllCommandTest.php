@@ -28,12 +28,14 @@ class ClearAllCommandTest extends TestCase
      */
     public function testExecute()
     {
+        $command = 'clear_all -v';
+
         $this->createSomeThumbs();
-        $this->exec('clear_all -v');
+        $this->exec($command);
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 3');
 
-        $this->exec('clear_all -v');
+        $this->exec($command);
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 0');
     }

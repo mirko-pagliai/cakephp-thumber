@@ -28,12 +28,14 @@ class ClearCommandTest extends TestCase
      */
     public function testExecute()
     {
+        $command = 'clear 400x400.jpg -v';
+
         $this->createSomeThumbs();
-        $this->exec('clear 400x400.jpg -v');
+        $this->exec($command);
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 2');
 
-        $this->exec('clear 400x400.jpg -v');
+        $this->exec($command);
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 0');
 
@@ -56,14 +58,8 @@ class ClearCommandTest extends TestCase
         $this->exec('clear ' . $fullPath . ' -v');
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 0');
-    }
 
-    /**
-     * Tests for `execute()` method, with error
-     * @test
-     */
-    public function testExecuteWithError()
-    {
+        //With error
         $this->exec('clear ' . DS . 'noExisting -v');
         $this->assertExitCode(1);
         $this->assertErrorContains('Error deleting thumbnails');
