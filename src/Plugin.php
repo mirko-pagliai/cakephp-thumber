@@ -14,10 +14,25 @@
 namespace Thumber;
 
 use Cake\Core\BasePlugin;
+use Thumber\Command\ClearAllCommand;
+use Thumber\Command\ClearCommand;
 
 /**
  * Plugin class
  */
 class Plugin extends BasePlugin
 {
+    /**
+     * Add console commands for the plugin
+     * @param Cake\Console\CommandCollection $commands The command collection to update
+     * @return Cake\Console\CommandCollection
+     * @since 1.7.1
+     */
+    public function console($commands)
+    {
+        $commands->add('thumber.clear', ClearCommand::class);
+        $commands->add('thumber.clear_all', ClearAllCommand::class);
+
+        return $commands;
+    }
 }

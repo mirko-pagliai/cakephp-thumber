@@ -28,7 +28,7 @@ class ClearAllCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $command = 'clear_all -v';
+        $command = 'thumber.clear_all -v';
 
         $this->createSomeThumbs();
         $this->exec($command);

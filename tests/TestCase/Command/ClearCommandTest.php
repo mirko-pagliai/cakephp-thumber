@@ -28,7 +28,7 @@ class ClearCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $command = 'clear 400x400.jpg -v';
+        $command = 'thumber.clear 400x400.jpg -v';
 
         $this->createSomeThumbs();
         $this->exec($command);
@@ -40,27 +40,27 @@ class ClearCommandTest extends TestCase
         $this->assertOutputContains('Thumbnails deleted: 0');
 
         $this->createSomeThumbs();
-        $this->exec('clear 400x400.png -v');
+        $this->exec('thumber.clear 400x400.png -v');
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 1');
 
-        $this->exec('clear 400x400.png -v');
+        $this->exec('thumber.clear 400x400.png -v');
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 0');
 
         //With full path
         $this->createSomeThumbs();
         $fullPath = WWW_ROOT . 'img' . DS . '400x400.jpg';
-        $this->exec('clear ' . $fullPath . ' -v');
+        $this->exec('thumber.clear ' . $fullPath . ' -v');
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 2');
 
-        $this->exec('clear ' . $fullPath . ' -v');
+        $this->exec('thumber.clear ' . $fullPath . ' -v');
         $this->assertExitCode(0);
         $this->assertOutputContains('Thumbnails deleted: 0');
 
         //With error
-        $this->exec('clear ' . DS . 'noExisting -v');
+        $this->exec('thumber.clear ' . DS . 'noExisting -v');
         $this->assertExitCode(1);
         $this->assertErrorContains('Error deleting thumbnails');
     }

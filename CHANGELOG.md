@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.7 branch
 # 1.7.1
+* renamed commands. Now they are `thumber.clear` and `thumber.clear_all`;
 * updated for CakePHP 3.7.1 and `php-tools` 1.1.19.
 
 # 1.7.0
