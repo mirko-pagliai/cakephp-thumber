@@ -59,7 +59,7 @@ abstract class TestCase extends CakeTestCase
     protected static function createCopy($path)
     {
         $result = create_tmp_file();
-        safe_copy($path, $result);
+        @copy($path, $result);
 
         return $result;
     }
@@ -81,7 +81,7 @@ abstract class TestCase extends CakeTestCase
      */
     protected function deleteAll()
     {
-        return safe_unlink_recursive(Configure::readOrFail('Thumber.target'));
+        return @unlink_recursive(Configure::readOrFail('Thumber.target'));
     }
 
     /**
@@ -104,8 +104,7 @@ abstract class TestCase extends CakeTestCase
         $actualCopy = self::createCopy($actual);
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
-        safe_unlink($expectedCopy);
-        safe_unlink($actualCopy);
+        @array_map('unlink', [$expectedCopy, $actualCopy]);
     }
 
     /**
