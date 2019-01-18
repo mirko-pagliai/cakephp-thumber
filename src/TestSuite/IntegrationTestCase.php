@@ -30,7 +30,7 @@ abstract class IntegrationTestCase extends CakeIntegrationTestCase
      */
     public function tearDown()
     {
-        safe_unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
+        @unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
 
         parent::tearDown();
     }
