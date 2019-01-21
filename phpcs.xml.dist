@@ -22,5 +22,6 @@
     <exclude-pattern>*.min.js</exclude-pattern>
     <exclude-pattern>/config/Migrations</exclude-pattern>
     <exclude-pattern>/coverage</exclude-pattern>
+    <exclude-pattern>/gh-pages</exclude-pattern>
     <exclude-pattern>/vendor</exclude-pattern>
 </ruleset>
