@@ -12,7 +12,7 @@
  */
 namespace Test\TestCase\Command;
 
-use Thumber\TestSuite\ConsoleIntegrationTestTrait;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 use Thumber\TestSuite\TestCase;
 
 /**
@@ -32,11 +32,13 @@ class ClearAllCommandTest extends TestCase
 
         $this->createSomeThumbs();
         $this->exec($command);
-        $this->assertExitCode(0);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 3');
 
         $this->exec($command);
-        $this->assertExitCode(0);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 0');
+
+        $this->assertErrorEmpty();
     }
 }

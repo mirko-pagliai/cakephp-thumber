@@ -12,7 +12,7 @@
  */
 namespace Test\TestCase\Command;
 
-use Thumber\TestSuite\ConsoleIntegrationTestTrait;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 use Thumber\TestSuite\TestCase;
 
 /**
@@ -32,36 +32,37 @@ class ClearCommandTest extends TestCase
 
         $this->createSomeThumbs();
         $this->exec($command);
-        $this->assertExitCode(0);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 2');
 
         $this->exec($command);
-        $this->assertExitCode(0);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 0');
 
         $this->createSomeThumbs();
         $this->exec('thumber.clear 400x400.png -v');
-        $this->assertExitCode(0);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 1');
 
         $this->exec('thumber.clear 400x400.png -v');
-        $this->assertExitCode(0);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 0');
 
         //With full path
         $this->createSomeThumbs();
         $fullPath = WWW_ROOT . 'img' . DS . '400x400.jpg';
         $this->exec('thumber.clear ' . $fullPath . ' -v');
-        $this->assertExitCode(0);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 2');
 
         $this->exec('thumber.clear ' . $fullPath . ' -v');
-        $this->assertExitCode(0);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 0');
+        $this->assertErrorEmpty();
 
         //With error
         $this->exec('thumber.clear ' . DS . 'noExisting -v');
-        $this->assertExitCode(1);
+        $this->assertExitWithError();
         $this->assertErrorContains('Error deleting thumbnails');
     }
 }

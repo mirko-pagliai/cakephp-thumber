@@ -13,8 +13,8 @@
 namespace Thumber\Test\TestCase\Routing\Middleware;
 
 use Cake\Core\Configure;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\View\View;
+use MeTools\TestSuite\IntegrationTestTrait;
 use Thumber\Http\Exception\ThumbNotFoundException;
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator;
