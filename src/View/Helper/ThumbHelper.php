@@ -15,6 +15,7 @@ namespace Thumber\View\Helper;
 
 use Cake\View\Helper;
 use InvalidArgumentException;
+use RuntimeException;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -106,7 +107,7 @@ class ThumbHelper extends Helper
         $options += ['fullBase' => true];
 
         $thumber = new ThumbCreator($path);
-        is_true_or_fail(method_exists($thumber, $name), __d('thumber', 'Method `{0}::{1}()` does not exist', get_class($this), $name), \RuntimeException::class);
+        is_true_or_fail(method_exists($thumber, $name), __d('thumber', 'Method `{0}::{1}()` does not exist', get_class($this), $name), RuntimeException::class);
 
         $thumber->$name($params['width'], $params['height'])->save($params);
 
