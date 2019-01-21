@@ -5,7 +5,8 @@
 * requires `me-tools` package for dev;
 * removed `ConsoleIntegrationTestTrait`, because it is now sufficient to use the
     same trait provided by `me-tools`;
-* updated for CakePHP 3.7.1 and `php-tools` 1.1.12.
+* updated for CakePHP 3.7.1 and `php-tools` 1.1.12;
+* added [API](//mirko-pagliai.github.io/cakephp-thumber).
 
 # 1.7.0
 * `ThumberShell` has been replaced with console commands. Every method of the

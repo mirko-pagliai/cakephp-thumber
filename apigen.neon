@@ -1,7 +1,7 @@
 source:
     - src/
 
-destination: docs/
+destination: gh-pages/
 
 # Access levels of included method and properties. (default: ["public","protected"]) (multiple values allowed)
 accessLevels:           
