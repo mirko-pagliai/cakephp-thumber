@@ -15,7 +15,6 @@ namespace Thumber\View\Helper;
 
 use Cake\View\Helper;
 use InvalidArgumentException;
-use RuntimeException;
 use Thumber\Utility\ThumbCreator;
 
 /**
