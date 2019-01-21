@@ -28,17 +28,6 @@ class ThumbnailMiddlewareTest extends TestCase
     use IntegrationTestTrait;
 
     /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setupServer();
-    }
-
-    /**
      * Test for `thumb()` method, with some files
      * @test
      */
