@@ -97,6 +97,7 @@ Configure::write('Thumber', [
     'driver' => getenv('THUMBER_DRIVER'),
     'comparingDir' => TESTS . DS . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS,
 ]);
+Configure::write('pluginsToLoad', ['Thumber']);
 
 echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
 

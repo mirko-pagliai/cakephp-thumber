@@ -14,10 +14,10 @@
 namespace Thumber\Command;
 
 use Cake\Console\Arguments;
-use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Exception;
+use MeTools\Console\Command;
 use Thumber\Utility\ThumbManager;
 
 /**

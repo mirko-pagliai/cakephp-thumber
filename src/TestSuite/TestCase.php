@@ -14,31 +14,16 @@ namespace Thumber\TestSuite;
 
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\TestSuite\TestCase as CakeTestCase;
+use MeTools\TestSuite\TestCase as BaseTestCase;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
-use Tools\ReflectionTrait;
-use Tools\TestSuite\TestCaseTrait;
 
 /**
  * TestCase class
  */
-abstract class TestCase extends CakeTestCase
+abstract class TestCase extends BaseTestCase
 {
-    use ReflectionTrait;
-    use TestCaseTrait;
     use ThumbsPathTrait;
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->loadPlugins(['Thumber']);
-    }
 
     /**
      * Called after every test method
@@ -46,7 +31,7 @@ abstract class TestCase extends CakeTestCase
      */
     public function tearDown()
     {
-        $this->deleteAll();
+        @unlink_recursive(Configure::readOrFail('Thumber.target'));
 
         parent::tearDown();
     }
@@ -73,15 +58,6 @@ abstract class TestCase extends CakeTestCase
         (new ThumbCreator('400x400.jpg'))->resize(200)->save();
         (new ThumbCreator('400x400.jpg'))->resize(300)->save();
         (new ThumbCreator('400x400.png'))->resize(200)->save();
-    }
-
-    /**
-     * Deletes all thumbnails
-     * @return bool
-     */
-    protected function deleteAll()
-    {
-        return @unlink_recursive(Configure::readOrFail('Thumber.target'));
     }
 
     /**
