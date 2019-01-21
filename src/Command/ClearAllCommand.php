@@ -32,9 +32,7 @@ class ClearAllCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('thumber', 'Clears all thumbnails'));
-
-        return $parser;
+        return $parser->setDescription(__d('thumber', 'Clears all thumbnails'));
     }
 
     /**

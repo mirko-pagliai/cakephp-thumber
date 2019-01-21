@@ -32,13 +32,11 @@ class ClearCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('thumber', 'Clears all thumbnails that have been generated from an image path'));
-        $parser->addArgument('path', [
-            'help' => __d('thumber', 'Path of the original image'),
-            'required' => true,
-        ]);
-
-        return $parser;
+        return $parser->setDescription(__d('thumber', 'Clears all thumbnails that have been generated from an image path'))
+            ->addArgument('path', [
+                'help' => __d('thumber', 'Path of the original image'),
+                'required' => true,
+            ]);
     }
 
     /**
