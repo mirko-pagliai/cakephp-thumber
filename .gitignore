@@ -3,5 +3,5 @@
 *.old.*
 composer.lock
 coverage/
-gh-pages/
+gh-pages/*
 vendor/
