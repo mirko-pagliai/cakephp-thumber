@@ -10,10 +10,15 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Test\TestCase\Command;
+namespace Thumber\Test\TestCase\Command;
 
+use Cake\Console\ConsoleIo;
+use Cake\Console\Exception\StopException;
+use Cake\TestSuite\Stub\ConsoleOutput;
+use Exception;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbManager;
 
 /**
  * ClearCommandTest class
@@ -21,6 +26,11 @@ use Thumber\TestSuite\TestCase;
 class ClearCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
+
+    /**
+     * @var bool
+     */
+    protected $autoInitializeClass = true;
 
     /**
      * Tests for `execute()` method
@@ -64,5 +74,15 @@ class ClearCommandTest extends TestCase
         $this->exec('thumber.clear ' . DS . 'noExisting -v');
         $this->assertExitWithError();
         $this->assertErrorContains('Error deleting thumbnails');
+
+        //On failure
+        $this->expectException(StopException::class);
+        $this->Command->ThumbManager = $this->getMockBuilder(ThumbManager::class)
+            ->setMethods(['_clear'])
+            ->getMock();
+        $this->Command->ThumbManager->method('_clear')
+            ->will($this->throwException(new Exception));
+
+        $this->Command->run(['noExisting'], new ConsoleIo(null, new ConsoleOutput));
     }
 }

@@ -26,6 +26,20 @@ use Thumber\Utility\ThumbManager;
 class ClearAllCommand extends Command
 {
     /**
+     * @var \Thumber\Utility\ThumbManager
+     */
+    public $ThumbManager;
+
+    /**
+     * Hook method invoked by CakePHP when a command is about to be executed
+     * @uses $ThumbManager
+     */
+    public function initialize()
+    {
+        $this->ThumbManager = $this->ThumbManager ?: new ThumbManager;
+    }
+
+    /**
      * Hook method for defining this command's option parser
      * @param ConsoleOptionParser $parser The parser to be defined
      * @return ConsoleOptionParser
@@ -40,12 +54,12 @@ class ClearAllCommand extends Command
      * @param Arguments $args The command arguments
      * @param ConsoleIo $io The console io
      * @return null|int The exit code or null for success
-     * @uses ThumbManager::clearAll()
+     * @uses $ThumbManager
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
         try {
-            $count = (new ThumbManager)->clearAll();
+            $count = $this->ThumbManager->clearAll();
         } catch (Exception $e) {
             $io->err(__d('thumber', 'Error deleting thumbnails'));
             $this->abort();
