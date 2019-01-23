@@ -103,6 +103,8 @@ See our wiki:
 * [How to use the helper](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper)
 * [How to uses the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility)
 
+And refer to our [API](//mirko-pagliai.github.io/cakephp-thumber).
+
 ## Testing
 The library (`GD` or `Imagick`) to be tested is set by the `tests/bootstrap.php` file, using the
 `THUMBER_DRIVER` environment variable. By default, `Imagick` is used.
