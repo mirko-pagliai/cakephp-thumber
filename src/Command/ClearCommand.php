@@ -32,6 +32,7 @@ class ClearCommand extends Command
 
     /**
      * Hook method invoked by CakePHP when a command is about to be executed
+     * @return void
      * @uses $ThumbManager
      */
     public function initialize()
