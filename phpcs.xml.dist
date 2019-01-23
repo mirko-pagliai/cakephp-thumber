@@ -8,11 +8,12 @@
     <rule ref="Generic.Commenting.Todo">
         <severity>0</severity>
     </rule>
-
+    <rule ref="Generic.PHP.NoSilencedErrors.Discouraged">
+        <severity>0</severity>
+    </rule>
     <rule ref="Internal.NoCodeFound">
         <severity>0</severity>
     </rule>
-
     <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
         <exclude-pattern>/webroot</exclude-pattern>
     </rule>
@@ -21,5 +22,6 @@
     <exclude-pattern>*.min.js</exclude-pattern>
     <exclude-pattern>/config/Migrations</exclude-pattern>
     <exclude-pattern>/coverage</exclude-pattern>
+    <exclude-pattern>/gh-pages</exclude-pattern>
     <exclude-pattern>/vendor</exclude-pattern>
 </ruleset>

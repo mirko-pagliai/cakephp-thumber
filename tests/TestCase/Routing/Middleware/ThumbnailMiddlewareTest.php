@@ -14,7 +14,8 @@ namespace Thumber\Test\TestCase\Routing\Middleware;
 
 use Cake\Core\Configure;
 use Cake\View\View;
-use Thumber\TestSuite\IntegrationTestTrait;
+use MeTools\TestSuite\IntegrationTestTrait;
+use Thumber\Http\Exception\ThumbNotFoundException;
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator;
 use Thumber\View\Helper\ThumbHelper;
@@ -77,22 +78,16 @@ class ThumbnailMiddlewareTest extends TestCase
         $this->assertResponseCode(304);
 
         //Deletes the last thumbnail file. Now the `Last-Modified` header is different
-        safe_unlink($thumb);
+        @unlink($thumb);
         sleep(1);
-        $thumb = (new ThumbCreator($file))->resize(200)->save();
+        (new ThumbCreator($file))->resize(200)->save();
         $this->get($url);
         $this->assertResponseOk();
         $this->assertNotEquals($lastModified, $this->_response->getHeader('Last-Modified')[0]);
-    }
 
-    /**
-     * Test for `asset()` method, with a a no existing file
-     * @expectedException Thumber\Http\Exception\ThumbNotFoundException
-     * @expectedExceptionMessageRegExp /^File `[\w\/:\\]+` doesn't exist$/
-     * @test
-     */
-    public function testThumbNoExistingFile()
-    {
+        //With a a no existing file
+        $this->expectException(ThumbNotFoundException::class);
+        $this->expectExceptionMessage('File `' . $this->getPath('noExistingFile') . '` doesn\'t exist');
         $this->disableErrorHandlerMiddleware();
         $this->get('/thumb/' . base64_encode('noExistingFile'));
     }

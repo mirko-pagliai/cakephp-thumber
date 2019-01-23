@@ -12,6 +12,7 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use Intervention\Image\Exception\InvalidArgumentException;
 use Thumber\TestSuite\TestCase;
 
 /**
@@ -35,6 +36,10 @@ class ThumbCreatorOperationsTest extends TestCase
         //In this case, the width will be the original size
         $thumb = $this->getThumbCreatorInstance()->crop(400, 200)->save();
         $this->assertImageSize($thumb, 400, 200);
+
+        //Without parameters
+        $this->expectException(InvalidArgumentException::class);
+        $this->getThumbCreatorInstance()->crop()->save();
     }
 
     /**
@@ -74,16 +79,6 @@ class ThumbCreatorOperationsTest extends TestCase
     }
 
     /**
-     * Test for `crop()` method, called without parameters
-     * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @test
-     */
-    public function testCropWithoutParameters()
-    {
-        $this->getThumbCreatorInstance()->crop()->save();
-    }
-
-    /**
      * Test for `fit()` method
      * @ŧest
      */
@@ -94,6 +89,10 @@ class ThumbCreatorOperationsTest extends TestCase
 
         $thumb = $this->getThumbCreatorInstance()->fit(200, 400)->save();
         $this->assertImageSize($thumb, 200, 400);
+
+        //Without parameters
+        $this->expectException(InvalidArgumentException::class);
+        $this->getThumbCreatorInstance()->fit()->save();
     }
 
     /**
@@ -178,16 +177,6 @@ class ThumbCreatorOperationsTest extends TestCase
     }
 
     /**
-     * Test for `fit()` method, called without parameters
-     * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @test
-     */
-    public function testFitWithoutParameters()
-    {
-        $this->getThumbCreatorInstance()->fit()->save();
-    }
-
-    /**
      * Test for `resize()` method
      * @ŧest
      */
@@ -198,6 +187,10 @@ class ThumbCreatorOperationsTest extends TestCase
 
         $thumb = $this->getThumbCreatorInstance()->resize(null, 200)->save();
         $this->assertImageSize($thumb, 200, 200);
+
+        //Without parameters
+        $this->expectException(InvalidArgumentException::class);
+        $this->getThumbCreatorInstance()->resize()->save();
     }
 
     /**
@@ -341,16 +334,6 @@ class ThumbCreatorOperationsTest extends TestCase
             'upsize' => false,
         ])->save();
         $this->assertImageFileEquals('resize_w400_h600_noAspectRatio_noUpsize.jpg', $thumb);
-    }
-
-    /**
-     * Test for `resize()` method, called without parameters
-     * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @test
-     */
-    public function testResizeWithoutParameters()
-    {
-        $this->getThumbCreatorInstance()->resize()->save();
     }
 
     /**

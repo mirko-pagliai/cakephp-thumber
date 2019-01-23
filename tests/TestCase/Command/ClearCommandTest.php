@@ -10,10 +10,15 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Test\TestCase\Command;
+namespace Thumber\Test\TestCase\Command;
 
-use Thumber\TestSuite\ConsoleIntegrationTestTrait;
+use Cake\Console\ConsoleIo;
+use Cake\Console\Exception\StopException;
+use Cake\TestSuite\Stub\ConsoleOutput;
+use Exception;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbManager;
 
 /**
  * ClearCommandTest class
@@ -23,49 +28,61 @@ class ClearCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
+     * @var bool
+     */
+    protected $autoInitializeClass = true;
+
+    /**
      * Tests for `execute()` method
      * @test
      */
     public function testExecute()
     {
+        $command = 'thumber.clear 400x400.jpg -v';
+
         $this->createSomeThumbs();
-        $this->exec('clear 400x400.jpg -v');
-        $this->assertExitCode(0);
+        $this->exec($command);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 2');
 
-        $this->exec('clear 400x400.jpg -v');
-        $this->assertExitCode(0);
+        $this->exec($command);
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 0');
 
         $this->createSomeThumbs();
-        $this->exec('clear 400x400.png -v');
-        $this->assertExitCode(0);
+        $this->exec('thumber.clear 400x400.png -v');
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 1');
 
-        $this->exec('clear 400x400.png -v');
-        $this->assertExitCode(0);
+        $this->exec('thumber.clear 400x400.png -v');
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 0');
 
         //With full path
         $this->createSomeThumbs();
         $fullPath = WWW_ROOT . 'img' . DS . '400x400.jpg';
-        $this->exec('clear ' . $fullPath . ' -v');
-        $this->assertExitCode(0);
+        $this->exec('thumber.clear ' . $fullPath . ' -v');
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 2');
 
-        $this->exec('clear ' . $fullPath . ' -v');
-        $this->assertExitCode(0);
+        $this->exec('thumber.clear ' . $fullPath . ' -v');
+        $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 0');
-    }
+        $this->assertErrorEmpty();
 
-    /**
-     * Tests for `execute()` method, with error
-     * @test
-     */
-    public function testExecuteWithError()
-    {
-        $this->exec('clear ' . DS . 'noExisting -v');
-        $this->assertExitCode(1);
+        //With error
+        $this->exec('thumber.clear ' . DS . 'noExisting -v');
+        $this->assertExitWithError();
         $this->assertErrorContains('Error deleting thumbnails');
+
+        //On failure
+        $this->expectException(StopException::class);
+        $this->Command->ThumbManager = $this->getMockBuilder(ThumbManager::class)
+            ->setMethods(['_clear'])
+            ->getMock();
+        $this->Command->ThumbManager->method('_clear')
+            ->will($this->throwException(new Exception));
+
+        $this->Command->run(['noExisting'], new ConsoleIo(null, new ConsoleOutput));
     }
 }

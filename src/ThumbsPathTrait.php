@@ -16,7 +16,6 @@ namespace Thumber;
 use Cake\Core\Configure;
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Filesystem\Folder;
-use RuntimeException;
 
 /**
  * This trait provides some methods to get and resolve thumbnails paths.
@@ -42,7 +41,6 @@ trait ThumbsPathTrait
      * Internal method to resolve a partial path, returning a full path
      * @param string $path Partial path
      * @return string
-     * @throws RuntimeException
      */
     protected function resolveFilePath($path)
     {
@@ -64,10 +62,7 @@ trait ThumbsPathTrait
             }
         }
 
-        //Checks if is readable
-        if (!is_readable($path)) {
-            throw new RuntimeException(__d('thumber', 'File `{0}` not readable', rtr($path)));
-        }
+        is_readable_or_fail($path);
 
         return $path;
     }

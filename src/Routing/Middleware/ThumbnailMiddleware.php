@@ -36,13 +36,9 @@ class ThumbnailMiddleware
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
         $file = $this->getPath(base64_decode($request->getParam('basename')));
-
-        if (!is_readable($file)) {
-            throw new ThumbNotFoundException(__d('thumber', 'File `{0}` doesn\'t exist', $file));
-        }
+        is_readable_or_fail($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
 
         $response = $response->withModified(filemtime($file));
-
         if ($response->checkNotModified($request)) {
             return $response;
         }

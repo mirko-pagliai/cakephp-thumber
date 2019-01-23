@@ -14,31 +14,16 @@ namespace Thumber\TestSuite;
 
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\TestSuite\TestCase as CakeTestCase;
+use MeTools\TestSuite\TestCase as BaseTestCase;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
-use Tools\ReflectionTrait;
-use Tools\TestSuite\TestCaseTrait;
 
 /**
  * TestCase class
  */
-abstract class TestCase extends CakeTestCase
+abstract class TestCase extends BaseTestCase
 {
-    use ReflectionTrait;
-    use TestCaseTrait;
     use ThumbsPathTrait;
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->loadPlugins(['Thumber']);
-    }
 
     /**
      * Called after every test method
@@ -46,7 +31,7 @@ abstract class TestCase extends CakeTestCase
      */
     public function tearDown()
     {
-        $this->deleteAll();
+        @unlink_recursive(Configure::readOrFail('Thumber.target'));
 
         parent::tearDown();
     }
@@ -58,9 +43,8 @@ abstract class TestCase extends CakeTestCase
      */
     protected static function createCopy($path)
     {
-        $result = tempnam(sys_get_temp_dir(), $path);
-
-        safe_copy($path, $result);
+        $result = create_tmp_file();
+        @copy($path, $result);
 
         return $result;
     }
@@ -77,15 +61,6 @@ abstract class TestCase extends CakeTestCase
     }
 
     /**
-     * Deletes all thumbnails
-     * @return bool
-     */
-    protected function deleteAll()
-    {
-        return safe_unlink_recursive(Configure::readOrFail('Thumber.target'));
-    }
-
-    /**
      * Asserts that the contents of one image file is equal to the contents of
      *  another image file
      * @param string $expected Expected file
@@ -98,17 +73,14 @@ abstract class TestCase extends CakeTestCase
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
         $expected = Folder::isAbsolute($expected) ? $expected : Configure::read('Thumber.comparingDir') . $expected;
-
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
 
         $expectedCopy = self::createCopy($expected);
         $actualCopy = self::createCopy($actual);
-
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
-        safe_unlink($expectedCopy);
-        safe_unlink($actualCopy);
+        @array_map('unlink', [$expectedCopy, $actualCopy]);
     }
 
     /**
@@ -167,8 +139,7 @@ abstract class TestCase extends CakeTestCase
     protected function getThumbCreatorInstanceWithSave($path = null, array $options = [])
     {
         if (is_array($path) && func_num_args() < 2) {
-            $options = $path;
-            $path = null;
+            list($options, $path) = [$path, null];
         }
 
         $thumbCreator = $this->getThumbCreatorInstance($path);

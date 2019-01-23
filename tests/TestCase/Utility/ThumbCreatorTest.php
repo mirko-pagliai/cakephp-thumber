@@ -14,8 +14,10 @@ namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Intervention\Image\Exception\NotReadableException;
+use Intervention\Image\Exception\NotReadableException as InterventionNotReadableException;
+use InvalidArgumentException;
 use Thumber\TestSuite\TestCase;
+use Tools\Exception\NotReadableException;
 
 /**
  * ThumbCreatorTest class
@@ -24,23 +26,24 @@ class ThumbCreatorTest extends TestCase
 {
     /**
      * Test for `__construct()` method, passing a no existing file
-     * @expectedException RuntimeException
-     * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFile()
     {
+        $this->expectException(NotReadableException::class);
+        $this->expectExceptionMessage('File or directory `' . rtr(WWW_ROOT) . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
     /**
      * Test for `__construct()` method, passing a no existing file from plugin
-     * @expectedException RuntimeException
-     * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFileFromPlugin()
     {
+        $this->loadPlugins(['TestPlugin']);
+        $this->expectException(NotReadableException::class);
+        $this->expectExceptionMessage('File or directory `' . rtr(Plugin::path('TestPlugin')) . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 
@@ -52,13 +55,10 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetImageInstanceUnsupportedImageType()
     {
+        $exception = new InterventionNotReadableException('Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.');
         $thumbCreator = $this->getThumbCreatorInstance();
-
         $thumbCreator->ImageManager = $this->getMockBuilder(get_class($thumbCreator->ImageManager))->getMock();
-        $thumbCreator->ImageManager->method('make')->will($this->throwException(new NotReadableException(
-            'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.'
-        )));
-
+        $thumbCreator->ImageManager->method('make')->will($this->throwException($exception));
         $this->invokeMethod($thumbCreator, 'getImageInstance');
     }
 
@@ -68,7 +68,6 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetUrl()
     {
-        //With full base
         $result = $this->getThumbCreatorInstanceWithSave()->getUrl();
         $this->assertThumbUrl($result);
         $this->assertTextStartsWith(Configure::read('App.fullBaseUrl'), $result);
@@ -77,15 +76,9 @@ class ThumbCreatorTest extends TestCase
         $result = $this->getThumbCreatorInstanceWithSave()->getUrl(false);
         $this->assertThumbUrl($result);
         $this->assertTextStartsNotWith(Configure::read('App.fullBaseUrl'), $result);
-    }
 
-    /**
-     * Test for `getUrl()` method, without the `$target` property
-     * @expectedException InvalidArgumentException
-     * @ŧest
-     */
-    public function testGetUrlMissingTarget()
-    {
+        //Without the `$target` property
+        $this->expectException(InvalidArgumentException::class);
         $this->getThumbCreatorInstance()->getUrl();
     }
 
