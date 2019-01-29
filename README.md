@@ -101,7 +101,7 @@ save thumbnails.
 ## How to use
 See our wiki:
 * [How to use the helper](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper)
-* [How to uses the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility)
+* [How to use the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-ThumbCreator-utility)
 
 ## Testing
 The library (`GD` or `Imagick`) to be tested is set by the `tests/bootstrap.php` file, using the
