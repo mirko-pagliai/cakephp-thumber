@@ -30,7 +30,7 @@ define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
 define('APP_DIR', 'test_app');
 define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', APP . 'webroot' . DS);
-define('TMP', sys_get_temp_dir() . DS);
+define('TMP', sys_get_temp_dir() . DS . 'cakephp-thumber' . DS);
 define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP . 'cache' . DS);
 define('LOGS', TMP . 'logs' . DS);

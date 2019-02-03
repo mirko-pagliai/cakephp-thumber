@@ -197,13 +197,14 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using the `target` option with a no existing
      *  directory target
-     * @expectedException Tools\Exception\NotWritableException
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\/:\\]+` is not writable$/
      * @test
      */
     public function testSaveInvalidTargetDir()
     {
-        $this->getThumbCreatorInstanceWithSave(['target' => TMP . 'noExistingDir' . DS . 'thumb.jpg']);
+        $target = TMP . 'noExistingDir' . DS . 'thumb.jpg';
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Unable to create file `' . $target . '`');
+        $this->getThumbCreatorInstanceWithSave(compact('target'));
     }
 
     /**
