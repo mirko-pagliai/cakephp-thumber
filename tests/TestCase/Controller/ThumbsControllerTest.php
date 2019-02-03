@@ -14,7 +14,9 @@ namespace Thumber\Test\TestCase\Controller;
 
 use Cake\View\View;
 use Thumber\Controller\ThumbsController;
+use Thumber\Http\Exception\ThumbNotFoundException;
 use Thumber\TestSuite\IntegrationTestCase;
+use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 use Thumber\View\Helper\ThumbHelper;
 
@@ -23,6 +25,8 @@ use Thumber\View\Helper\ThumbHelper;
  */
 class ThumbsControllerTest extends IntegrationTestCase
 {
+    use ThumbTrait;
+
     /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
@@ -91,16 +95,10 @@ class ThumbsControllerTest extends IntegrationTestCase
         $this->get($url);
         $this->assertResponseOk();
         $this->assertNotEquals($lastModified, $this->_response->header()['Last-Modified']);
-    }
 
-    /**
-     * Test for `asset()` method, with a a no existing file
-     * @expectedException Thumber\Http\Exception\ThumbNotFoundException
-     * @expectedExceptionMessageRegExp /^File `[\w\/:\\]+` doesn't exist$/
-     * @test
-     */
-    public function testThumbNoExistingFile()
-    {
+        //With a no existing file
+        $this->expectException(ThumbNotFoundException::class);
+        $this->expectExceptionMessage('File `' . $this->getPath('noExistingFile') . '` doesn\'t exist');
         (new ThumbsController)->thumb(base64_encode('noExistingFile'));
     }
 

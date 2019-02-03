@@ -58,6 +58,7 @@ abstract class TestCase extends CakeTestCase
 
     /**
      * Internal method to create some thumbs
+     * @return void
      */
     protected function createSomeThumbs()
     {

@@ -12,6 +12,7 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use Cake\Network\Exception\InternalErrorException;
 use Thumber\TestSuite\TestCase;
 use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
@@ -217,14 +218,14 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using the `target` option with a no existing
      *  directory target
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessageRegExp /^The directory `[\w\/:\\]+` is not writeable$/
      * @test
      */
     public function testSaveInvalidTargetDir()
     {
-        (new ThumbCreator('400x400.png'))->resize(200)
-            ->save(['target' => TMP . 'noExistingDir' . DS . 'thumb.jpg']);
+        $target = TMP . 'noExistingDir' . DS . 'thumb.jpg';
+        $this->expectException(InternalErrorException::class);
+        $this->expectExceptionMessage('The directory `' . dirname($target) . '` is not writeable');
+        (new ThumbCreator('400x400.png'))->resize(200)->save(compact('target'));
     }
 
     /**
