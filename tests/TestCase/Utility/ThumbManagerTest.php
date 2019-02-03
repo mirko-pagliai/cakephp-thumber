@@ -42,6 +42,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * Test for `clear()` method
+     * @group onlyUnix
      * @ŧest
      */
     public function testClear()
@@ -54,6 +55,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * Test for `clear()` method, with error
+     * @group onlyUnix
      * @ŧest
      */
     public function testClearWithError()
@@ -68,6 +70,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * Test for `clearAll()` method
+     * @group onlyUnix
      * @ŧest
      */
     public function testClearAll()
