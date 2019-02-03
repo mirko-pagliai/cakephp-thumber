@@ -61,9 +61,9 @@ class ThumbManagerTest extends TestCase
         $class = $this->getMockBuilder(get_class($this->ThumbManager))
             ->setMethods(['get'])
             ->getMock();
-        $class->method('get')->will($this->returnValue([DS . 'noExisting']));
+        $class->method('get')->will($this->returnValue(['noExisting']));
 
-        $this->assertFalse($class->clear(DS . 'noExisting'));
+        $this->assertFalse($class->clear('noExisting'));
     }
 
     /**
