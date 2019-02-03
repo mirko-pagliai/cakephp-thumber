@@ -42,6 +42,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * Test for `clear()` method
+     * @group onlyUnix
      * @ŧest
      */
     public function testClear()
@@ -54,6 +55,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * Test for `clear()` method, with error
+     * @group onlyUnix
      * @ŧest
      */
     public function testClearWithError()
@@ -61,13 +63,14 @@ class ThumbManagerTest extends TestCase
         $class = $this->getMockBuilder(get_class($this->ThumbManager))
             ->setMethods(['get'])
             ->getMock();
-        $class->method('get')->will($this->returnValue([DS . 'noExisting']));
+        $class->method('get')->will($this->returnValue(['noExisting']));
 
-        $this->assertFalse($class->clear(DS . 'noExisting'));
+        $this->assertFalse($class->clear('noExisting'));
     }
 
     /**
      * Test for `clearAll()` method
+     * @group onlyUnix
      * @ŧest
      */
     public function testClearAll()
@@ -92,6 +95,6 @@ class ThumbManagerTest extends TestCase
      */
     public function testGetAll()
     {
-        $this->assertCount(3, $this->ThumbManager->getAll());
+        $this->assertGreaterThanOrEqual(3, $this->ThumbManager->getAll());
     }
 }
