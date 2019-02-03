@@ -16,6 +16,7 @@ use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Thumber\ThumbTrait;
+use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
 use Tools\TestSuite\TestCaseTrait;
 
@@ -53,6 +54,16 @@ abstract class TestCase extends CakeTestCase
         copy($path, $result);
 
         return $result;
+    }
+
+    /**
+     * Internal method to create some thumbs
+     */
+    protected function createSomeThumbs()
+    {
+        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
+        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
+        (new ThumbCreator('400x400.png'))->resize(200)->save();
     }
 
     /**
