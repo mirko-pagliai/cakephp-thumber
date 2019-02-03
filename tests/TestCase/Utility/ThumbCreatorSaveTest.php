@@ -126,11 +126,12 @@ class ThumbCreatorSaveTest extends TestCase
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
         $this->assertEquals($time, filemtime($thumb));
 
-        //Deletes the thumbnail and wait 1 second
+        $this->skipIf(IS_WIN);
+
+        //Deletes the thumbnail and wait 1 second and tries to create again the
+        //  same thumbnail. Now the creation time is different
         @unlink($thumb);
         sleep(1);
-
-        //Tries to create again the same thumbnail. Now the creation time is different
         $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
         $this->assertNotEquals($time, filemtime($thumb));
     }

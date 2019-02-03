@@ -79,6 +79,7 @@ class ThumberShellTest extends TestCase
 
     /**
      * Tests for `clear()` method
+     * @group onlyUnix
      * @test
      */
     public function testClear()
@@ -125,6 +126,7 @@ class ThumberShellTest extends TestCase
 
     /**
      * Tests for `clear()` method with error
+     * @group onlyUnix
      * @test
      */
     public function testClearWithError()
@@ -137,6 +139,7 @@ class ThumberShellTest extends TestCase
 
     /**
      * Tests for `clearAll()` method
+     * @group onlyUnix
      * @test
      */
     public function testClearAll()

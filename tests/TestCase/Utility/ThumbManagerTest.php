@@ -95,6 +95,6 @@ class ThumbManagerTest extends TestCase
      */
     public function testGetAll()
     {
-        $this->assertCount(3, $this->ThumbManager->getAll());
+        $this->assertGreaterThanOrEqual(3, $this->ThumbManager->getAll());
     }
 }

@@ -94,16 +94,24 @@ class ThumbsControllerTest extends IntegrationTestCase
         $thumb = (new ThumbCreator($file))->resize(200)->save();
         $this->get($url);
         $this->assertResponseOk();
-        $this->assertNotEquals($lastModified, $this->_response->header()['Last-Modified']);
 
-        //With a no existing file
+        $this->skipIf(IS_WIN);
+        $this->assertNotEquals($lastModified, $this->_response->header()['Last-Modified']);
+    }
+
+    /**
+     * Test for `thumb()` method, with a a no existing file
+     * @test
+     */
+    public function testThumbNoExistingFile()
+    {
         $this->expectException(ThumbNotFoundException::class);
         $this->expectExceptionMessage('File `' . $this->getPath('noExistingFile') . '` doesn\'t exist');
         (new ThumbsController)->thumb(base64_encode('noExistingFile'));
     }
 
     /**
-     * Test for `thumb()` method, with a a no existing file
+     * Test for `thumb()` method, with a a no existing file response
      * @test
      */
     public function testThumbNoExistingFileResponse()
