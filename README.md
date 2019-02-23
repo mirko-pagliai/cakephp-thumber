@@ -47,8 +47,9 @@ For more information about supported format, please refer to the
 
 ## Installation
 You can install the plugin via composer:
-
-    $ composer require --prefer-dist mirko-pagliai/cakephp-thumber
+```bash
+$ composer require --prefer-dist mirko-pagliai/cakephp-thumber
+```
 
 **NOTE: the latest version available requires at least CakePHP 3.7**.
 
@@ -58,12 +59,14 @@ This branch coincides with the 1.4.1 version of *cakephp-thumber* and in any
 case it will no longer receive new features but only bugfixes.
  
 In this case, you can install the package as well:
-
-    $ composer require --prefer-dist mirko-pagliai/cakephp-thumber:dev-cakephp3.2
+```bash
+$ composer require --prefer-dist mirko-pagliai/cakephp-thumber:dev-cakephp3.2
+```
     
 After installation, you have to edit `APP/config/bootstrap.php` to load the plugin:
-
-    Plugin::load('Thumber', ['bootstrap' => true, 'routes' => true]);
+```php
+Plugin::load('Thumber', ['bootstrap' => true, 'routes' => true]);
+```
 
 For more information on how to load the plugin, please refer to the 
 [Cookbook](http://book.cakephp.org/3.0/en/plugins.html#loading-a-plugin).
@@ -71,7 +74,9 @@ For more information on how to load the plugin, please refer to the
 By default the plugin uses the `APP/tmp/thumbs` directory to save the 
 thumbnails. So you have to create the directory and make it writable:
 
-    $ mkdir tmp/thumbs && chmod 775 tmp/thumbs
+```bash
+$ mkdir tmp/thumbs && chmod 775 tmp/thumbs
+```
 
 If you want to use a different directory, read below.
 
@@ -87,13 +92,15 @@ of your application.
 plugin name (`Thumber`) as a prefix.
 
 ### Configuration values
-
-    Configure::write('Thumber.driver', 'imagick');
-    
+```php
+Configure::write('Thumber.driver', 'imagick');
+```
 Setting `Thumber.driver`, you can choose which driver to use for the creation of 
 thumbnails. Valid values are `imagick` or `gd`.
 
-    Configure::write('Thumber.target', TMP . 'thumbs');
+```php
+Configure::write('Thumber.target', TMP . 'thumbs');
+```
     
 Setting `Thumber.target`, you can use another directory where the plugin will 
 save thumbnails.
@@ -103,24 +110,28 @@ See our wiki:
 * [How to use the helper](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper)
 * [How to use the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-ThumbCreator-utility)
 
+And refer to our [API](//mirko-pagliai.github.io/cakephp-thumber).
+
 ## Testing
 The library (`GD` or `Imagick`) to be tested is set by the `tests/bootstrap.php` file, using the
 `THUMBER_DRIVER` environment variable. By default, `Imagick` is used.
 
 For example:
+```php
+if (!getenv('THUMBER_DRIVER')) {
+    putenv('THUMBER_DRIVER=imagick');
+}
 
-    if (!getenv('THUMBER_DRIVER')) {
-        putenv('THUMBER_DRIVER=imagick');
-    }
-
-    Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
+Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
+```
     
 Moreover, some tests belong to the `imageEquals` group. These tests generate thubnails and compare them with pre-loaded thumbnails (inside `tests/comparing_files/`).  
 By default, these tests are not performed, because the images may be different if generated from different environments and systems.
 
 To exclude these tests, you should run:
-
-    vendor/bin/phpunit --exclude-group imageEquals
+```bash
+vendor/bin/phpunit --exclude-group imageEquals
+```
 
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward 
