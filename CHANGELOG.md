@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.7 branch
+# 1.7.2
+* updated for `php-tools` 1.2.
+
 # 1.7.1
 * renamed commands. Now they are `thumber.clear` and `thumber.clear_all`;
 * requires `me-tools` package for dev;
