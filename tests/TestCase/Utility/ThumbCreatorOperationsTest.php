@@ -27,15 +27,15 @@ class ThumbCreatorOperationsTest extends TestCase
     public function testCrop()
     {
         $thumb = $this->getThumbCreatorInstance()->crop(200, 200)->save();
-        $this->assertImageSize($thumb, 200, 200);
+        $this->assertImageSize(200, 200, $thumb);
 
         //Only width
         $thumb = $this->getThumbCreatorInstance()->crop(200)->save();
-        $this->assertImageSize($thumb, 200, 200);
+        $this->assertImageSize(200, 200, $thumb);
 
         //In this case, the width will be the original size
         $thumb = $this->getThumbCreatorInstance()->crop(400, 200)->save();
-        $this->assertImageSize($thumb, 400, 200);
+        $this->assertImageSize(400, 200, $thumb);
 
         //Without parameters
         $this->expectException(InvalidArgumentException::class);
@@ -64,7 +64,7 @@ class ThumbCreatorOperationsTest extends TestCase
     public function testCropXAndY()
     {
         $thumb = $this->getThumbCreatorInstance()->crop(200, 200, ['x' => 50, 'y' => 50])->save();
-        $this->assertImageSize($thumb, 200, 200);
+        $this->assertImageSize(200, 200, $thumb);
     }
 
     /**
@@ -85,10 +85,10 @@ class ThumbCreatorOperationsTest extends TestCase
     public function testFit()
     {
         $thumb = $this->getThumbCreatorInstance()->fit(200)->save();
-        $this->assertImageSize($thumb, 200, 200);
+        $this->assertImageSize(200, 200, $thumb);
 
         $thumb = $this->getThumbCreatorInstance()->fit(200, 400)->save();
-        $this->assertImageSize($thumb, 200, 400);
+        $this->assertImageSize(200, 400, $thumb);
 
         //Without parameters
         $this->expectException(InvalidArgumentException::class);
@@ -116,7 +116,7 @@ class ThumbCreatorOperationsTest extends TestCase
     public function testFitPosition()
     {
         $thumb = $this->getThumbCreatorInstance()->fit(200, 200, ['position' => 'top'])->save();
-        $this->assertImageSize($thumb, 200, 200);
+        $this->assertImageSize(200, 200, $thumb);
     }
 
     /**
@@ -145,15 +145,15 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         //In this case, the thumbnail will keep the original dimensions
         $thumb = $this->getThumbCreatorInstance()->fit(450, 450, ['upsize' => true])->save();
-        $this->assertImageSize($thumb, 400, 400);
+        $this->assertImageSize(400, 400, $thumb);
 
         //In this case, the thumbnail will exceed the original size
         $thumb = $this->getThumbCreatorInstance()->fit(450, 450, ['upsize' => false])->save();
-        $this->assertImageSize($thumb, 450, 450);
+        $this->assertImageSize(450, 450, $thumb);
 
         //In this case, the thumbnail will exceed the original size
         $thumb = $this->getThumbCreatorInstance()->fit(null, 450, ['upsize' => false])->save();
-        $this->assertImageSize($thumb, 450, 450);
+        $this->assertImageSize(450, 450, $thumb);
     }
 
     /**
@@ -183,10 +183,10 @@ class ThumbCreatorOperationsTest extends TestCase
     public function testResize()
     {
         $thumb = $this->getThumbCreatorInstance()->resize(200)->save();
-        $this->assertImageSize($thumb, 200, 200);
+        $this->assertImageSize(200, 200, $thumb);
 
         $thumb = $this->getThumbCreatorInstance()->resize(null, 200)->save();
-        $this->assertImageSize($thumb, 200, 200);
+        $this->assertImageSize(200, 200, $thumb);
 
         //Without parameters
         $this->expectException(InvalidArgumentException::class);
@@ -215,11 +215,11 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         //In this case, the thumbnail will keep the ratio
         $thumb = $this->getThumbCreatorInstance()->resize(200, 300, ['aspectRatio' => true])->save();
-        $this->assertImageSize($thumb, 200, 200);
+        $this->assertImageSize(200, 200, $thumb);
 
         //In this case, the thumbnail will not maintain the ratio
         $thumb = $this->getThumbCreatorInstance()->resize(200, 300, ['aspectRatio' => false])->save();
-        $this->assertImageSize($thumb, 200, 300);
+        $this->assertImageSize(200, 300, $thumb);
     }
 
     /**
@@ -247,15 +247,15 @@ class ThumbCreatorOperationsTest extends TestCase
     {
         //In this case, the thumbnail will keep the original dimensions
         $thumb = $this->getThumbCreatorInstance()->resize(450, 450, ['upsize' => true])->save();
-        $this->assertImageSize($thumb, 400, 400);
+        $this->assertImageSize(400, 400, $thumb);
 
         //In this case, the thumbnail will exceed the original size
         $thumb = $this->getThumbCreatorInstance()->resize(450, 450, ['upsize' => false])->save();
-        $this->assertImageSize($thumb, 450, 450);
+        $this->assertImageSize(450, 450, $thumb);
 
         //In this case, the thumbnail will exceed the original size
         $thumb = $this->getThumbCreatorInstance()->resize(null, 450, ['upsize' => false])->save();
-        $this->assertImageSize($thumb, 450, 450);
+        $this->assertImageSize(450, 450, $thumb);
     }
 
     /**
@@ -289,21 +289,21 @@ class ThumbCreatorOperationsTest extends TestCase
             'aspectRatio' => true,
             'upsize' => true,
         ])->save();
-        $this->assertImageSize($thumb, 400, 400);
+        $this->assertImageSize(400, 400, $thumb);
 
         //In this case, the thumbnail will not keep the ratio and the original dimensions
         $thumb = $this->getThumbCreatorInstance()->resize(500, 600, [
             'aspectRatio' => false,
             'upsize' => false,
         ])->save();
-        $this->assertImageSize($thumb, 500, 600);
+        $this->assertImageSize(500, 600, $thumb);
 
         //In this case, the thumbnail will not keep the ratio and the original dimensions
         $thumb = $this->getThumbCreatorInstance()->resize(null, 600, [
             'aspectRatio' => false,
             'upsize' => false,
         ])->save();
-        $this->assertImageSize($thumb, 400, 600);
+        $this->assertImageSize(400, 600, $thumb);
     }
 
     /**
@@ -343,10 +343,10 @@ class ThumbCreatorOperationsTest extends TestCase
     public function testResizeCanvas()
     {
         $thumb = $this->getThumbCreatorInstance()->resizeCanvas(200, 100)->save();
-        $this->assertImageSize($thumb, 200, 100);
+        $this->assertImageSize(200, 100, $thumb);
 
         $thumb = $this->getThumbCreatorInstance()->resizeCanvas(null, 200)->save();
-        $this->assertImageSize($thumb, 400, 200);
+        $this->assertImageSize(400, 200, $thumb);
     }
 
     /**
@@ -370,7 +370,7 @@ class ThumbCreatorOperationsTest extends TestCase
     public function testResizeCanvasAnchor()
     {
         $thumb = $this->getThumbCreatorInstance()->resizeCanvas(300, 300, ['anchor' => 'bottom'])->save();
-        $this->assertImageSize($thumb, 300, 300);
+        $this->assertImageSize(300, 300, $thumb);
     }
 
     /**
@@ -393,7 +393,7 @@ class ThumbCreatorOperationsTest extends TestCase
         $thumb = $this->getThumbCreatorInstance()
             ->resizeCanvas(300, 300, ['relative' => true, 'bgcolor' => '#000000'])
             ->save();
-        $this->assertImageSize($thumb, 700, 700);
+        $this->assertImageSize(700, 700, $thumb);
     }
 
     /**
@@ -417,7 +417,7 @@ class ThumbCreatorOperationsTest extends TestCase
     public function testSeveralMethods()
     {
         $thumb = $this->getThumbCreatorInstance()->crop(600)->resize(200)->save();
-        $this->assertImageSize($thumb, 200, 200);
+        $this->assertImageSize(200, 200, $thumb);
     }
 
     /**

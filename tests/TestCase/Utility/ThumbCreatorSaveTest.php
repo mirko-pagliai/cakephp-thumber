@@ -15,6 +15,7 @@ namespace Thumber\Test\TestCase\Utility;
 use Cake\Core\Configure;
 use Intervention\Image\Exception\InvalidArgumentException;
 use Intervention\Image\Exception\NotSupportedException;
+use RuntimeException;
 use Thumber\TestSuite\TestCase;
 
 /**
@@ -47,17 +48,17 @@ class ThumbCreatorSaveTest extends TestCase
         foreach ($extensions as $extension => $expectedMimetype) {
             $thumb = $this->getThumbCreatorInstance('400x400.' . $extension)->resize(200)->save();
             $this->assertThumbPath($thumb);
-            $this->assertFileMime($thumb, $expectedMimetype);
+            $this->assertFileMime($expectedMimetype, $thumb);
 
             //Using `format` option
             $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['format' => $extension]);
             $this->assertThumbPath($thumb);
-            $this->assertFileMime($thumb, $expectedMimetype);
+            $this->assertFileMime($expectedMimetype, $thumb);
 
             //Using `target` option
             $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['target' => 'image.' . $extension]);
             $this->assertEquals($this->getPath('image.' . $extension), $thumb);
-            $this->assertFileMime($thumb, $expectedMimetype);
+            $this->assertFileMime($expectedMimetype, $thumb);
         }
     }
 
@@ -161,7 +162,7 @@ class ThumbCreatorSaveTest extends TestCase
     {
         $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['target' => 'thumb.png']);
         $this->assertEquals($this->getPath('thumb.png'), $thumb);
-        $this->assertFileMime($thumb, 'image/png');
+        $this->assertFileMime('image/png', $thumb);
 
         //With an invalid file format
         $this->expectException(NotSupportedException::class);
@@ -202,7 +203,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveInvalidTargetDir()
     {
         $target = TMP . 'noExistingDir' . DS . 'thumb.jpg';
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Unable to create file `' . $target . '`');
         $this->getThumbCreatorInstanceWithSave(compact('target'));
     }
