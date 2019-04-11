@@ -1,7 +1,7 @@
 source:
     - src/
 
-destination: gh-pages/
+destination: ../cakephp-thumber-gh-pages
 
 # Access levels of included method and properties. (default: ["public","protected"]) (multiple values allowed)
 accessLevels:           

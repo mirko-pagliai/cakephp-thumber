@@ -14,6 +14,7 @@
 namespace Thumber\Utility;
 
 use Cake\Core\Configure;
+use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
 use Intervention\Image\Constraint;
@@ -310,7 +311,7 @@ class ThumbCreator
      */
     public function save(array $options = [])
     {
-        is_true_or_fail(!empty($this->callbacks), __d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__), \RuntimeException::class);
+        is_true_or_fail($this->callbacks, __d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__), RuntimeException::class);
 
         $options = $this->getDefaultSaveOptions($options);
         $target = $options['target'];
@@ -325,9 +326,10 @@ class ThumbCreator
         }
 
         $target = Folder::isAbsolute($target) ? $target : $this->getPath($target);
+        $File = new File($target);
 
         //Creates the thumbnail, if this does not exist
-        if (!file_exists($target)) {
+        if (!$File->exists()) {
             $imageInstance = $this->getImageInstance();
 
             //Calls each callback
@@ -338,9 +340,8 @@ class ThumbCreator
             $content = $imageInstance->encode($options['format'], $options['quality']);
             $imageInstance->destroy();
 
-            //Writes
-            is_writable_or_fail(dirname($target));
-            file_put_contents($target, $content);
+            is_true_or_fail($File->write($content), __d('thumber', 'Unable to create file `{0}`', rtr($target)), RuntimeException::class);
+            $File->close();
         }
 
         //Resets arguments and callbacks

@@ -21,7 +21,6 @@ if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 
-// Path constants to a few helpful things.
 define('ROOT', dirname(__DIR__) . DS);
 define('CAKE_CORE_INCLUDE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
 define('CORE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
@@ -31,10 +30,10 @@ define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
 define('APP_DIR', 'test_app');
 define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', APP . 'webroot' . DS);
-define('TMP', sys_get_temp_dir() . DS);
+define('TMP', sys_get_temp_dir() . DS . 'cakephp-thumber' . DS);
 define('CONFIG', APP . 'config' . DS);
-define('CACHE', TMP);
-define('LOGS', TMP . 'cakephp_log' . DS);
+define('CACHE', TMP . 'cache' . DS);
+define('LOGS', TMP . 'logs' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
 
 @mkdir(TMP);
