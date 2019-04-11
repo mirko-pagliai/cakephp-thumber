@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.7 branch
 # 1.7.2
+* little fixes;
 * updated for `php-tools` 1.2.
 
 # 1.7.1
