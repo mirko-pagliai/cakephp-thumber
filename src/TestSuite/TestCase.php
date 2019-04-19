@@ -18,7 +18,7 @@ use Cake\TestSuite\TestCase as CakeTestCase;
 use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * Thumber TestCase class
@@ -26,9 +26,7 @@ use Tools\TestSuite\TestCaseTrait;
 abstract class TestCase extends CakeTestCase
 {
     use ReflectionTrait;
-    use TestCaseTrait {
-        assertFileMime as baseAssertFileMime;
-    }
+    use TestTrait;
     use ThumbTrait;
 
     /**
