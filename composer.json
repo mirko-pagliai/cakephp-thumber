@@ -12,11 +12,11 @@
         "php": ">=5.5.9",
         "cakephp/cakephp": "^3.7.1",
         "intervention/image": "^2.4",
+        "mirko-pagliai/me-tools": "^2.18.4",
         "mirko-pagliai/php-tools": "^1.2"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^3.0",
-        "mirko-pagliai/me-tools": "^2.18.4",
         "phpunit/phpunit": "^5.7|^6.0"
     },
     "autoload": {
