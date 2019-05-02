@@ -109,3 +109,5 @@ Plugin::load('Thumber', [
 
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
+
+loadPHPUnitAliases();
