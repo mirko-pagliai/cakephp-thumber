@@ -112,7 +112,7 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Returns an instance of `ThumbCreator`
-     * @param string $path Path of the image from which to create the
+     * @param string|null $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
      * @return ThumbCreator
