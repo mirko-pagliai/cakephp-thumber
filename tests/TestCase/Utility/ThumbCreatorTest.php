@@ -16,6 +16,7 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Intervention\Image\Exception\NotReadableException as InterventionNotReadableException;
 use InvalidArgumentException;
+use RuntimeException;
 use Thumber\TestSuite\TestCase;
 use Tools\Exception\NotReadableException;
 
@@ -48,13 +49,13 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
-     * Test for `getImageInstance()` method, with unsupported image type for. GD driver
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Image type `image/jpeg` is not supported by this driver
+     * Test for `getImageInstance()` method, with unsupported image type for GD driver
      * @ŧest
      */
     public function testGetImageInstanceUnsupportedImageType()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Image type `image/jpeg` is not supported by this driver');
         $exception = new InterventionNotReadableException('Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.');
         $thumbCreator = $this->getThumbCreatorInstance();
         $thumbCreator->ImageManager = $this->getMockBuilder(get_class($thumbCreator->ImageManager))->getMock();

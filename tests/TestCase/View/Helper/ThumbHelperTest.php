@@ -13,6 +13,8 @@
 namespace Thumber\Test\TestCase\View\Helper;
 
 use Cake\View\View;
+use Intervention\Image\Exception\InvalidArgumentException as InterventionInvalidArgumentException;
+use InvalidArgumentException;
 use RuntimeException;
 use Thumber\TestSuite\TestCase;
 use Thumber\View\Helper\ThumbHelper;
@@ -76,22 +78,22 @@ class ThumbHelperTest extends TestCase
 
     /**
      * Test for magic `_call()` method, called without parameters
-     * @expectedException Intervention\Image\Exception\InvalidArgumentException
      * @test
      */
     public function testMagicCallWithoutParameters()
     {
+        $this->expectException(InterventionInvalidArgumentException::class);
         $this->Thumb->crop('400x400.png');
     }
 
     /**
      * Test for magic `_call()` method, called without path
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Thumbnail path is missing
      * @test
      */
     public function testMagicCallWithoutPath()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Thumbnail path is missing');
         $this->Thumb->crop();
     }
 
