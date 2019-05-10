@@ -52,7 +52,7 @@ class ThumbHelper extends Helper
      * @return string
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
      * @since 1.4.0
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @uses isUrlMethod()
      * @uses runUrlMethod()
      */
@@ -91,7 +91,7 @@ class ThumbHelper extends Helper
      * @param array $options Array of HTML attributes for the `img` element
      * @return string Thumbnail url
      * @since 1.4.0
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @uses isUrlMethod()
      */
     protected function runUrlMethod($name, $path, array $params = [], array $options = [])
@@ -103,8 +103,11 @@ class ThumbHelper extends Helper
         $options += ['fullBase' => true];
 
         $thumber = new ThumbCreator($path);
-        is_true_or_fail(method_exists($thumber, $name), __d('thumber', 'Method `{0}::{1}()` does not exist', get_class($this), $name), RuntimeException::class);
-
+        is_true_or_fail(
+            method_exists($thumber, $name),
+            __d('thumber', 'Method `{0}::{1}()` does not exist', get_class($this), $name),
+            RuntimeException::class
+        );
         $thumber->$name($params['width'], $params['height'])->save($params);
 
         return $thumber->getUrl($options['fullBase']);

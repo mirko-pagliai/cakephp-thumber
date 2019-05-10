@@ -33,7 +33,7 @@ class ThumbManagerTest extends TestCase
     {
         parent::setUp();
 
-        $this->ThumbManager = new ThumbManager;
+        $this->ThumbManager = new ThumbManager();
 
         $this->createSomeThumbs();
     }

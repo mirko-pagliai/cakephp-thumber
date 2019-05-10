@@ -32,7 +32,7 @@ class ThumbHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->Thumb = new ThumbHelper(new View);
+        $this->Thumb = new ThumbHelper(new View());
     }
 
     /**

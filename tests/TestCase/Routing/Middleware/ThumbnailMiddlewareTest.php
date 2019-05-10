@@ -51,7 +51,7 @@ class ThumbnailMiddlewareTest extends TestCase
             ];
         }
 
-        $ThumbHelper = new ThumbHelper(new View);
+        $ThumbHelper = new ThumbHelper(new View());
 
         foreach ($extensions as $extension => $expectedMimeType) {
             $file = '400x400.' . $extension;

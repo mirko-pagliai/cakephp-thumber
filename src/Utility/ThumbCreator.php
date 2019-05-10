@@ -37,7 +37,7 @@ class ThumbCreator
 
     /**
      * `ImageManager` instance
-     * @var Intervention\Image\ImageManager
+     * @var \Intervention\Image\ImageManager
      */
     public $ImageManager;
 
@@ -121,7 +121,7 @@ class ThumbCreator
     /**
      * Gets an `Image` instance
      * @return \Intervention\Image\Image
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @uses $ImageManager
      * @uses $path
      */
@@ -149,7 +149,7 @@ class ThumbCreator
      *  the result
      * @return string
      * @since 1.5.1
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @uses $target
      */
     public function getUrl($fullBase = true)
@@ -300,7 +300,7 @@ class ThumbCreator
      * @param array $options Options for saving
      * @return string Thumbnail path
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @uses getDefaultSaveOptions()
      * @uses getImageInstance()
      * @uses $arguments
@@ -311,7 +311,11 @@ class ThumbCreator
      */
     public function save(array $options = [])
     {
-        is_true_or_fail($this->callbacks, __d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__), RuntimeException::class);
+        is_true_or_fail(
+            $this->callbacks,
+            __d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__),
+            RuntimeException::class
+        );
 
         $options = $this->getDefaultSaveOptions($options);
         $target = $options['target'];
@@ -340,7 +344,11 @@ class ThumbCreator
             $content = $imageInstance->encode($options['format'], $options['quality']);
             $imageInstance->destroy();
 
-            is_true_or_fail($File->Folder->pwd() && $File->write($content), __d('thumber', 'Unable to create file `{0}`', rtr($target)), RuntimeException::class);
+            is_true_or_fail(
+                $File->Folder->pwd() && $File->write($content),
+                __d('thumber', 'Unable to create file `{0}`', rtr($target)),
+                RuntimeException::class
+            );
             $File->close();
         }
 

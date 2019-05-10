@@ -24,8 +24,8 @@ class Plugin extends BasePlugin
 {
     /**
      * Add console commands for the plugin
-     * @param Cake\Console\CommandCollection $commands The command collection to update
-     * @return Cake\Console\CommandCollection
+     * @param \Cake\Console\CommandCollection $commands The command collection to update
+     * @return \Cake\Console\CommandCollection
      * @since 1.7.1
      */
     public function console($commands)

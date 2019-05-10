@@ -55,8 +55,8 @@ class ClearAllCommandTest extends TestCase
             ->setMethods(['_clear'])
             ->getMock();
         $this->Command->ThumbManager->method('_clear')
-            ->will($this->throwException(new Exception));
+            ->will($this->throwException(new Exception()));
 
-        $this->Command->run([], new ConsoleIo(null, new ConsoleOutput));
+        $this->Command->run([], new ConsoleIo(null, new ConsoleOutput()));
     }
 }
