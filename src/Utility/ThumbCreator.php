@@ -168,8 +168,8 @@ class ThumbCreator
      *
      * You can define optional coordinates to move the top-left corner of the
      *  cutout to a certain position.
-     * @param int $width Required width
-     * @param int $heigth Required heigth
+     * @param int|null $width Required width
+     * @param int|null $heigth Required heigth
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#crop
@@ -199,8 +199,8 @@ class ThumbCreator
      * Resizes the image, combining cropping and resizing to format image in a
      *  smart way. It will find the best fitting aspect ratio on the current
      *  image automatically, cut it out and resize it to the given dimension
-     * @param int $width Required width
-     * @param int $heigth Required heigth
+     * @param int|null $width Required width
+     * @param int|null $heigth Required heigth
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#fit
@@ -232,8 +232,8 @@ class ThumbCreator
 
     /**
      * Resizes the image
-     * @param int $width Required width
-     * @param int $heigth Required heigth
+     * @param int|null $width Required width
+     * @param int|null $heigth Required heigth
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#resize
@@ -271,7 +271,7 @@ class ThumbCreator
      *  the given width or height to the actual image dimensions. You can also
      *  pass a background color for the emerging area of the image
      * @param int $width Required width
-     * @param int $heigth Required heigth
+     * @param int|null $heigth Required heigth
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#resizecanvas
