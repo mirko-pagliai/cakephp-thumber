@@ -270,7 +270,7 @@ class ThumbCreator
      *  resizing is going to happen. Set the mode to relative to add or subtract
      *  the given width or height to the actual image dimensions. You can also
      *  pass a background color for the emerging area of the image
-     * @param int $width Required width
+     * @param int|null $width Required width
      * @param int|null $heigth Required heigth
      * @param array $options Options for the thumbnail
      * @return \Thumber\Utility\ThumbCreator
