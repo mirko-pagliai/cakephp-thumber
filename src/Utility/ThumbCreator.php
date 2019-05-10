@@ -340,7 +340,7 @@ class ThumbCreator
             $content = $imageInstance->encode($options['format'], $options['quality']);
             $imageInstance->destroy();
 
-            is_true_or_fail($File->write($content), __d('thumber', 'Unable to create file `{0}`', rtr($target)), RuntimeException::class);
+            is_true_or_fail($File->Folder->pwd() && $File->write($content), __d('thumber', 'Unable to create file `{0}`', rtr($target)), RuntimeException::class);
             $File->close();
         }
 
