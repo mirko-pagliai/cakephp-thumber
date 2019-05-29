@@ -10,6 +10,7 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Core\Configure;
 
 //Default thumbnails driver

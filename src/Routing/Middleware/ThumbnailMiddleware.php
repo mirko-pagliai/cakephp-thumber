@@ -27,11 +27,11 @@ class ThumbnailMiddleware
 
     /**
      * Serves thumbnail if the request matches one
-     * @param ServerRequestInterface $request The request
-     * @param ResponseInterface $response The response
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request
+     * @param \Psr\Http\Message\ResponseInterface $response The response
      * @param callable $next Callback to invoke the next middleware
-     * @return ResponseInterface A response
-     * @throws ThumbNotFoundException
+     * @return \Psr\Http\Message\ResponseInterface A response
+     * @throws \Thumber\Http\Exception\ThumbNotFoundException
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {

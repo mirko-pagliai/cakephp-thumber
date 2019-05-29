@@ -10,12 +10,13 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Thumber\Routing\Middleware\ThumbnailMiddleware;
 
 Router::plugin('Thumber', ['path' => '/thumb'], function (RouteBuilder $routes) {
-    $routes->registerMiddleware('thumbnail', new ThumbnailMiddleware);
+    $routes->registerMiddleware('thumbnail', new ThumbnailMiddleware());
 
     if (!$routes->nameExists('thumb')) {
         $routes->get('/:basename', [], 'thumb')
