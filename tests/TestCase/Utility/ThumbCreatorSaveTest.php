@@ -12,18 +12,17 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
-use Cake\Network\Exception\InternalErrorException;
+use Cake\Core\Configure;
+use Intervention\Image\Exception\InvalidArgumentException;
+use Intervention\Image\Exception\NotSupportedException;
+use RuntimeException;
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbTrait;
-use Thumber\Utility\ThumbCreator;
 
 /**
  * ThumbCreatorSaveTest class
  */
 class ThumbCreatorSaveTest extends TestCase
 {
-    use ThumbTrait;
-
     /**
      * Test for `save()` method
      * @test
@@ -38,61 +37,38 @@ class ThumbCreatorSaveTest extends TestCase
         ];
 
         //Adds some extensions only for the `imagick` driver
-        if ($this->getDriver() == 'imagick') {
-            $extensions += [
-                'bmp' => 'image/x-ms-bmp',
-                'ico' => 'image/x-icon',
-                'psd' => 'image/vnd.adobe.photoshop',
-                'tif' => 'image/tiff',
-                'tiff' => 'image/tiff',
-            ];
-        }
+        $extensions += Configure::readOrFail('Thumber.driver') == 'imagick' ? [
+            'bmp' => 'image/x-ms-bmp',
+            'ico' => 'image/x-icon',
+            'psd' => 'image/vnd.adobe.photoshop',
+            'tif' => 'image/tiff',
+            'tiff' => 'image/tiff',
+        ] : [];
 
         foreach ($extensions as $extension => $expectedMimetype) {
-            $thumb = (new ThumbCreator('400x400.' . $extension))->resize(200)->save();
+            $thumb = $this->getThumbCreatorInstance('400x400.' . $extension)->resize(200)->save();
             $this->assertThumbPath($thumb);
             $this->assertFileMime($expectedMimetype, $thumb);
 
             //Using `format` option
-            $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => $extension]);
+            $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['format' => $extension]);
             $this->assertThumbPath($thumb);
             $this->assertFileMime($expectedMimetype, $thumb);
 
             //Using `target` option
-            $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.' . $extension]);
+            $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['target' => 'image.' . $extension]);
             $this->assertEquals($this->getPath('image.' . $extension), $thumb);
             $this->assertFileMime($expectedMimetype, $thumb);
         }
-    }
 
-    /**
-     * Test for `save()` method, using an invalid file as input.
-     *
-     * This test runs only for the `gd` driver.
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Image type `text/x-php` is not supported by this driver
-     * @ŧest
-     */
-    public function testSaveFromInvalidFileGd()
-    {
-        $this->skipIf($this->getDriver() != 'gd');
-
-        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
-    }
-
-    /**
-     * Test for `save()` method, using an invalid file as input.
-     *
-     * This test runs only for the `imagick` driver.
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Unable to read image from file `tests/test_app/config/routes.php`
-     * @ŧest
-     */
-    public function testSaveFromInvalidFileImagick()
-    {
-        $this->skipIf($this->getDriver() != 'imagick');
-
-        (new ThumbCreator(APP . 'config' . DS . 'routes.php'))->resize(200)->save();
+        //With an invalid file as input.
+        $expectExceptionMessage = 'Unable to read image from file `tests/test_app/config/routes.php`';
+        if (Configure::readOrFail('Thumber.driver') != 'imagick') {
+            $expectExceptionMessage = 'Image type `text/x-php` is not supported by this driver';
+        }
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage($expectExceptionMessage);
+        $this->getThumbCreatorInstanceWithSave(APP . 'config' . DS . 'routes.php');
     }
 
     /**
@@ -104,11 +80,10 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveSameFileDifferentArguments()
     {
-        $firstThumb = explode('_', basename((new ThumbCreator('400x400.png'))->resize(200)->save()));
-        $secondThumb = explode('_', basename((new ThumbCreator('400x400.png'))->resize(300)->save()));
-
-        $this->assertEquals($firstThumb[0], $secondThumb[0]);
-        $this->assertNotEquals($firstThumb[1], $secondThumb[1]);
+        $firstThumb = explode('_', basename($this->getThumbCreatorInstance()->resize(200)->save()));
+        $secondThumb = explode('_', basename($this->getThumbCreatorInstance()->resize(300)->save()));
+        $this->assertSame($firstThumb[0], $secondThumb[0]);
+        $this->assertNotSame($firstThumb[1], $secondThumb[1]);
     }
 
     /**
@@ -119,21 +94,18 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveReturnsExistingThumb()
     {
         //Creates the thumbnail and gets the creation time
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
-        $time = filemtime($thumb);
+        $time = filemtime($this->getThumbCreatorInstance()->resize(200)->save());
 
         //Tries to create again the same thumbnail. Now the creation time is the same
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
+        $thumb = $this->getThumbCreatorInstance()->resize(200)->save();
         $this->assertEquals($time, filemtime($thumb));
 
-        $this->skipIf(IS_WIN);
-
-        //Deletes the thumbnail and wait 1 second and tries to create again the
-        //  same thumbnail. Now the creation time is different
+        //Deletes the thumbnail and wait 1 second, then tries to create again
+        //  the same thumbnail. Now the creation time is different
         @unlink($thumb);
         sleep(1);
-        $thumb = (new ThumbCreator('400x400.png'))->resize(200)->save();
-        $this->assertNotEquals($time, filemtime($thumb));
+        $newTime = filemtime($this->getThumbCreatorInstance()->resize(200)->save());
+        $this->assertNotEquals($time, $newTime);
     }
 
     /**
@@ -142,19 +114,11 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithQuality()
     {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
-        $this->assertThumbPath($thumb);
-        $this->assertFileMime('image/jpeg', $thumb);
-    }
+        $this->assertThumbPath($this->getThumbCreatorInstance()->resize(200)->save(['quality' => 10]));
 
-    /**
-     * Test for `save()` method, using the `quality` option with an invalid value
-     * @expectedException Intervention\Image\Exception\InvalidArgumentException
-     * @ŧest
-     */
-    public function testSaveWithQualityInvalidValue()
-    {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 101]);
+        //With an invalid value
+        $this->expectException(InvalidArgumentException::class);
+        $this->getThumbCreatorInstanceWithSave(['quality' => 101]);
     }
 
     /**
@@ -164,7 +128,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithQualityImageEquals()
     {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['quality' => 10]);
+        $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['quality' => 10]);
         $this->assertImageFileEquals('resize_w200_h200_quality_10.jpg', $thumb);
     }
 
@@ -174,20 +138,13 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithTarget()
     {
-        $thumb = (new ThumbCreator('400x400.jpg'))->resize(200)->save(['target' => 'thumb.jpg']);
-        $this->assertEquals($this->getPath('thumb.jpg'), $thumb);
-        $this->assertFileMime('image/jpeg', $thumb);
-    }
+        $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['target' => 'thumb.png']);
+        $this->assertEquals($this->getPath('thumb.png'), $thumb);
+        $this->assertFileMime('image/png', $thumb);
 
-    /**
-     * Test for `save()` method, using the `format` option with an invalid file
-     *  format
-     * @expectedException Intervention\Image\Exception\NotSupportedException
-     * @ŧest
-     */
-    public function testSaveWithInvalidFormat()
-    {
-        (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'txt']);
+        //With an invalid file format
+        $this->expectException(NotSupportedException::class);
+        $this->getThumbCreatorInstanceWithSave(['format' => 'txt']);
     }
 
     /**
@@ -196,24 +153,16 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithSimilarFormat()
     {
-        $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'jpeg']);
+        $file = $this->getThumbCreatorInstance()->resize(200)->save(['format' => 'jpeg']);
         $this->assertFileExtension('jpg', $file);
 
-        $this->skipIf($this->getDriver() === 'gd');
-
-        $file = (new ThumbCreator('400x400.png'))->resize(200)->save(['format' => 'tif']);
+        $this->skipIfDriverIs('gd');
+        $file = $this->getThumbCreatorInstance()->resize(200)->save(['format' => 'tif']);
         $this->assertFileExtension('tiff', $file, PATHINFO_EXTENSION);
-    }
 
-    /**
-     * Test for `save()` method, using the `target` option with an invalid file
-     *  format
-     * @expectedException Intervention\Image\Exception\NotSupportedException
-     * @test
-     */
-    public function testSaveInvalidTargetFormat()
-    {
-        (new ThumbCreator('400x400.png'))->resize(200)->save(['target' => 'image.txt']);
+        //Using the `target` option with an invalid file
+        $this->expectException(NotSupportedException::class);
+        $this->getThumbCreatorInstanceWithSave(['target' => 'image.txt']);
     }
 
     /**
@@ -224,18 +173,19 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveInvalidTargetDir()
     {
         $target = TMP . 'noExistingDir' . DS . 'thumb.jpg';
-        $this->expectException(InternalErrorException::class);
-        $this->expectExceptionMessage('The directory `' . dirname($target) . '` is not writeable');
-        (new ThumbCreator('400x400.png'))->resize(200)->save(compact('target'));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unable to create file `' . $target . '`');
+        $this->getThumbCreatorInstanceWithSave(compact('target'));
     }
 
     /**
      * Test for `save()` method, without a valid method called before
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage No valid method called before the `save` method
+     * @test
      */
     public function testSaveWithoutCallbacks()
     {
-        (new ThumbCreator('400x400.jpg'))->save();
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No valid method called before the `save` method');
+        $this->getThumbCreatorInstance()->save();
     }
 }

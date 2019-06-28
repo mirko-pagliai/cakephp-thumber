@@ -14,27 +14,23 @@ namespace Thumber\Test\TestCase\TestSuite;
 
 use Cake\Core\Configure;
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbTrait;
+use Thumber\Utility\ThumbManager;
 
 /**
  * TestCaseTest class
  */
 class TestCaseTest extends TestCase
 {
-    use ThumbTrait;
-
     /**
      * Test for `assertImageFileEquals()` method
      * @ŧest
      */
     public function testAssertImageFileEquals()
     {
-        $original = Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg';
+        $original = Configure::readOrFail('Thumber.comparingDir') . 'resize_w200_h200.jpg';
         $copy = tempnam(TMP, $original);
-
         copy($original, $copy);
-
-        $this->assertImageFileEquals(Configure::read(THUMBER . '.comparingDir') . 'resize_w200_h200.jpg', $copy);
+        $this->assertImageFileEquals(Configure::readOrFail('Thumber.comparingDir') . 'resize_w200_h200.jpg', $copy);
         $this->assertImageFileEquals('resize_w200_h200.jpg', $copy);
     }
 
@@ -44,8 +40,8 @@ class TestCaseTest extends TestCase
      */
     public function testAssertThumbPath()
     {
-        foreach ($this->getSupportedFormats() as $extension) {
-            $this->assertThumbPath($this->getPath() . DS . md5(time()) . '_' . md5(time()) . '.' . $extension);
+        foreach (ThumbManager::$supportedFormats as $extension) {
+            $this->assertThumbPath($this->getPath(md5(time()) . '_' . md5(time()) . '.' . $extension));
         }
     }
 }

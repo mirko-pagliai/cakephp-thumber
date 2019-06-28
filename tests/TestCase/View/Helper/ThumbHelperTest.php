@@ -13,30 +13,26 @@
 namespace Thumber\Test\TestCase\View\Helper;
 
 use Cake\View\View;
+use Intervention\Image\Exception\InvalidArgumentException as InterventionInvalidArgumentException;
+use InvalidArgumentException;
+use RuntimeException;
 use Thumber\TestSuite\TestCase;
-use Thumber\ThumbTrait;
 use Thumber\View\Helper\ThumbHelper;
-use Tools\ReflectionTrait;
 
 /**
  * ThumbHelperTest class
  */
 class ThumbHelperTest extends TestCase
 {
-    use ReflectionTrait;
-    use ThumbTrait;
-
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->Thumb = new ThumbHelper(new View);
+        $this->Thumb = new ThumbHelper(new View());
     }
 
     /**
@@ -73,37 +69,31 @@ class ThumbHelperTest extends TestCase
             ];
             $this->assertHtml($expected, $this->Thumb->$method($path, $params, ['url' => 'http://example']));
         }
-    }
 
-    /**
-     * Test for magic `_call()` method, called without parameters
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Method Thumber\View\Helper\ThumbHelper::noExisting does not exist
-     * @test
-     */
-    public function testMagicCallNoExistingMethod()
-    {
+        //Calling a no existing method
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Method `Thumber\View\Helper\ThumbHelper::noExisting()` does not exist');
         $this->Thumb->noExisting('400x400.png');
     }
 
     /**
      * Test for magic `_call()` method, called without parameters
-     * @expectedException Intervention\Image\Exception\InvalidArgumentException
      * @test
      */
     public function testMagicCallWithoutParameters()
     {
+        $this->expectException(InterventionInvalidArgumentException::class);
         $this->Thumb->crop('400x400.png');
     }
 
     /**
      * Test for magic `_call()` method, called without path
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Thumbnail path is missing
      * @test
      */
     public function testMagicCallWithoutPath()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Thumbnail path is missing');
         $this->Thumb->crop();
     }
 

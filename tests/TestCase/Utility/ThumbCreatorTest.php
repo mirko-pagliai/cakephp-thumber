@@ -12,81 +12,75 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Intervention\Image\Exception\NotReadableException;
-use Intervention\Image\ImageManager;
+use Intervention\Image\Exception\NotReadableException as InterventionNotReadableException;
+use InvalidArgumentException;
+use RuntimeException;
 use Thumber\TestSuite\TestCase;
-use Thumber\Utility\ThumbCreator;
-use Tools\ReflectionTrait;
+use Tools\Exception\NotReadableException;
 
 /**
  * ThumbCreatorTest class
  */
 class ThumbCreatorTest extends TestCase
 {
-    use ReflectionTrait;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        Plugin::load('TestPlugin');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        Plugin::unload('TestPlugin');
-    }
-
     /**
      * Test for `__construct()` method, passing a no existing file
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFile()
     {
-        new ThumbCreator('noExistingFile.gif');
+        $this->expectException(NotReadableException::class);
+        $this->expectExceptionMessage('File or directory `' . rtr(WWW_ROOT) . 'img' . DS . 'noExistingFile.gif` is not readable');
+        $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
     /**
      * Test for `__construct()` method, passing a no existing file from plugin
-     * @expectedException Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessageRegExp /^File `[\w\/:\\\.]+` not readable$/
      * @test
      */
     public function testConstructNoExistingFileFromPlugin()
     {
-        new ThumbCreator('TestPlugin.noExistingFile.gif');
+        $this->loadPlugins(['TestPlugin']);
+        $this->expectException(NotReadableException::class);
+        $this->expectExceptionMessage('File or directory `' . rtr(Plugin::path('TestPlugin')) . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
+        $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 
     /**
-     * Test for `getImageInstance()` method, with unsupported image type for. GD driver
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Image type `image/png` is not supported by this driver
+     * Test for `getImageInstance()` method, with unsupported image type for GD driver
      * @ŧest
      */
     public function testGetImageInstanceUnsupportedImageType()
     {
-        $thumber = new ThumbCreator('400x400.png');
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Image type `image/jpeg` is not supported by this driver');
+        $exception = new InterventionNotReadableException('Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.');
+        $thumbCreator = $this->getThumbCreatorInstance();
+        $thumbCreator->ImageManager = $this->getMockBuilder(get_class($thumbCreator->ImageManager))->getMock();
+        $thumbCreator->ImageManager->method('make')->will($this->throwException($exception));
+        $this->invokeMethod($thumbCreator, 'getImageInstance');
+    }
 
-        $message = 'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.';
-        $thumber->ImageManager = $this->getMockBuilder(ImageManager::class)->getMock();
-        $thumber->ImageManager->method('make')->will($this->throwException(new NotReadableException($message)));
+    /**
+     * Test for `getUrl()` method
+     * @ŧest
+     */
+    public function testGetUrl()
+    {
+        $result = $this->getThumbCreatorInstanceWithSave()->getUrl();
+        $this->assertThumbUrl($result);
+        $this->assertTextStartsWith(Configure::read('App.fullBaseUrl'), $result);
 
-        $this->invokeMethod($thumber, 'getImageInstance');
+        //Without full base
+        $result = $this->getThumbCreatorInstanceWithSave()->getUrl(false);
+        $this->assertThumbUrl($result);
+        $this->assertTextStartsNotWith(Configure::read('App.fullBaseUrl'), $result);
+
+        //Without the `$target` property
+        $this->expectException(InvalidArgumentException::class);
+        $this->getThumbCreatorInstance()->getUrl();
     }
 
     /**
@@ -95,27 +89,25 @@ class ThumbCreatorTest extends TestCase
      */
     public function testPath()
     {
-        $file = WWW_ROOT . 'img' . DS . '400x400.png';
-
-        $thumber = new ThumbCreator('400x400.png');
+        $file = WWW_ROOT . 'img' . DS . '400x400.jpg';
+        $thumber = $this->getThumbCreatorInstance();
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
-        $thumber = new ThumbCreator($file);
+        $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
         //From plugin
+        $this->loadPlugins(['TestPlugin']);
         $file = Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . '400x400.png';
-
-        $thumber = new ThumbCreator('TestPlugin.400x400.png');
+        $thumber = $this->getThumbCreatorInstance('TestPlugin.400x400.png');
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
-        $thumber = new ThumbCreator($file);
+        $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
         //From remote
         $file = 'http://example.com.png';
-
-        $thumber = new ThumbCreator($file);
+        $thumber = $this->getThumbCreatorInstance($file);
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
     }
 }

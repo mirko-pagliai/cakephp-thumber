@@ -25,6 +25,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "App\\": "tests/test_app/TestApp/",
             "Thumber\\Test\\": "tests"
         }
     }

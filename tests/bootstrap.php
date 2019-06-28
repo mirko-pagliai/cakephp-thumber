@@ -10,6 +10,7 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -70,8 +71,11 @@ Configure::write('App', [
     'cssBaseUrl' => 'css/',
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
-        'templates' => [APP . 'TestApp' . DS . 'Template' . DS],
-    ]
+        'templates' => [
+            APP . 'TestApp' . DS . 'Template' . DS,
+            ROOT . 'src' . DS . 'Template' . DS,
+        ],
+    ],
 ]);
 
 Cache::config([
@@ -96,10 +100,12 @@ if (!getenv('THUMBER_DRIVER')) {
     putenv('THUMBER_DRIVER=imagick');
 }
 
-Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
-Configure::write('Thumber.comparingDir', TESTS . DS . 'comparing_files' . DS . Configure::read('Thumber.driver') . DS);
+Configure::write('Thumber', [
+    'driver' => getenv('THUMBER_DRIVER'),
+    'comparingDir' => TESTS . DS . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS,
+]);
 
-echo 'Running tests for "' . Configure::read('Thumber.driver') . '" driver ' . PHP_EOL;
+echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
 
 Plugin::load('Thumber', [
     'bootstrap' => true,

@@ -10,34 +10,29 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Core\Configure;
 
-//Sets the default Thumber name
-if (!defined('THUMBER')) {
-    define('THUMBER', 'Thumber');
-}
-
 //Default thumbnails driver
-if (!Configure::check(THUMBER . '.driver')) {
-    Configure::write(THUMBER . '.driver', 'imagick');
+if (!Configure::check('Thumber.driver')) {
+    Configure::write('Thumber.driver', 'imagick');
 }
 
 //Default thumbnails directory
-if (!Configure::check(THUMBER . '.target')) {
-    Configure::write(THUMBER . '.target', TMP . 'thumbs');
+if (!Configure::check('Thumber.target')) {
+    Configure::write('Thumber.target', TMP . 'thumbs');
 }
 
 //Checks for driver
-$driver = Configure::read(THUMBER . '.driver');
-
+$driver = Configure::read('Thumber.driver');
 if (!in_array($driver, ['imagick', 'gd'])) {
-    trigger_error(sprintf('The driver %s is not supported', $driver), E_USER_ERROR);
+    trigger_error(sprintf('The driver `%s` is not supported', $driver), E_USER_ERROR);
 }
 
 //Checks for target directory
-$target = Configure::read(THUMBER . '.target');
+$target = Configure::read('Thumber.target');
 @mkdir($target, 0777, true);
 
 if (!is_writeable($target)) {
-    trigger_error(sprintf('Directory %s not writeable', $target), E_USER_ERROR);
+    trigger_error(sprintf('Directory `%s` not writeable', $target), E_USER_ERROR);
 }

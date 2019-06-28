@@ -20,7 +20,9 @@
  * @license     http://www.gnu.org/licenses/agpl.txt AGPL License
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
-use Cake\Core\Plugin;
 
-//Load all plugin routes
-Plugin::routes();
+use Cake\Routing\Router;
+
+Router::scope('/', function ($routes) {
+    $routes->loadPlugin('Thumber');
+});

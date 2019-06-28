@@ -26,16 +26,14 @@ class ThumbManagerTest extends TestCase
     protected $ThumbManager;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->ThumbManager = new ThumbManager;
+        $this->ThumbManager = new ThumbManager();
 
         $this->createSomeThumbs();
     }
@@ -60,12 +58,11 @@ class ThumbManagerTest extends TestCase
      */
     public function testClearWithError()
     {
-        $class = $this->getMockBuilder(get_class($this->ThumbManager))
+        $ThumbManager = $this->getMockBuilder(ThumbManager::class)
             ->setMethods(['get'])
             ->getMock();
-        $class->method('get')->will($this->returnValue(['noExisting']));
-
-        $this->assertFalse($class->clear('noExisting'));
+        $ThumbManager->method('get')->will($this->returnValue(['noExisting']));
+        $this->assertFalse($ThumbManager->clear('noExisting'));
     }
 
     /**

@@ -16,26 +16,23 @@ namespace Thumber\View\Helper;
 use Cake\View\Helper;
 use InvalidArgumentException;
 use RuntimeException;
-use Thumber\ThumbTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
  * Thumb Helper.
  *
  * This helper allows you to generate thumbnails.
- * @method string crop()
- * @method string cropUrl()
- * @method string fit()
- * @method string fitUrl()
- * @method string resize()
- * @method string resizeUrl()
- * @method string resizeCanvas()
- * @method string resizeCanvasUrl()
+ * @method string crop($path, array $params = [], array $options = []) Crops the image, cutting out a rectangular part of the image
+ * @method string cropUrl($path, array $params = [], array $options = []) As for the `crop()` method, but this only returns the url
+ * @method string fit($path, array $params = [], array $options = []) Resizes the image, combining cropping and resizing to format image in a smart way. It will find the best fitting aspect ratio on the current image automatically, cut it out and resize it to the given dimension
+ * @method string fitUrl($path, array $params = [], array $options = []) As for the `fit()` method, but this only returns the url
+ * @method string resize($path, array $params = [], array $options = []) Resizes the image
+ * @method string resizeUrl($path, array $params = [], array $options = []) As for the `resize()` method, but this only returns the url
+ * @method string resizeCanvas($path, array $params = [], array $options = []) Resizes the boundaries of the current image to given width and height. An anchor can be defined to determine from what point of the image the resizing is going to happen. Set the mode to relative to add or subtract the given width or height to the actual image dimensions. You can also pass a background color for the emerging area of the image
+ * @method string resizeCanvasUrl($path, array $params = [], array $options = []) As for the `resizeCanvas()` method, but this only returns the url
  */
 class ThumbHelper extends Helper
 {
-    use ThumbTrait;
-
     /**
      * Helpers
      * @var array
@@ -43,11 +40,7 @@ class ThumbHelper extends Helper
     public $helpers = ['Html'];
 
     /**
-     * Magic method.
-     *
-     * It dynamically calls all methods: `crop()`, `cropUrl()`, `fit()`,
-     *  `fitUrl()`, `resize()`, `resizeUrl()`, `resizeCanvas()` and
-     *  `resizeCanvasUrl()`.
+     * Magic method. It dynamically calls all other methods.
      *
      * Each method takes these arguments:
      *  - $path Path of the image from which to create the thumbnail. It can be
@@ -59,17 +52,14 @@ class ThumbHelper extends Helper
      * @return string
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
      * @since 1.4.0
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @uses isUrlMethod()
      * @uses runUrlMethod()
      */
     public function __call($name, $params)
     {
         list($path, $params, $options) = $params + [null, [], []];
-
-        if (!$path) {
-            throw new InvalidArgumentException(__d('thumber', 'Thumbnail path is missing'));
-        }
+        is_true_or_fail($path, __d('thumber', 'Thumbnail path is missing'), InvalidArgumentException::class);
 
         $url = $this->runUrlMethod($name, $path, $params, $options);
 
@@ -101,7 +91,7 @@ class ThumbHelper extends Helper
      * @param array $options Array of HTML attributes for the `img` element
      * @return string Thumbnail url
      * @since 1.4.0
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @uses isUrlMethod()
      */
     protected function runUrlMethod($name, $path, array $params = [], array $options = [])
@@ -112,15 +102,14 @@ class ThumbHelper extends Helper
         $params += ['format' => 'jpg', 'height' => null, 'width' => null];
         $options += ['fullBase' => true];
 
-        //Creates the thumbnail
-        $thumb = new ThumbCreator($path);
+        $thumber = new ThumbCreator($path);
+        is_true_or_fail(
+            method_exists($thumber, $name),
+            __d('thumber', 'Method `{0}::{1}()` does not exist', get_class($this), $name),
+            RuntimeException::class
+        );
+        $thumber->$name($params['width'], $params['height'])->save($params);
 
-        if (!method_exists($thumb, $name)) {
-            throw new RuntimeException(__d('thumber', 'Method {0}::{1} does not exist', get_class($this), $name));
-        }
-
-        $thumb = $thumb->$name($params['width'], $params['height'])->save($params);
-
-        return $this->getUrl($thumb, $options['fullBase']);
+        return $thumber->getUrl($options['fullBase']);
     }
 }

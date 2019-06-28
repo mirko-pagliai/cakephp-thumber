@@ -15,27 +15,27 @@ namespace Thumber\TestSuite;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Thumber\ThumbTrait;
+use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
 use Tools\TestSuite\TestTrait;
 
 /**
- * Thumber TestCase class
+ * TestCase class
  */
 abstract class TestCase extends CakeTestCase
 {
     use ReflectionTrait;
     use TestTrait;
-    use ThumbTrait;
+    use ThumbsPathTrait;
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
     {
-        @unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
+        @unlink_recursive(Configure::readOrFail('Thumber.target'));
 
         parent::tearDown();
     }
@@ -47,9 +47,8 @@ abstract class TestCase extends CakeTestCase
      */
     protected static function createCopy($path)
     {
-        $result = tempnam(sys_get_temp_dir(), $path);
-
-        copy($path, $result);
+        $result = create_tmp_file();
+        @copy($path, $result);
 
         return $result;
     }
@@ -77,20 +76,15 @@ abstract class TestCase extends CakeTestCase
      */
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
-        if (!Folder::isAbsolute($expected)) {
-            $expected = Configure::read(THUMBER . '.comparingDir') . $expected;
-        }
-
+        $expected = Folder::isAbsolute($expected) ? $expected : Configure::read('Thumber.comparingDir') . $expected;
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
 
         $expectedCopy = self::createCopy($expected);
         $actualCopy = self::createCopy($actual);
-
         self::assertFileEquals($expectedCopy, $actualCopy, $message);
 
-        @unlink($expectedCopy);
-        @unlink($actualCopy);
+        @array_map('unlink', [$expectedCopy, $actualCopy]);
     }
 
     /**
@@ -103,11 +97,7 @@ abstract class TestCase extends CakeTestCase
      */
     public function assertThumbPath($path, $message = '')
     {
-        $regex = sprintf(
-            '/^%s[a-z0-9]{32}_[a-z0-9]{32}\.(%s)/',
-            preg_quote($this->getPath() . DS, '/'),
-            implode('|', self::getSupportedFormats())
-        );
+        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote($this->getPath() . DS, '/'));
         self::assertRegExp($regex, $path, $message);
     }
 
@@ -121,6 +111,56 @@ abstract class TestCase extends CakeTestCase
      */
     public function assertThumbUrl($url, $message = '')
     {
-        self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[A-z0-9]+/', $url, $message);
+        self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[\w\d]+/', $url, $message);
+    }
+
+    /**
+     * Returns an instance of `ThumbCreator`
+     * @param string|null $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url
+     * @return \Thumber\Utility\ThumbCreator
+     * @since 1.5.1
+     */
+    protected function getThumbCreatorInstance($path = null)
+    {
+        return new ThumbCreator($path ?: '400x400.jpg');
+    }
+
+    /**
+     * Returns an instance of `ThumbCreator`, after calling `resize()` and
+     *  `save()` methods.
+     *
+     * It can be called passing only the array of options as first argument.
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
+     *  or a remote url
+     * @param array $options Options for saving
+     * @return \Thumber\Utility\ThumbCreator
+     * @since 1.5.1
+     * @uses getThumbCreatorInstance()
+     */
+    protected function getThumbCreatorInstanceWithSave($path = null, array $options = [])
+    {
+        if (is_array($path) && func_num_args() < 2) {
+            list($options, $path) = [$path, null];
+        }
+
+        $thumbCreator = $this->getThumbCreatorInstance($path);
+        $thumbCreator->resize(200)->save($options);
+
+        return $thumbCreator;
+    }
+
+    /**
+     * Skips the test if you running the designated driver
+     * @param string $driver Driver name
+     * @param string $message The message to display
+     * @return bool
+     * @since 1.5.0
+     */
+    public function skipIfDriverIs($driver, $message = '')
+    {
+        return parent::skipIf(Configure::readOrFail('Thumber.driver') == $driver, $message);
     }
 }
