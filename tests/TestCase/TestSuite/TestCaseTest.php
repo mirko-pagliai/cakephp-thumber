@@ -40,7 +40,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertThumbPath()
     {
-        foreach (ThumbManager::$supportedFormats as $extension) {
+        foreach (ThumbManager::SUPPORTED_FORMATS as $extension) {
             $this->assertThumbPath($this->getPath(md5(time()) . '_' . md5(time()) . '.' . $extension));
         }
     }

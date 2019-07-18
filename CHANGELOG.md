@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.7 branch
+### 1.7.4
+* little fixes.
+
 ### 1.7.3
 * fixed little bug for `composer.json`.
 
