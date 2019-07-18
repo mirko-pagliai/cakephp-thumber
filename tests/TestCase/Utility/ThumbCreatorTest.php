@@ -42,7 +42,7 @@ class ThumbCreatorTest extends TestCase
      */
     public function testConstructNoExistingFileFromPlugin()
     {
-        $this->loadPlugins(['TestPlugin']);
+        Plugin::load('TestPlugin');
         $this->expectException(NotReadableException::class);
         $this->expectExceptionMessage('File or directory `' . rtr(Plugin::path('TestPlugin')) . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
@@ -97,7 +97,7 @@ class ThumbCreatorTest extends TestCase
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
         //From plugin
-        $this->loadPlugins(['TestPlugin']);
+        Plugin::load('TestPlugin');
         $file = Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . '400x400.png';
         $thumber = $this->getThumbCreatorInstance('TestPlugin.400x400.png');
         $this->assertEquals($this->getProperty($thumber, 'path'), $file);

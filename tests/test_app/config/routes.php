@@ -21,8 +21,6 @@
  * @link        http://git.novatlantis.it Nova Atlantis Ltd
  */
 
-use Cake\Routing\Router;
+use Cake\Core\Plugin;
 
-Router::scope('/', function ($routes) {
-    $routes->loadPlugin('Thumber');
-});
+Plugin::routes();
