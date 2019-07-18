@@ -28,7 +28,7 @@ class ThumbManager
      * Supported formats
      * @var array
      */
-    public static $supportedFormats = ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
+    const SUPPORTED_FORMATS = ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
 
     /**
      * Internal method to clear thumbnails
@@ -58,7 +58,7 @@ class ThumbManager
      */
     protected function _find($regexpPattern = null, $sort = false)
     {
-        $regexpPattern = $regexpPattern ?: sprintf('[\d\w]{32}_[\d\w]{32}\.(%s)', implode('|', self::$supportedFormats));
+        $regexpPattern = $regexpPattern ?: sprintf('[\d\w]{32}_[\d\w]{32}\.(%s)', implode('|', self::SUPPORTED_FORMATS));
 
         return (new Folder($this->getPath()))->find($regexpPattern, $sort);
     }
@@ -95,7 +95,7 @@ class ThumbManager
      */
     public function get($path, $sort = false)
     {
-        $regexpPattern = sprintf('%s_[\d\w]{32}\.(%s)', md5($this->resolveFilePath($path)), implode('|', self::$supportedFormats));
+        $regexpPattern = sprintf('%s_[\d\w]{32}\.(%s)', md5($this->resolveFilePath($path)), implode('|', self::SUPPORTED_FORMATS));
 
         return $this->_find($regexpPattern, $sort);
     }
