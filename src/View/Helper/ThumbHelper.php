@@ -60,7 +60,6 @@ class ThumbHelper extends Helper
     {
         list($path, $params, $options) = $params + [null, [], []];
         is_true_or_fail($path, __d('thumber', 'Thumbnail path is missing'), InvalidArgumentException::class);
-
         $url = $this->runUrlMethod($name, $path, $params, $options);
 
         return $this->isUrlMethod($name) ? $url : $this->Html->image($url, $options);
@@ -78,7 +77,7 @@ class ThumbHelper extends Helper
      */
     protected function isUrlMethod($name)
     {
-        return substr($name, -3) === 'Url';
+        return string_ends_with($name, 'Url');
     }
 
     /**
@@ -97,8 +96,6 @@ class ThumbHelper extends Helper
     protected function runUrlMethod($name, $path, array $params = [], array $options = [])
     {
         $name = $this->isUrlMethod($name) ? substr($name, 0, -3) : $name;
-
-        //Sets default parameters and options
         $params += ['format' => 'jpg', 'height' => null, 'width' => null];
         $options += ['fullBase' => true];
 

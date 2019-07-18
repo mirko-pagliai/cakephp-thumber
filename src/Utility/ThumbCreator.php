@@ -81,7 +81,6 @@ class ThumbCreator
      * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
-     * @return \Thumber\Utility\ThumbCreator
      * @uses $ImageManager
      * @uses $arguments
      * @uses $driver
@@ -93,8 +92,6 @@ class ThumbCreator
         $this->ImageManager = new ImageManager(['driver' => $this->driver]);
         $this->path = $this->resolveFilePath($path);
         $this->arguments[] = $this->path;
-
-        return $this;
     }
 
     /**
@@ -154,7 +151,7 @@ class ThumbCreator
      */
     public function getUrl($fullBase = true)
     {
-        is_true_or_fail(!empty($this->target), __d(
+        is_true_or_fail($this->target, __d(
             'thumber',
             'Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked',
             'save()'
@@ -180,8 +177,6 @@ class ThumbCreator
     {
         $heigth = $heigth ?: $width;
         $width = $width ?: $heigth;
-
-        //Sets default options
         $options += ['x' => null, 'y' => null];
 
         //Adds arguments
@@ -211,8 +206,6 @@ class ThumbCreator
     {
         $heigth = $heigth ?: $width;
         $width = $width ?: $heigth;
-
-        //Sets default options
         $options += ['position' => 'center', 'upsize' => true];
 
         //Adds arguments
@@ -242,7 +235,6 @@ class ThumbCreator
      */
     public function resize($width = null, $heigth = null, array $options = [])
     {
-        //Sets default options
         $options += ['aspectRatio' => true, 'upsize' => true];
 
         //Adds arguments
@@ -254,7 +246,6 @@ class ThumbCreator
                 if ($options['aspectRatio']) {
                     $constraint->aspectRatio();
                 }
-
                 if ($options['upsize']) {
                     $constraint->upsize();
                 }
@@ -281,7 +272,6 @@ class ThumbCreator
      */
     public function resizeCanvas($width, $heigth = null, array $options = [])
     {
-        //Sets default options
         $options += ['anchor' => 'center', 'relative' => false, 'bgcolor' => '#ffffff'];
 
         //Adds arguments
