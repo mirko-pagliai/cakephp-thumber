@@ -32,7 +32,7 @@ class ThumbCreatorTest extends TestCase
     public function testConstructNoExistingFile()
     {
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `' . rtr(WWW_ROOT) . 'img' . DS . 'noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `' . add_slash_term(rtr(WWW_ROOT)) . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
@@ -44,7 +44,7 @@ class ThumbCreatorTest extends TestCase
     {
         Plugin::load('TestPlugin');
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `' . rtr(Plugin::path('TestPlugin')) . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `' . add_slash_term(rtr(Plugin::path('TestPlugin'))) . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 

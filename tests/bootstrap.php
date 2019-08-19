@@ -97,7 +97,7 @@ Cache::config([
 ]);
 
 if (!getenv('THUMBER_DRIVER')) {
-    putenv('THUMBER_DRIVER=imagick');
+    putenv('THUMBER_DRIVER=' . (extension_loaded('imagick') ? 'imagick' : 'gd'));
 }
 
 Configure::write('Thumber', [
