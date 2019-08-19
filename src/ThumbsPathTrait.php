@@ -53,15 +53,13 @@ trait ThumbsPathTrait
         //  relative to `APP/webroot/img/`
         if (!Folder::isAbsolute($path)) {
             $pluginSplit = pluginSplit($path);
-
-            //Note that using `pluginSplit()` is not sufficient, because
-            //  `$path` may still contain a dot
-            $path = WWW_ROOT . 'img' . DS . $path;
-            if (!empty($pluginSplit[0]) && in_array($pluginSplit[0], CorePlugin::loaded())) {
-                $path = CorePlugin::path($pluginSplit[0]) . 'webroot' . DS . 'img' . DS . $pluginSplit[1];
+            $www = add_slash_term(WWW_ROOT);
+            if ($pluginSplit[0] && in_array($pluginSplit[0], CorePlugin::loaded())) {
+                $www = add_slash_term(CorePlugin::path($pluginSplit[0])) . 'webroot' . DS;
+                $path = $pluginSplit[1];
             }
+            $path = $www . 'img' . DS . $path;
         }
-
         is_readable_or_fail($path);
 
         return $path;
