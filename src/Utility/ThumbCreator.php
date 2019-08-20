@@ -15,7 +15,6 @@ namespace Thumber\Utility;
 
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
 use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
@@ -319,7 +318,7 @@ class ThumbCreator
             $options['format'] = $optionsFromTarget['format'];
         }
 
-        $target = Folder::isAbsolute($target) ? $target : $this->getPath($target);
+        $target = is_absolute($target) ? $target : $this->getPath($target);
         $File = new File($target);
 
         //Creates the thumbnail, if this does not exist

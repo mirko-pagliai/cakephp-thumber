@@ -13,7 +13,6 @@
 namespace Thumber\TestSuite;
 
 use Cake\Core\Configure;
-use Cake\Filesystem\Folder;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
@@ -31,7 +30,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function tearDown()
     {
-        @unlink_recursive(Configure::readOrFail('Thumber.target'));
+        unlink_recursive(Configure::readOrFail('Thumber.target'));
 
         parent::tearDown();
     }
@@ -72,7 +71,7 @@ abstract class TestCase extends BaseTestCase
      */
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
-        $expected = Folder::isAbsolute($expected) ? $expected : Configure::read('Thumber.comparingDir') . $expected;
+        $expected = is_absolute($expected) ? $expected : Configure::read('Thumber.comparingDir') . $expected;
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
 
