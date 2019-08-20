@@ -13,6 +13,7 @@
 namespace Thumber\TestSuite;
 
 use Cake\Core\Configure;
+use Exception;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
@@ -30,7 +31,11 @@ abstract class TestCase extends BaseTestCase
      */
     public function tearDown()
     {
-        unlink_recursive(Configure::readOrFail('Thumber.target'));
+        try {
+            unlink_recursive(Configure::readOrFail('Thumber.target'));
+        } catch (Exception $e) {
+
+        }
 
         parent::tearDown();
     }
