@@ -11,23 +11,29 @@ matrix:
   fast_finish: true
 
   include:
+    - php: 5.6
+      env: dependencies=lowest
+    - php: 7.0
+      env: dependencies=lowest
+    - php: 7.1
+      env: dependencies=lowest
+    - php: 7.2
+      env: dependencies=lowest
+    - php: 7.3
+      env: dependencies=lowest
     - php: 7.0
       env: PHPCS=1
-
     - php: 7.0
       env: THUMBER_DRIVER=gd
-
     - php: 7.0
       env: COVERAGE=1
 
-    - php: 7.0
-      env: CAKEPHP_VERSION="3.7.*"
-
 install:
   - printf "\n" | pecl install imagick
-  - composer self-update
+  - composer self-update -q
   - composer install --prefer-dist --no-interaction
-  - if [[ ! -z "$CAKEPHP_VERSION" ]]; then composer require --update-with-dependencies cakephp/cakephp:${CAKEPHP_VERSION}; fi
+  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest -n; fi;
+  - composer show -i
 
 script:
   - if [[ $PHPCS != '1' && $COVERAGE != '1' ]]; then vendor/bin/phpunit --exclude-group imageEquals; fi
