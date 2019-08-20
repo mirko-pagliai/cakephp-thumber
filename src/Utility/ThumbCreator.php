@@ -14,7 +14,6 @@
 namespace Thumber\Utility;
 
 use Cake\Core\Configure;
-use Cake\Filesystem\File;
 use Cake\Routing\Router;
 use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
@@ -319,10 +318,9 @@ class ThumbCreator
         }
 
         $target = is_absolute($target) ? $target : $this->getPath($target);
-        $File = new File($target);
 
         //Creates the thumbnail, if this does not exist
-        if (!$File->exists()) {
+        if (!file_exists($target)) {
             $imageInstance = $this->getImageInstance();
 
             //Calls each callback
@@ -334,11 +332,10 @@ class ThumbCreator
             $imageInstance->destroy();
 
             is_true_or_fail(
-                $File->Folder->pwd() && $File->write($content),
+                create_file($target, $content),
                 __d('thumber', 'Unable to create file `{0}`', rtr($target)),
                 RuntimeException::class
             );
-            $File->close();
         }
 
         //Resets arguments and callbacks

@@ -13,7 +13,6 @@
  */
 namespace Thumber\Utility;
 
-use Cake\Filesystem\File;
 use Symfony\Component\Finder\Finder;
 use Thumber\ThumbsPathTrait;
 
@@ -40,7 +39,7 @@ class ThumbManager
         $count = 0;
 
         foreach ($filenames as $filename) {
-            if (!(new File($this->getPath($filename)))->delete()) {
+            if (!@unlink($this->getPath($filename))) {
                 return false;
             }
 
