@@ -34,7 +34,6 @@ abstract class TestCase extends BaseTestCase
         try {
             unlink_recursive(Configure::readOrFail('Thumber.target'));
         } catch (Exception $e) {
-
         }
 
         parent::tearDown();
