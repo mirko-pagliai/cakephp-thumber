@@ -89,6 +89,11 @@ class ThumbManagerTest extends TestCase
      */
     public function testGetAll()
     {
-        $this->assertCount(3, $this->ThumbManager->getAll());
+        $result = $this->ThumbManager->getAll();
+        $resultWithSort = $this->ThumbManager->getAll(true);
+        $this->assertCount(3, $result);
+        $this->assertCount(3, $resultWithSort);
+        $this->assertEquals($result, $resultWithSort);
+        $this->assertNotSame($result, $resultWithSort);
     }
 }
