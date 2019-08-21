@@ -94,6 +94,7 @@ class ThumbManagerTest extends TestCase
         $this->assertCount(3, $result);
         $this->assertCount(3, $resultWithSort);
         $this->assertEquals($result, $resultWithSort);
+        $this->skipIf(IS_WIN);
         $this->assertNotSame($result, $resultWithSort);
     }
 }
