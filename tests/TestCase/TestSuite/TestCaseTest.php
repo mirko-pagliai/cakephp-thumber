@@ -22,6 +22,16 @@ use Thumber\Utility\ThumbManager;
 class TestCaseTest extends TestCase
 {
     /**
+     * Test for `tearDown()` method
+     * @test
+     */
+    public function testTearDown()
+    {
+        Configure::delete('Thumber.target');
+        $this->assertNull(parent::tearDown());
+    }
+
+    /**
      * Test for `assertImageFileEquals()` method
      * @ŧest
      */

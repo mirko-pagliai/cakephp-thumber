@@ -166,19 +166,6 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
-     * Test for `save()` method, using the `target` option with a no existing
-     *  directory target
-     * @test
-     */
-    public function testSaveInvalidTargetDir()
-    {
-        $target = TMP . 'noExistingDir' . DS . 'thumb.jpg';
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unable to create file `' . $target . '`');
-        $this->getThumbCreatorInstanceWithSave(compact('target'));
-    }
-
-    /**
      * Test for `save()` method, without a valid method called before
      * @test
      */

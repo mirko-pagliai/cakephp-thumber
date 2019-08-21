@@ -13,8 +13,7 @@
  */
 namespace Thumber\Utility;
 
-use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
+use Symfony\Component\Finder\Finder;
 use Thumber\ThumbsPathTrait;
 
 /**
@@ -40,7 +39,7 @@ class ThumbManager
         $count = 0;
 
         foreach ($filenames as $filename) {
-            if (!(new File($this->getPath($filename)))->delete()) {
+            if (!@unlink($this->getPath($filename))) {
                 return false;
             }
 
@@ -52,15 +51,20 @@ class ThumbManager
 
     /**
      * Internal method to find thumbnails
-     * @param string|null $regexpPattern `preg_match()` pattern
+     * @param string|null $pattern A pattern (a regexp, a glob, or a string)
      * @param bool $sort Whether results should be sorted
      * @return array
      */
-    protected function _find($regexpPattern = null, $sort = false)
+    protected function _find($pattern = null, $sort = false)
     {
-        $regexpPattern = $regexpPattern ?: sprintf('[\d\w]{32}_[\d\w]{32}\.(%s)', implode('|', self::SUPPORTED_FORMATS));
+        $pattern = $pattern ?: sprintf('/[\d\w]{32}_[\d\w]{32}\.(%s)$/', implode('|', self::SUPPORTED_FORMATS));
+        $finder = (new Finder())->files()->name($pattern)->in($this->getPath());
 
-        return (new Folder($this->getPath()))->find($regexpPattern, $sort);
+        if ($sort) {
+            $finder = $finder->sortByName();
+        }
+
+        return objects_map(iterator_to_array($finder), 'getFilename');
     }
 
     /**
@@ -95,9 +99,9 @@ class ThumbManager
      */
     public function get($path, $sort = false)
     {
-        $regexpPattern = sprintf('%s_[\d\w]{32}\.(%s)', md5($this->resolveFilePath($path)), implode('|', self::SUPPORTED_FORMATS));
+        $pattern = sprintf('/%s_[\d\w]{32}\.(%s)$/', md5($this->resolveFilePath($path)), implode('|', self::SUPPORTED_FORMATS));
 
-        return $this->_find($regexpPattern, $sort);
+        return $this->_find($pattern, $sort);
     }
 
     /**
