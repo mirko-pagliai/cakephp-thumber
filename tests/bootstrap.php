@@ -16,6 +16,7 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Routing\DispatcherFactory;
 
+session_start();
 ini_set('intl.default_locale', 'en_US');
 
 require dirname(__DIR__) . '/vendor/autoload.php';

@@ -15,7 +15,6 @@ namespace Thumber;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin as CorePlugin;
-use Cake\Filesystem\Folder;
 
 /**
  * This trait provides some methods to get and resolve thumbnails paths.
@@ -51,7 +50,7 @@ trait ThumbsPathTrait
 
         //If it a relative path, it can be a file from a plugin or a file
         //  relative to `APP/webroot/img/`
-        if (!Folder::isAbsolute($path)) {
+        if (!is_absolute($path)) {
             $pluginSplit = pluginSplit($path);
             $www = add_slash_term(WWW_ROOT);
             if ($pluginSplit[0] && in_array($pluginSplit[0], CorePlugin::loaded())) {

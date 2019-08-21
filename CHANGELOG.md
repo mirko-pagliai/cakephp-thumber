@@ -1,7 +1,9 @@
 # 1.x branch
 ## 1.7 branch
 ### 1.7.5
-* fixed little bug for `ThumbsPathTrait::resolveFilePath()` method.
+* fixed little bug for `ThumbsPathTrait::resolveFilePath()` method;
+* added tests for lower dependencies;
+* no longer uses `File` and `Folder` classes.
 
 ### 1.7.4
 * little fixes.
