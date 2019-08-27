@@ -96,7 +96,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function assertThumbPath($path, $message = '')
     {
-        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote($this->getPath() . DS, '/'));
+        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote($this->getPath(), '/'));
         self::assertRegExp($regex, $path, $message);
     }
 

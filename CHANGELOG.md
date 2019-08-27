@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.7 branch
+### 1.7.6
+* fixed little bug for `ThumbsPathTrait::getPath()` method.
+
 ### 1.7.5
 * fixed little bug for `ThumbsPathTrait::resolveFilePath()` method;
 * added tests for lower dependencies;

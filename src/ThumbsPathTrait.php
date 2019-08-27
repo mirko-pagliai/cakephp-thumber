@@ -31,9 +31,7 @@ trait ThumbsPathTrait
      */
     protected function getPath($file = null)
     {
-        $path = Configure::readOrFail('Thumber.target');
-
-        return $file ? $path . DS . $file : $path;
+        return add_slash_term(Configure::readOrFail('Thumber.target')) . $file;
     }
 
     /**
