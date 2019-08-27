@@ -32,7 +32,7 @@ abstract class TestCase extends BaseTestCase
     public function tearDown()
     {
         try {
-            unlink_recursive(Configure::readOrFail('Thumber.target'));
+            unlink_recursive($this->getPath());
         } catch (Exception $e) {
         }
 
@@ -55,12 +55,13 @@ abstract class TestCase extends BaseTestCase
     /**
      * Internal method to create some thumbs
      * @return void
+     * @uses getThumbCreatorInstance()
      */
     protected function createSomeThumbs()
     {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
-        (new ThumbCreator('400x400.png'))->resize(200)->save();
+        $this->getThumbCreatorInstance('400x400.jpg')->resize(200)->save();
+        $this->getThumbCreatorInstance('400x400.jpg')->resize(300)->save();
+        $this->getThumbCreatorInstance('400x400.png')->resize(200)->save();
     }
 
     /**
@@ -96,7 +97,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function assertThumbPath($path, $message = '')
     {
-        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote($this->getPath(), '/'));
+        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote($this->getPath(), DS));
         self::assertRegExp($regex, $path, $message);
     }
 
