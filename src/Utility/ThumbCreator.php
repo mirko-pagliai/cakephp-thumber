@@ -328,14 +328,9 @@ class ThumbCreator
                 call_user_func($callback, $imageInstance);
             }
 
-            $content = $imageInstance->encode($options['format'], $options['quality']);
+            $success = create_file($target, $imageInstance->encode($options['format'], $options['quality']));
             $imageInstance->destroy();
-
-            is_true_or_fail(
-                create_file($target, $content),
-                __d('thumber', 'Unable to create file `{0}`', rtr($target)),
-                RuntimeException::class
-            );
+            is_true_or_fail($success, __d('thumber', 'Unable to create file `{0}`', rtr($target)), RuntimeException::class);
         }
 
         //Resets arguments and callbacks
