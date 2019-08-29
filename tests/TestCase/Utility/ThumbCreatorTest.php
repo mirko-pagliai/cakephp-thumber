@@ -13,11 +13,11 @@
 namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Intervention\Image\Exception\NotReadableException as InterventionNotReadableException;
 use Intervention\Image\ImageManager;
 use InvalidArgumentException;
-use RuntimeException;
+use MeTools\Core\Plugin;
+use PhpThumber\Exception\UnsupportedImageTypeException;
 use Thumber\TestSuite\TestCase;
 use Tools\Exception\NotReadableException;
 
@@ -33,6 +33,7 @@ class ThumbCreatorTest extends TestCase
     public function testConstructNoExistingFile()
     {
         $this->expectException(NotReadableException::class);
+        $this->expectExceptionMessage('File or directory `' . rtr(WWW_ROOT) . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
@@ -44,6 +45,7 @@ class ThumbCreatorTest extends TestCase
     {
         $this->loadPlugins(['TestPlugin']);
         $this->expectException(NotReadableException::class);
+        $this->expectExceptionMessage('File or directory `' . rtr(Plugin::path('TestPlugin')) . DS . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 
@@ -53,7 +55,7 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetImageInstanceUnsupportedImageType()
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(UnsupportedImageTypeException::class);
         $this->expectExceptionMessage('Image type `image/jpeg` is not supported by this driver');
         $exception = new InterventionNotReadableException('Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.');
         $thumbCreator = $this->getThumbCreatorInstance();

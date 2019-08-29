@@ -17,22 +17,16 @@ use Cake\Core\Configure;
 if (!Configure::check('Thumber.driver')) {
     Configure::write('Thumber.driver', 'imagick');
 }
+if (!defined('THUMBER_DRIVER')) {
+    define('THUMBER_DRIVER', Configure::read('Thumber.driver'));
+}
 
 //Default thumbnails directory
 if (!Configure::check('Thumber.target')) {
     Configure::write('Thumber.target', TMP . 'thumbs');
 }
-
-//Checks for driver
-$driver = Configure::read('Thumber.driver');
-if (!in_array($driver, ['imagick', 'gd'])) {
-    trigger_error(sprintf('The driver `%s` is not supported', $driver), E_USER_ERROR);
+if (!defined('THUMBER_TARGET')) {
+    define('THUMBER_TARGET', Configure::read('Thumber.target'));
 }
 
-//Checks for target directory
-$target = Configure::read('Thumber.target');
-@mkdir($target, 0777, true);
-
-if (!is_writeable($target)) {
-    trigger_error(sprintf('Directory `%s` not writeable', $target), E_USER_ERROR);
-}
+require_once ROOT . 'vendor' . DS . 'mirko-pagliai' . DS . 'php-thumber' . DS . 'config' . DS . 'bootstrap.php';

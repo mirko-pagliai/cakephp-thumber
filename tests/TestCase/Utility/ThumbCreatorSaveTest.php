@@ -12,11 +12,13 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use BadMethodCallException;
 use Cake\Core\Configure;
 use Intervention\Image\Exception\InvalidArgumentException;
 use Intervention\Image\Exception\NotSupportedException;
-use RuntimeException;
 use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbCreator;
+use Tools\Exception\NotWritableException;
 
 /**
  * ThumbCreatorSaveTest class
@@ -60,15 +62,22 @@ class ThumbCreatorSaveTest extends TestCase
             $this->assertEquals($this->getPath('image.' . $extension), $thumb);
             $this->assertFileMime($expectedMimetype, $thumb);
         }
+    }
 
-        //With an invalid file as input.
-        $expectExceptionMessage = 'Unable to read image from file `tests/test_app/config/routes.php`';
-        if (Configure::readOrFail('Thumber.driver') != 'imagick') {
-            $expectExceptionMessage = 'Image type `text/x-php` is not supported by this driver';
-        }
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage($expectExceptionMessage);
-        $this->getThumbCreatorInstanceWithSave(APP . 'config' . DS . 'routes.php');
+    /**
+     * Test for `save()` method, if unable to create file
+     * @test
+     */
+    public function testSaveUnableToCreateFile()
+    {
+        $this->expectException(NotWritableException::class);
+        $this->expectExceptionMessage('Unable to create file ``');
+        $ThumbCreator = $this->getMockBuilder(ThumbCreator::class)
+            ->setConstructorArgs([THUMBER_EXAMPLE_DIR . '400x400.jpg'])
+            ->setMethods(['getPath'])
+            ->getMock();
+        $ThumbCreator->method('getPath')->willReturn(null);
+        $ThumbCreator->resize(200)->save();
     }
 
     /**
@@ -171,7 +180,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithoutCallbacks()
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('No valid method called before the `save` method');
         $this->getThumbCreatorInstance()->save();
     }

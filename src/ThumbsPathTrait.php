@@ -13,25 +13,16 @@
  */
 namespace Thumber;
 
-use Cake\Core\Configure;
 use Cake\Core\Plugin as CorePlugin;
+use PhpThumber\ThumbsPathTrait as PhpThumberThumbsPathTrait;
 
 /**
  * This trait provides some methods to get and resolve thumbnails paths.
  */
 trait ThumbsPathTrait
 {
-    /**
-     * Gets a path for a thumbnail.
-     *
-     * Called with the `$file` argument, returns the file absolute path.
-     * Otherwise, called with `null`, returns the path of the target directory.
-     * @param string|null $file File
-     * @return string
-     */
-    protected function getPath($file = null)
-    {
-        return add_slash_term(Configure::readOrFail('Thumber.target')) . $file;
+    use PhpThumberThumbsPathTrait {
+        PhpThumberThumbsPathTrait::resolveFilePath as parentResolveFilePath;
     }
 
     /**
@@ -41,24 +32,18 @@ trait ThumbsPathTrait
      */
     protected function resolveFilePath($path)
     {
-        //Returns, if it's a remote file
-        if (is_url($path)) {
-            return $path;
-        }
-
         //If it a relative path, it can be a file from a plugin or a file
         //  relative to `APP/webroot/img/`
         if (!is_absolute($path)) {
             $pluginSplit = pluginSplit($path);
-            $www = add_slash_term(WWW_ROOT);
+            $www = WWW_ROOT;
             if ($pluginSplit[0] && in_array($pluginSplit[0], CorePlugin::loaded())) {
-                $www = add_slash_term(CorePlugin::path($pluginSplit[0])) . 'webroot' . DS;
+                $www = add_slash_term(CorePlugin::path($pluginSplit[0])) . 'webroot';
                 $path = $pluginSplit[1];
             }
-            $path = $www . 'img' . DS . $path;
+            $path = add_slash_term($www) . 'img' . DS . $path;
         }
-        is_readable_or_fail($path);
 
-        return $path;
+        return $this->parentResolveFilePath($path);
     }
 }

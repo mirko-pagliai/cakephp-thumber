@@ -12,9 +12,8 @@
  */
 namespace Thumber\Test\TestCase\TestSuite;
 
-use Cake\Core\Configure;
+use Exception;
 use Thumber\TestSuite\TestCase;
-use Thumber\Utility\ThumbManager;
 
 /**
  * TestCaseTest class
@@ -27,31 +26,11 @@ class TestCaseTest extends TestCase
      */
     public function testTearDown()
     {
-        Configure::delete('Thumber.target');
-        $this->assertNull(parent::tearDown());
-    }
+        $test = $this->getMockBuilder(TestCaseTest::class)
+            ->setMethods(['getPath'])
+            ->getMock();
 
-    /**
-     * Test for `assertImageFileEquals()` method
-     * @ŧest
-     */
-    public function testAssertImageFileEquals()
-    {
-        $original = Configure::readOrFail('Thumber.comparingDir') . 'resize_w200_h200.jpg';
-        $copy = tempnam(TMP, $original);
-        copy($original, $copy);
-        $this->assertImageFileEquals(Configure::readOrFail('Thumber.comparingDir') . 'resize_w200_h200.jpg', $copy);
-        $this->assertImageFileEquals('resize_w200_h200.jpg', $copy);
-    }
-
-    /**
-     * Test for `assertThumbPath()` method
-     * @ŧest
-     */
-    public function testAssertThumbPath()
-    {
-        foreach (ThumbManager::SUPPORTED_FORMATS as $extension) {
-            $this->assertThumbPath($this->getPath(md5(time()) . '_' . md5(time()) . '.' . $extension));
-        }
+        $test->method('getPath')->willThrowException(new Exception);
+        $this->assertNull($test->tearDown());
     }
 }
