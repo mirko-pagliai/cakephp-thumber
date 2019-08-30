@@ -18,6 +18,8 @@ use Intervention\Image\Exception\InvalidArgumentException;
 use Intervention\Image\Exception\NotSupportedException;
 use RuntimeException;
 use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbCreator;
+use Tools\Exception\NotWritableException;
 
 /**
  * ThumbCreatorSaveTest class
@@ -107,6 +109,22 @@ class ThumbCreatorSaveTest extends TestCase
         sleep(1);
         $newTime = filemtime($this->getThumbCreatorInstance()->resize(200)->save());
         $this->assertNotEquals($time, $newTime);
+    }
+
+    /**
+     * Test for `save()` method, if unable to create file
+     * @test
+     */
+    public function testSaveUnableToCreateFile()
+    {
+        $this->expectException(NotWritableException::class);
+        $this->expectExceptionMessage('Unable to create file ``');
+        $ThumbCreator = $this->getMockBuilder(ThumbCreator::class)
+            ->setConstructorArgs(['400x400.jpg'])
+            ->setMethods(['getPath'])
+            ->getMock();
+        $ThumbCreator->method('getPath')->willReturn(null);
+        $ThumbCreator->resize(200)->save();
     }
 
     /**
