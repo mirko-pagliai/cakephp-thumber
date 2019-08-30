@@ -131,7 +131,6 @@ class ThumbCreator
             $imageInstance = $this->ImageManager->make($this->path);
         } catch (NotReadableException $e) {
             $message = __d('thumber', 'Unable to read image from file `{0}`', rtr($this->path));
-
             if ($e->getMessage() == 'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.') {
                 $message = __d('thumber', 'Image type `{0}` is not supported by this driver', mime_content_type($this->path));
             }
@@ -306,7 +305,7 @@ class ThumbCreator
     {
         is_true_or_fail(
             $this->callbacks,
-            __d('thumber', 'No valid method called before the `{0}` method', 'save'),
+            __d('thumber', 'No valid method called before the `{0}` method', 'save()'),
             BadMethodCallException::class
         );
 
