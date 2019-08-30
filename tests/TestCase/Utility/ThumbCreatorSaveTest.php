@@ -12,6 +12,7 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use BadMethodCallException;
 use Cake\Core\Configure;
 use Intervention\Image\Exception\InvalidArgumentException;
 use Intervention\Image\Exception\NotSupportedException;
@@ -171,7 +172,7 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithoutCallbacks()
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('No valid method called before the `save` method');
         $this->getThumbCreatorInstance()->save();
     }
