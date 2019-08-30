@@ -12,14 +12,18 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use BadMethodCallException;
 use Cake\Core\Configure;
 use Intervention\Image\Exception\NotReadableException as InterventionNotReadableException;
 use Intervention\Image\ImageManager;
 use InvalidArgumentException;
 use MeTools\Core\Plugin;
+use PhpThumber\Exception\NotReadableImageException;
 use PhpThumber\Exception\UnsupportedImageTypeException;
 use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbCreator;
 use Tools\Exception\NotReadableException;
+use Tools\Exception\NotWritableException;
 
 /**
  * ThumbCreatorTest class
@@ -67,6 +71,23 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
+     * Test for `getImageInstance()` method, with a not readable image
+     * @ŧest
+     */
+    public function testGetImageInstanceNotReadableImageException()
+    {
+        $expectedException = NotReadableImageException::class;
+        $expectedExceptionMessage = 'Unable to read image from file `tests/bootstrap.php`';
+        if (THUMBER_DRIVER != 'imagick') {
+            $expectedException = UnsupportedImageTypeException::class;
+            $expectedExceptionMessage = 'Image type `text/x-php` is not supported by this driver';
+        }
+        $this->expectException($expectedException);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->getThumbCreatorInstanceWithSave(TESTS . 'bootstrap.php');
+    }
+
+    /**
      * Test for `getUrl()` method
      * @ŧest
      */
@@ -92,25 +113,36 @@ class ThumbCreatorTest extends TestCase
      */
     public function testPath()
     {
-        $file = WWW_ROOT . 'img' . DS . '400x400.jpg';
-        $thumber = $this->getThumbCreatorInstance();
-        $this->assertEquals($this->getProperty($thumber, 'path'), $file);
-
-        $thumber = $this->getThumbCreatorInstance($file);
-        $this->assertEquals($this->getProperty($thumber, 'path'), $file);
-
-        //From plugin
         $this->loadPlugins(['TestPlugin']);
-        $file = Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . '400x400.png';
-        $thumber = $this->getThumbCreatorInstance('TestPlugin.400x400.png');
-        $this->assertEquals($this->getProperty($thumber, 'path'), $file);
 
-        $thumber = $this->getThumbCreatorInstance($file);
-        $this->assertEquals($this->getProperty($thumber, 'path'), $file);
+        foreach ([
+            WWW_ROOT . 'img' . DS . '400x400.jpg',
+            Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . '400x400.png',
+        ] as $file) {
+            $thumber = $this->getThumbCreatorInstance($file);
+            $this->assertEquals($this->getProperty($thumber, 'path'), $file);
+        }
+    }
 
-        //From remote
-        $file = 'http://example.com.png';
-        $thumber = $this->getThumbCreatorInstance($file);
-        $this->assertEquals($this->getProperty($thumber, 'path'), $file);
+    /**
+     * Test for `save()` method
+     * @test
+     */
+    public function testSave()
+    {
+        //When unable to create the file
+        $this->assertException(BadMethodCallException::class, function () {
+            $this->getThumbCreatorInstance()->save();
+        }, 'No valid method called before the `save()` method');
+
+        //Without a valid method called before
+        $ThumbCreator = $this->getMockBuilder(ThumbCreator::class)
+            ->setConstructorArgs([THUMBER_EXAMPLE_DIR . '400x400.jpg'])
+            ->setMethods(['getPath'])
+            ->getMock();
+        $ThumbCreator->method('getPath')->willReturn(null);
+        $this->assertException(NotWritableException::class, function () use ($ThumbCreator) {
+            $ThumbCreator->resize(200)->save();
+        }, 'Unable to create file ``');
     }
 }
