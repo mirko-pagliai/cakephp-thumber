@@ -19,7 +19,7 @@ use InvalidArgumentException;
 use PhpThumber\Exception\NotReadableImageException;
 use PhpThumber\Exception\UnsupportedImageTypeException;
 use PhpThumber\ThumbCreator as PhpThumberThumbCreator;
-use Thumber\ThumbsPathTrait;
+use Thumber\Utility\ThumbManager;
 use Tools\Exception\NotWritableException;
 
 /**
@@ -30,8 +30,6 @@ use Tools\Exception\NotWritableException;
  */
 class ThumbCreator extends PhpThumberThumbCreator
 {
-    use ThumbsPathTrait;
-
     /**
      * Construct.
      * It sets the file path and extension.
@@ -42,7 +40,7 @@ class ThumbCreator extends PhpThumberThumbCreator
      */
     public function __construct($path)
     {
-        parent::__construct($this->resolveFilePath($path));
+        parent::__construct(ThumbManager::resolveFilePath($path));
     }
 
     /**

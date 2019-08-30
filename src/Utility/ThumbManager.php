@@ -13,15 +13,34 @@
  */
 namespace Thumber\Utility;
 
+use Cake\Core\Plugin;
 use PhpThumber\ThumbManager as PhpThumberThumbManager;
-use Thumber\ThumbsPathTrait;
 
 /**
  * A utility to manage thumbnails
  */
 class ThumbManager extends PhpThumberThumbManager
 {
-    use ThumbsPathTrait;
+    /**
+     * Internal method to resolve a relative path, returning a full path
+     * @param string $path Partial path
+     * @return string
+     */
+    public static function resolveFilePath($path)
+    {
+        //A relative path can be a file from `APP/webroot/img/` or a plugin
+        if (!is_url($path) && !is_absolute($path)) {
+            $pluginSplit = pluginSplit($path);
+            $www = WWW_ROOT;
+            if ($pluginSplit[0] && in_array($pluginSplit[0], Plugin::loaded())) {
+                $www = add_slash_term(Plugin::path($pluginSplit[0])) . 'webroot';
+                $path = $pluginSplit[1];
+            }
+            $path = add_slash_term($www) . 'img' . DS . $path;
+        }
+
+        return $path;
+    }
 
     /**
      * Gets all thumbnails that have been generated from an image path

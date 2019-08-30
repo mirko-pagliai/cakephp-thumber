@@ -136,13 +136,8 @@ class ThumbCreatorTest extends TestCase
         }, 'No valid method called before the `save()` method');
 
         //Without a valid method called before
-        $ThumbCreator = $this->getMockBuilder(ThumbCreator::class)
-            ->setConstructorArgs([THUMBER_EXAMPLE_DIR . '400x400.jpg'])
-            ->setMethods(['getPath'])
-            ->getMock();
-        $ThumbCreator->method('getPath')->willReturn(null);
-        $this->assertException(NotWritableException::class, function () use ($ThumbCreator) {
-            $ThumbCreator->resize(200)->save();
+        $this->assertException(NotWritableException::class, function () {
+            $this->getThumbCreatorInstance()->resize(200)->save(['target' => DS . 'noExisting']);
         }, 'Unable to create file ``');
     }
 }

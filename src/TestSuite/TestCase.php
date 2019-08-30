@@ -15,7 +15,6 @@ namespace Thumber\TestSuite;
 use Exception;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 use PhpThumber\TestSuite\TestTrait as PhpThumberTestTrait;
-use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -23,7 +22,7 @@ use Thumber\Utility\ThumbCreator;
  */
 abstract class TestCase extends BaseTestCase
 {
-    use PhpThumberTestTrait, ThumbsPathTrait;
+    use PhpThumberTestTrait;
 
     /**
      * Called after every test method
@@ -32,7 +31,7 @@ abstract class TestCase extends BaseTestCase
     public function tearDown()
     {
         try {
-            unlink_recursive($this->getPath());
+            unlink_recursive(THUMBER_TARGET);
         } catch (Exception $e) {
         }
 
