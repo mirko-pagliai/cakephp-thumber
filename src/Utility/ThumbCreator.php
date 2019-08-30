@@ -33,6 +33,19 @@ class ThumbCreator extends PhpThumberThumbCreator
     use ThumbsPathTrait;
 
     /**
+     * Construct.
+     * It sets the file path and extension.
+     * @param string $path Path of the image from which to create the
+     *  thumbnail. It can be a relative path from `APP/webroot/img/`, a full
+     *  path or a remote url
+     * @uses resolveFilePath()
+     */
+    public function __construct($path)
+    {
+        parent::__construct($this->resolveFilePath($path));
+    }
+
+    /**
      * Gets an `Image` instance
      * @return \Intervention\Image\Image
      */

@@ -21,20 +21,17 @@ use PhpThumber\ThumbsPathTrait as PhpThumberThumbsPathTrait;
  */
 trait ThumbsPathTrait
 {
-    use PhpThumberThumbsPathTrait {
-        PhpThumberThumbsPathTrait::resolveFilePath as parentResolveFilePath;
-    }
+    use PhpThumberThumbsPathTrait;
 
     /**
-     * Internal method to resolve a partial path, returning a full path
+     * Internal method to resolve a relative path, returning a full path
      * @param string $path Partial path
      * @return string
      */
     protected function resolveFilePath($path)
     {
-        //If it a relative path, it can be a file from a plugin or a file
-        //  relative to `APP/webroot/img/`
-        if (!is_absolute($path)) {
+        //A relative path can be a file from `APP/webroot/img/` or a plugin
+        if (!is_url($path) && !is_absolute($path)) {
             $pluginSplit = pluginSplit($path);
             $www = WWW_ROOT;
             if ($pluginSplit[0] && in_array($pluginSplit[0], CorePlugin::loaded())) {
@@ -44,6 +41,6 @@ trait ThumbsPathTrait
             $path = add_slash_term($www) . 'img' . DS . $path;
         }
 
-        return $this->parentResolveFilePath($path);
+        return $path;
     }
 }

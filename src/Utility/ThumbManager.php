@@ -22,4 +22,16 @@ use Thumber\ThumbsPathTrait;
 class ThumbManager extends PhpThumberThumbManager
 {
     use ThumbsPathTrait;
+
+    /**
+     * Gets all thumbnails that have been generated from an image path
+     * @param string $path Path of the original image
+     * @param bool $sort Whether results should be sorted
+     * @return array
+     * @uses resolveFilePath()
+     */
+    public function get($path, $sort = false)
+    {
+        return parent::get($this->resolveFilePath($path), $sort);
+    }
 }
