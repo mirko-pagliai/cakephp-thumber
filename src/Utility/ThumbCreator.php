@@ -13,6 +13,7 @@
  */
 namespace Thumber\Utility;
 
+use BadMethodCallException;
 use Cake\Routing\Router;
 use Intervention\Image\Exception\NotReadableException;
 use InvalidArgumentException;
@@ -80,7 +81,7 @@ class ThumbCreator extends PhpThumberThumbCreator
         try {
             return parent::save($options);
         } catch (BadMethodCallException $e) {
-            throw new BadMethodCallException(__d('thumber', 'No valid method called before the `{0}` method', 'save'));
+            throw new BadMethodCallException(__d('thumber', 'No valid method called before the `{0}` method', 'save()'));
         } catch (NotWritableException $e) {
             throw new NotWritableException(__d('thumber', 'Unable to create file `{0}`', $e->getFilePath()));
         }

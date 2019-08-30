@@ -12,10 +12,10 @@
  */
 namespace Thumber\Test\TestCase\View\Helper;
 
+use BadMethodCallException;
 use Cake\View\View;
 use Intervention\Image\Exception\InvalidArgumentException as InterventionInvalidArgumentException;
 use InvalidArgumentException;
-use RuntimeException;
 use Thumber\TestSuite\TestCase;
 use Thumber\View\Helper\ThumbHelper;
 
@@ -71,8 +71,8 @@ class ThumbHelperTest extends TestCase
         }
 
         //Calling a no existing method
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Method `Thumber\View\Helper\ThumbHelper::noExisting()` does not exist');
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Method `Thumber\Utility\ThumbCreator::noExisting()` does not exist');
         $this->Thumb->noExisting('400x400.png');
     }
 

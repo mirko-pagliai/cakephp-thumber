@@ -1,6 +1,8 @@
 # 1.x branch
 ## 1.7 branch
 ### 1.7.6
+* `ThumbCreator` can throw a `BadMethodCallException` or a `NotWritableException`;
+* `ThumbHelper` throws a `BadMethodCallException` if a method doesn't exist;
 * fixed little bug for `ThumbsPathTrait::getPath()` method;
 * little fixes.
 

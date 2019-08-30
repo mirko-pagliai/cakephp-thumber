@@ -181,7 +181,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithoutCallbacks()
     {
         $this->expectException(BadMethodCallException::class);
-        $this->expectExceptionMessage('No valid method called before the `save` method');
+        $this->expectExceptionMessage('No valid method called before the `save()` method');
         $this->getThumbCreatorInstance()->save();
     }
 }
