@@ -15,7 +15,6 @@ namespace Thumber\Utility;
 
 use BadMethodCallException;
 use Cake\Routing\Router;
-use Intervention\Image\Exception\NotReadableException;
 use InvalidArgumentException;
 use PhpThumber\Exception\NotReadableImageException;
 use PhpThumber\Exception\UnsupportedImageTypeException;
@@ -46,7 +45,7 @@ class ThumbCreator extends PhpThumberThumbCreator
             throw new UnsupportedImageTypeException($message);
         } catch (NotReadableImageException $e) {
             $message = __d('thumber', 'Unable to read image from file `{0}`', $e->getFilePath());
-            throw new NotReadableException($message);
+            throw new NotReadableImageException($message);
         }
     }
 
