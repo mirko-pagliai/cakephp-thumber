@@ -5,10 +5,9 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/kmo1kmgqg34y4g87?svg=true)](https://ci.appveyor.com/project/mirko-pagliai/cakephp-thumber)
 [![codecov](https://codecov.io/gh/mirko-pagliai/cakephp-thumber/branch/master/graph/badge.svg)](https://codecov.io/gh/mirko-pagliai/cakephp-thumber)
 
-*cakephp-thumber* is a CakePHP plugin to create thumbnails.  
 
-It uses [intervention/image](https://github.com/Intervention/image) and 
-provides:
+*cakephp-thumber* is a CakePHP plugin for creating thumbnails on the fly and it implements a file cache for thumbnails.
+It uses [intervention/image](https://github.com/Intervention/image), working as wrapper and provides:
 * `ThumbCreator`, an utility to create thumbnails;
 * `ThumbHelper`, a convenient helper that allows you to create thumbnails on 
 the fly from your templates.

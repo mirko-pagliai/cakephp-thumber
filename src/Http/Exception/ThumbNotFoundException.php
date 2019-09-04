@@ -12,11 +12,11 @@
  */
 namespace Thumber\Http\Exception;
 
-use RuntimeException;
+use Tools\Exception\FileNotExistsException;
 
 /**
  * ThumbNotFoundException
  */
-class ThumbNotFoundException extends RuntimeException
+class ThumbNotFoundException extends FileNotExistsException
 {
 }

@@ -12,11 +12,14 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
+use BadMethodCallException;
 use Cake\Core\Configure;
 use Intervention\Image\Exception\InvalidArgumentException;
 use Intervention\Image\Exception\NotSupportedException;
 use RuntimeException;
 use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbCreator;
+use Tools\Exception\NotWritableException;
 
 /**
  * ThumbCreatorSaveTest class
@@ -109,6 +112,23 @@ class ThumbCreatorSaveTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, if unable to create file
+     * @requires OS Linux
+     * @test
+     */
+    public function testSaveUnableToCreateFile()
+    {
+        $this->expectException(NotWritableException::class);
+        $this->expectExceptionMessage('Unable to create file `' . DS . 'noExisting`');
+        $ThumbCreator = $this->getMockBuilder(ThumbCreator::class)
+            ->setConstructorArgs(['400x400.jpg'])
+            ->setMethods(['getPath'])
+            ->getMock();
+        $ThumbCreator->method('getPath')->willReturn(DS . 'noExisting');
+        $ThumbCreator->resize(200)->save();
+    }
+
+    /**
      * Test for `save()` method, using the `quality` option
      * @ŧest
      */
@@ -171,8 +191,8 @@ class ThumbCreatorSaveTest extends TestCase
      */
     public function testSaveWithoutCallbacks()
     {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('No valid method called before the `save` method');
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('No valid method called before the `save()` method');
         $this->getThumbCreatorInstance()->save();
     }
 }

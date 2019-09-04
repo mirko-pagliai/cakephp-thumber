@@ -30,9 +30,7 @@ class Plugin extends BasePlugin
      */
     public function console($commands)
     {
-        $commands->add('thumber.clear', ClearCommand::class);
-        $commands->add('thumber.clear_all', ClearAllCommand::class);
-
-        return $commands;
+        return $commands->add('thumber.clear', ClearCommand::class)
+            ->add('thumber.clear_all', ClearAllCommand::class);
     }
 }
