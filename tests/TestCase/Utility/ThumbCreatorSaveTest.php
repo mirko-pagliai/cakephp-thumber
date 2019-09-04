@@ -118,12 +118,12 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveUnableToCreateFile()
     {
         $this->expectException(NotWritableException::class);
-        $this->expectExceptionMessage('Unable to create file ``');
+        $this->expectExceptionMessage('Unable to create file `' . DS . 'noExisting`');
         $ThumbCreator = $this->getMockBuilder(ThumbCreator::class)
             ->setConstructorArgs(['400x400.jpg'])
             ->setMethods(['getPath'])
             ->getMock();
-        $ThumbCreator->method('getPath')->willReturn(null);
+        $ThumbCreator->method('getPath')->willReturn(DS . 'noExisting');
         $ThumbCreator->resize(200)->save();
     }
 
