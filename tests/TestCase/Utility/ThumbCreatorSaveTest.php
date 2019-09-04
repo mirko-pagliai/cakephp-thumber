@@ -113,6 +113,7 @@ class ThumbCreatorSaveTest extends TestCase
 
     /**
      * Test for `save()` method, if unable to create file
+     * @requires OS Linux
      * @test
      */
     public function testSaveUnableToCreateFile()
