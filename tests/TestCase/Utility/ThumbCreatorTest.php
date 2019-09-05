@@ -21,7 +21,6 @@ use MeTools\Core\Plugin;
 use PhpThumber\Exception\NotReadableImageException;
 use PhpThumber\Exception\UnsupportedImageTypeException;
 use Thumber\TestSuite\TestCase;
-use Thumber\Utility\ThumbCreator;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
 
