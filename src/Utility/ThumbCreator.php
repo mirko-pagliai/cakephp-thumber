@@ -16,11 +16,11 @@ namespace Thumber\Utility;
 use BadMethodCallException;
 use Cake\Routing\Router;
 use InvalidArgumentException;
-use PhpThumber\Exception\NotReadableImageException;
-use PhpThumber\Exception\UnsupportedImageTypeException;
-use PhpThumber\ThumbCreator as PhpThumberThumbCreator;
 use Thumber\Utility\ThumbManager;
 use Tools\Exception\NotWritableException;
+use Tools\Thumber\Exception\NotReadableImageException;
+use Tools\Thumber\Exception\UnsupportedImageTypeException;
+use Tools\Thumber\ThumbCreator as BaseThumbCreator;
 
 /**
  * Utility to create a thumb.
@@ -28,7 +28,7 @@ use Tools\Exception\NotWritableException;
  * Please, refer to the `README` file to know how to use the utility and to
  * see examples.
  */
-class ThumbCreator extends PhpThumberThumbCreator
+class ThumbCreator extends BaseThumbCreator
 {
     /**
      * Construct.

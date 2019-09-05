@@ -14,15 +14,15 @@ namespace Thumber\TestSuite;
 
 use Exception;
 use MeTools\TestSuite\TestCase as BaseTestCase;
-use PhpThumber\TestSuite\TestTrait as PhpThumberTestTrait;
 use Thumber\Utility\ThumbCreator;
+use Tools\Thumber\TestSuite\TestTrait;
 
 /**
  * TestCase class
  */
 abstract class TestCase extends BaseTestCase
 {
-    use PhpThumberTestTrait;
+    use TestTrait;
 
     /**
      * Called after every test method
