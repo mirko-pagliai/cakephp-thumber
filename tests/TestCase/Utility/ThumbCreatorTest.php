@@ -18,11 +18,11 @@ use Intervention\Image\Exception\NotReadableException as InterventionNotReadable
 use Intervention\Image\ImageManager;
 use InvalidArgumentException;
 use MeTools\Core\Plugin;
-use PhpThumber\Exception\NotReadableImageException;
-use PhpThumber\Exception\UnsupportedImageTypeException;
 use Thumber\TestSuite\TestCase;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
+use Tools\Thumber\Exception\NotReadableImageException;
+use Tools\Thumber\Exception\UnsupportedImageTypeException;
 
 /**
  * ThumbCreatorTest class

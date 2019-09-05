@@ -14,12 +14,12 @@
 namespace Thumber\Utility;
 
 use Cake\Core\Plugin;
-use PhpThumber\ThumbManager as PhpThumberThumbManager;
+use Tools\Thumber\ThumbManager as BaseThumbManager;
 
 /**
  * A utility to manage thumbnails
  */
-class ThumbManager extends PhpThumberThumbManager
+class ThumbManager extends BaseThumbManager
 {
     /**
      * Internal method to resolve a relative path, returning a full path
