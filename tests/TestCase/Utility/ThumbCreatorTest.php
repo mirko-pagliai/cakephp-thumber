@@ -36,7 +36,7 @@ class ThumbCreatorTest extends TestCase
     public function testConstructNoExistingFile()
     {
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `' . rtr(WWW_ROOT) . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `tests/test_app/webroot/img/noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
@@ -48,7 +48,7 @@ class ThumbCreatorTest extends TestCase
     {
         $this->loadPlugins(['TestPlugin']);
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `' . rtr(Plugin::path('TestPlugin')) . DS . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `tests/test_app/Plugin/TestPlugin/webroot/img/noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 
@@ -135,6 +135,7 @@ class ThumbCreatorTest extends TestCase
         }, 'No valid method called before the `save()` method');
 
         //Without a valid method called before
+        $this->skipIf(IS_WIN);
         $this->assertException(NotWritableException::class, function () {
             $this->getThumbCreatorInstance()->resize(200)->save(['target' => DS . 'noExisting']);
         }, 'Unable to create file ``');
