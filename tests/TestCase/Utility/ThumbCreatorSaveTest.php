@@ -65,12 +65,12 @@ class ThumbCreatorSaveTest extends TestCase
         }
 
         //With an invalid file as input.
-        $expectExceptionMessage = 'Unable to read image from file `tests/test_app/config/routes.php`';
+        $expectMessage = 'Unable to read image from file `tests/test_app/config/routes.php`';
         if (Configure::readOrFail('Thumber.driver') != 'imagick') {
-            $expectExceptionMessage = 'Image type `text/x-php` is not supported by this driver';
+            $expectMessage = 'Image type `text/x-php` is not supported by this driver';
         }
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage($expectExceptionMessage);
+        $this->expectExceptionMessage($expectMessage);
         $this->getThumbCreatorInstanceWithSave(APP . 'config' . DS . 'routes.php');
     }
 
