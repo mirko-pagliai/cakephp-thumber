@@ -321,7 +321,7 @@ class ThumbCreator
             $options['format'] = $optionsFromTarget['format'];
         }
 
-        $target = is_absolute($target) ? $target : $this->getPath($target);
+        $target = (new Filesystem())->isAbsolutePath($target) ? $target : $this->getPath($target);
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
