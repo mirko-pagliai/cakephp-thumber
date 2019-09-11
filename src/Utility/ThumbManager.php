@@ -14,6 +14,7 @@
 namespace Thumber\Utility;
 
 use Cake\Core\Plugin;
+use Symfony\Component\Filesystem\Filesystem;
 use Tools\Thumber\ThumbManager as BaseThumbManager;
 
 /**
@@ -29,7 +30,7 @@ class ThumbManager extends BaseThumbManager
     public static function resolveFilePath($path)
     {
         //A relative path can be a file from `APP/webroot/img/` or a plugin
-        if (!is_url($path) && !is_absolute($path)) {
+        if (!is_url($path) && !(new Filesystem())->isAbsolutePath($path)) {
             $pluginSplit = pluginSplit($path);
             $www = WWW_ROOT;
             if ($pluginSplit[0] && in_array($pluginSplit[0], Plugin::loaded())) {
