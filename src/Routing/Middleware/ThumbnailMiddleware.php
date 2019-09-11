@@ -29,11 +29,10 @@ class ThumbnailMiddleware
      * Serves thumbnail if the request matches one
      * @param \Psr\Http\Message\ServerRequestInterface $request The request
      * @param \Psr\Http\Message\ResponseInterface $response The response
-     * @param callable $next Callback to invoke the next middleware
      * @return \Psr\Http\Message\ResponseInterface A response
      * @throws \Thumber\Http\Exception\ThumbNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
     {
         $file = $this->getPath(base64_decode($request->getParam('basename')));
         is_readable_or_fail($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);

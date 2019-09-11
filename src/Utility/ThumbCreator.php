@@ -13,6 +13,7 @@
  */
 namespace Thumber\Utility;
 
+use BadMethodCallException;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Intervention\Image\Constraint;
@@ -21,7 +22,10 @@ use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use InvalidArgumentException;
 use RuntimeException;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 use Thumber\ThumbsPathTrait;
+use Tools\Exception\NotWritableException;
 
 /**
  * Utility to create a thumb.
@@ -127,7 +131,6 @@ class ThumbCreator
             $imageInstance = $this->ImageManager->make($this->path);
         } catch (NotReadableException $e) {
             $message = __d('thumber', 'Unable to read image from file `{0}`', rtr($this->path));
-
             if ($e->getMessage() == 'Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.') {
                 $message = __d('thumber', 'Image type `{0}` is not supported by this driver', mime_content_type($this->path));
             }
@@ -288,7 +291,8 @@ class ThumbCreator
      * @param array $options Options for saving
      * @return string Thumbnail path
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
-     * @throws \RuntimeException
+     * @throws \BadMethodCallException
+     * @throws \Tools\Exception\NotWritableException
      * @uses getDefaultSaveOptions()
      * @uses getImageInstance()
      * @uses $arguments
@@ -301,23 +305,19 @@ class ThumbCreator
     {
         is_true_or_fail(
             $this->callbacks,
-            __d('thumber', 'No valid method called before the `{0}` method', __FUNCTION__),
-            RuntimeException::class
+            __d('thumber', 'No valid method called before the `{0}` method', 'save()'),
+            BadMethodCallException::class
         );
 
         $options = $this->getDefaultSaveOptions($options);
         $target = $options['target'];
+        $options['format'] = $target ? $this->getDefaultSaveOptions([], $target)['format'] : $options['format'];
 
         if (!$target) {
             $this->arguments[] = [$this->driver, $options['format'], $options['quality']];
-
             $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
-        } else {
-            $optionsFromTarget = $this->getDefaultSaveOptions([], $target);
-            $options['format'] = $optionsFromTarget['format'];
         }
-
-        $target = is_absolute($target) ? $target : $this->getPath($target);
+        $target = (new Filesystem())->isAbsolutePath($target) ? $target : $this->getPath($target);
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
@@ -330,12 +330,11 @@ class ThumbCreator
 
             $content = $imageInstance->encode($options['format'], $options['quality']);
             $imageInstance->destroy();
-
-            is_true_or_fail(
-                create_file($target, $content),
-                __d('thumber', 'Unable to create file `{0}`', rtr($target)),
-                RuntimeException::class
-            );
+            try {
+                (new Filesystem())->dumpFile($target, $content);
+            } catch (IOException $e) {
+                throw new NotWritableException(__d('thumber', 'Unable to create file `{0}`', rtr($target)));
+            }
         }
 
         //Resets arguments and callbacks

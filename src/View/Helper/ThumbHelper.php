@@ -13,9 +13,9 @@
  */
 namespace Thumber\View\Helper;
 
+use BadMethodCallException;
 use Cake\View\Helper;
 use InvalidArgumentException;
-use RuntimeException;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -90,7 +90,7 @@ class ThumbHelper extends Helper
      * @param array $options Array of HTML attributes for the `img` element
      * @return string Thumbnail url
      * @since 1.4.0
-     * @throws \RuntimeException
+     * @throws \BadMethodCallException
      * @uses isUrlMethod()
      */
     protected function runUrlMethod($name, $path, array $params = [], array $options = [])
@@ -99,12 +99,13 @@ class ThumbHelper extends Helper
         $params += ['format' => 'jpg', 'height' => null, 'width' => null];
         $options += ['fullBase' => true];
 
-        $thumber = new ThumbCreator($path);
+        $className = ThumbCreator::class;
         is_true_or_fail(
-            method_exists($thumber, $name),
-            __d('thumber', 'Method `{0}::{1}()` does not exist', get_class($this), $name),
-            RuntimeException::class
+            method_exists($className, $name),
+            __d('thumber', 'Method `{0}::{1}()` does not exist', $className, $name),
+            BadMethodCallException::class
         );
+        $thumber = new $className($path);
         $thumber->$name($params['width'], $params['height'])->save($params);
 
         return $thumber->getUrl($options['fullBase']);

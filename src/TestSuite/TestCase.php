@@ -15,6 +15,7 @@ namespace Thumber\TestSuite;
 use Cake\Core\Configure;
 use Exception;
 use MeTools\TestSuite\TestCase as BaseTestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 
@@ -32,7 +33,7 @@ abstract class TestCase extends BaseTestCase
     public function tearDown()
     {
         try {
-            unlink_recursive(Configure::readOrFail('Thumber.target'));
+            unlink_recursive($this->getPath());
         } catch (Exception $e) {
         }
 
@@ -55,12 +56,13 @@ abstract class TestCase extends BaseTestCase
     /**
      * Internal method to create some thumbs
      * @return void
+     * @uses getThumbCreatorInstance()
      */
     protected function createSomeThumbs()
     {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
-        (new ThumbCreator('400x400.png'))->resize(200)->save();
+        $this->getThumbCreatorInstance('400x400.jpg')->resize(200)->save();
+        $this->getThumbCreatorInstance('400x400.jpg')->resize(300)->save();
+        $this->getThumbCreatorInstance('400x400.png')->resize(200)->save();
     }
 
     /**
@@ -75,7 +77,8 @@ abstract class TestCase extends BaseTestCase
      */
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
-        $expected = is_absolute($expected) ? $expected : Configure::read('Thumber.comparingDir') . $expected;
+        $isAbsolute = (new Filesystem())->isAbsolutePath($expected);
+        $expected = $isAbsolute ? $expected : Configure::read('Thumber.comparingDir') . $expected;
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
 
@@ -96,7 +99,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function assertThumbPath($path, $message = '')
     {
-        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote($this->getPath() . DS, '/'));
+        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote($this->getPath(), DS));
         self::assertRegExp($regex, $path, $message);
     }
 

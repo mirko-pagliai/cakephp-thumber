@@ -5,10 +5,9 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/kmo1kmgqg34y4g87?svg=true)](https://ci.appveyor.com/project/mirko-pagliai/cakephp-thumber)
 [![codecov](https://codecov.io/gh/mirko-pagliai/cakephp-thumber/branch/master/graph/badge.svg)](https://codecov.io/gh/mirko-pagliai/cakephp-thumber)
 
-*cakephp-thumber* is a CakePHP plugin to create thumbnails.  
 
-It uses [intervention/image](https://github.com/Intervention/image) and 
-provides:
+*cakephp-thumber* is a CakePHP plugin for creating thumbnails on the fly and it implements a file cache for thumbnails.
+It uses [intervention/image](https://github.com/Intervention/image), working as wrapper and provides:
 * `ThumbCreator`, an utility to create thumbnails;
 * `ThumbHelper`, a convenient helper that allows you to create thumbnails on 
 the fly from your templates.
@@ -21,13 +20,13 @@ even a coffee is enough! Thank you.
 
 ***
 
-  * [Requirements and supported formats](#requirements-and-supported-formats)
-  * [Installation](#installation)
-  * [Configuration](#configuration)
-    + [Configuration values](#configuration-values)
-  * [How to use](#how-to-use)
-  * [Testing](#testing)
-  * [Versioning](#versioning)
+*   [Requirements and supported formats](#requirements-and-supported-formats)
+*   [Installation](#installation)
+*   [Configuration](#configuration)
+    * [Configuration values](#configuration-values)
+*   [How to use](#how-to-use)
+*   [Testing](#testing)
+*   [Versioning](#versioning)
 
 ## Requirements and supported formats
 *cakephp-thumber* requires GD Library (>=2.0) **or** Imagick PHP extension 
@@ -107,8 +106,8 @@ save thumbnails.
 
 ## How to use
 See our wiki:
-* [How to use the helper](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper)
-* [How to use the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-ThumbCreator-utility)
+*   [How to use the helper](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper)
+*   [How to use the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-ThumbCreator-utility)
 
 And refer to our [API](//mirko-pagliai.github.io/cakephp-thumber).
 
