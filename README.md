@@ -20,13 +20,13 @@ even a coffee is enough! Thank you.
 
 ***
 
-  * [Requirements and supported formats](#requirements-and-supported-formats)
-  * [Installation](#installation)
-  * [Configuration](#configuration)
-    + [Configuration values](#configuration-values)
-  * [How to use](#how-to-use)
-  * [Testing](#testing)
-  * [Versioning](#versioning)
+*   [Requirements and supported formats](#requirements-and-supported-formats)
+*   [Installation](#installation)
+*   [Configuration](#configuration)
+    * [Configuration values](#configuration-values)
+*   [How to use](#how-to-use)
+*   [Testing](#testing)
+*   [Versioning](#versioning)
 
 ## Requirements and supported formats
 *cakephp-thumber* requires GD Library (>=2.0) **or** Imagick PHP extension 
@@ -106,8 +106,8 @@ save thumbnails.
 
 ## How to use
 See our wiki:
-* [How to use the helper](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper)
-* [How to use the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-ThumbCreator-utility)
+*   [How to use the helper](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper)
+*   [How to use the ThumbCreator utility](https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-ThumbCreator-utility)
 
 And refer to our [API](//mirko-pagliai.github.io/cakephp-thumber).
 

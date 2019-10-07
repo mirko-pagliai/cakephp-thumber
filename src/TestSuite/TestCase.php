@@ -15,6 +15,7 @@ namespace Thumber\TestSuite;
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Exception;
+use Symfony\Component\Filesystem\Filesystem;
 use Thumber\ThumbsPathTrait;
 use Thumber\Utility\ThumbCreator;
 use Tools\ReflectionTrait;
@@ -80,7 +81,8 @@ abstract class TestCase extends CakeTestCase
      */
     public static function assertImageFileEquals($expected, $actual, $message = '')
     {
-        $expected = is_absolute($expected) ? $expected : Configure::read('Thumber.comparingDir') . $expected;
+        $isAbsolute = (new Filesystem())->isAbsolutePath($expected);
+        $expected = $isAbsolute ? $expected : Configure::read('Thumber.comparingDir') . $expected;
         self::assertFileExists($expected, $message);
         self::assertFileExists($actual, $message);
 

@@ -311,17 +311,13 @@ class ThumbCreator
 
         $options = $this->getDefaultSaveOptions($options);
         $target = $options['target'];
+        $options['format'] = $target ? $this->getDefaultSaveOptions([], $target)['format'] : $options['format'];
 
         if (!$target) {
             $this->arguments[] = [$this->driver, $options['format'], $options['quality']];
-
             $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $options['format']);
-        } else {
-            $optionsFromTarget = $this->getDefaultSaveOptions([], $target);
-            $options['format'] = $optionsFromTarget['format'];
         }
-
-        $target = is_absolute($target) ? $target : $this->getPath($target);
+        $target = (new Filesystem())->isAbsolutePath($target) ? $target : $this->getPath($target);
 
         //Creates the thumbnail, if this does not exist
         if (!file_exists($target)) {
