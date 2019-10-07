@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.7 branch
+### 1.7.7
+* it self-determines which driver to use, if not set manually.
+
 ### 1.7.6
 * `ThumbCreator` can throw a `BadMethodCallException` or a `NotWritableException`;
 * `ThumbHelper` throws a `BadMethodCallException` if a method doesn't exist;
