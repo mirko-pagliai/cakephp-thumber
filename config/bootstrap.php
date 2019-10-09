@@ -14,19 +14,13 @@
 use Cake\Core\Configure;
 
 //Default thumbnails driver
-if (!Configure::check('Thumber.driver')) {
-    Configure::write('Thumber.driver', extension_loaded('imagick') ? 'imagick' : 'gd');
-}
 if (!defined('THUMBER_DRIVER')) {
-    define('THUMBER_DRIVER', Configure::read('Thumber.driver'));
+    define('THUMBER_DRIVER', Configure::read('Thumber.driver', extension_loaded('imagick') ? 'imagick' : 'gd'));
 }
 
 //Default thumbnails directory
-if (!Configure::check('Thumber.target')) {
-    Configure::write('Thumber.target', TMP . 'thumbs');
-}
 if (!defined('THUMBER_TARGET')) {
-    define('THUMBER_TARGET', Configure::read('Thumber.target'));
+    define('THUMBER_TARGET', Configure::read('Thumber.target', TMP . 'thumbs'));
 }
 
 require_once ROOT . 'vendor' . DS . 'mirko-pagliai' . DS . 'php-thumber' . DS . 'config' . DS . 'bootstrap.php';
