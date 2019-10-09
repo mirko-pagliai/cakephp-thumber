@@ -15,7 +15,7 @@ use Cake\Core\Configure;
 
 //Default thumbnails driver
 if (!Configure::check('Thumber.driver')) {
-    Configure::write('Thumber.driver', 'imagick');
+    Configure::write('Thumber.driver', extension_loaded('imagick') ? 'imagick' : 'gd');
 }
 
 //Default thumbnails directory
