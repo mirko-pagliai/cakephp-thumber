@@ -20,17 +20,4 @@ use Thumber\TestSuite\TestCase;
  */
 class TestCaseTest extends TestCase
 {
-    /**
-     * Test for `tearDown()` method
-     * @test
-     */
-    public function testTearDown()
-    {
-        $test = $this->getMockBuilder(TestCaseTest::class)
-            ->setMethods(['getPath'])
-            ->getMock();
-
-        $test->method('getPath')->willThrowException(new Exception());
-        $this->assertNull($test->tearDown());
-    }
 }
