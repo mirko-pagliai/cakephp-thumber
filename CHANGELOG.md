@@ -1,4 +1,10 @@
 # 1.x branch
+## 1.8 branch
+### 1.8.0
+* the `ThumbsPathTrait` no longer exists. The `getPath()` method no longer
+    exists, use instead the `THUMBER_TARGET` constant. The `resolveFilePath()`
+    method has been moved to the `ThumbManager` class.
+
 ## 1.7 branch
 ### 1.7.7
 * it self-determines which driver to use, if not set manually.

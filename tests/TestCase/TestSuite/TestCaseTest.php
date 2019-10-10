@@ -20,4 +20,12 @@ use Thumber\TestSuite\TestCase;
  */
 class TestCaseTest extends TestCase
 {
+    /**
+     * Test for `tearDown()` method
+     * @test
+     */
+    public function testTearDown()
+    {
+        $this->assertNull($test->tearDown());
+    }
 }
