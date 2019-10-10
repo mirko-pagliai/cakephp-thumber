@@ -107,23 +107,6 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
-     * Test for `$path` property
-     * @ŧest
-     */
-    public function testPath()
-    {
-        $this->loadPlugins(['TestPlugin']);
-
-        foreach ([
-            WWW_ROOT . 'img' . DS . '400x400.jpg',
-            Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . '400x400.png',
-        ] as $file) {
-            $thumber = $this->getThumbCreatorInstance($file);
-            $this->assertEquals($this->getProperty($thumber, 'path'), $file);
-        }
-    }
-
-    /**
      * Test for `save()` method
      * @test
      */
