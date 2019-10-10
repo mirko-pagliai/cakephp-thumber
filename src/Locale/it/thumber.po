@@ -1,7 +1,6 @@
 # LANGUAGE translation of cakephp-thumber
 # Copyright 2019 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
-# Mirko Pagliai <mirko.pagliai@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
@@ -14,7 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language-Team: Italian <>\n"
 "Language: it\n"
-"X-Generator: Lokalize 2.0\n"
 
 #: Command/ClearAllCommand.php:50
 msgid "Clears all thumbnails"
