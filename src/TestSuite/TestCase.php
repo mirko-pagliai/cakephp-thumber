@@ -12,7 +12,6 @@
  */
 namespace Thumber\TestSuite;
 
-use Exception;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 use Thumber\Utility\ThumbCreator;
 use Tools\Thumber\TestSuite\TestTrait;
