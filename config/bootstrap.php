@@ -23,4 +23,4 @@ if (!defined('THUMBER_TARGET')) {
     define('THUMBER_TARGET', Configure::read('Thumber.target', TMP . 'thumbs'));
 }
 
-require_once ROOT . 'vendor' . DS . 'mirko-pagliai' . DS . 'php-thumber' . DS . 'config' . DS . 'bootstrap.php';
+require_once add_slash_term(ROOT) . 'vendor' . DS . 'mirko-pagliai' . DS . 'php-thumber' . DS . 'config' . DS . 'bootstrap.php';
