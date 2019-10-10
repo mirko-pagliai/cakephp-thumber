@@ -25,20 +25,6 @@ abstract class TestCase extends BaseTestCase
     use TestTrait;
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        try {
-            unlink_recursive(THUMBER_TARGET);
-        } catch (Exception $e) {
-        }
-
-        parent::tearDown();
-    }
-
-    /**
      * Asserts for a valid thumbnail url
      * @param string $url Thumbnail url
      * @param string $message The failure message that will be appended to the
