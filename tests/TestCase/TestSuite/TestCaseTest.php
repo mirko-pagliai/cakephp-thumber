@@ -26,6 +26,10 @@ class TestCaseTest extends TestCase
      */
     public function testTearDown()
     {
+        $test = $this->getMockBuilder(TestCaseTest::class)
+            ->setMethods([])
+            ->getMock();
+
         $this->assertNull($test->tearDown());
     }
 }
