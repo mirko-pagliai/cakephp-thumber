@@ -11,7 +11,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.7.0
  */
-namespace Thumber\TestSuite;
+namespace Thumber\Cake\TestSuite;
 
 use Cake\TestSuite\IntegrationTestTrait as CakeIntegrationTestTrait;
 

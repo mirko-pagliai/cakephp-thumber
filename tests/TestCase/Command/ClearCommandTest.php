@@ -10,15 +10,15 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Test\TestCase\Command;
+namespace Thumber\Cake\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
 use Cake\Console\Exception\StopException;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use Exception;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
-use Thumber\TestSuite\TestCase;
-use Thumber\Utility\ThumbManager;
+use Thumber\Cake\TestSuite\TestCase;
+use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * ClearCommandTest class

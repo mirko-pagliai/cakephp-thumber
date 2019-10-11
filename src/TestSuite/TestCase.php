@@ -10,11 +10,11 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\TestSuite;
+namespace Thumber\Cake\TestSuite;
 
 use MeTools\TestSuite\TestCase as BaseTestCase;
-use Thumber\Utility\ThumbCreator;
-use Tools\Thumber\TestSuite\TestTrait;
+use Thumber\Cake\Utility\ThumbCreator;
+use Thumber\TestSuite\TestTrait;
 
 /**
  * TestCase class

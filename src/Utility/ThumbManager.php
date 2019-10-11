@@ -11,11 +11,11 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.3.0
  */
-namespace Thumber\Utility;
+namespace Thumber\Cake\Utility;
 
 use Cake\Core\Plugin;
 use Symfony\Component\Filesystem\Filesystem;
-use Tools\Thumber\ThumbManager as BaseThumbManager;
+use Thumber\ThumbManager as BaseThumbManager;
 
 /**
  * A utility to manage thumbnails
