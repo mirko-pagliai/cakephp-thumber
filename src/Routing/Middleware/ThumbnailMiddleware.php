@@ -28,7 +28,7 @@ class ThumbnailMiddleware
      * @param \Psr\Http\Message\ServerRequestInterface $request The request
      * @param \Psr\Http\Message\ResponseInterface $response The response
      * @return \Psr\Http\Message\ResponseInterface A response
-     * @throws \Thumber\Http\Exception\ThumbNotFoundException
+     * @throws \Thumber\Cake\Http\Exception\ThumbNotFoundException
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
