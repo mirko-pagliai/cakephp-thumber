@@ -11,11 +11,11 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.6.0
  */
-namespace Thumber\Routing\Middleware;
+namespace Thumber\Cake\Routing\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Thumber\Http\Exception\ThumbNotFoundException;
+use Thumber\Cake\Http\Exception\ThumbNotFoundException;
 
 /**
  * Handles serving thumbnails

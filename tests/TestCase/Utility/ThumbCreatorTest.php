@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Test\TestCase\Utility;
+namespace Thumber\Cake\Test\TestCase\Utility;
 
 use BadMethodCallException;
 use Cake\Core\Configure;
@@ -18,11 +18,11 @@ use Intervention\Image\Exception\NotReadableException as InterventionNotReadable
 use Intervention\Image\ImageManager;
 use InvalidArgumentException;
 use MeTools\Core\Plugin;
-use Thumber\TestSuite\TestCase;
+use Thumber\Cake\TestSuite\TestCase;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
-use Tools\Thumber\Exception\NotReadableImageException;
-use Tools\Thumber\Exception\UnsupportedImageTypeException;
+use Thumber\Exception\NotReadableImageException;
+use Thumber\Exception\UnsupportedImageTypeException;
 
 /**
  * ThumbCreatorTest class

@@ -11,16 +11,16 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility
  */
-namespace Thumber\Utility;
+namespace Thumber\Cake\Utility;
 
 use BadMethodCallException;
 use Cake\Routing\Router;
 use InvalidArgumentException;
-use Thumber\Utility\ThumbManager;
+use Thumber\Cake\Utility\ThumbManager;
 use Tools\Exception\NotWritableException;
-use Tools\Thumber\Exception\NotReadableImageException;
-use Tools\Thumber\Exception\UnsupportedImageTypeException;
-use Tools\Thumber\ThumbCreator as BaseThumbCreator;
+use Thumber\Exception\NotReadableImageException;
+use Thumber\Exception\UnsupportedImageTypeException;
+use Thumber\ThumbCreator as BaseThumbCreator;
 
 /**
  * Utility to create a thumb.

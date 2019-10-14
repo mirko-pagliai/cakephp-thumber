@@ -15,7 +15,7 @@ namespace App;
 
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\RoutingMiddleware;
-use Thumber\Plugin as Thumber;
+use Thumber\Cake\Plugin as Thumber;
 
 /**
  * Application setup class.

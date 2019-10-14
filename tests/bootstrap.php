@@ -89,7 +89,7 @@ Cache::setConfig([
     ],
 ]);
 
-Configure::write('pluginsToLoad', ['Thumber']);
+Configure::write('pluginsToLoad', ['Thumber/Cake']);
 
 if (!getenv('THUMBER_DRIVER')) {
     putenv('THUMBER_DRIVER=' . (extension_loaded('imagick') ? 'imagick' : 'gd'));

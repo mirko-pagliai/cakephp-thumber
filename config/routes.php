@@ -13,7 +13,7 @@
 
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
-use Thumber\Routing\Middleware\ThumbnailMiddleware;
+use Thumber\Cake\Routing\Middleware\ThumbnailMiddleware;
 
 Router::plugin('Thumber', ['path' => '/thumb'], function (RouteBuilder $routes) {
     $routes->registerMiddleware('thumbnail', new ThumbnailMiddleware());

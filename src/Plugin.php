@@ -11,11 +11,11 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.5.0
  */
-namespace Thumber;
+namespace Thumber\Cake;
 
 use Cake\Core\BasePlugin;
-use Thumber\Command\ClearAllCommand;
-use Thumber\Command\ClearCommand;
+use Thumber\Cake\Command\ClearAllCommand;
+use Thumber\Cake\Command\ClearCommand;
 
 /**
  * Plugin class

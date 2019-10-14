@@ -11,12 +11,12 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
  */
-namespace Thumber\View\Helper;
+namespace Thumber\Cake\View\Helper;
 
 use BadMethodCallException;
 use Cake\View\Helper;
 use InvalidArgumentException;
-use Thumber\Utility\ThumbCreator;
+use Thumber\Cake\Utility\ThumbCreator;
 
 /**
  * Thumb Helper.
