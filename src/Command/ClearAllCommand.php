@@ -26,7 +26,7 @@ use Thumber\Cake\Utility\ThumbManager;
 class ClearAllCommand extends Command
 {
     /**
-     * @var \Thumber\Utility\ThumbManager
+     * @var \Thumber\Cake\Utility\ThumbManager
      */
     public $ThumbManager;
 
