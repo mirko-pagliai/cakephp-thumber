@@ -17,12 +17,11 @@ use Cake\Core\Configure;
 use Intervention\Image\Exception\NotReadableException as InterventionNotReadableException;
 use Intervention\Image\ImageManager;
 use InvalidArgumentException;
-use MeTools\Core\Plugin;
 use Thumber\Cake\TestSuite\TestCase;
-use Tools\Exception\NotReadableException;
-use Tools\Exception\NotWritableException;
 use Thumber\Exception\NotReadableImageException;
 use Thumber\Exception\UnsupportedImageTypeException;
+use Tools\Exception\NotReadableException;
+use Tools\Exception\NotWritableException;
 
 /**
  * ThumbCreatorTest class

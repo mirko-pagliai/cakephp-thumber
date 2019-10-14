@@ -17,10 +17,10 @@ use BadMethodCallException;
 use Cake\Routing\Router;
 use InvalidArgumentException;
 use Thumber\Cake\Utility\ThumbManager;
-use Tools\Exception\NotWritableException;
 use Thumber\Exception\NotReadableImageException;
 use Thumber\Exception\UnsupportedImageTypeException;
 use Thumber\ThumbCreator as BaseThumbCreator;
+use Tools\Exception\NotWritableException;
 
 /**
  * Utility to create a thumb.
