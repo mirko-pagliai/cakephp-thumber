@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of cakephp-thumber.
  *
@@ -27,7 +28,7 @@ class ThumbManager extends BaseThumbManager
      * @param string $path Partial path
      * @return string
      */
-    public static function resolveFilePath($path)
+    public static function resolveFilePath(string $path): string
     {
         //A relative path can be a file from `APP/webroot/img/` or a plugin
         if (!is_url($path) && !(new Filesystem())->isAbsolutePath($path)) {
@@ -50,7 +51,7 @@ class ThumbManager extends BaseThumbManager
      * @return array
      * @uses resolveFilePath()
      */
-    public function get($path, $sort = false)
+    public function get(string $path, bool $sort = false): array
     {
         return parent::get($this->resolveFilePath($path), $sort);
     }

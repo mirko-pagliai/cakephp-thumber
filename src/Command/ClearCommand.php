@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of cakephp-thumber.
  *
@@ -35,7 +36,7 @@ class ClearCommand extends Command
      * @return void
      * @uses $ThumbManager
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->ThumbManager = $this->ThumbManager ?: new ThumbManager();
     }
@@ -45,7 +46,7 @@ class ClearCommand extends Command
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
      */
-    protected function buildOptionParser(ConsoleOptionParser $parser)
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         return $parser->setDescription(__d('thumber', 'Clears all thumbnails that have been generated from an image path'))
             ->addArgument('path', [
@@ -61,7 +62,7 @@ class ClearCommand extends Command
      * @return int|null The exit code or null for success
      * @uses $ThumbManager
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         try {
             $count = $this->ThumbManager->clear($args->getArgument('path'));

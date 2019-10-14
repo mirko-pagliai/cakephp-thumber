@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of cakephp-thumber.
  *
@@ -56,9 +57,9 @@ class ThumbHelper extends Helper
      * @uses isUrlMethod()
      * @uses runUrlMethod()
      */
-    public function __call($name, $params)
+    public function __call(string $name, array $params): string
     {
-        list($path, $params, $options) = $params + [null, [], []];
+        [$path, $params, $options] = $params + [null, [], []];
         is_true_or_fail($path, __d('thumber', 'Thumbnail path is missing'), InvalidArgumentException::class);
         $url = $this->runUrlMethod($name, $path, $params, $options);
 
@@ -75,7 +76,7 @@ class ThumbHelper extends Helper
      * @return bool
      * @since 1.4.0
      */
-    protected function isUrlMethod($name)
+    protected function isUrlMethod(string $name): bool
     {
         return string_ends_with($name, 'Url');
     }
@@ -93,7 +94,7 @@ class ThumbHelper extends Helper
      * @throws \BadMethodCallException
      * @uses isUrlMethod()
      */
-    protected function runUrlMethod($name, $path, array $params = [], array $options = [])
+    protected function runUrlMethod(string $name, string $path, array $params = [], array $options = []): string
     {
         $name = $this->isUrlMethod($name) ? substr($name, 0, -3) : $name;
         $params += ['format' => 'jpg', 'height' => null, 'width' => null];
