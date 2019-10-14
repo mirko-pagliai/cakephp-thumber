@@ -15,7 +15,7 @@ namespace App;
 
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\RoutingMiddleware;
-use Thumber\Plugin as Thumber;
+use Thumber\Cake\Plugin as Thumber;
 
 /**
  * Application setup class.
@@ -27,6 +27,7 @@ class Application extends BaseApplication
 {
     /**
      * Load all the application configuration and bootstrap logic
+     * @return void
      */
     public function bootstrap()
     {
@@ -40,8 +41,6 @@ class Application extends BaseApplication
      */
     public function middleware($middlewareQueue)
     {
-        $middlewareQueue->add(new RoutingMiddleware($this));
-
-        return $middlewareQueue;
+        return $middlewareQueue->add(new RoutingMiddleware($this));
     }
 }

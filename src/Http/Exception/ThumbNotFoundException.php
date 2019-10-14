@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Http\Exception;
+namespace Thumber\Cake\Http\Exception;
 
 use Tools\Exception\FileNotExistsException;
 

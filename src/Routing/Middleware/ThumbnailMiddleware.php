@@ -11,20 +11,17 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.6.0
  */
-namespace Thumber\Routing\Middleware;
+namespace Thumber\Cake\Routing\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Thumber\Http\Exception\ThumbNotFoundException;
-use Thumber\ThumbsPathTrait;
+use Thumber\Cake\Http\Exception\ThumbNotFoundException;
 
 /**
  * Handles serving thumbnails
  */
 class ThumbnailMiddleware
 {
-    use ThumbsPathTrait;
-
     /**
      * Serves thumbnail if the request matches one
      * @param \Psr\Http\Message\ServerRequestInterface $request The request
@@ -34,7 +31,7 @@ class ThumbnailMiddleware
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $file = $this->getPath(base64_decode($request->getParam('basename')));
+        $file = add_slash_term(THUMBER_TARGET) . base64_decode($request->getParam('basename'));
         is_readable_or_fail($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
 
         $response = $response->withModified(filemtime($file));

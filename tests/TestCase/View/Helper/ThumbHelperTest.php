@@ -10,14 +10,14 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Test\TestCase\View\Helper;
+namespace Thumber\Cake\Test\TestCase\View\Helper;
 
 use BadMethodCallException;
 use Cake\View\View;
 use Intervention\Image\Exception\InvalidArgumentException as InterventionInvalidArgumentException;
 use InvalidArgumentException;
-use Thumber\TestSuite\TestCase;
-use Thumber\View\Helper\ThumbHelper;
+use Thumber\Cake\TestSuite\TestCase;
+use Thumber\Cake\View\Helper\ThumbHelper;
 
 /**
  * ThumbHelperTest class
@@ -72,7 +72,7 @@ class ThumbHelperTest extends TestCase
 
         //Calling a no existing method
         $this->expectException(BadMethodCallException::class);
-        $this->expectExceptionMessage('Method `Thumber\Utility\ThumbCreator::noExisting()` does not exist');
+        $this->expectExceptionMessage('Method `Thumber\Cake\Utility\ThumbCreator::noExisting()` does not exist');
         $this->Thumb->noExisting('400x400.png');
     }
 
