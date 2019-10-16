@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/mirko-pagliai/cakephp-thumber.svg?branch=master)](https://travis-ci.org/mirko-pagliai/cakephp-thumber)
 [![Build status](https://ci.appveyor.com/api/projects/status/kmo1kmgqg34y4g87?svg=true)](https://ci.appveyor.com/project/mirko-pagliai/cakephp-thumber)
 [![codecov](https://codecov.io/gh/mirko-pagliai/cakephp-thumber/branch/master/graph/badge.svg)](https://codecov.io/gh/mirko-pagliai/cakephp-thumber)
+[![CodeFactor](https://www.codefactor.io/repository/github/mirko-pagliai/cakephp-thumber/badge)](https://www.codefactor.io/repository/github/mirko-pagliai/cakephp-thumber)
 
 *cakephp-thumber* is a CakePHP plugin to create thumbnails.  
 
@@ -62,14 +63,15 @@ In this case, you can install the package as well:
 ```bash
 $ composer require --prefer-dist mirko-pagliai/cakephp-thumber:dev-cakephp3.2
 ```
-    
-After installation, you have to edit `APP/config/bootstrap.php` to load the plugin:
-```php
-Plugin::load('Thumber', ['bootstrap' => true, 'routes' => true]);
-```
 
-For more information on how to load the plugin, please refer to the 
-[Cookbook](http://book.cakephp.org/3.0/en/plugins.html#loading-a-plugin).
+Then you have to load the plugin. For more information on how to load the plugin,
+please refer to the [Cookbook](//book.cakephp.org/3.0/en/plugins.html#loading-a-plugin).
+
+Simply, you can execute the shell command to enable the plugin:
+```bash
+bin/cake plugin load Thumber
+```
+This would update your application's bootstrap method.
     
 By default the plugin uses the `APP/tmp/thumbs` directory to save the 
 thumbnails. So you have to create the directory and make it writable:
@@ -86,10 +88,6 @@ The plugin uses some configuration parameters and you can set them using the
 
 For example, you can do this at the bottom of the file `APP/config/app.php`
 of your application.
-
-**Note**: up to the *1.0.4* version, the configuration parameters had the
-`Thumbs` name as a prefix. Starting with the *1.1.0* version, they have the
-plugin name (`Thumber`) as a prefix.
 
 ### Configuration values
 ```php
