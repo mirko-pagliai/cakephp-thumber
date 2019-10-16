@@ -14,25 +14,13 @@
 use Cake\Core\Configure;
 
 //Default thumbnails driver
-if (!Configure::check('Thumber.driver')) {
-    Configure::write('Thumber.driver', extension_loaded('imagick') ? 'imagick' : 'gd');
+if (!defined('THUMBER_DRIVER')) {
+    define('THUMBER_DRIVER', Configure::read('Thumber.driver') ?: (extension_loaded('imagick') ? 'imagick' : 'gd'));
 }
 
 //Default thumbnails directory
-if (!Configure::check('Thumber.target')) {
-    Configure::write('Thumber.target', TMP . 'thumbs');
+if (!defined('THUMBER_TARGET')) {
+    define('THUMBER_TARGET', Configure::read('Thumber.target') ?: TMP . 'thumbs');
 }
 
-//Checks for driver
-$driver = Configure::read('Thumber.driver');
-if (!in_array($driver, ['imagick', 'gd'])) {
-    trigger_error(sprintf('The driver `%s` is not supported', $driver), E_USER_ERROR);
-}
-
-//Checks for target directory
-$target = Configure::read('Thumber.target');
-@mkdir($target, 0777, true);
-
-if (!is_writeable($target)) {
-    trigger_error(sprintf('Directory `%s` not writeable', $target), E_USER_ERROR);
-}
+require_once add_slash_term(ROOT) . 'vendor' . DS . 'mirko-pagliai' . DS . 'php-thumber' . DS . 'config' . DS . 'bootstrap.php';

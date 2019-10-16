@@ -15,21 +15,17 @@ namespace Thumber\Test\TestCase\Shell;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\TestSuite\Stub\ConsoleOutput;
-use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
-use Thumber\Shell\ThumberShell;
-use Thumber\Utility\ThumbCreator;
-use Tools\ReflectionTrait;
+use Thumber\Cake\Shell\ThumberShell;
+use Thumber\Cake\TestSuite\TestCase;
 
 /**
  * ThumbManagerTest class
  */
 class ThumberShellTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
-     * @var \Thumber\Shell\ThumberShell
+     * @var \Thumber\Cake\Shell\ThumberShell
      */
     protected $ThumberShell;
 
@@ -42,16 +38,6 @@ class ThumberShellTest extends TestCase
      * @var \Cake\TestSuite\Stub\ConsoleOutput
      */
     protected $out;
-
-    /**
-     * Internal method to create some thumbs
-     */
-    protected function createSomeThumbs()
-    {
-        (new ThumbCreator('400x400.jpg'))->resize(200)->save();
-        (new ThumbCreator('400x400.jpg'))->resize(300)->save();
-        (new ThumbCreator('400x400.png'))->resize(200)->save();
-    }
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -94,6 +80,7 @@ class ThumberShellTest extends TestCase
         $this->assertEquals(['Thumbnails deleted: 0'], $this->out->messages());
         $this->assertEmpty($this->err->messages());
 
+        @unlink_recursive(THUMBER_TARGET);
         $this->createSomeThumbs();
         $this->setProperty($this->out, '_out', []);
 

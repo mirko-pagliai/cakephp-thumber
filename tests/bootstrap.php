@@ -29,10 +29,10 @@ define('ROOT', dirname(__DIR__) . DS);
 define('CAKE_CORE_INCLUDE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
 define('CORE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
-define('TESTS', ROOT . 'tests');
+define('TESTS', ROOT . 'tests' . DS);
 define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
-define('APP_DIR', 'test_app');
-define('WEBROOT_DIR', 'webroot');
+define('APP_DIR', 'test_app' . DS);
+define('WEBROOT_DIR', 'webroot' . DS);
 define('WWW_ROOT', APP . 'webroot' . DS);
 define('TMP', sys_get_temp_dir() . DS . 'cakephp-thumber' . DS);
 define('CONFIG', APP . 'config' . DS);
@@ -101,10 +101,9 @@ if (!getenv('THUMBER_DRIVER')) {
     putenv('THUMBER_DRIVER=' . (extension_loaded('imagick') ? 'imagick' : 'gd'));
 }
 
-Configure::write('Thumber', [
-    'driver' => getenv('THUMBER_DRIVER'),
-    'comparingDir' => TESTS . DS . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS,
-]);
+Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
+define('THUMBER_EXAMPLE_DIR', ROOT . 'vendor' . DS . 'mirko-pagliai' . DS . 'php-thumber' . DS . 'tests' . DS . 'examples' . DS);
+define('THUMBER_COMPARING_DIR', THUMBER_EXAMPLE_DIR . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS);
 
 echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
 

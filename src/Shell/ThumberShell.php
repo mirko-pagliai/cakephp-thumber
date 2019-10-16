@@ -11,11 +11,11 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.3.0
  */
-namespace Thumber\Shell;
+namespace Thumber\Cake\Shell;
 
 use Cake\Console\Shell;
 use Exception;
-use Thumber\Utility\ThumbManager;
+use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * A shell to manage thumbnails
@@ -27,8 +27,8 @@ class ThumberShell extends Shell
      * @param string $method Method to call, provided by the `ThumbManager` class
      * @param array $args Arguments
      * @return bool
-     * @uses Thumber\Utility\ThumbManager::clear()
-     * @uses Thumber\Utility\ThumbManager::clearAll()
+     * @uses Thumber\Cake\Utility\ThumbManager::clear()
+     * @uses Thumber\Cake\Utility\ThumbManager::clearAll()
      */
     protected function _clear($method, $args = [])
     {

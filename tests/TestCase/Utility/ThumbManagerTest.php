@@ -12,8 +12,8 @@
  */
 namespace Thumber\Test\TestCase\Utility;
 
-use Thumber\TestSuite\TestCase;
-use Thumber\Utility\ThumbManager;
+use Thumber\Cake\TestSuite\TestCase;
+use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * ThumbManagerTest class
@@ -21,7 +21,7 @@ use Thumber\Utility\ThumbManager;
 class ThumbManagerTest extends TestCase
 {
     /**
-     * @var \Thumber\Utility\ThumbManager
+     * @var \Thumber\Cake\Utility\ThumbManager
      */
     protected $ThumbManager;
 
