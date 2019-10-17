@@ -11,14 +11,14 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.7.0
  */
-namespace Thumber\Command;
+namespace Thumber\Cake\Command;
 
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Exception;
 use MeTools\Console\Command;
-use Thumber\Utility\ThumbManager;
+use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * Clears all thumbnails that have been generated from an image path
@@ -26,7 +26,7 @@ use Thumber\Utility\ThumbManager;
 class ClearCommand extends Command
 {
     /**
-     * @var \Thumber\Utility\ThumbManager
+     * @var \Thumber\Cake\Utility\ThumbManager
      */
     public $ThumbManager;
 

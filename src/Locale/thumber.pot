@@ -1,11 +1,11 @@
 # LANGUAGE translation of cakephp-thumber
-# Copyright 2018 Mirko Pagliai <mirko.pagliai@gmail.com>
+# Copyright 2019 Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-03-28 14:11+0200\n"
+"POT-Creation-Date: 2019-10-10 15:25+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -13,51 +13,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/ThumbTrait.php:120
-msgid "File `{0}` not readable"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Controller/ThumbsController.php:37
-msgid "File `{0}` doesn't exist"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:41
-msgid "Error deleting thumbnails"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:46
-msgid "Thumbnails deleted: {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:80
-msgid "Clears all thumbnails that have been generated from an image path"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:84
-msgid "Path of the original image"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:90
+#: Command/ClearAllCommand.php:50
 msgid "Clears all thumbnails"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Shell/ThumberShell.php:91
-msgid "A shell to manage thumbnails"
+#: Command/ClearAllCommand.php:65
+#: Command/ClearCommand.php:69
+msgid "Error deleting thumbnails"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:116
-msgid "Unable to read image from file `{0}`"
+#: Command/ClearAllCommand.php:69
+#: Command/ClearCommand.php:73
+msgid "Thumbnails deleted: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:119
+#: Command/ClearCommand.php:50
+msgid "Clears all thumbnails that have been generated from an image path"
+msgstr ""
+
+#: Command/ClearCommand.php:52
+msgid "Path of the original image"
+msgstr ""
+
+#: Routing/Middleware/ThumbnailMiddleware.php:35
+msgid "File `{0}` doesn't exist"
+msgstr ""
+
+#: Utility/ThumbCreator.php:55
 msgid "Image type `{0}` is not supported by this driver"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:275
+#: Utility/ThumbCreator.php:58
+msgid "Unable to read image from file `{0}`"
+msgstr ""
+
+#: Utility/ThumbCreator.php:74
+msgid "Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked"
+msgstr ""
+
+#: Utility/ThumbCreator.php:94
 msgid "No valid method called before the `{0}` method"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/cakephp-thumber/src/Utility/ThumbCreator.php:306
-msgid "The directory `{0}` is not writeable"
+#: Utility/ThumbCreator.php:96
+msgid "Unable to create file `{0}`"
+msgstr ""
+
+#: View/Helper/ThumbHelper.php:62
+msgid "Thumbnail path is missing"
+msgstr ""
+
+#: View/Helper/ThumbHelper.php:105
+msgid "Method `{0}::{1}()` does not exist"
 msgstr ""
 

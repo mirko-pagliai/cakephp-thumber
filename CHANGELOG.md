@@ -1,4 +1,15 @@
 # 1.x branch
+## 1.8 branch
+### 1.8.0
+* much of the code will be moved into the `php-thumber` package, so that it
+    becomes a php library independent from CakePHP. This plugin will continue to
+    exist and all classes and methods will remain unchanged, but it will only
+    include the code closely related to CakePHP (commands, helpers, middlewares, etc);
+* the namespace prefix is now `Thumber\Cake` and no longer `Thumber`;
+* the `ThumbsPathTrait` no longer exists. The `getPath()` method no longer
+    exists, use instead the `THUMBER_TARGET` constant. The `resolveFilePath()`
+    method has been moved to the `ThumbManager` class.
+
 ## 1.7 branch
 ### 1.7.7
 * it self-determines which driver to use, if not set manually.

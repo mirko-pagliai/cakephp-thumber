@@ -11,83 +11,36 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.3.0
  */
-namespace Thumber\Utility;
+namespace Thumber\Cake\Utility;
 
-use Symfony\Component\Finder\Finder;
-use Thumber\ThumbsPathTrait;
+use Cake\Core\Plugin;
+use Symfony\Component\Filesystem\Filesystem;
+use Thumber\ThumbManager as BaseThumbManager;
 
 /**
  * A utility to manage thumbnails
  */
-class ThumbManager
+class ThumbManager extends BaseThumbManager
 {
-    use ThumbsPathTrait;
-
     /**
-     * Supported formats
-     * @var array
+     * Internal method to resolve a relative path, returning a full path
+     * @param string $path Partial path
+     * @return string
      */
-    const SUPPORTED_FORMATS = ['bmp', 'gif', 'ico', 'jpg', 'png', 'psd', 'tiff'];
-
-    /**
-     * Internal method to clear thumbnails
-     * @param array $filenames Filenames
-     * @return int|bool Number of thumbnails deleted otherwise `false` in case of error
-     */
-    protected function _clear($filenames)
+    public static function resolveFilePath($path)
     {
-        $count = 0;
-
-        foreach ($filenames as $filename) {
-            if (!@unlink($this->getPath($filename))) {
-                return false;
+        //A relative path can be a file from `APP/webroot/img/` or a plugin
+        if (!is_url($path) && !(new Filesystem())->isAbsolutePath($path)) {
+            $pluginSplit = pluginSplit($path);
+            $www = WWW_ROOT;
+            if ($pluginSplit[0] && in_array($pluginSplit[0], Plugin::loaded())) {
+                $www = add_slash_term(Plugin::path($pluginSplit[0])) . 'webroot';
+                $path = $pluginSplit[1];
             }
-
-            $count++;
+            $path = add_slash_term($www) . 'img' . DS . $path;
         }
 
-        return $count;
-    }
-
-    /**
-     * Internal method to find thumbnails
-     * @param string|null $pattern A pattern (a regexp, a glob, or a string)
-     * @param bool $sort Whether results should be sorted
-     * @return array
-     */
-    protected function _find($pattern = null, $sort = false)
-    {
-        $pattern = $pattern ?: sprintf('/[\d\w]{32}_[\d\w]{32}\.(%s)$/', implode('|', self::SUPPORTED_FORMATS));
-        $finder = (new Finder())->files()->name($pattern)->in($this->getPath());
-
-        if ($sort) {
-            $finder = $finder->sortByName();
-        }
-
-        return objects_map(iterator_to_array($finder), 'getFilename');
-    }
-
-    /**
-     * Clears all thumbnails that have been generated from an image path
-     * @param string $path Path of the original image
-     * @return int|bool Number of thumbnails deleted otherwise `false` in case of error
-     * @uses _clear()
-     * @uses get()
-     */
-    public function clear($path)
-    {
-        return $this->_clear($this->get($path));
-    }
-
-    /**
-     * Clears all thumbnails
-     * @return int|bool Number of thumbnails deleted otherwise `false` in case of error
-     * @uses _clear()
-     * @uses getAll()
-     */
-    public function clearAll()
-    {
-        return $this->_clear($this->getAll());
+        return $path;
     }
 
     /**
@@ -95,23 +48,10 @@ class ThumbManager
      * @param string $path Path of the original image
      * @param bool $sort Whether results should be sorted
      * @return array
-     * @uses _find()
+     * @uses resolveFilePath()
      */
     public function get($path, $sort = false)
     {
-        $pattern = sprintf('/%s_[\d\w]{32}\.(%s)$/', md5($this->resolveFilePath($path)), implode('|', self::SUPPORTED_FORMATS));
-
-        return $this->_find($pattern, $sort);
-    }
-
-    /**
-     * Gets all thumbnails
-     * @param bool $sort Whether results should be sorted
-     * @return array
-     * @uses _find()
-     */
-    public function getAll($sort = false)
-    {
-        return $this->_find(null, $sort);
+        return parent::get($this->resolveFilePath($path), $sort);
     }
 }
