@@ -14,6 +14,14 @@ provides:
 * `ThumbHelper`, a convenient helper that allows you to create thumbnails on 
 the fly from your templates.
 
+Starting from `1.8.0` release, much of the code has been moved into the
+[php-thumber](https://github.com/mirko-pagliai/php-thumber) package, so that it
+becomes a php library independent from CakePHP.
+This plugin continues to exist and all classes and methods remain unchanged, but
+it only includes the code closely related to CakePHP (commands, helpers,
+middlewares, etc).
+The namespace prefix is now `Thumber\Cake` and no longer `Thumber`.
+
 Did you like this plugin? Its development requires a lot of time for me.  
 Please consider the possibility of making [a donation](//paypal.me/mirkopagliai):
 even a coffee is enough! Thank you.
