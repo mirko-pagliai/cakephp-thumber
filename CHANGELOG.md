@@ -5,6 +5,7 @@
     becomes a php library independent from CakePHP. This plugin will continue to
     exist and all classes and methods will remain unchanged, but it will only
     include the code closely related to CakePHP (commands, helpers, middlewares, etc);
+* the namespace prefix is now `Thumber\Cake` and no longer `Thumber`;
 * the `ThumbsPathTrait` no longer exists. The `getPath()` method no longer
     exists, use instead the `THUMBER_TARGET` constant. The `resolveFilePath()`
     method has been moved to the `ThumbManager` class.
