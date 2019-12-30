@@ -33,7 +33,7 @@ class ThumberShell extends Shell
     protected function _clear($method, $args = [])
     {
         try {
-            $count = call_user_func_array([new ThumbManager, $method], (array)$args);
+            $count = call_user_func_array([new ThumbManager(), $method], (array)$args);
         } catch (Exception $e) {
             $count = false;
         }
@@ -72,7 +72,7 @@ class ThumberShell extends Shell
 
     /**
      * Gets the option parser instance and configures it
-     * @return ConsoleOptionParser
+     * @return \Cake\Console\ConsoleOptionParser
      */
     public function getOptionParser()
     {

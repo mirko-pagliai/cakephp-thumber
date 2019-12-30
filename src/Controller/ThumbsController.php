@@ -26,8 +26,8 @@ class ThumbsController extends Controller
     /**
      * Renders a thumbnail
      * @param string $basename Encoded thumbnail basename
-     * @return Cake\Network\Response|null
-     * @throws ThumbNotFoundException
+     * @return \Cake\Network\Response|null
+     * @throws \Thumber\Http\Exception\ThumbNotFoundException
      */
     public function thumb($basename)
     {

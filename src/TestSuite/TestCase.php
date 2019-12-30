@@ -23,7 +23,9 @@ use Tools\TestSuite\TestTrait as ToolsTestTrait;
  */
 abstract class TestCase extends CakeTestCase
 {
-    use ReflectionTrait, ThumberTestTrait, ToolsTestTrait;
+    use ReflectionTrait;
+    use ThumberTestTrait;
+    use ToolsTestTrait;
 
     /**
      * Asserts for a valid thumbnail url

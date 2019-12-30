@@ -52,8 +52,8 @@ class ThumberShellTest extends TestCase
 
         $this->createSomeThumbs();
 
-        $this->out = new ConsoleOutput;
-        $this->err = new ConsoleOutput;
+        $this->out = new ConsoleOutput();
+        $this->err = new ConsoleOutput();
         $io = new ConsoleIo($this->out, $this->err);
         $io->level(2);
 
@@ -148,7 +148,7 @@ class ThumberShellTest extends TestCase
      */
     public function testGetOptionParser()
     {
-        $parser = (new ThumberShell)->getOptionParser();
+        $parser = (new ThumberShell())->getOptionParser();
 
         $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
 
