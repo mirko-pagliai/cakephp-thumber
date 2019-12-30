@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of cakephp-thumber.
  *
@@ -15,6 +16,7 @@ namespace Thumber\Cake\Utility;
 
 use BadMethodCallException;
 use Cake\Routing\Router;
+use Intervention\Image\Image;
 use InvalidArgumentException;
 use Thumber\Cake\Utility\ThumbManager;
 use Thumber\Exception\NotReadableImageException;
@@ -38,7 +40,7 @@ class ThumbCreator extends BaseThumbCreator
      *  path or a remote url
      * @uses \Thumber\Cake\Utility\ThumbManager::resolveFilePath()
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
         parent::__construct(ThumbManager::resolveFilePath($path));
     }
@@ -47,7 +49,7 @@ class ThumbCreator extends BaseThumbCreator
      * Gets an `Image` instance
      * @return \Intervention\Image\Image
      */
-    protected function getImageInstance()
+    protected function getImageInstance(): Image
     {
         try {
             return parent::getImageInstance();
@@ -69,7 +71,7 @@ class ThumbCreator extends BaseThumbCreator
      * @throws \InvalidArgumentException
      * @uses $target
      */
-    public function getUrl($fullBase = true)
+    public function getUrl(bool $fullBase = true): string
     {
         is_true_or_fail($this->target, __d(
             'thumber',
@@ -86,7 +88,7 @@ class ThumbCreator extends BaseThumbCreator
      * @return string Thumbnail path
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
      */
-    public function save(array $options = [])
+    public function save(array $options = []): string
     {
         try {
             return parent::save($options);

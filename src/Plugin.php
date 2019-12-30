@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of cakephp-thumber.
  *
@@ -13,6 +14,7 @@
  */
 namespace Thumber\Cake;
 
+use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Thumber\Cake\Command\ClearAllCommand;
 use Thumber\Cake\Command\ClearCommand;
@@ -28,7 +30,7 @@ class Plugin extends BasePlugin
      * @return \Cake\Console\CommandCollection
      * @since 1.7.1
      */
-    public function console($commands)
+    public function console($commands): CommandCollection
     {
         return $commands->add('thumber.clear', ClearCommand::class)
             ->add('thumber.clear_all', ClearAllCommand::class);
