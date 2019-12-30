@@ -15,7 +15,6 @@ namespace Thumber\Cake\Utility;
 
 use BadMethodCallException;
 use Cake\Routing\Router;
-use Intervention\Image\Image;
 use InvalidArgumentException;
 use Thumber\Cake\Utility\ThumbManager;
 use Thumber\Exception\NotReadableImageException;
