@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of cakephp-thumber.
  *
@@ -31,7 +32,7 @@ abstract class TestCase extends BaseTestCase
      * @return void
      * @since 1.4.0
      */
-    public function assertThumbUrl($url, $message = '')
+    public function assertThumbUrl(string $url, string $message = ''): void
     {
         self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[\w\d]+/', $url, $message);
     }
@@ -44,7 +45,7 @@ abstract class TestCase extends BaseTestCase
      * @return \Thumber\Cake\Utility\ThumbCreator
      * @since 1.5.1
      */
-    protected function getThumbCreatorInstance($path = null)
+    protected function getThumbCreatorInstance(?string $path = null): ThumbCreator
     {
         return new ThumbCreator($path ?: '400x400.jpg');
     }

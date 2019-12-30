@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of cakephp-thumber.
  *
@@ -29,7 +30,7 @@ class ThumbnailMiddleware
      * @return \Psr\Http\Message\ResponseInterface A response
      * @throws \Thumber\Cake\Http\Exception\ThumbNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $file = add_slash_term(THUMBER_TARGET) . base64_decode($request->getParam('basename'));
         is_readable_or_fail($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);

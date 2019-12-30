@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of cakephp-thumber.
  *
@@ -31,7 +32,7 @@ trait IntegrationTestTrait
      *  generated message
      * @return void
      */
-    public function assertContentType($type, $message = '')
+    public function assertContentType(string $type, string $message = ''): void
     {
         $this->skipIf(!version_compare(PHP_VERSION, '7.0', '>') &&
             in_array($type, ['image/x-ms-bmp', 'image/vnd.adobe.photoshop']));
