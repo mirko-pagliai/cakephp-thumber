@@ -116,6 +116,8 @@ Plugin::load('Thumber', [
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
 
+$_SERVER['PHP_SELF'] = '/';
+
 if (function_exists('loadPHPUnitAliases')) {
     loadPHPUnitAliases();
 }
