@@ -1,5 +1,5 @@
 # LANGUAGE translation of cakephp-thumber
-# Copyright 2019 Mirko Pagliai <mirko.pagliai@gmail.com>
+# Copyright Mirko Pagliai <mirko.pagliai@gmail.com>
 #
 #, fuzzy
 msgid ""

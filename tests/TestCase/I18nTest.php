@@ -11,13 +11,24 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Cake\Http\Exception;
 
-use Tools\Exception\FileNotExistsException;
+namespace Thumber\Test\TestCase;
+
+use Cake\I18n\I18n;
+use MeTools\TestSuite\TestCase;
 
 /**
- * ThumbNotFoundException
+ * I18nTest class
  */
-class ThumbNotFoundException extends FileNotExistsException
+class I18nTest extends TestCase
 {
+    /**
+     * Tests I18n translations
+     * @test
+     */
+    public function testI18nConstant()
+    {
+        $translator = I18n::translator('thumber', 'it');
+        $this->assertEquals('Cancella tutte le miniature', $translator->translate('Clears all thumbnails'));
+    }
 }
