@@ -76,7 +76,7 @@ please refer to the [Cookbook](//book.cakephp.org/4.0/en/plugins.html#loading-a-
 
 Simply, you can execute the shell command to enable the plugin:
 ```bash
-bin/cake plugin load Thumber
+bin/cake plugin load Thumber/Cake
 ```
 This would update your application's bootstrap method.
 

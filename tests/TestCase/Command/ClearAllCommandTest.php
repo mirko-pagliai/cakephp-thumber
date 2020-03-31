@@ -35,23 +35,39 @@ class ClearAllCommandTest extends TestCase
     protected $autoInitializeClass = true;
 
     /**
+     * @var string
+     */
+    protected $command = 'thumber.clear_all -v';
+
+    /**
      * Tests for `execute()` method
      * @test
      */
     public function testExecute()
     {
-        $command = 'thumber.clear_all -v';
-
         $this->createSomeThumbs();
-        $this->exec($command);
+        $this->exec($this->command);
         $this->assertExitWithSuccess();
         $this->assertOutputRegExp('/^Thumbnails deleted: [^0]\d*$/');
+    }
 
-        $this->exec($command);
+    /**
+     * Tests for `execute()` method, with no thumbnails
+     * @test
+     */
+    public function testExecuteNoThumbs()
+    {
+        $this->exec($this->command);
         $this->assertExitWithSuccess();
         $this->assertOutputContains('Thumbnails deleted: 0');
+    }
 
-        //On failure
+    /**
+     * Tests for `execute()` method, on failure
+     * @test
+     */
+    public function testExecuteOnFailure()
+    {
         $this->expectException(StopException::class);
         $this->Command->ThumbManager = $this->getMockBuilder(ThumbManager::class)
             ->setMethods(['_clear'])
