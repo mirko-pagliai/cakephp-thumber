@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.2
+* updated for `me-tools` 2.19.7 and `php-thumber` 1.2.
+
 ### 1.9.1
 * fixed locales and added tests.
 

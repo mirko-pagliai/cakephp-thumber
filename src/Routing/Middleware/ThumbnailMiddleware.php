@@ -18,6 +18,7 @@ namespace Thumber\Cake\Routing\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
+use Tools\Exceptionist;
 
 /**
  * Handles serving thumbnails
@@ -34,7 +35,7 @@ class ThumbnailMiddleware
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $file = add_slash_term(THUMBER_TARGET) . base64_decode($request->getParam('basename'));
-        is_readable_or_fail($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
+        Exceptionist::isReadable($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
 
         $response = $response->withModified(filemtime($file));
         if ($response->checkNotModified($request)) {

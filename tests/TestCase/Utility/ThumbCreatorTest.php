@@ -37,7 +37,7 @@ class ThumbCreatorTest extends TestCase
     public function testConstructNoExistingFile()
     {
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `tests/test_app/webroot/img/noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `tests/test_app/webroot/img/noExistingFile.gif` does not exist');
         $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
@@ -49,7 +49,7 @@ class ThumbCreatorTest extends TestCase
     {
         $this->loadPlugins(['TestPlugin']);
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `tests/test_app/Plugin/TestPlugin/webroot/img/noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `tests/test_app/Plugin/TestPlugin/webroot/img/noExistingFile.gif` does not exist');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 
