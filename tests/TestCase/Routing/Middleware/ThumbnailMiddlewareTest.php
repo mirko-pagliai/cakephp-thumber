@@ -21,6 +21,7 @@ use Thumber\Cake\Http\Exception\ThumbNotFoundException;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Cake\Utility\ThumbCreator;
 use Thumber\Cake\View\Helper\ThumbHelper;
+use Tools\Filesystem;
 
 /**
  * ThumbnailMiddlewareTest class
@@ -89,7 +90,7 @@ class ThumbnailMiddlewareTest extends TestCase
 
         //With a a no existing file
         $this->expectException(ThumbNotFoundException::class);
-        $this->expectExceptionMessage('File `' . add_slash_term(THUMBER_TARGET) . 'noExistingFile` doesn\'t exist');
+        $this->expectExceptionMessage('File `' . (new Filesystem())->addSlashTerm(THUMBER_TARGET) . 'noExistingFile` doesn\'t exist');
         $this->disableErrorHandlerMiddleware();
         $this->get('/thumb/' . base64_encode('noExistingFile'));
     }

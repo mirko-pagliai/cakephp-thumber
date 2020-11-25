@@ -19,6 +19,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
 use Tools\Exceptionist;
+use Tools\Filesystem;
 
 /**
  * Handles serving thumbnails
@@ -34,7 +35,7 @@ class ThumbnailMiddleware
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $file = add_slash_term(THUMBER_TARGET) . base64_decode($request->getParam('basename'));
+        $file = (new Filesystem())->concatenate(THUMBER_TARGET, base64_decode($request->getParam('basename')));
         Exceptionist::isReadable($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
 
         $response = $response->withModified(filemtime($file));
