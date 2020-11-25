@@ -50,4 +50,4 @@ abstract class TestCase extends BaseTestCase
     {
         return new ThumbCreator($path ?: '400x400.jpg');
     }
-}
+        }

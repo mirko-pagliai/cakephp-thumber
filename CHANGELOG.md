@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.3
-* updated for `php-tools` 1.4.5.
+* updated for `php-tools` 1.4.5;
+* added `phpstan`, so fixed some code.
 
 ### 1.9.2
 * updated for `me-tools` 2.19.7 and `php-thumber` 1.2.
