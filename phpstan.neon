@@ -39,13 +39,9 @@ parameters:
             path: tests/TestCase
 
         -
-            message: '#on an unknown class PHPUnit_Framework_MockObject_MockObject\.$#'
+            message: '#^Access to an undefined property#'
             path: tests/TestCase
 
         -
             message: '#^Call to an undefined method Thumber\\ThumbCreator::getUrl\(\)\.$#'
             path: tests/TestCase/Utility/ThumbCreatorTest.php
-
-        -
-            message: '#^Access to an undefined property Thumber\\Cake\\Test\\TestCase\\View\\Helper\\ThumbHelperTest::\$Thumb\.$#'
-            path: tests/TestCase/View/Helper/ThumbHelperTest.php
