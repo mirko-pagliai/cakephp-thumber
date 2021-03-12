@@ -17,12 +17,14 @@ namespace Thumber\Cake\TestSuite;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 use Thumber\Cake\Utility\ThumbCreator;
 use Thumber\TestSuite\TestTrait;
+use Tools\TestSuite\BackwardCompatibilityTrait;
 
 /**
  * TestCase class
  */
 abstract class TestCase extends BaseTestCase
 {
+    use BackwardCompatibilityTrait;
     use TestTrait;
 
     /**
@@ -35,7 +37,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function assertThumbUrl(string $url, string $message = ''): void
     {
-        self::assertRegExp('/^(http:\/\/localhost)?\/thumb\/[\w\d]+/', $url, $message);
+        self::assertMatchesRegularExpression('/^(http:\/\/localhost)?\/thumb\/[\w\d]+/', $url, $message);
     }
 
     /**
