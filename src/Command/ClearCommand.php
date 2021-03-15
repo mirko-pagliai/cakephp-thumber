@@ -67,7 +67,7 @@ class ClearCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         try {
-            $count = $this->ThumbManager->clear($args->getArgument('path'));
+            $count = $this->ThumbManager->clear((string)$args->getArgument('path'));
         } catch (Exception $e) {
             $io->err(__d('thumber', 'Error deleting thumbnails'));
             $this->abort();

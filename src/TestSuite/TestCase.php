@@ -42,14 +42,31 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Returns an instance of `ThumbCreator`
-     * @param string|null $path Path of the image from which to create the
+     * @param string $path Path of the image from which to create the
      *  thumbnail. It can be a relative path (to APP/webroot/img), a full path
      *  or a remote url
      * @return \Thumber\Cake\Utility\ThumbCreator
-     * @since 1.5.1
      */
-    protected function getThumbCreatorInstance(?string $path = null): ThumbCreator
+    protected function getThumbCreatorInstance(string $path = ''): ThumbCreator
     {
         return new ThumbCreator($path ?: '400x400.jpg');
+    }
+
+    /**
+     * Returns an instance of `ThumbCreator`, after calling `resize()` and
+     *  `save()` methods.
+     *
+     * It can be called passing only the array of options as first argument.
+     * @param string $path Path of the image from which to create the thumbnail.
+     *  It can be a full path or a remote url
+     * @param array $options Options for saving
+     * @return \Thumber\Cake\Utility\ThumbCreator
+     */
+    protected function getThumbCreatorInstanceWithSave(string $path = '', array $options = []): ThumbCreator
+    {
+        $thumbCreator = $this->getThumbCreatorInstance($path);
+        $thumbCreator->resize(200)->save($options);
+
+        return $thumbCreator;
     }
 }

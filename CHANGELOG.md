@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.4
+* extensive improvement of function descriptions and tags. The level of `phpstan`
+    has been raised.
+
 ### 1.9.3
 * updated for `php-tools` 1.4.5;
 * added `phpstan`, so fixed some code.
