@@ -4,16 +4,18 @@
     "homepage": "https://github.com/mirko-pagliai/cakephp-thumber",
     "type": "cakephp-plugin",
     "license": "MIT",
-    "authors": [{
+    "authors": [
+        {
             "name": "Mirko Pagliai",
             "email": "mirko.pagliai@gmail.com"
-        }],
+        }
+    ],
     "require": {
         "php": ">=5.5.9",
         "cakephp/cakephp": "^3.2",
         "intervention/image": "^2.4",
-        "mirko-pagliai/php-thumber": "~1.0.0",
-        "mirko-pagliai/php-tools": "~1.2.11"
+        "mirko-pagliai/php-thumber": "dev-php5.6 as 1.2.1",
+        "mirko-pagliai/php-tools": "dev-php5.6 as 1.4.5"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^3.0|^4.0",
@@ -29,5 +31,30 @@
             "App\\": "tests/test_app/TestApp/",
             "Thumber\\Cake\\Test\\": "tests"
         }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test-lowest",
+            "@composer update",
+            "@test",
+            "@stan"
+        ],
+        "cs-check": "phpcs --standard=phpcs.xml.dist",
+        "cs-fix": "phpcbf --standard=phpcs.xml.dist",
+        "test": "rm -f -r /tmp/cake* && phpunit",
+        "coverage": "XDEBUG_MODE=coverage phpunit --coverage-html=coverage",
+        "phpstan": "phpstan.phar analyse",
+        "psalm": "psalm.phar",
+        "stan": [
+            "@stan-setup",
+            "@phpstan",
+            "@psalm"
+        ],
+        "stan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan:^0.12 psalm/phar:^3.18 && mv composer.backup composer.json",
+        "test-lowest": [
+            "@composer update --prefer-lowest",
+            "@test"
+        ]
     }
 }

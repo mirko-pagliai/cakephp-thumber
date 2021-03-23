@@ -84,7 +84,7 @@ Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
 define('THUMBER_EXAMPLE_DIR', ROOT . 'vendor' . DS . 'mirko-pagliai' . DS . 'php-thumber' . DS . 'tests' . DS . 'examples' . DS);
 define('THUMBER_COMPARING_DIR', THUMBER_EXAMPLE_DIR . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS);
 
-Plugin::load('Thumber', [
+Plugin::load('Thumber/Cake', [
     'bootstrap' => true,
     'path' => ROOT,
     'routes' => true,

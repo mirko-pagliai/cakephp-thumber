@@ -15,10 +15,12 @@
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-Router::plugin('Thumber', ['path' => '/thumb'], function (RouteBuilder $routes) {
-    $routes->connect(
-        '/:basename',
-        ['controller' => 'Thumbs', 'action' => 'thumb'],
-        ['_name' => 'thumb', 'basename' => '[\w\d=]+', 'pass' => ['basename']]
-    );
+Router::plugin('Thumber/Cake', ['path' => '/thumb'], function (RouteBuilder $routes) {
+    if (!$routes->nameExists('thumb')) {
+        $routes->connect(
+            '/:basename',
+            ['controller' => 'Thumbs', 'action' => 'thumb'],
+            ['_name' => 'thumb', 'basename' => '[\w\d=]+', 'pass' => ['basename']]
+        );
+    }
 });

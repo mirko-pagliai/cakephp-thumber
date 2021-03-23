@@ -14,10 +14,10 @@
  */
 namespace Thumber\Cake\View\Helper;
 
-use BadMethodCallException;
 use Cake\View\Helper;
 use InvalidArgumentException;
 use Thumber\Cake\Utility\ThumbCreator;
+use Tools\Exceptionist;
 
 /**
  * Thumb Helper.
@@ -60,7 +60,7 @@ class ThumbHelper extends Helper
     public function __call($name, $params)
     {
         list($path, $params, $options) = $params + [null, [], []];
-        is_true_or_fail($path, __d('thumber', 'Thumbnail path is missing'), InvalidArgumentException::class);
+        Exceptionist::isTrue($path, __d('thumber', 'Thumbnail path is missing'), InvalidArgumentException::class);
         $url = $this->runUrlMethod($name, $path, $params, $options);
 
         return $this->isUrlMethod($name) ? $url : $this->Html->image($url, $options);
@@ -101,11 +101,7 @@ class ThumbHelper extends Helper
         $options += ['fullBase' => true];
 
         $className = ThumbCreator::class;
-        is_true_or_fail(
-            method_exists($className, $name),
-            __d('thumber', 'Method `{0}::{1}()` does not exist', $className, $name),
-            BadMethodCallException::class
-        );
+        Exceptionist::methodExists($className, $name, __d('thumber', 'Method `{0}::{1}()` does not exist', $className, $name));
         $thumber = new $className($path);
         $thumber->$name($params['width'], $params['height'])->save($params);
 

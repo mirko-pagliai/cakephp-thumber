@@ -11,28 +11,31 @@
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Controller;
+namespace Thumber\Cake\Controller;
 
 use Cake\Controller\Controller;
-use Thumber\Http\Exception\ThumbNotFoundException;
-use Thumber\ThumbTrait;
+use Thumber\Cake\Http\Exception\ThumbNotFoundException;
+use Tools\Exceptionist;
+use Tools\Filesystem;
 
 /**
  * Thumbs controller class
  */
 class ThumbsController extends Controller
 {
-    use ThumbTrait;
-
     /**
      * Renders a thumbnail
      * @param string $basename Encoded thumbnail basename
      * @return \Cake\Network\Response|null
-     * @throws \Thumber\Http\Exception\ThumbNotFoundException
+     * @throws \Thumber\Cake\Http\Exception\ThumbNotFoundException
      */
     public function thumb($basename)
     {
-        $file = $this->getPath(base64_decode($basename));
+
+        $file = (new Filesystem())->concatenate(THUMBER_TARGET, base64_decode($basename));
+        Exceptionist::isReadable($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
+
+//        $file = $this->getPath(base64_decode($basename));
 
         if (!is_readable($file)) {
             throw new ThumbNotFoundException(__d('thumber', 'File `{0}` doesn\'t exist', $file));

@@ -22,6 +22,7 @@ use Thumber\Exception\NotReadableImageException;
 use Thumber\Exception\NotWritableException;
 use Thumber\Exception\UnsupportedImageTypeException;
 use Thumber\ThumbCreator as BaseThumbCreator;
+use Tools\Exceptionist;
 
 /**
  * Utility to create a thumb.
@@ -53,7 +54,7 @@ class ThumbCreator extends BaseThumbCreator
         try {
             return parent::getImageInstance();
         } catch (UnsupportedImageTypeException $e) {
-            $message = __d('thumber', 'Image type `{0}` is not supported by this driver', $e->getImageType());
+            $message = __d('thumber', 'Image type `{0}` is not supported by this driver', $e->getValue());
             throw new UnsupportedImageTypeException($message);
         } catch (NotReadableImageException $e) {
             $message = __d('thumber', 'Unable to read image from file `{0}`', $e->getFilePath());
@@ -72,7 +73,7 @@ class ThumbCreator extends BaseThumbCreator
      */
     public function getUrl($fullBase = true)
     {
-        is_true_or_fail($this->target, __d(
+        Exceptionist::isTrue($this->target, __d(
             'thumber',
             'Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked',
             'save()'

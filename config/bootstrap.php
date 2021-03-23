@@ -13,6 +13,7 @@
  */
 
 use Cake\Core\Configure;
+use Tools\Filesystem;
 
 //Default thumbnails driver
 if (!defined('THUMBER_DRIVER')) {
@@ -24,4 +25,5 @@ if (!defined('THUMBER_TARGET')) {
     define('THUMBER_TARGET', Configure::read('Thumber.target') ?: TMP . 'thumbs');
 }
 
-require_once add_slash_term(ROOT) . 'vendor' . DS . 'mirko-pagliai' . DS . 'php-thumber' . DS . 'config' . DS . 'bootstrap.php';
+$bootstrap = (new Filesystem())->concatenate(ROOT, 'vendor', 'mirko-pagliai', 'php-thumber', 'config', 'bootstrap.php');
+require_once $bootstrap;

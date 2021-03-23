@@ -15,8 +15,8 @@
 namespace Thumber\Cake\Utility;
 
 use Cake\Core\Plugin;
-use Symfony\Component\Filesystem\Filesystem;
 use Thumber\ThumbManager as BaseThumbManager;
+use Tools\Filesystem;
 
 /**
  * A utility to manage thumbnails
@@ -30,15 +30,16 @@ class ThumbManager extends BaseThumbManager
      */
     public static function resolveFilePath($path)
     {
+        $Filesystem = new Filesystem();
+
         //A relative path can be a file from `APP/webroot/img/` or a plugin
-        if (!is_url($path) && !(new Filesystem())->isAbsolutePath($path)) {
+        if (!is_url($path) && !$Filesystem->isAbsolutePath($path)) {
             $pluginSplit = pluginSplit($path);
-            $www = WWW_ROOT;
             if ($pluginSplit[0] && in_array($pluginSplit[0], Plugin::loaded())) {
-                $www = add_slash_term(Plugin::path($pluginSplit[0])) . 'webroot';
+                $www = $Filesystem->concatenate(Plugin::path($pluginSplit[0]), 'webroot');
                 $path = $pluginSplit[1];
             }
-            $path = add_slash_term($www) . 'img' . DS . $path;
+            $path = $Filesystem->concatenate($www ?? WWW_ROOT, 'img', $path);
         }
 
         return $path;
@@ -48,7 +49,7 @@ class ThumbManager extends BaseThumbManager
      * Gets all thumbnails that have been generated from an image path
      * @param string $path Path of the original image
      * @param bool $sort Whether results should be sorted
-     * @return array
+     * @return array<string, string>
      * @uses resolveFilePath()
      */
     public function get($path, $sort = false)

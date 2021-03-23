@@ -53,20 +53,6 @@ class ThumbManagerTest extends TestCase
     }
 
     /**
-     * Test for `clear()` method, with error
-     * @group onlyUnix
-     * @ŧest
-     */
-    public function testClearWithError()
-    {
-        $ThumbManager = $this->getMockBuilder(ThumbManager::class)
-            ->setMethods(['get'])
-            ->getMock();
-        $ThumbManager->method('get')->will($this->returnValue(['noExisting']));
-        $this->assertFalse($ThumbManager->clear('noExisting'));
-    }
-
-    /**
      * Test for `clearAll()` method
      * @group onlyUnix
      * @ŧest

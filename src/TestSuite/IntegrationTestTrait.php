@@ -14,15 +14,17 @@
  */
 namespace Thumber\Cake\TestSuite;
 
-use Cake\Core\Configure;
-use Thumber\ThumbTrait;
+use Cake\TestSuite\IntegrationTestTrait as CakeIntegrationTestTrait;
+use Tools\Filesystem;
 
 /**
  * A trait intended to make integration tests of your controllers easier
  */
 trait IntegrationTestTrait
 {
-    use ThumbTrait;
+    use CakeIntegrationTestTrait {
+        CakeIntegrationTestTrait::assertContentType as cakeAssertContentType;
+    }
 
     /**
      * Teardown any static object changes and restore them
@@ -30,7 +32,7 @@ trait IntegrationTestTrait
      */
     public function tearDown()
     {
-        @unlink_recursive(Configure::readOrFail(THUMBER . '.target'));
+        Filesystem::instance()->unlinkRecursive(THUMBER_TARGET);
 
         parent::tearDown();
     }

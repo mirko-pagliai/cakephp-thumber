@@ -37,7 +37,7 @@ class ThumbCreatorTest extends TestCase
     public function testConstructNoExistingFile()
     {
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `tests/test_app/webroot/img/noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `tests' . DS . 'test_app' . DS . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` does not exist');
         $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
@@ -49,7 +49,7 @@ class ThumbCreatorTest extends TestCase
     {
         Plugin::load('TestPlugin');
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `tests/test_app/Plugin/TestPlugin/webroot/img/noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'TestPlugin' . DS . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` does not exist');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 
@@ -114,14 +114,14 @@ class ThumbCreatorTest extends TestCase
     public function testSave()
     {
         //When unable to create the file
-        $this->assertException(BadMethodCallException::class, function () {
+        $this->assertException(function () {
             $this->getThumbCreatorInstance()->save();
-        }, 'No valid method called before the `save()` method');
+        }, BadMethodCallException::class, 'No valid method called before the `save()` method');
 
         //Without a valid method called before
         $this->skipIf(IS_WIN);
-        $this->assertException(NotWritableException::class, function () {
+        $this->assertException(function () {
             $this->getThumbCreatorInstance()->resize(200)->save(['target' => DS . 'noExisting']);
-        }, 'Unable to create file `' . DS . 'noExisting`');
+        }, NotWritableException::class, 'Unable to create file `' . DS . 'noExisting`');
     }
 }

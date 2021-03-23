@@ -12,10 +12,10 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Test\TestCase;
+namespace Thumber\Cake\Test\TestCase;
 
 use Cake\I18n\I18n;
-use Thumber\TestSuite\TestCase;
+use Thumber\Cake\TestSuite\TestCase;
 
 /**
  * I18nTest class
