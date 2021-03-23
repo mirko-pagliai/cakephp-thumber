@@ -16,8 +16,8 @@ namespace Thumber\Cake\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\View\View;
-use Thumber\Cake\TestSuite\IntegrationTestTrait;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
+use Thumber\Cake\TestSuite\IntegrationTestTrait;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Cake\Utility\ThumbCreator;
 use Thumber\Cake\View\Helper\ThumbHelper;

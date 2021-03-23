@@ -31,11 +31,8 @@ class ThumbsController extends Controller
      */
     public function thumb($basename)
     {
-
         $file = (new Filesystem())->concatenate(THUMBER_TARGET, base64_decode($basename));
         Exceptionist::isReadable($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
-
-//        $file = $this->getPath(base64_decode($basename));
 
         if (!is_readable($file)) {
             throw new ThumbNotFoundException(__d('thumber', 'File `{0}` doesn\'t exist', $file));

@@ -15,22 +15,20 @@ namespace Thumber\Cake\TestSuite;
 
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Thumber\Cake\Utility\ThumbCreator;
-//use Thumber\TestSuite\TestTrait as ThumberTestTrait;
-use Tools\TestSuite\ReflectionTrait;
-use Tools\TestSuite\TestTrait as ToolsTestTrait;
 use Thumber\TestSuite\TestTrait;
 use Tools\TestSuite\BackwardCompatibilityTrait;
+use Tools\TestSuite\ReflectionTrait;
+use Tools\TestSuite\TestTrait as ToolsTestTrait;
 
 /**
  * TestCase class
  */
 abstract class TestCase extends CakeTestCase
 {
-    use ReflectionTrait;
-//    use ThumberTestTrait;
-    use ToolsTestTrait;
     use BackwardCompatibilityTrait;
+    use ReflectionTrait;
     use TestTrait;
+    use ToolsTestTrait;
 
     /**
      * Asserts for a valid thumbnail url
