@@ -104,7 +104,7 @@ class ThumbHelperTest extends TestCase
      */
     public function testIsUrlMethod()
     {
-        $isUrlMethod = function (string $methodName) {
+        $isUrlMethod = function ($methodName) {
             return $this->invokeMethod($this->Thumb, 'isUrlMethod', [$methodName]);
         };
 

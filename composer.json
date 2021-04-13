@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "cakephp/cakephp": "^3.2",
+        "cakephp/cakephp": "^3.3.4",
         "intervention/image": "^2.4",
         "mirko-pagliai/php-thumber": "dev-php5.6 as 1.2.1",
         "mirko-pagliai/php-tools": "dev-php5.6 as 1.4.5"

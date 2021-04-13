@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of cakephp-thumber.
@@ -17,8 +16,7 @@ namespace Thumber\Cake\Test\TestCase\Controller;
 use Cake\Core\Configure;
 use Cake\View\View;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
-use Thumber\Cake\TestSuite\IntegrationTestTrait;
-use Thumber\Cake\TestSuite\TestCase;
+use Thumber\Cake\TestSuite\IntegrationTestCase;
 use Thumber\Cake\Utility\ThumbCreator;
 use Thumber\Cake\View\Helper\ThumbHelper;
 use Tools\Filesystem;
@@ -26,10 +24,8 @@ use Tools\Filesystem;
 /**
  * ThumbsControllerTest class
  */
-class ThumbsControllerTest extends TestCase
+class ThumbsControllerTest extends IntegrationTestCase
 {
-    use IntegrationTestTrait;
-
     /**
      * Test for `thumb()` method, with some files
      * @test
@@ -66,11 +62,13 @@ class ThumbsControllerTest extends TestCase
 
             $this->get($url);
             $this->assertResponseOk();
-            $this->assertFileResponse($thumb);
             $this->assertContentType($expectedMimeType);
+            if (method_exists($this, 'assertFileResponse')) {
+                $this->assertFileResponse($thumb);
+            }
 
             //Gets the `Last-Modified` header
-            $lastModified = $this->_response->getHeader('Last-Modified')[0];
+            $lastModified = $this->_response->header()['Last-Modified'];
             $this->assertNotEmpty($lastModified);
         }
 
@@ -86,12 +84,14 @@ class ThumbsControllerTest extends TestCase
         (new ThumbCreator($file))->resize(200)->save();
         $this->get($url);
         $this->assertResponseOk();
-        $this->assertNotEquals($lastModified, $this->_response->getHeader('Last-Modified')[0]);
+        $this->assertNotEquals($lastModified, $this->_response->header()['Last-Modified']);
 
         //With a a no existing file
-        $this->expectException(ThumbNotFoundException::class);
-        $this->expectExceptionMessage('File `' . (new Filesystem())->addSlashTerm(THUMBER_TARGET) . 'noExistingFile` doesn\'t exist');
-        $this->disableErrorHandlerMiddleware();
-        $this->get('/thumb/' . base64_encode('noExistingFile'));
+        if (method_exists($this, 'disableErrorHandlerMiddleware')) {
+            $this->expectException(ThumbNotFoundException::class);
+            $this->expectExceptionMessage('File `' . (new Filesystem())->addSlashTerm(THUMBER_TARGET) . 'noExistingFile` doesn\'t exist');
+            $this->disableErrorHandlerMiddleware();
+            $this->get('/thumb/' . base64_encode('noExistingFile'));
+        }
     }
 }

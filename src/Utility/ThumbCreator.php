@@ -19,7 +19,6 @@ use Cake\Routing\Router;
 use InvalidArgumentException;
 use Thumber\Cake\Utility\ThumbManager;
 use Thumber\Exception\NotReadableImageException;
-use Thumber\Exception\NotWritableException;
 use Thumber\Exception\UnsupportedImageTypeException;
 use Thumber\ThumbCreator as BaseThumbCreator;
 use Tools\Exceptionist;
@@ -94,8 +93,6 @@ class ThumbCreator extends BaseThumbCreator
             return parent::save($options);
         } catch (BadMethodCallException $e) {
             throw new BadMethodCallException(__d('thumber', 'No valid method called before the `{0}` method', 'save()'));
-        } catch (NotWritableException $e) {
-            throw new NotWritableException(__d('thumber', 'Unable to create file `{0}`', $e->getFilePath()));
         }
     }
 }

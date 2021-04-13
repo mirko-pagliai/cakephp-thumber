@@ -17,22 +17,20 @@ parameters:
         -  tests/test_app/
 
     ignoreErrors:
-        - '#^Ternary operator condition is always true\.$#'
-        - '#^Constant THUMBER_(TARGET|DRIVER) not found\.$#'
-        - '#^Call to an undefined method Psr#'
+        - '#^Parameter \#1 \$function of function call_user_func_array expects callable\(\)#'
 
         -
-            message: '#Thumber\\Cake\\Routing\\Middleware\\ThumbnailMiddleware given\.$#'
-            path: config/routes.php
-
-        -
-            message: '#^Variable \$count might not be defined\.$#'
+            message: '#expects array, [\w\|]+ given\.$#'
             count: 2
-            path: src/Command
+            path: src
 
         -
             message: '#^Access to an undefined property Thumber\\Cake\\View\\Helper\\ThumbHelper::\$Html\.$#'
             path: src/View/Helper/ThumbHelper.php
+
+        -
+            message: '#does not accept PHPUnit\\Framework\\MockObject\\MockObject\.$#'
+            path: tests/TestCase
 
         -
             message: '#has no return typehint specified\.$#'
@@ -41,3 +39,7 @@ parameters:
         -
             message: '#^Access to an undefined property#'
             path: tests/TestCase
+
+        -
+            message: '#^Cannot call method header\(\) on Cake\\Http\\Response\|null\.$#'
+            path: tests/TestCase/Controller/ThumbsControllerTest.php

@@ -4,13 +4,11 @@ namespace App;
 
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\RoutingMiddleware;
-use Thumber\Cake\Plugin as Thumber;
 
 class Application extends BaseApplication
 {
     public function bootstrap()
     {
-        $this->addPlugin(Thumber::class);
     }
 
     public function middleware($middlewareQueue)

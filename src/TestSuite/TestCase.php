@@ -65,7 +65,7 @@ abstract class TestCase extends CakeTestCase
      * @param array $options Options for saving
      * @return \Thumber\Cake\Utility\ThumbCreator
      */
-    protected function getThumbCreatorInstanceWithSave(string $path = '', array $options = []): ThumbCreator
+    protected function getThumbCreatorInstanceWithSave($path = '', array $options = [])
     {
         $thumbCreator = $this->getThumbCreatorInstance($path);
         $thumbCreator->resize(200)->save($options);

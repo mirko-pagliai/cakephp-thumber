@@ -10,22 +10,17 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.7.0
  */
 namespace Thumber\Cake\TestSuite;
 
-use Cake\TestSuite\IntegrationTestTrait as CakeIntegrationTestTrait;
+use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
 use Tools\Filesystem;
 
 /**
- * A trait intended to make integration tests of your controllers easier
+ * IntegrationTestCase class
  */
-trait IntegrationTestTrait
+abstract class IntegrationTestCase extends CakeIntegrationTestCase
 {
-    use CakeIntegrationTestTrait {
-        CakeIntegrationTestTrait::assertContentType as cakeAssertContentType;
-    }
-
     /**
      * Teardown any static object changes and restore them
      * @return void
@@ -49,6 +44,6 @@ trait IntegrationTestTrait
         $this->skipIf(!version_compare(PHP_VERSION, '7.0', '>') &&
             in_array($type, ['image/x-ms-bmp', 'image/vnd.adobe.photoshop']));
 
-        $this->cakeAssertContentType($type, $message);
+        parent::assertContentType($type, $message);
     }
 }

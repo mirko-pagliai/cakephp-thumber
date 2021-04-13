@@ -39,7 +39,7 @@ class ThumbManager extends BaseThumbManager
                 $www = $Filesystem->concatenate(Plugin::path($pluginSplit[0]), 'webroot');
                 $path = $pluginSplit[1];
             }
-            $path = $Filesystem->concatenate($www ?? WWW_ROOT, 'img', $path);
+            $path = $Filesystem->concatenate(isset($www) ? $www : WWW_ROOT, 'img', $path);
         }
 
         return $path;

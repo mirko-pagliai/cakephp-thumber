@@ -15,17 +15,17 @@
     </projectFiles>
 
     <issueHandlers>
-        <UndefinedConstant>
+        <ImplementedReturnTypeMismatch>
             <errorLevel type="suppress">
-                <file name="src/Routing/Middleware/ThumbnailMiddleware.php" />
+                <file name="src/Shell/ThumberShell.php" />
             </errorLevel>
-        </UndefinedConstant>
+        </ImplementedReturnTypeMismatch>
 
-        <UndefinedInterfaceMethod>
+        <InvalidArgument>
             <errorLevel type="suppress">
-                <file name="src/Routing/Middleware/ThumbnailMiddleware.php" />
+                <file name="src/Shell/ThumberShell.php" />
             </errorLevel>
-        </UndefinedInterfaceMethod>
+        </InvalidArgument>
 
         <NullableReturnStatement>
             <errorLevel type="suppress">

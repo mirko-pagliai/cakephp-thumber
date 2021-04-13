@@ -19,6 +19,7 @@ use Cake\TestSuite\Stub\ConsoleOutput;
 use Cake\Utility\Inflector;
 use Thumber\Cake\Shell\ThumberShell;
 use Thumber\Cake\TestSuite\TestCase;
+use Tools\Filesystem;
 
 /**
  * ThumbManagerTest class
@@ -81,7 +82,7 @@ class ThumberShellTest extends TestCase
         $this->assertEquals(['Thumbnails deleted: 0'], $this->out->messages());
         $this->assertEmpty($this->err->messages());
 
-        @unlink_recursive(THUMBER_TARGET);
+        Filesystem::instance()->unlinkRecursive(THUMBER_TARGET);
         $this->createSomeThumbs();
         $this->setProperty($this->out, '_out', []);
 
