@@ -48,6 +48,10 @@ class ThumbsControllerTest extends IntegrationTestCase
                 'tif' => 'image/tiff',
                 'tiff' => 'image/tiff',
             ];
+
+            if (version_compare(PHP_VERSION, '7.4', '>=')) {
+                $extensions['ico'] = 'image/vnd.microsoft.icon';
+            }
         }
 
         $ThumbHelper = new ThumbHelper(new View());
