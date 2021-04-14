@@ -84,7 +84,7 @@ class ThumbManagerTest extends TestCase
         $this->assertCount(3, $result);
         $this->assertCount(3, $resultWithSort);
         $this->assertEquals($result, $resultWithSort);
-        $this->skipIf(IS_WIN);
+        $this->skipIf(IS_WIN || version_compare(PHP_VERSION, '7.3', '>='));
         $this->assertNotSame($result, $resultWithSort);
     }
 }

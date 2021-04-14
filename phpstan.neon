@@ -17,6 +17,7 @@ parameters:
         -  tests/test_app/
 
     ignoreErrors:
+        - '#^Left side of \|\| is always (true|false)\.$#'
         - '#^Parameter \#1 \$function of function call_user_func_array expects callable\(\)#'
 
         -

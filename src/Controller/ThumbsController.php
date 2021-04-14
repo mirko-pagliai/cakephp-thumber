@@ -14,6 +14,7 @@
 namespace Thumber\Cake\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
 use Tools\Exceptionist;
 use Tools\Filesystem;
@@ -40,7 +41,14 @@ class ThumbsController extends Controller
 
         $this->response->modified((int)filemtime($file));
 
-        if ($this->response->checkNotModified($this->request)) {
+        //See https://github.com/cakephp/cakephp/issues/12536
+        if (version_compare(Configure::version(), '3.6', '<') && version_compare(PHP_VERSION, '7.3', '>=')) {
+            $checkNotModified = @$this->response->checkNotModified($this->request);
+        } else {
+            $checkNotModified = $this->response->checkNotModified($this->request);
+        }
+
+        if ($checkNotModified) {
             return $this->response;
         }
 
