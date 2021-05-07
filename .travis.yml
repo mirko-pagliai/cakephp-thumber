@@ -6,7 +6,6 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - 7.4
 
 matrix:
   fast_finish: true
@@ -21,8 +20,6 @@ matrix:
     - php: 7.2
       env: dependencies=lowest
     - php: 7.3
-      env: dependencies=lowest
-    - php: 7.4
       env: dependencies=lowest
     - php: 7.2
       env: PHPCS=1
