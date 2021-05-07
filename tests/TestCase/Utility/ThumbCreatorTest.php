@@ -114,14 +114,14 @@ class ThumbCreatorTest extends TestCase
     public function testSave()
     {
         //When unable to create the file
-        $this->assertException(BadMethodCallException::class, function () {
+        $this->assertException(function () {
             $this->getThumbCreatorInstance()->save();
-        }, 'No valid method called before the `save()` method');
+        }, BadMethodCallException::class, 'No valid method called before the `save()` method');
 
         //Without a valid method called before
         $this->skipIf(IS_WIN);
-        $this->assertException(NotWritableException::class, function () {
+        $this->assertException(function () {
             $this->getThumbCreatorInstance()->resize(200)->save(['target' => DS . 'noExisting']);
-        }, 'Unable to create file ``');
+        }, NotWritableException::class, 'Unable to create file ``');
     }
 }

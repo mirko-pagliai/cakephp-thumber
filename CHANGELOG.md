@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.4
+* updated for `php-thumber` 1.3;
 * extensive improvement of function descriptions and tags. The level of `phpstan`
     has been raised.
 
