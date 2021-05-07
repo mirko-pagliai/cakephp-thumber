@@ -26,5 +26,5 @@ if (!defined('THUMBER_TARGET')) {
     define('THUMBER_TARGET', Configure::read('Thumber.target', TMP . 'thumbs'));
 }
 
-$bootstrap = (new Filesystem())->concatenate(ROOT, 'vendor', 'mirko-pagliai', 'php-thumber', 'config', 'bootstrap.php');
+$bootstrap = Filesystem::instance()->concatenate(ROOT, 'vendor', 'mirko-pagliai', 'php-thumber', 'config', 'bootstrap.php');
 require_once $bootstrap;
