@@ -26,7 +26,11 @@ matrix:
       env: COVERAGE=1
 
 install:
-  - printf "\n" | pecl install imagick
+  - home="$PWD"
+  - cd /tmp && git clone https://github.com/Imagick/imagick && cd imagick
+  - phpize && ./configure
+  - make &&  make install
+  - cd "$home"
   - composer self-update -q
   - composer install --prefer-dist --no-interaction
   - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest -n; fi;
