@@ -1,4 +1,4 @@
-# Thumber
+# cakephp-thumber
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 [![Build Status](https://travis-ci.org/mirko-pagliai/cakephp-thumber.svg?branch=master)](https://travis-ci.org/mirko-pagliai/cakephp-thumber)
@@ -32,8 +32,9 @@ even a coffee is enough! Thank you.
 
 *   [Requirements and supported formats](#requirements-and-supported-formats)
 *   [Installation](#installation)
+    + [Installation on older CakePHP and PHP versions](#installation-on-older-cakephp-and-php-versions)
 *   [Configuration](#configuration)
-    * [Configuration values](#configuration-values)
+    + [Configuration values](#configuration-values)
 *   [How to use](#how-to-use)
 *   [Testing](#testing)
 *   [Versioning](#versioning)
@@ -60,17 +61,6 @@ You can install the plugin via composer:
 $ composer require --prefer-dist mirko-pagliai/cakephp-thumber
 ```
 
-**NOTE: the latest version available requires at least CakePHP 4**.
-
-Instead, the [cakephp3](//github.com/mirko-pagliai/cakephp-thumber/tree/cakephp3)
-branch is compatible with all previous versions of CakePHP from version 3.2.
-This branch coincides with the current version of *cakephp-thumber*.
-
-In this case, you can install the package as well:
-```bash
-$ composer require --prefer-dist mirko-pagliai/cakephp-thumber:dev-cakephp3
-```
-
 Then you have to load the plugin. For more information on how to load the plugin,
 please refer to the [Cookbook](//book.cakephp.org/4.0/en/plugins.html#loading-a-plugin).
 
@@ -87,7 +77,21 @@ thumbnails. So you have to create the directory and make it writable:
 $ mkdir tmp/thumbs && chmod 775 tmp/thumbs
 ```
 
-If you want to use a different directory, read below.
+If you want to use a different directory, read the [Configuration](#configuration) section.
+
+### Installation on older CakePHP and PHP versions
+Recent packages and the master branch require at least CakePHP 4.0 and PHP 7.2.
+Instead, the [cakephp3](//github.com/mirko-pagliai/cakephp-thumber/tree/cakephp3) branch
+requires at least PHP 5.6.
+
+In this case, you can install the package as well:
+```bash
+$ composer require --prefer-dist mirko-pagliai/cakephp-thumber:dev-cakephp3
+```
+
+Note that the `cakephp3` branch will no longer be updated as of May 7, 2021,
+except for security patches, and it matches the
+[1.9.4](//github.com/mirko-pagliai/cakephp-thumber/releases/tag/1.9.4) version.
 
 ## Configuration
 The plugin uses some configuration parameters and you can set them using the

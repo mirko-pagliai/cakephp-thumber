@@ -16,7 +16,6 @@ namespace Thumber\Cake\Test\TestCase\Utility;
 
 use BadMethodCallException;
 use Cake\Core\Configure;
-use Intervention\Image\Exception\NotReadableException as InterventionNotReadableException;
 use Intervention\Image\ImageManager;
 use InvalidArgumentException;
 use Thumber\Cake\TestSuite\TestCase;
@@ -61,12 +60,11 @@ class ThumbCreatorTest extends TestCase
     {
         $this->expectException(UnsupportedImageTypeException::class);
         $this->expectExceptionMessage('Image type `image/jpeg` is not supported by this driver');
-        $exception = new InterventionNotReadableException('Unsupported image type. GD driver is only able to decode JPG, PNG, GIF or WebP files.');
         $thumbCreator = $this->getThumbCreatorInstance();
         $thumbCreator->ImageManager = $this->getMockBuilder(ImageManager::class)
             ->setMethods(['make'])
             ->getMock();
-        $thumbCreator->ImageManager->method('make')->will($this->throwException($exception));
+        $thumbCreator->ImageManager->method('make')->will($this->throwException(new UnsupportedImageTypeException('', 0, E_ERROR, __FILE__, __LINE__, null, 'image/jpeg')));
         $this->invokeMethod($thumbCreator, 'getImageInstance');
     }
 
@@ -76,15 +74,15 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetImageInstanceNotReadableImageException()
     {
-        $expectedException = NotReadableImageException::class;
-        $expectedMessage = 'Unable to read image from file `tests/bootstrap.php`';
-        if (THUMBER_DRIVER != 'imagick') {
-            $expectedException = UnsupportedImageTypeException::class;
-            $expectedMessage = 'Image type `text/x-php` is not supported by this driver';
-        }
-        $this->expectException($expectedException);
-        $this->expectExceptionMessage($expectedMessage);
-        $this->getThumbCreatorInstanceWithSave(TESTS . 'bootstrap.php');
+        $this->expectException(NotReadableImageException::class);
+        $this->expectExceptionMessage('Unable to read image from file `anExampleFile`');
+
+        $thumbCreator = $this->getThumbCreatorInstance();
+        $thumbCreator->ImageManager = $this->getMockBuilder(ImageManager::class)
+            ->setMethods(['make'])
+            ->getMock();
+        $thumbCreator->ImageManager->method('make')->will($this->throwException(new NotReadableImageException('', 0, E_ERROR, __FILE__, __LINE__, null, 'anExampleFile')));
+        $this->invokeMethod($thumbCreator, 'getImageInstance');
     }
 
     /**
@@ -114,14 +112,14 @@ class ThumbCreatorTest extends TestCase
     public function testSave()
     {
         //When unable to create the file
-        $this->assertException(BadMethodCallException::class, function () {
+        $this->assertException(function () {
             $this->getThumbCreatorInstance()->save();
-        }, 'No valid method called before the `save()` method');
+        }, BadMethodCallException::class, 'No valid method called before the `save()` method');
 
         //Without a valid method called before
         $this->skipIf(IS_WIN);
-        $this->assertException(NotWritableException::class, function () {
+        $this->assertException(function () {
             $this->getThumbCreatorInstance()->resize(200)->save(['target' => DS . 'noExisting']);
-        }, 'Unable to create file ``');
+        }, NotWritableException::class, 'Unable to create file ``');
     }
 }

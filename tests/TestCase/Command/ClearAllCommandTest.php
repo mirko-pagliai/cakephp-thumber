@@ -30,6 +30,11 @@ class ClearAllCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
+     * @var \Thumber\Cake\Command\ClearAllCommand
+     */
+    protected $Command;
+
+    /**
      * @var bool
      */
     protected $autoInitializeClass = true;

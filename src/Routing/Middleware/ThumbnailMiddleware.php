@@ -35,7 +35,7 @@ class ThumbnailMiddleware
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $file = (new Filesystem())->concatenate(THUMBER_TARGET, base64_decode($request->getParam('basename')));
+        $file = Filesystem::instance()->concatenate(THUMBER_TARGET, base64_decode($request->getParam('basename')));
         Exceptionist::isReadable($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
 
         $response = $response->withModified(filemtime($file));

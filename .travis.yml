@@ -3,6 +3,8 @@ language: php
 php:
   - 7.2
   - 7.3
+  - 7.4
+  - 8.0
 
 matrix:
   fast_finish: true
@@ -12,6 +14,10 @@ matrix:
       env: dependencies=lowest
     - php: 7.3
       env: dependencies=lowest
+    - php: 7.4
+      env: dependencies=lowest
+    - php: 8.0
+      env: dependencies=lowest
     - php: 7.2
       env: PHPCS=1
     - php: 7.2
@@ -20,7 +26,11 @@ matrix:
       env: COVERAGE=1
 
 install:
-  - printf "\n" | pecl install imagick
+  - home="$PWD"
+  - cd /tmp && git clone https://github.com/Imagick/imagick && cd imagick
+  - phpize && ./configure
+  - make &&  make install
+  - cd "$home"
   - composer self-update -q
   - composer install --prefer-dist --no-interaction
   - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest -n; fi;

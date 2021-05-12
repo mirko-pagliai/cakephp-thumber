@@ -61,20 +61,17 @@ class ClearCommand extends Command
      * Clears all thumbnails that have been generated from an image path
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
-     * @return int|null The exit code or null for success
-     * @uses $ThumbManager
+     * @return void
      */
-    public function execute(Arguments $args, ConsoleIo $io): ?int
+    public function execute(Arguments $args, ConsoleIo $io): void
     {
         try {
-            $count = $this->ThumbManager->clear($args->getArgument('path'));
+            $count = $this->ThumbManager->clear((string)$args->getArgument('path'));
         } catch (Exception $e) {
             $io->err(__d('thumber', 'Error deleting thumbnails'));
             $this->abort();
         }
 
         $io->verbose(__d('thumber', 'Thumbnails deleted: {0}', $count));
-
-        return null;
     }
 }

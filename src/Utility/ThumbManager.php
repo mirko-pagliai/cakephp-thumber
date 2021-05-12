@@ -50,7 +50,7 @@ class ThumbManager extends BaseThumbManager
      * Gets all thumbnails that have been generated from an image path
      * @param string $path Path of the original image
      * @param bool $sort Whether results should be sorted
-     * @return array
+     * @return array<string, string>
      * @uses resolveFilePath()
      */
     public function get(string $path, bool $sort = false): array
