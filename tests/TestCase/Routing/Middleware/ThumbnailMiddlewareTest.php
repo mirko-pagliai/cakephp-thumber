@@ -69,7 +69,6 @@ class ThumbnailMiddlewareTest extends TestCase
             ], ['fullBase' => false]);
 
             $this->get($url);
-            $this->assertResponseOk();
             $this->assertFileResponse($thumb);
             $this->assertContentType($expectedMimeType);
 
