@@ -16,7 +16,6 @@ namespace Thumber\Cake\Test\TestCase\View\Helper;
 
 use BadMethodCallException;
 use Cake\View\View;
-use Intervention\Image\Exception\InvalidArgumentException as InterventionInvalidArgumentException;
 use InvalidArgumentException;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Cake\View\Helper\ThumbHelper;
@@ -84,7 +83,7 @@ class ThumbHelperTest extends TestCase
      */
     public function testMagicCallWithoutParameters()
     {
-        $this->expectException(InterventionInvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->Thumb->crop('400x400.png');
     }
 

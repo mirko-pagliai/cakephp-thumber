@@ -98,7 +98,7 @@ class ThumbHelper extends Helper
     protected function runUrlMethod(string $name, string $path, array $params = [], array $options = []): string
     {
         $name = $this->isUrlMethod($name) ? substr($name, 0, -3) : $name;
-        $params += ['format' => 'jpg', 'height' => null, 'width' => null];
+        $params += ['format' => 'jpg', 'height' => 0, 'width' => 0];
         $options += ['fullBase' => true];
 
         $className = ThumbCreator::class;
