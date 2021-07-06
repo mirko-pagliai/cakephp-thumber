@@ -48,7 +48,7 @@ class ClearCommandTest extends TestCase
      * Tests for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->createSomeThumbs();
         $this->exec($this->command . ' 400x400.jpg');
@@ -60,7 +60,7 @@ class ClearCommandTest extends TestCase
      * Tests for `execute()` method, with no thumbs
      * @test
      */
-    public function testExecuteNoThumbs()
+    public function testExecuteNoThumbs(): void
     {
         $this->exec($this->command . ' 400x400.jpg');
         $this->assertExitWithSuccess();
@@ -71,7 +71,7 @@ class ClearCommandTest extends TestCase
      * Tests for `execute()` method, with full path
      * @test
      */
-    public function testExecuteWithFullPath()
+    public function testExecuteWithFullPath(): void
     {
         $this->createSomeThumbs();
         $fullPath = WWW_ROOT . 'img' . DS . '400x400.jpg';
@@ -85,7 +85,7 @@ class ClearCommandTest extends TestCase
      * Tests for `execute()` method, with a no existing file
      * @test
      */
-    public function testExecuteNoExistingFile()
+    public function testExecuteNoExistingFile(): void
     {
         $this->exec($this->command . ' ' . DS . 'noExisting');
         $this->assertExitWithError();
@@ -96,7 +96,7 @@ class ClearCommandTest extends TestCase
      * Tests for `execute()` method, on failure
      * @test
      */
-    public function testExecuteOnFailure()
+    public function testExecuteOnFailure(): void
     {
         $this->expectException(StopException::class);
         $this->Command->ThumbManager = $this->getMockBuilder(ThumbManager::class)

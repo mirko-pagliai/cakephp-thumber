@@ -48,7 +48,7 @@ class ClearAllCommandTest extends TestCase
      * Tests for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->createSomeThumbs();
         $this->exec($this->command);
@@ -60,7 +60,7 @@ class ClearAllCommandTest extends TestCase
      * Tests for `execute()` method, with no thumbnails
      * @test
      */
-    public function testExecuteNoThumbs()
+    public function testExecuteNoThumbs(): void
     {
         $this->exec($this->command);
         $this->assertExitWithSuccess();
@@ -71,7 +71,7 @@ class ClearAllCommandTest extends TestCase
      * Tests for `execute()` method, on failure
      * @test
      */
-    public function testExecuteOnFailure()
+    public function testExecuteOnFailure(): void
     {
         $this->expectException(StopException::class);
         $this->Command->ThumbManager = $this->getMockBuilder(ThumbManager::class)

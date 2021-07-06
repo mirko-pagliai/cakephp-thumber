@@ -27,7 +27,7 @@ class I18nTest extends TestCase
      * Tests I18n translations
      * @test
      */
-    public function testI18nConstant()
+    public function testI18nConstant(): void
     {
         $translator = I18n::getTranslator('thumber', 'it');
         $this->assertEquals('Cancella tutte le miniature', $translator->translate('Clears all thumbnails'));

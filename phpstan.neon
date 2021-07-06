@@ -35,9 +35,5 @@ parameters:
             path: src/View/Helper/ThumbHelper.php
 
         -
-            message: '#has no return typehint specified\.$#'
-            path: tests/TestCase
-
-        -
             message: '#^Access to an undefined property#'
             path: tests/TestCase

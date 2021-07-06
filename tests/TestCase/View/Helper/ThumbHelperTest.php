@@ -40,7 +40,7 @@ class ThumbHelperTest extends TestCase
      * Test for magic `__call()` method
      * @test
      */
-    public function testMagicCall()
+    public function testMagicCall(): void
     {
         $path = '400x400.png';
         $params = ['width' => 200];
@@ -81,7 +81,7 @@ class ThumbHelperTest extends TestCase
      * Test for magic `_call()` method, called without parameters
      * @test
      */
-    public function testMagicCallWithoutParameters()
+    public function testMagicCallWithoutParameters(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->Thumb->crop('400x400.png');
@@ -91,7 +91,7 @@ class ThumbHelperTest extends TestCase
      * Test for magic `_call()` method, called without path
      * @test
      */
-    public function testMagicCallWithoutPath()
+    public function testMagicCallWithoutPath(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Thumbnail path is missing');
@@ -102,7 +102,7 @@ class ThumbHelperTest extends TestCase
      * Test for magic `isUrlMethod()` method
      * @test
      */
-    public function testIsUrlMethod()
+    public function testIsUrlMethod(): void
     {
         $isUrlMethod = function (string $methodName) {
             return $this->invokeMethod($this->Thumb, 'isUrlMethod', [$methodName]);
