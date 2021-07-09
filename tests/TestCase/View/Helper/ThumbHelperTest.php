@@ -26,6 +26,11 @@ use Thumber\Cake\View\Helper\ThumbHelper;
 class ThumbHelperTest extends TestCase
 {
     /**
+     * @var \Thumber\Cake\View\Helper\ThumbHelper
+     */
+    protected $Thumb;
+
+    /**
      * Called before every test method
      * @return void
      */
@@ -33,7 +38,7 @@ class ThumbHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->Thumb = new ThumbHelper(new View());
+        $this->Thumb = $this->Thumb ?: new ThumbHelper(new View());
     }
 
     /**
@@ -74,6 +79,7 @@ class ThumbHelperTest extends TestCase
         //Calling a no existing method
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Method `Thumber\Cake\Utility\ThumbCreator::noExisting()` does not exist');
+        /** @phpstan-ignore-next-line */
         $this->Thumb->noExisting('400x400.png');
     }
 
@@ -95,6 +101,7 @@ class ThumbHelperTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Thumbnail path is missing');
+        /** @phpstan-ignore-next-line */
         $this->Thumb->crop();
     }
 

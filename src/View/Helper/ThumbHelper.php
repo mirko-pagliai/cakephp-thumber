@@ -32,6 +32,7 @@ use Tools\Exceptionist;
  * @method string resizeUrl($path, array $params = [], array $options = []) As for the `resize()` method, but this only returns the url
  * @method string resizeCanvas($path, array $params = [], array $options = []) Resizes the boundaries of the current image to given width and height. An anchor can be defined to determine from what point of the image the resizing is going to happen. Set the mode to relative to add or subtract the given width or height to the actual image dimensions. You can also pass a background color for the emerging area of the image
  * @method string resizeCanvasUrl($path, array $params = [], array $options = []) As for the `resizeCanvas()` method, but this only returns the url
+ * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class ThumbHelper extends Helper
 {
