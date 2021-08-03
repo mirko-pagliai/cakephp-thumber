@@ -1,0 +1,32 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#2 \\$middleware of method Cake\\\\Routing\\\\RouteBuilder\\:\\:registerMiddleware\\(\\) expects Closure\\|Psr\\\\Http\\\\Server\\\\MiddlewareInterface\\|string, Thumber\\\\Cake\\\\Routing\\\\Middleware\\\\ThumbnailMiddleware given\\.$#"
+			count: 1
+			path: config/routes.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: src/Command/ClearAllCommand.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: src/Command/ClearCommand.php
+
+		-
+			message: "#^Call to an undefined method Psr\\\\Http\\\\Message\\\\ResponseInterface\\:\\:withModified\\(\\)\\.$#"
+			count: 1
+			path: src/Routing/Middleware/ThumbnailMiddleware.php
+
+		-
+			message: "#^Call to an undefined method Psr\\\\Http\\\\Message\\\\ServerRequestInterface\\:\\:getParam\\(\\)\\.$#"
+			count: 1
+			path: src/Routing/Middleware/ThumbnailMiddleware.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: tests/TestCase/View/Helper/ThumbHelperTest.php
+

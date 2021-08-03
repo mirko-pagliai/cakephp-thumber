@@ -33,7 +33,7 @@ class ThumbCreatorTest extends TestCase
      * Test for `__construct()` method, passing a no existing file
      * @test
      */
-    public function testConstructNoExistingFile()
+    public function testConstructNoExistingFile(): void
     {
         $this->expectException(NotReadableException::class);
         $this->expectExceptionMessage('File or directory `tests' . DS . 'test_app' . DS . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` does not exist');
@@ -44,7 +44,7 @@ class ThumbCreatorTest extends TestCase
      * Test for `__construct()` method, passing a no existing file from plugin
      * @test
      */
-    public function testConstructNoExistingFileFromPlugin()
+    public function testConstructNoExistingFileFromPlugin(): void
     {
         $this->loadPlugins(['TestPlugin']);
         $this->expectException(NotReadableException::class);
@@ -56,7 +56,7 @@ class ThumbCreatorTest extends TestCase
      * Test for `getImageInstance()` method, with unsupported image type for GD driver
      * @ŧest
      */
-    public function testGetImageInstanceUnsupportedImageType()
+    public function testGetImageInstanceUnsupportedImageType(): void
     {
         $this->expectException(UnsupportedImageTypeException::class);
         $this->expectExceptionMessage('Image type `image/jpeg` is not supported by this driver');
@@ -72,7 +72,7 @@ class ThumbCreatorTest extends TestCase
      * Test for `getImageInstance()` method, with a not readable image
      * @ŧest
      */
-    public function testGetImageInstanceNotReadableImageException()
+    public function testGetImageInstanceNotReadableImageException(): void
     {
         $this->expectException(NotReadableImageException::class);
         $this->expectExceptionMessage('Unable to read image from file `anExampleFile`');
@@ -89,7 +89,7 @@ class ThumbCreatorTest extends TestCase
      * Test for `getUrl()` method
      * @ŧest
      */
-    public function testGetUrl()
+    public function testGetUrl(): void
     {
         $result = $this->getThumbCreatorInstanceWithSave()->getUrl();
         $this->assertThumbUrl($result);
@@ -109,7 +109,7 @@ class ThumbCreatorTest extends TestCase
      * Test for `save()` method
      * @test
      */
-    public function testSave()
+    public function testSave(): void
     {
         //When unable to create the file
         $this->assertException(function () {

@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.5
+* updated for `php-thumber` 1.4;
+* improvement of function descriptions and tags.
+
 ### 1.9.4
 * updated for `php-thumber` 1.3;
 * ready for `php` 8;

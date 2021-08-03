@@ -34,7 +34,7 @@ class ThumbnailMiddlewareTest extends TestCase
      * Test for `thumb()` method, with some files
      * @test
      */
-    public function testThumb()
+    public function testThumb(): void
     {
         $extensions = [
             'gif' => 'image/gif',

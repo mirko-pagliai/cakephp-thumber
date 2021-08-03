@@ -1,3 +1,6 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     level: 8
 
@@ -15,29 +18,3 @@ parameters:
 
     excludes_analyse:
         -  tests/test_app/
-
-    ignoreErrors:
-        - '#^Ternary operator condition is always true\.$#'
-        - '#^Constant THUMBER_(TARGET|DRIVER) not found\.$#'
-        - '#^Call to an undefined method Psr#'
-
-        -
-            message: '#Thumber\\Cake\\Routing\\Middleware\\ThumbnailMiddleware given\.$#'
-            path: config/routes.php
-
-        -
-            message: '#^Variable \$count might not be defined\.$#'
-            count: 2
-            path: src/Command
-
-        -
-            message: '#^Access to an undefined property Thumber\\Cake\\View\\Helper\\ThumbHelper::\$Html\.$#'
-            path: src/View/Helper/ThumbHelper.php
-
-        -
-            message: '#has no return typehint specified\.$#'
-            path: tests/TestCase
-
-        -
-            message: '#^Access to an undefined property#'
-            path: tests/TestCase

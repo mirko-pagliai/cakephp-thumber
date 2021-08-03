@@ -72,6 +72,6 @@ class ClearCommand extends Command
             $this->abort();
         }
 
-        $io->verbose(__d('thumber', 'Thumbnails deleted: {0}', $count));
+        $io->verbose(__d('thumber', 'Thumbnails deleted: {0}', $count ?? 0));
     }
 }
