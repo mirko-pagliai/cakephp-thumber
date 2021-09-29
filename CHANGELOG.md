@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.6
+* migration to github actions.
+
 ### 1.9.5
 * updated for `php-thumber` 1.4;
 * improvement of function descriptions and tags.
