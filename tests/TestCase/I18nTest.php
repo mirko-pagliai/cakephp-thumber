@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace Thumber\Cake\Test\TestCase;
 
 use Cake\I18n\I18n;
-use MeTools\TestSuite\TestCase;
+use Thumber\TestSuite\TestCase;
 
 /**
  * I18nTest class

@@ -1,9 +1,9 @@
 # cakephp-thumber
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
-[![Build Status](https://travis-ci.org/mirko-pagliai/cakephp-thumber.svg?branch=master)](https://travis-ci.org/mirko-pagliai/cakephp-thumber)
-[![Build status](https://ci.appveyor.com/api/projects/status/kmo1kmgqg34y4g87?svg=true)](https://ci.appveyor.com/project/mirko-pagliai/cakephp-thumber)
+[![CI](https://github.com/mirko-pagliai/cakephp-thumber/actions/workflows/ci.yml/badge.svg)](https://github.com/mirko-pagliai/cakephp-thumber/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/mirko-pagliai/cakephp-thumber/branch/master/graph/badge.svg)](https://codecov.io/gh/mirko-pagliai/cakephp-thumber)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8b336c067caa49dbb144601862795143)](https://www.codacy.com/gh/mirko-pagliai/cakephp-thumber/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mirko-pagliai/cakephp-thumber&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/mirko-pagliai/cakephp-thumber/badge)](https://www.codefactor.io/repository/github/mirko-pagliai/cakephp-thumber)
 
 *cakephp-thumber* is a CakePHP plugin to create thumbnails.
