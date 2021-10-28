@@ -14,14 +14,14 @@ declare(strict_types=1);
  */
 
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
-use Thumber\Cake\Routing\Middleware\ThumbnailMiddleware;
+use Thumber\Cake\Middleware\ThumbnailMiddleware;
 
-Router::plugin('Thumber', ['path' => '/thumb'], function (RouteBuilder $routes) {
+/** @var \Cake\Routing\RouteBuilder $routes */
+$routes->plugin('Thumber', ['path' => '/thumb'], function (RouteBuilder $routes) {
     $routes->registerMiddleware('thumbnail', new ThumbnailMiddleware());
 
     if (!$routes->nameExists('thumb')) {
-        $routes->get('/:basename', [], 'thumb')
+        $routes->get('/{basename}', [], 'thumb')
             ->setPatterns(['basename' => '[\w\d=]+'])
             ->setPass(['basename'])
             ->setMiddleware(['thumbnail']);

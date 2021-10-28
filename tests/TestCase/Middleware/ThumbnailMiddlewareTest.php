@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Cake\Test\TestCase\Routing\Middleware;
+namespace Thumber\Cake\Test\TestCase\Middleware;
 
 use Cake\Core\Configure;
 use Cake\View\View;
@@ -93,7 +93,7 @@ class ThumbnailMiddlewareTest extends TestCase
 
         //With a a no existing file
         $this->expectException(ThumbNotFoundException::class);
-        $this->expectExceptionMessage('File `' . (new Filesystem())->addSlashTerm(THUMBER_TARGET) . 'noExistingFile` doesn\'t exist');
+        $this->expectExceptionMessage('File `' . Filesystem::instance()->concatenate(THUMBER_TARGET, 'noExistingFile') . '` doesn\'t exist');
         $this->disableErrorHandlerMiddleware();
         $this->get('/thumb/' . base64_encode('noExistingFile'));
     }

@@ -17,13 +17,13 @@
     <issueHandlers>
         <UndefinedConstant>
             <errorLevel type="suppress">
-                <file name="src/Routing/Middleware/ThumbnailMiddleware.php" />
+                <file name="src/Middleware/ThumbnailMiddleware.php" />
             </errorLevel>
         </UndefinedConstant>
 
         <UndefinedInterfaceMethod>
             <errorLevel type="suppress">
-                <file name="src/Routing/Middleware/ThumbnailMiddleware.php" />
+                <file name="src/Middleware/ThumbnailMiddleware.php" />
             </errorLevel>
         </UndefinedInterfaceMethod>
 
