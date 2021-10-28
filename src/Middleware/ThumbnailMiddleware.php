@@ -13,10 +13,13 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.6.0
  */
-namespace Thumber\Cake\Routing\Middleware;
+namespace Thumber\Cake\Middleware;
 
+use Cake\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
 use Tools\Exceptionist;
 use Tools\Filesystem;
@@ -24,25 +27,27 @@ use Tools\Filesystem;
 /**
  * Handles serving thumbnails
  */
-class ThumbnailMiddleware
+class ThumbnailMiddleware implements MiddlewareInterface
 {
     /**
      * Serves thumbnail if the request matches one
      * @param \Psr\Http\Message\ServerRequestInterface $request The request
-     * @param \Psr\Http\Message\ResponseInterface $response The response
+     * @param \Psr\Http\Server\RequestHandlerInterface $handler Request handler
      * @return \Psr\Http\Message\ResponseInterface A response
      * @throws \Thumber\Cake\Http\Exception\ThumbNotFoundException
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        /** @var \Cake\Http\ServerRequest $request */
         $file = Filesystem::instance()->concatenate(THUMBER_TARGET, base64_decode($request->getParam('basename')));
         Exceptionist::isReadable($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
 
-        $response = $response->withModified(filemtime($file));
+        $response = new Response();
+        $response = $response->withModified(filemtime($file) ?: 0);
         if ($response->checkNotModified($request)) {
             return $response;
         }
 
-        return $response->withFile($file)->withType(mime_content_type($file));
+        return $response->withFile($file)->withType(mime_content_type($file) ?: '');
     }
 }
