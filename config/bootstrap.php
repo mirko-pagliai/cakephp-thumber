@@ -14,7 +14,6 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use Tools\Filesystem;
 
 //Default thumbnails driver
 if (!defined('THUMBER_DRIVER')) {
@@ -25,6 +24,3 @@ if (!defined('THUMBER_DRIVER')) {
 if (!defined('THUMBER_TARGET')) {
     define('THUMBER_TARGET', Configure::read('Thumber.target', TMP . 'thumbs'));
 }
-
-$bootstrap = Filesystem::instance()->concatenate(ROOT, 'vendor', 'mirko-pagliai', 'php-thumber', 'config', 'bootstrap.php');
-require_once $bootstrap;

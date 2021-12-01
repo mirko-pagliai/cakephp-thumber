@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.8
+* fixed the bootstrap.
+
 ### 1.9.7
 * ready for CakePHP 4.3. The `ThumbnailMiddleware` was moved from
     `Thumber\Cake\Routing\Middleware` to `Thumber\Cake\Middleware`.
