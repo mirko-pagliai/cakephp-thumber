@@ -12,16 +12,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.2', '7.3', '7.4', '8.0', '8.1']
+        php-version: ['7.4', '8.0', '8.1']
         prefer-lowest: ['']
         thumber-driver: ['imagick', 'gd']
         include:
-          - php-version: '7.2'
-            prefer-lowest: 'prefer-lowest'
-            thumber-driver: 'imagick'
-          - php-version: '7.3'
-            prefer-lowest: 'prefer-lowest'
-            thumber-driver: 'imagick'
           - php-version: '7.4'
             prefer-lowest: 'prefer-lowest'
             thumber-driver: 'imagick'
@@ -32,11 +26,6 @@ jobs:
             prefer-lowest: 'prefer-lowest'
             thumber-driver: 'imagick'
           - php-version: '7.4'
-            thumber-driver: 'gd'
-        exclude:
-          - php-version: '7.2'
-            thumber-driver: 'gd'
-          - php-version: '7.3'
             thumber-driver: 'gd'
 
     steps:

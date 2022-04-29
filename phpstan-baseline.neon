@@ -3,15 +3,5 @@ parameters:
 		-
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 1
-			path: src/Command/ClearAllCommand.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: src/Command/ClearCommand.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
 			path: tests/TestCase/View/Helper/ThumbHelperTest.php
 

@@ -30,14 +30,16 @@ even a coffee is enough! Thank you.
 
 ***
 
-*   [Requirements and supported formats](#requirements-and-supported-formats)
-*   [Installation](#installation)
+  * [Requirements and supported formats](#requirements-and-supported-formats)
+  * [Installation](#installation)
     + [Installation on older CakePHP and PHP versions](#installation-on-older-cakephp-and-php-versions)
-*   [Configuration](#configuration)
+      - [For PHP 7.2 or later](#for-php-72-or-later)
+      - [For PHP 5.6 and CakePHP 3 or later](#for-php-56-and-cakephp-3-or-later)
+  * [Configuration](#configuration)
     + [Configuration values](#configuration-values)
-*   [How to use](#how-to-use)
-*   [Testing](#testing)
-*   [Versioning](#versioning)
+  * [How to use](#how-to-use)
+  * [Testing](#testing)
+  * [Versioning](#versioning)
 
 ## Requirements and supported formats
 *cakephp-thumber* requires GD Library (>=2.0) **or** Imagick PHP extension
@@ -80,9 +82,28 @@ $ mkdir tmp/thumbs && chmod 775 tmp/thumbs
 If you want to use a different directory, read the [Configuration](#configuration) section.
 
 ### Installation on older CakePHP and PHP versions
-Recent packages and the master branch require at least CakePHP 4.0 and PHP 7.2.
-Instead, the [cakephp3](//github.com/mirko-pagliai/cakephp-thumber/tree/cakephp3) branch
-requires at least PHP 5.6.
+Recent packages and the master branch require at least CakePHP 4.0 and PHP 7.4
+and the current development of the code is based on these and later versions of
+CakePHP and PHP.
+However, there are still some branches compatible with previous versions of
+CakePHP and PHP.
+
+#### For PHP 7.2 or later
+The [php7.2](//github.com/mirko-pagliai/cakephp-thumber/tree/php7.2) branch
+requires at least PHP 7.2.
+
+In this case, you can install the package as well:
+```bash
+$ composer require --prefer-dist mirko-pagliai/cakephp-thumber:dev-php7.2
+```
+
+Note that the `php7.2` branch will no longer be updated as of April 29, 2022,
+except for security patches, and it matches the
+[1.9.9](https://github.com/mirko-pagliai/cakephp-thumber/releases/tag/1.9.9) version.
+
+#### For PHP 5.6 and CakePHP 3 or later
+The [cakephp3](//github.com/mirko-pagliai/cakephp-thumber/tree/cakephp3) branch
+requires at least PHP 5.6 and CakePHP 3.
 
 In this case, you can install the package as well:
 ```bash
