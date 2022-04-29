@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.10 branch
 ### 1.10.0
-* requires at least PHP 7.4.
+* requires at least PHP 7.4;
+* little fixes.
 
 ## 1.9 branch
 ### 1.9.9
