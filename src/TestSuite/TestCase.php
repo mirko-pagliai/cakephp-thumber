@@ -17,12 +17,14 @@ namespace Thumber\Cake\TestSuite;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 use Thumber\Cake\Utility\ThumbCreator;
 use Thumber\TestSuite\TestTrait;
+use Tools\TestSuite\BackwardCompatibilityTrait;
 
 /**
  * TestCase class
  */
 abstract class TestCase extends BaseTestCase
 {
+    use BackwardCompatibilityTrait;
     use TestTrait;
 
     /**

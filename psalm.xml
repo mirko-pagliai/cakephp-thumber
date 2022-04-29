@@ -33,6 +33,12 @@
             </errorLevel>
         </UndefinedConstant>
 
+        <UndefinedFunction>
+            <errorLevel type="suppress">
+                <file name="src/View/Helper/ThumbHelper.php" />
+            </errorLevel>
+        </UndefinedFunction>
+
         <UndefinedInterfaceMethod>
             <errorLevel type="suppress">
                 <file name="src/Middleware/ThumbnailMiddleware.php" />
