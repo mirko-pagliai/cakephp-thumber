@@ -80,7 +80,7 @@ class ThumbHelper extends Helper
      */
     protected function isUrlMethod(string $name): bool
     {
-        return string_ends_with($name, 'Url');
+        return str_ends_with($name, 'Url');
     }
 
     /**
