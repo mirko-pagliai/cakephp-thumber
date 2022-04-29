@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.9
-* added tests for PHP 8.1.
+* added tests for PHP 8.1;
+* little fixes.
 
 ### 1.9.8
 * fixed the bootstrap.
