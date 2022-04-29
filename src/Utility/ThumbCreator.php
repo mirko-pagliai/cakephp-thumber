@@ -71,11 +71,10 @@ class ThumbCreator extends BaseThumbCreator
      * @return string
      * @since 1.5.1
      * @throws \InvalidArgumentException
-     * @uses $target
      */
     public function getUrl(bool $fullBase = true): string
     {
-        Exceptionist::isTrue($this->target, __d(
+        Exceptionist::isTrue($this->target ?? false, __d(
             'thumber',
             'Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked',
             'save()'
