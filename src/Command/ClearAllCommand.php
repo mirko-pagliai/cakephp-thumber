@@ -31,16 +31,16 @@ class ClearAllCommand extends Command
      * A `ThumbManager` instance
      * @var \Thumber\Cake\Utility\ThumbManager
      */
-    public $ThumbManager;
+    public ThumbManager $ThumbManager;
 
     /**
-     * Hook method invoked by CakePHP when a command is about to be executed
-     * @return void
-     * @uses $ThumbManager
+     * Construct
      */
-    public function initialize(): void
+    public function __construct()
     {
-        $this->ThumbManager = $this->ThumbManager ?: new ThumbManager();
+        parent::__construct();
+
+        $this->ThumbManager = new ThumbManager();
     }
 
     /**
