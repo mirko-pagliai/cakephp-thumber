@@ -15,6 +15,18 @@
     </projectFiles>
 
     <issueHandlers>
+        <NullableReturnStatement>
+            <errorLevel type="suppress">
+                <file name="src/View/Helper/ThumbHelper.php" />
+            </errorLevel>
+        </NullableReturnStatement>
+
+        <RedundantPropertyInitializationCheck>
+            <errorLevel type="suppress">
+                <file name="src/Utility/ThumbCreator.php" />
+            </errorLevel>
+        </RedundantPropertyInitializationCheck>
+
         <UndefinedConstant>
             <errorLevel type="suppress">
                 <file name="src/Middleware/ThumbnailMiddleware.php" />
@@ -26,11 +38,5 @@
                 <file name="src/Middleware/ThumbnailMiddleware.php" />
             </errorLevel>
         </UndefinedInterfaceMethod>
-
-        <NullableReturnStatement>
-            <errorLevel type="suppress">
-                <file name="src/View/Helper/ThumbHelper.php" />
-            </errorLevel>
-        </NullableReturnStatement>
     </issueHandlers>
 </psalm>
