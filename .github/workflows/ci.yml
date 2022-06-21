@@ -29,7 +29,7 @@ jobs:
             thumber-driver: 'gd'
 
     steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
 
         - name: Validate composer.json and composer.lock
           run: composer validate --strict
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
 
         - name: Setup PHP
           uses: shivammathur/setup-php@v2
@@ -127,7 +127,7 @@ jobs:
       PHP_VERSION: '7.4'
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
