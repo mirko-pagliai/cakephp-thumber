@@ -24,15 +24,11 @@ use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * ClearAllCommandTest class
+ * @property \Thumber\Cake\Command\ClearAllCommand $Command
  */
 class ClearAllCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
-
-    /**
-     * @var \Thumber\Cake\Command\ClearAllCommand
-     */
-    protected $Command;
 
     /**
      * @var bool
