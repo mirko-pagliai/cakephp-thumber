@@ -47,15 +47,11 @@ class ThumbnailMiddlewareTest extends TestCase
         if (Configure::readOrFail('Thumber.driver') == 'imagick') {
             $extensions += [
                 'bmp' => 'image/x-ms-bmp',
-                'ico' => 'image/x-icon',
+                'ico' => 'image/vnd.microsoft.icon',
                 'psd' => 'image/vnd.adobe.photoshop',
                 'tif' => 'image/tiff',
                 'tiff' => 'image/tiff',
             ];
-
-            if (version_compare(PHP_VERSION, '7.4', '>=')) {
-                $extensions['ico'] = 'image/vnd.microsoft.icon';
-            }
         }
 
         $ThumbHelper = new ThumbHelper(new View());
