@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\Middleware;
 
+use Cake\Core\Configure;
 use Cake\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -44,8 +45,12 @@ class ThumbnailMiddleware implements MiddlewareInterface
 
         $response = new Response();
         $response = $response->withModified(filemtime($file) ?: 0);
-        if ($response->checkNotModified($request)) {
-            return $response;
+        /**
+         * @todo to be removed in a later version
+         */
+        $method = version_compare(Configure::version(), '4.4', '>=') ? 'isNotModified' : 'checkNotModified';
+        if ($response->$method($request)) {
+            return $response->withNotModified();
         }
 
         return $response->withFile($file)->withType(mime_content_type($file) ?: '');
