@@ -54,5 +54,10 @@
             "@psalm"
         ],
         "update-lowest": "@composer update --prefer-lowest"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
