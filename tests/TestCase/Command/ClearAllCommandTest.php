@@ -71,7 +71,7 @@ class ClearAllCommandTest extends TestCase
     {
         $this->expectException(StopException::class);
         $this->Command->ThumbManager = $this->getMockBuilder(ThumbManager::class)
-            ->setMethods(['_clear'])
+            ->onlyMethods(['_clear'])
             ->getMock();
         $this->Command->ThumbManager->method('_clear')
             ->will($this->throwException(new Exception()));
