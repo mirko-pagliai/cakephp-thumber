@@ -25,6 +25,7 @@ use Tools\Filesystem;
 
 /**
  * ThumbnailMiddlewareTest class
+ * @property \Cake\Http\Response $_response The response for the most recent request
  */
 class ThumbnailMiddlewareTest extends TestCase
 {

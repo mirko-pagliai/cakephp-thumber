@@ -90,17 +90,11 @@ jobs:
             coverage: none
             tools: cs2pr
 
-        - name: Cache Composer packages
-          id: composer-cache
-          uses: actions/cache@v2
-          with:
-            path: vendor
-            key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-            restore-keys: |
-              ${{ runner.os }}-php-
-
         - name: Composer install
-          run: composer stan-setup
+          run: composer update
+
+        - name: Composer show
+          run: composer show
 
         - name: Run PHP CodeSniffer
           continue-on-error: true
@@ -111,7 +105,7 @@ jobs:
 
         - name: Run psalm
           if: success() || failure()
-          run: vendor/bin/psalm.phar --output-format=github
+          run: vendor/bin/psalm.phar --output-format=github --php-version=8.0
 
         - name: Run phpstan
           if: success() || failure()
