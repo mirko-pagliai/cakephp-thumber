@@ -16,7 +16,7 @@ namespace Thumber\Cake\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
 use Cake\Console\Exception\StopException;
-use Cake\TestSuite\Stub\ConsoleOutput;
+use Cake\Console\TestSuite\StubConsoleOutput;
 use Exception;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 use Thumber\Cake\TestSuite\TestCase;
@@ -101,6 +101,6 @@ class ClearCommandTest extends TestCase
         $this->Command->ThumbManager->method('_clear')
             ->will($this->throwException(new Exception()));
 
-        $this->Command->run(['noExisting'], new ConsoleIo(null, new ConsoleOutput()));
+        $this->Command->run(['noExisting'], new ConsoleIo(null, new StubConsoleOutput()));
     }
 }

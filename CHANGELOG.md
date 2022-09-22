@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.10 branch
+### 1.10.2
+* updated for CakePHP 4.4.
+
 ### 1.10.1
 * ready for CakePHP 4.4.
 
