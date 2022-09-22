@@ -20,8 +20,8 @@
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",
         "phpunit/phpunit": "^9.1|^9.5",
-        "phpstan/phpstan": "^0.12",
-        "psalm/phar": "^3.18|^4"
+        "phpstan/phpstan": "^1.7",
+        "psalm/phar": "^4.24"
     },
     "autoload": {
         "psr-4": {
