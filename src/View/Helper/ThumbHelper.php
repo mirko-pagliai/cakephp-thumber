@@ -50,22 +50,22 @@ class ThumbHelper extends Helper
      *      a relative path (to APP/webroot/img), a full path or a remote url;
      *  - $params Parameters for creating the thumbnail;
      *  - $options Array of HTML attributes for the `img` element.
-     * @param string $name Method to invoke
+     * @param string $method Method to invoke
      * @param array $params Array of params for the method
      * @return string
-     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
-     * @since 1.4.0
      * @throws \InvalidArgumentException
+     * @since 1.4.0
+     * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
      * @uses isUrlMethod()
      * @uses runUrlMethod()
      */
-    public function __call(string $name, array $params): string
+    public function __call(string $method, array $params): string
     {
         [$path, $params, $options] = $params + [null, [], []];
         Exceptionist::isTrue($path, __d('thumber', 'Thumbnail path is missing'), InvalidArgumentException::class);
-        $url = $this->runUrlMethod($name, $path, $params, $options);
+        $url = $this->runUrlMethod($method, $path, $params, $options);
 
-        return $this->isUrlMethod($name) ? $url : $this->Html->image($url, $options);
+        return $this->isUrlMethod($method) ? $url : $this->Html->image($url, $options);
     }
 
     /**

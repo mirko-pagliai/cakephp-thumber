@@ -28,7 +28,7 @@ class ThumbHelperTest extends TestCase
     /**
      * @var \Thumber\Cake\View\Helper\ThumbHelper
      */
-    protected $Thumb;
+    protected ThumbHelper $Thumb;
 
     /**
      * Called before every test method

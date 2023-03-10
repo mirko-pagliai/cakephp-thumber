@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -38,7 +39,7 @@ class ClearAllCommandTest extends TestCase
     /**
      * @var string
      */
-    protected $command = 'thumber.clear_all -v';
+    protected string $command = 'thumber.clear_all -v';
 
     /**
      * Tests for `execute()` method
