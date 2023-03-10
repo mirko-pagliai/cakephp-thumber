@@ -51,7 +51,7 @@ class ThumbManager extends BaseThumbManager
      * @param string $path Path of the original image
      * @param bool $sort Whether results should be sorted
      * @return array<string, string>
-     * @uses resolveFilePath()
+     * @throws \Tools\Exception\NotReadableException
      */
     public function get(string $path, bool $sort = false): array
     {
