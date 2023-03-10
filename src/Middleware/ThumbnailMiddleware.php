@@ -41,7 +41,7 @@ class ThumbnailMiddleware implements MiddlewareInterface
     {
         /** @var \Cake\Http\ServerRequest $request */
         $file = Filesystem::instance()->concatenate(THUMBER_TARGET, base64_decode($request->getParam('basename')));
-        Exceptionist::isReadable($file, __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
+        Exceptionist::isTrue(is_readable($file), __d('thumber', 'File `{0}` doesn\'t exist', $file), ThumbNotFoundException::class);
 
         $response = new Response();
         $response = $response->withModified(filemtime($file) ?: 0);
