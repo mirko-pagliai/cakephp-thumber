@@ -3,7 +3,8 @@
 ### 1.11.0
 * the `ThumbCreator` class has been revised;
 * `ThumberCreator::getImageInstance()` and `ThumberCreator::save()` methods have been, because they would now coincide
-  with the methods of the extended class.
+  with the methods of the extended class;
+* added tests for `ThumbManager` class.
 
 ## 1.10 branch
 ### 1.10.2
