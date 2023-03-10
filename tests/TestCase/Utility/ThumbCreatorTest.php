@@ -62,7 +62,7 @@ class ThumbCreatorTest extends TestCase
         $this->expectExceptionMessage('Image type `image/jpeg` is not supported by this driver');
         $thumbCreator = $this->getThumbCreatorInstance();
         $thumbCreator->ImageManager = $this->getMockBuilder(ImageManager::class)
-            ->setMethods(['make'])
+            ->onlyMethods(['make'])
             ->getMock();
         $thumbCreator->ImageManager->method('make')->will($this->throwException(new UnsupportedImageTypeException('', 0, E_ERROR, __FILE__, __LINE__, null, 'image/jpeg')));
         $this->invokeMethod($thumbCreator, 'getImageInstance');
@@ -79,7 +79,7 @@ class ThumbCreatorTest extends TestCase
 
         $thumbCreator = $this->getThumbCreatorInstance();
         $thumbCreator->ImageManager = $this->getMockBuilder(ImageManager::class)
-            ->setMethods(['make'])
+            ->onlyMethods(['make'])
             ->getMock();
         $thumbCreator->ImageManager->method('make')->will($this->throwException(new NotReadableImageException('', 0, E_ERROR, __FILE__, __LINE__, null, 'anExampleFile')));
         $this->invokeMethod($thumbCreator, 'getImageInstance');
