@@ -76,11 +76,4 @@ define('THUMBER_COMPARING_DIR', THUMBER_EXAMPLE_DIR . 'comparing_files' . DS . g
 define('THUMBER_TARGET', Configure::read('Thumber.target', TMP . 'thumbs'));
 $_SERVER['PHP_SELF'] = '/';
 
-/**
- * @todo to be removed in a later version
- */
-if (!class_exists('Cake\Console\TestSuite\StubConsoleOutput')) {
-    class_alias('Cake\TestSuite\Stub\ConsoleOutput', 'Cake\Console\TestSuite\StubConsoleOutput');
-}
-
 echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;

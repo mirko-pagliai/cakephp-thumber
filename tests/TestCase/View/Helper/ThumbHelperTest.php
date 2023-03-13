@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -14,21 +15,22 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\Test\TestCase\View\Helper;
 
-use BadMethodCallException;
 use Cake\View\View;
-use InvalidArgumentException;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Cake\View\Helper\ThumbHelper;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * ThumbHelperTest class
  */
 class ThumbHelperTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * @var \Thumber\Cake\View\Helper\ThumbHelper
      */
-    protected $Thumb;
+    protected ThumbHelper $Thumb;
 
     /**
      * Called before every test method
@@ -38,12 +40,14 @@ class ThumbHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->Thumb = $this->Thumb ?: new ThumbHelper(new View());
+        if (empty($this->Thumb)) {
+            $this->Thumb = new ThumbHelper(new View());
+        }
     }
 
     /**
-     * Test for magic `__call()` method
      * @test
+     * @uses \Thumber\Cake\View\Helper\ThumbHelper::__call()
      */
     public function testMagicCall(): void
     {
@@ -77,43 +81,39 @@ class ThumbHelperTest extends TestCase
         }
 
         //Calling a no existing method
-        $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Method `Thumber\Cake\Utility\ThumbCreator::noExisting()` does not exist');
-        /** @phpstan-ignore-next-line */
         $this->Thumb->noExisting('400x400.png');
     }
 
     /**
      * Test for magic `_call()` method, called without parameters
      * @test
+     * @uses \Thumber\Cake\View\Helper\ThumbHelper::__call()
      */
     public function testMagicCallWithoutParameters(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('You have to set at least the width for the `Thumber\ThumbCreator::crop()` method');
         $this->Thumb->crop('400x400.png');
     }
 
     /**
      * Test for magic `_call()` method, called without path
      * @test
+     * @uses \Thumber\Cake\View\Helper\ThumbHelper::__call()
      */
     public function testMagicCallWithoutPath(): void
     {
-        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Thumbnail path is missing');
-        /** @phpstan-ignore-next-line */
         $this->Thumb->crop();
     }
 
     /**
-     * Test for magic `isUrlMethod()` method
      * @test
+     * @uses \Thumber\Cake\View\Helper\ThumbHelper::isUrlMethod()
      */
     public function testIsUrlMethod(): void
     {
-        $isUrlMethod = function (string $methodName) {
-            return $this->invokeMethod($this->Thumb, 'isUrlMethod', [$methodName]);
-        };
+        $isUrlMethod = fn(string $methodName) => $this->invokeMethod($this->Thumb, 'isUrlMethod', [$methodName]);
 
         $this->assertFalse($isUrlMethod('method'));
         $this->assertTrue($isUrlMethod('methodUrl'));

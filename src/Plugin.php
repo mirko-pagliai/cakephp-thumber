@@ -46,7 +46,7 @@ class Plugin extends BasePlugin
      * @return \Cake\Console\CommandCollection
      * @since 1.7.1
      */
-    public function console($commands): CommandCollection
+    public function console(CommandCollection $commands): CommandCollection
     {
         return $commands->add('thumber.clear', ClearCommand::class)
             ->add('thumber.clear_all', ClearAllCommand::class);

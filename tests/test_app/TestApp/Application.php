@@ -15,8 +15,8 @@ class Application extends BaseApplication
         $this->addPlugin(Thumber::class);
     }
 
-    public function middleware(MiddlewareQueue $middleware): MiddlewareQueue
+    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
-        return $middleware->add(new RoutingMiddleware($this));
+        return $middlewareQueue->add(new RoutingMiddleware($this));
     }
 }

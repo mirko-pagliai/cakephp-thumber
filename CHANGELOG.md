@@ -1,4 +1,13 @@
 # 1.x branch
+## 1.11 branch
+### 1.11.0
+* the `ThumbCreator` class has been revised;
+* `ThumberCreator::getImageInstance()` and `ThumberCreator::save()` methods have been, because they would now coincide
+  with the methods of the extended class;
+* all methods of `TestCase` class have been moved to the new `TestTrait`;
+* minor code, test, and documentation improvements;
+* added tests for `ThumbManager` class.
+
 ## 1.10 branch
 ### 1.10.2
 * updated for CakePHP 4.4;
@@ -94,7 +103,7 @@
 * removed `ConsoleIntegrationTestTrait`, because it is now sufficient to use the
     same trait provided by `me-tools`;
 * updated for CakePHP 3.7.1 and `php-tools` 1.1.12;
-* added [API](//mirko-pagliai.github.io/cakephp-thumber).
+* added [API](http://mirko-pagliai.github.io/cakephp-thumber).
 
 ### 1.7.0
 * `ThumberShell` has been replaced with console commands. Every method of the
