@@ -19,7 +19,7 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Exception;
-use MeTools\Console\Command;
+use MeTools\Command\Command;
 use Thumber\Cake\Utility\ThumbManager;
 
 /**
@@ -72,6 +72,6 @@ class ClearCommand extends Command
             $this->abort();
         }
 
-        $io->verbose(__d('thumber', 'Thumbnails deleted: {0}', $count ?? 0));
+        $io->verbose(__d('thumber', 'Thumbnails deleted: {0}', $count));
     }
 }
