@@ -18,6 +18,7 @@ namespace Thumber\Cake\Test\TestCase\Utility;
 use Cake\Core\Configure;
 use ErrorException;
 use Intervention\Image\ImageManager;
+use MeTools\Core\Plugin;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Exception\NotReadableImageException;
 use Thumber\Exception\UnsupportedImageTypeException;
@@ -40,7 +41,7 @@ class ThumbCreatorTest extends TestCase
     public function testConstructNoExistingFile(): void
     {
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `tests' . DS . 'test_app' . DS . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `' . WWW_ROOT . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('noExistingFile.gif');
     }
 
@@ -53,7 +54,7 @@ class ThumbCreatorTest extends TestCase
     {
         $this->expectException(NotReadableException::class);
         $this->loadPlugins(['TestPlugin' => []]);
-        $this->expectExceptionMessage('File or directory `tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'TestPlugin' . DS . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
+        $this->expectExceptionMessage('File or directory `' . Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
 
