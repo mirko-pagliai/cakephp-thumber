@@ -58,7 +58,7 @@ class ThumbManagerTest extends TestCase
 
         $this->loadPlugins(['TestPlugin' => []]);
         $result = $this->invokeMethod($this->ThumbManager, 'resolveFilePath', ['TestPlugin.400x400.png']);
-        $this->assertSame(Plugin::path('TestPlugin', 'webroot'. DS . 'img' . DS . '400x400.png'), $result);
+        $this->assertSame(Plugin::path('TestPlugin', 'webroot' . DS . 'img' . DS . '400x400.png'), $result);
     }
 
     /**

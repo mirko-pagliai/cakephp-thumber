@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Thumber\Cake\View\Helper;
 
 use Cake\View\Helper;
-use InvalidArgumentException;
 use Thumber\Cake\Utility\ThumbCreator;
 use Tools\Exceptionist;
 

@@ -16,15 +16,8 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\Utility;
 
-use BadMethodCallException;
 use Cake\Routing\Router;
-use Intervention\Image\Image;
-use InvalidArgumentException;
-use Thumber\Cake\Utility\ThumbManager;
-use Thumber\Exception\NotReadableImageException;
-use Thumber\Exception\UnsupportedImageTypeException;
 use Thumber\ThumbCreator as BaseThumbCreator;
-use Tools\Exception\NotWritableException;
 use Tools\Exceptionist;
 
 /**

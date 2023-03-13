@@ -22,7 +22,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
-use Tools\Exceptionist;
 use Tools\Filesystem;
 
 /**
