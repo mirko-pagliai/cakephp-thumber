@@ -1,5 +1,5 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpDocMissingThrowsInspection,PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -40,7 +40,9 @@ class ThumbManagerTest extends TestCase
     {
         parent::setUp();
 
-        $this->ThumbManager ??= new ThumbManager();
+        if (empty($this->ThumbManager)) {
+            $this->ThumbManager = new ThumbManager();
+        }
 
         $this->createSomeThumbs();
     }
@@ -67,5 +69,28 @@ class ThumbManagerTest extends TestCase
     {
         $this->assertCount(2, $this->ThumbManager->get('400x400.jpg'));
         $this->assertCount(1, $this->ThumbManager->get('400x400.png'));
+    }
+
+    /**
+     * @test
+     * @uses \Thumber\Cake\Utility\ThumbManager::clear()
+     */
+    public function testClear(): void
+    {
+        $this->assertEquals(2, $this->ThumbManager->clear('400x400.jpg'));
+        $this->assertEquals(1, $this->ThumbManager->clear('400x400.png'));
+
+        $this->createSomeThumbs();
+        $this->assertEquals(1, $this->ThumbManager->clear(WWW_ROOT . 'img' . DS . '400x400.png'));
+    }
+
+    /**
+     * @test
+     * @uses \Thumber\Cake\Utility\ThumbManager::clearAll()
+     */
+    public function testClearAll(): void
+    {
+        $this->assertEquals(3, $this->ThumbManager->clearAll());
+        $this->assertEmpty($this->ThumbManager->getAll());
     }
 }
