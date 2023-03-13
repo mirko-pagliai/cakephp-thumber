@@ -5,6 +5,7 @@
 * `ThumberCreator::getImageInstance()` and `ThumberCreator::save()` methods have been, because they would now coincide
   with the methods of the extended class;
 * all methods of `TestCase` class have been moved to the new `TestTrait`;
+* minor code, test, and documentation improvements;
 * added tests for `ThumbManager` class.
 
 ## 1.10 branch

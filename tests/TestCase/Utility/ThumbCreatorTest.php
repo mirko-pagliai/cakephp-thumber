@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -50,8 +51,8 @@ class ThumbCreatorTest extends TestCase
      */
     public function testConstructNoExistingFileFromPlugin(): void
     {
-        $this->loadPlugins(['TestPlugin' => []]);
         $this->expectException(NotReadableException::class);
+        $this->loadPlugins(['TestPlugin' => []]);
         $this->expectExceptionMessage('File or directory `tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'TestPlugin' . DS . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
     }
@@ -65,10 +66,10 @@ class ThumbCreatorTest extends TestCase
     {
         $this->expectException(UnsupportedImageTypeException::class);
         $this->expectExceptionMessage('Image type `image/jpeg` is not supported by this driver');
-        $thumbCreator = $this->getThumbCreatorInstance();
-        $thumbCreator->ImageManager = $this->createPartialMock(ImageManager::class, ['make']);
-        $thumbCreator->ImageManager->method('make')->willThrowException(new UnsupportedImageTypeException('Image type `image/jpeg` is not supported by this driver'));
-        $this->invokeMethod($thumbCreator, 'getImageInstance');
+        $ThumbCreator = $this->getThumbCreatorInstance();
+        $ThumbCreator->ImageManager = $this->createPartialMock(ImageManager::class, ['make']);
+        $ThumbCreator->ImageManager->method('make')->willThrowException(new UnsupportedImageTypeException('Image type `image/jpeg` is not supported by this driver'));
+        $this->invokeMethod($ThumbCreator, 'getImageInstance');
     }
 
     /**
@@ -80,10 +81,10 @@ class ThumbCreatorTest extends TestCase
     {
         $this->expectException(NotReadableImageException::class);
         $this->expectExceptionMessage('Unable to read image from file `anExampleFile`');
-        $thumbCreator = $this->getThumbCreatorInstance();
-        $thumbCreator->ImageManager = $this->createPartialMock(ImageManager::class, ['make']);
-        $thumbCreator->ImageManager->method('make')->willThrowException(new NotReadableImageException('Unable to read image from file `anExampleFile`'));
-        $this->invokeMethod($thumbCreator, 'getImageInstance');
+        $ThumbCreator = $this->getThumbCreatorInstance();
+        $ThumbCreator->ImageManager = $this->createPartialMock(ImageManager::class, ['make']);
+        $ThumbCreator->ImageManager->method('make')->willThrowException(new NotReadableImageException('Unable to read image from file `anExampleFile`'));
+        $this->invokeMethod($ThumbCreator, 'getImageInstance');
     }
 
     /**

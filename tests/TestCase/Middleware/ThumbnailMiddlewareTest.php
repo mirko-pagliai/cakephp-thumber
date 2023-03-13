@@ -33,7 +33,6 @@ class ThumbnailMiddlewareTest extends TestCase
     use IntegrationTestTrait;
 
     /**
-     * Test for `thumb()` method, with some files
      * @test
      */
     public function testThumb(): void
@@ -89,7 +88,7 @@ class ThumbnailMiddlewareTest extends TestCase
         $this->assertResponseOk();
         $this->assertNotEquals($lastModified, $this->_response->getHeader('Last-Modified')[0]);
 
-        //With a a no existing file
+        //With a no existing file
         $this->expectException(ThumbNotFoundException::class);
         $this->expectExceptionMessage('File `' . Filesystem::instance()->concatenate(THUMBER_TARGET, 'noExistingFile') . '` doesn\'t exist');
         $this->disableErrorHandlerMiddleware();
