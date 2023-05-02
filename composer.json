@@ -15,7 +15,7 @@
         "ext-fileinfo": "*",
         "cakephp/cakephp": "^4.4",
         "intervention/image": "^2.4",
-        "mirko-pagliai/me-tools": "~2.23.1",
+        "mirko-pagliai/me-tools": "~2.23.1|~2.24",
         "mirko-pagliai/php-thumber": "~1.5.3"
     },
     "require-dev": {
