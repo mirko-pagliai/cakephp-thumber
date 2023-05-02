@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.11 branch
+### 1.11.1
+* updated for `me-tools` 2.24.
+
 ### 1.11.0
 * the `ThumbCreator` class has been revised;
 * `ThumberCreator::getImageInstance()` and `ThumberCreator::save()` methods have been, because they would now coincide
