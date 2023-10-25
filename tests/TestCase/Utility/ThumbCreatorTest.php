@@ -16,8 +16,8 @@ declare(strict_types=1);
 namespace Thumber\Cake\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Intervention\Image\ImageManager;
-use MeTools\Core\Plugin;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Exception\NotReadableImageException;
 use Thumber\Exception\UnsupportedImageTypeException;
@@ -30,6 +30,16 @@ use Tools\TestSuite\ReflectionTrait;
 class ThumbCreatorTest extends TestCase
 {
     use ReflectionTrait;
+
+    /**
+     * @inheritDoc
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loadPlugins(['Thumber/Cake' => []]);
+    }
 
     /**
      * Test for `__construct()` method, passing a no existing file

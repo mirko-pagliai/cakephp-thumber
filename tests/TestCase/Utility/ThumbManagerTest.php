@@ -15,7 +15,6 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\Test\TestCase\Utility;
 
-use MeTools\Core\Plugin;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Cake\Utility\ThumbManager;
 use Tools\TestSuite\ReflectionTrait;
@@ -33,10 +32,9 @@ class ThumbManagerTest extends TestCase
     protected ThumbManager $ThumbManager;
 
     /**
-     * Called before every test method
-     * @return void
+     * @inheritDoc
      */
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -58,7 +56,7 @@ class ThumbManagerTest extends TestCase
 
         $this->loadPlugins(['TestPlugin' => []]);
         $result = $this->invokeMethod($this->ThumbManager, 'resolveFilePath', ['TestPlugin.400x400.png']);
-        $this->assertSame(Plugin::path('TestPlugin', 'webroot' . DS . 'img' . DS . '400x400.png'), $result);
+        $this->assertStringEndsWith('test_app/Plugin/TestPlugin/webroot/img/400x400.png', $result);
     }
 
     /**

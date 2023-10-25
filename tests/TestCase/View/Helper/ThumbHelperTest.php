@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -13,6 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Thumber\Cake\Test\TestCase\View\Helper;
 
 use Cake\View\View;
@@ -33,12 +33,13 @@ class ThumbHelperTest extends TestCase
     protected ThumbHelper $Thumb;
 
     /**
-     * Called before every test method
-     * @return void
+     * @inheritDoc
      */
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->loadPlugins(['Thumber/Cake' => []]);
 
         if (empty($this->Thumb)) {
             $this->Thumb = new ThumbHelper(new View());

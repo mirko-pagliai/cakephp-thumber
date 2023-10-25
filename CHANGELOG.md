@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.11 branch
 ### 1.11.2
+* no longer needs the `me-tools` package;
 * no longer uses the `Exceptionist` class;
 * added tests for PHP 8.2.
 
