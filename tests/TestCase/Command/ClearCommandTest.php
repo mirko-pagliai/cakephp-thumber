@@ -17,9 +17,11 @@ namespace Thumber\Cake\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
 use Cake\Console\Exception\StopException;
+use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Console\TestSuite\StubConsoleOutput;
 use Exception;
-use MeTools\TestSuite\CommandTestCase;
+use Thumber\Cake\Command\ClearCommand;
+use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Cake\TestSuite\TestTrait;
 use Thumber\Cake\Utility\ThumbManager;
 
@@ -27,8 +29,9 @@ use Thumber\Cake\Utility\ThumbManager;
  * ClearCommandTest class
  * @property \Thumber\Cake\Command\ClearCommand $Command
  */
-class ClearCommandTest extends CommandTestCase
+class ClearCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
     use TestTrait;
 
     /**
@@ -37,6 +40,8 @@ class ClearCommandTest extends CommandTestCase
      */
     public function testExecute(): void
     {
+        $this->useCommandRunner();
+
         $command = 'thumber.clear -v';
 
         $this->createSomeThumbs();
@@ -59,11 +64,20 @@ class ClearCommandTest extends CommandTestCase
         $this->exec($command . ' ' . DS . 'noExisting');
         $this->assertExitError();
         $this->assertErrorContains('Error deleting thumbnails');
+    }
 
-        //On failure
+    /**
+     * Test for `execute()` method, on failure
+     * @test
+     * @uses \Thumber\Cake\Command\ClearCommand::execute()
+     */
+    public function testExecuteOnFailure(): void
+    {
         $this->expectException(StopException::class);
-        $this->Command->ThumbManager = $this->createPartialMock(ThumbManager::class, ['_clear']);
-        $this->Command->ThumbManager->method('_clear')->willThrowException(new Exception());
-        $this->Command->run(['noExisting'], new ConsoleIo(null, new StubConsoleOutput()));
+        $ThumbManager = $this->createPartialMock(ThumbManager::class, ['_clear']);
+        $ThumbManager->method('_clear')->willThrowException(new Exception());
+        $Command = $this->createPartialMock(ClearCommand::class, ['getThumbManager']);
+        $Command->method('getThumbManager')->willReturn($ThumbManager);
+        $Command->run(['noExisting'], new ConsoleIo(null, new StubConsoleOutput()));
     }
 }

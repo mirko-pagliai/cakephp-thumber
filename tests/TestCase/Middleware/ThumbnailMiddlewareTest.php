@@ -16,8 +16,8 @@ declare(strict_types=1);
 namespace Thumber\Cake\Test\TestCase\Middleware;
 
 use Cake\Core\Configure;
+use Cake\TestSuite\IntegrationTestTrait;
 use Cake\View\View;
-use MeTools\TestSuite\IntegrationTestTrait;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Cake\Utility\ThumbCreator;
@@ -34,9 +34,12 @@ class ThumbnailMiddlewareTest extends TestCase
 
     /**
      * @test
+     * @uses \Thumber\Cake\Middleware\ThumbnailMiddleware::process()
      */
     public function testThumb(): void
     {
+        $this->loadPlugins(['Thumber/Cake' => []]);
+
         $extensions = [
             'gif' => 'image/gif',
             'jpeg' => 'image/jpeg',

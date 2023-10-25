@@ -15,11 +15,11 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\Command;
 
+use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Exception;
-use MeTools\Command\Command;
 use Thumber\Cake\Utility\ThumbManager;
 
 /**
@@ -27,22 +27,6 @@ use Thumber\Cake\Utility\ThumbManager;
  */
 class ClearAllCommand extends Command
 {
-    /**
-     * A `ThumbManager` instance
-     * @var \Thumber\Cake\Utility\ThumbManager
-     */
-    public ThumbManager $ThumbManager;
-
-    /**
-     * Construct
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->ThumbManager = new ThumbManager();
-    }
-
     /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
@@ -54,6 +38,15 @@ class ClearAllCommand extends Command
     }
 
     /**
+     * Internal method to get a `ThumbManager` instance
+     * @return \Thumber\Cake\Utility\ThumbManager
+     */
+    protected function getThumbManager(): ThumbManager
+    {
+        return new ThumbManager();
+    }
+
+    /**
      * Clears all thumbnails
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
@@ -62,7 +55,7 @@ class ClearAllCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): void
     {
         try {
-            $count = $this->ThumbManager->clearAll();
+            $count = $this->getThumbManager()->clearAll();
         } catch (Exception $e) {
             $io->err(__d('thumber', 'Error deleting thumbnails'));
             $this->abort();

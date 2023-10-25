@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.4', '8.0', '8.1']
+        php-version: ['7.4', '8.0', '8.1', '8.2']
         prefer-lowest: ['']
         thumber-driver: ['imagick', 'gd']
         include:
@@ -23,6 +23,9 @@ jobs:
             prefer-lowest: 'prefer-lowest'
             thumber-driver: 'imagick'
           - php-version: '8.1'
+            prefer-lowest: 'prefer-lowest'
+            thumber-driver: 'imagick'
+          - php-version: '8.2'
             prefer-lowest: 'prefer-lowest'
             thumber-driver: 'imagick'
           - php-version: '7.4'
@@ -42,7 +45,7 @@ jobs:
 
         - name: Cache Composer packages
           id: composer-cache
-          uses: actions/cache@v2
+          uses: actions/cache@v3
           with:
             path: vendor
             key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -73,8 +76,8 @@ jobs:
             fi
 
         - name: Submit code coverage
-          if: matrix.php-version == '8.0'
-          uses: codecov/codecov-action@v2
+          if: matrix.php-version == '8.1'
+          uses: codecov/codecov-action@v3
 
   cs-stan:
     name: Coding Standard & Static Analysis
@@ -86,7 +89,7 @@ jobs:
         - name: Setup PHP
           uses: shivammathur/setup-php@v2
           with:
-            php-version: '8.0'
+            php-version: '8.1'
             coverage: none
             tools: cs2pr
 
@@ -105,11 +108,11 @@ jobs:
 
         - name: Run psalm
           if: success() || failure()
-          run: vendor/bin/psalm.phar --output-format=github --php-version=8.0
+          run: vendor/bin/psalm --output-format=github --php-version=8.1
 
         - name: Run phpstan
           if: success() || failure()
-          run: vendor/bin/phpstan.phar analyse --error-format=github
+          run: vendor/bin/phpstan analyse --error-format=github
 
 
   testsuite-windows:
@@ -133,7 +136,7 @@ jobs:
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}

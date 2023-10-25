@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\TestSuite;
 
-use MeTools\TestSuite\TestCase as BaseTestCase;
+use Cake\TestSuite\TestCase as BaseTestCase;
 use Tools\Filesystem;
 
 /**
@@ -25,13 +25,19 @@ abstract class TestCase extends BaseTestCase
     use TestTrait;
 
     /**
-     * Called after every test method
-     * @return void
-     * @throws \Symfony\Component\Filesystem\Exception\IOException
-     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @throws \Tools\Exception\MethodNotExistsException
+     * @inheritDoc
      */
-    protected function tearDown(): void
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loadPlugins(['Thumber\\Cake\\Plugin' => []]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function tearDown(): void
     {
         Filesystem::instance()->unlinkRecursive(THUMBER_TARGET);
 
