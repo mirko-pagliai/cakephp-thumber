@@ -17,8 +17,8 @@ declare(strict_types=1);
 namespace Thumber\Cake\Utility;
 
 use Cake\Routing\Router;
+use LogicException;
 use Thumber\ThumbCreator as BaseThumbCreator;
-use Tools\Exceptionist;
 
 /**
  * Utility to create a thumb.
@@ -44,16 +44,18 @@ class ThumbCreator extends BaseThumbCreator
      * Builds and returns the url for the generated thumbnail
      * @param bool $fullBase If `true`, the full base URL will be prepended to the result
      * @return string
-     * @throws \ErrorException
+     * @throws \LogicException
      * @since 1.5.1
      */
     public function getUrl(bool $fullBase = true): string
     {
-        Exceptionist::isTrue(!empty($this->target), __d(
-            'thumber',
-            'Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked',
-            'save()'
-        ));
+        if (empty($this->target)) {
+            throw new LogicException(__d(
+                'thumber',
+                'Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked',
+                'save()'
+            ));
+        }
 
         return Router::url(['_name' => 'thumb', base64_encode(basename($this->target))], $fullBase);
     }

@@ -16,8 +16,8 @@ declare(strict_types=1);
 namespace Thumber\Cake\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
-use ErrorException;
 use Intervention\Image\ImageManager;
+use LogicException;
 use MeTools\Core\Plugin;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Exception\NotReadableImageException;
@@ -117,7 +117,7 @@ class ThumbCreatorTest extends TestCase
         //When unable to create the file
         $this->assertException(function () {
             $this->getThumbCreatorInstance()->save();
-        }, ErrorException::class, 'No valid method called before the `save()` method');
+        }, LogicException::class, 'No valid method called before the `save()` method');
 
         //Without a valid method called before
         $this->skipIf(IS_WIN);

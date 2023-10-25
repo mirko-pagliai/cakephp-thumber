@@ -16,8 +16,9 @@ declare(strict_types=1);
 namespace Thumber\Cake\View\Helper;
 
 use Cake\View\Helper;
+use LogicException;
 use Thumber\Cake\Utility\ThumbCreator;
-use Tools\Exceptionist;
+use Tools\Exception\MethodNotExistsException;
 
 /**
  * Thumb Helper.
@@ -51,14 +52,17 @@ class ThumbHelper extends Helper
      * @param string $method Method to invoke
      * @param array $params Array of params for the method
      * @return string
-     * @throws \ErrorException
+     * @throws \LogicException
+     * @throws \Tools\Exception\MethodNotExistsException
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
      * @since 1.4.0
      */
     public function __call(string $method, array $params): string
     {
         [$path, $params, $options] = $params + [null, [], []];
-        Exceptionist::isTrue($path, __d('thumber', 'Thumbnail path is missing'));
+        if (empty($path)) {
+            throw new LogicException(__d('thumber', 'Thumbnail path is missing'));
+        }
         $url = $this->runUrlMethod($method, $path, $params, $options);
 
         return $this->isUrlMethod($method) ? $url : $this->Html->image($url, $options);
@@ -86,7 +90,6 @@ class ThumbHelper extends Helper
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string Thumbnail url
-     * @throws \ErrorException
      * @throws \Tools\Exception\MethodNotExistsException
      * @since 1.4.0
      */
@@ -97,7 +100,9 @@ class ThumbHelper extends Helper
         $options += ['fullBase' => true];
 
         $className = ThumbCreator::class;
-        Exceptionist::methodExists($className, $name, __d('thumber', 'Method `{0}::{1}()` does not exist', $className, $name));
+        if (!method_exists($className, $name)) {
+            throw new MethodNotExistsException(__d('thumber', 'Method `{0}::{1}()` does not exist', $className, $name));
+        }
         $Thumber = new $className($path);
         $Thumber->$name($params['width'], $params['height'])->save($params);
 
