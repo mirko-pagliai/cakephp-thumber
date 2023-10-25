@@ -105,11 +105,11 @@ jobs:
 
         - name: Run psalm
           if: success() || failure()
-          run: vendor/bin/psalm.phar --output-format=github --php-version=8.0
+          run: vendor/bin/psalm --output-format=github --php-version=8.0
 
         - name: Run phpstan
           if: success() || failure()
-          run: vendor/bin/phpstan.phar analyse --error-format=github
+          run: vendor/bin/phpstan analyse --error-format=github
 
 
   testsuite-windows:

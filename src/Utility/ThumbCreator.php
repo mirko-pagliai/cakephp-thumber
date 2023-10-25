@@ -49,7 +49,7 @@ class ThumbCreator extends BaseThumbCreator
      */
     public function getUrl(bool $fullBase = true): string
     {
-        Exceptionist::isTrue($this->target ?? false, __d(
+        Exceptionist::isTrue(!empty($this->target), __d(
             'thumber',
             'Missing path of the generated thumbnail. Probably the `{0}` method has not been invoked',
             'save()'
