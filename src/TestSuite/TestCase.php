@@ -24,6 +24,9 @@ abstract class TestCase extends BaseTestCase
 {
     use TestTrait;
 
+    /**
+     * @inheritDoc
+     */
     public function setUp(): void
     {
         parent::setUp();
