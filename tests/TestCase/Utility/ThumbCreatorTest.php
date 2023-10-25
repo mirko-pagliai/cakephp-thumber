@@ -17,13 +17,11 @@ namespace Thumber\Cake\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Intervention\Image\ImageManager;
-use LogicException;
 use MeTools\Core\Plugin;
 use Thumber\Cake\TestSuite\TestCase;
 use Thumber\Exception\NotReadableImageException;
 use Thumber\Exception\UnsupportedImageTypeException;
 use Tools\Exception\NotReadableException;
-use Tools\Exception\NotWritableException;
 use Tools\TestSuite\ReflectionTrait;
 
 /**
@@ -109,20 +107,25 @@ class ThumbCreatorTest extends TestCase
     }
 
     /**
+     * Test for `save()` method, with no valid method called before
      * @test
      * @uses \Thumber\Cake\Utility\ThumbCreator::save()
      */
-    public function testSave(): void
+    public function testSaveWithNoValidMethod(): void
     {
-        //When unable to create the file
-        $this->assertException(function () {
-            $this->getThumbCreatorInstance()->save();
-        }, LogicException::class, 'No valid method called before the `save()` method');
+        $this->expectExceptionMessage('No valid method called before the `save()` method');
+        $this->getThumbCreatorInstance()->save();
+    }
 
-        //Without a valid method called before
+    /**
+     * Test for `save()` method, with a bad target
+     * @test
+     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     */
+    public function testSaveWithBadTarget(): void
+    {
         $this->skipIf(IS_WIN);
-        $this->assertException(function () {
-            $this->getThumbCreatorInstance()->resize(200)->save(['target' => DS . 'noExisting']);
-        }, NotWritableException::class, 'Unable to create file `' . DS . 'noExisting`');
+        $this->expectExceptionMessage('Unable to create file `' . DS . 'noExisting`');
+        $this->getThumbCreatorInstance()->resize(200)->save(['target' => DS . 'noExisting']);
     }
 }
