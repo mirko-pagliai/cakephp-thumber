@@ -56,7 +56,7 @@ class ThumbManagerTest extends TestCase
 
         $this->loadPlugins(['TestPlugin' => []]);
         $result = $this->invokeMethod($this->ThumbManager, 'resolveFilePath', ['TestPlugin.400x400.png']);
-        $this->assertStringEndsWith('test_app/Plugin/TestPlugin/webroot/img/400x400.png', $result);
+        $this->assertStringEndsWith('TestPlugin' . DS . 'webroot' . DS . 'img' . DS . '400x400.png', $result);
     }
 
     /**
