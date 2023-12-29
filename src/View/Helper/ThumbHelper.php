@@ -15,10 +15,10 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\View\Helper;
 
+use BadMethodCallException;
 use Cake\View\Helper;
 use LogicException;
 use Thumber\Cake\Utility\ThumbCreator;
-use Tools\Exception\MethodNotExistsException;
 
 /**
  * Thumb Helper.
@@ -90,7 +90,7 @@ class ThumbHelper extends Helper
      * @param array $params Parameters for creating the thumbnail
      * @param array $options Array of HTML attributes for the `img` element
      * @return string Thumbnail url
-     * @throws \Tools\Exception\MethodNotExistsException
+     * @throws \BadMethodCallException
      * @since 1.4.0
      */
     protected function runUrlMethod(string $name, string $path, array $params = [], array $options = []): string
@@ -101,7 +101,7 @@ class ThumbHelper extends Helper
 
         $className = ThumbCreator::class;
         if (!method_exists($className, $name)) {
-            throw new MethodNotExistsException(__d('thumber', 'Method `{0}::{1}()` does not exist', $className, $name));
+            throw new BadMethodCallException(__d('thumber', 'Method `{0}::{1}()` does not exist', $className, $name));
         }
         $Thumber = new $className($path);
         $Thumber->$name($params['width'], $params['height'])->save($params);

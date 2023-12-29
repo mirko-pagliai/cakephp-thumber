@@ -33,7 +33,6 @@ class ThumbCreator extends BaseThumbCreator
      * It sets the file path and extension.
      * @param string $path Path of the image from which to create the thumbnail. It can be a relative path from
      *  `APP/webroot/img/`, a full path or a remote url
-     * @throws \Tools\Exception\NotReadableException
      */
     public function __construct(string $path)
     {

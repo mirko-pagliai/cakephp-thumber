@@ -14,11 +14,11 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\Http\Exception;
 
-use Tools\Exception\FileNotExistsException;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * ThumbNotFoundException
  */
-class ThumbNotFoundException extends FileNotExistsException
+class ThumbNotFoundException extends NotFoundException
 {
 }

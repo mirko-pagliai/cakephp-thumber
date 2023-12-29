@@ -38,7 +38,6 @@ trait TestTrait
      * @param string $path Path of the image from which to create the thumbnail. It can be a relative path (to `
      *  APP/webroot/img`), a full path or a remote url
      * @return \Thumber\Cake\Utility\ThumbCreator
-     * @throws \Tools\Exception\NotReadableException
      */
     protected function getThumbCreatorInstance(string $path = ''): ThumbCreator
     {
@@ -52,9 +51,6 @@ trait TestTrait
      * @param string $path Path of the image from which to create the thumbnail. It can be a full path or a remote url
      * @param array $options Options for saving
      * @return \Thumber\Cake\Utility\ThumbCreator
-     * @throws \Tools\Exception\NotReadableException
-     * @throws \Tools\Exception\NotWritableException
-     * @throws \Thumber\Exception\NotReadableImageException
      * @throws \ErrorException
      */
     protected function getThumbCreatorInstanceWithSave(string $path = '', array $options = []): ThumbCreator
