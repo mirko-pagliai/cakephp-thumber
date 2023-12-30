@@ -18,10 +18,8 @@ namespace Thumber\Cake\Test\TestCase\Utility;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Intervention\Image\ImageManager;
+use LogicException;
 use Thumber\Cake\TestSuite\TestCase;
-use Thumber\Exception\NotReadableImageException;
-use Thumber\Exception\UnsupportedImageTypeException;
-use Tools\Exception\NotReadableException;
 use Tools\TestSuite\ReflectionTrait;
 
 /**
@@ -48,7 +46,6 @@ class ThumbCreatorTest extends TestCase
      */
     public function testConstructNoExistingFile(): void
     {
-        $this->expectException(NotReadableException::class);
         $this->expectExceptionMessage('File or directory `' . WWW_ROOT . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('noExistingFile.gif');
     }
@@ -60,7 +57,6 @@ class ThumbCreatorTest extends TestCase
      */
     public function testConstructNoExistingFileFromPlugin(): void
     {
-        $this->expectException(NotReadableException::class);
         $this->loadPlugins(['TestPlugin' => []]);
         $this->expectExceptionMessage('File or directory `' . Plugin::path('TestPlugin') . 'webroot' . DS . 'img' . DS . 'noExistingFile.gif` is not readable');
         $this->getThumbCreatorInstance('TestPlugin.noExistingFile.gif');
@@ -73,11 +69,10 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetImageInstanceUnsupportedImageType(): void
     {
-        $this->expectException(UnsupportedImageTypeException::class);
         $this->expectExceptionMessage('Image type `image/jpeg` is not supported by this driver');
         $ThumbCreator = $this->getThumbCreatorInstance();
         $ThumbCreator->ImageManager = $this->createPartialMock(ImageManager::class, ['make']);
-        $ThumbCreator->ImageManager->method('make')->willThrowException(new UnsupportedImageTypeException('Image type `image/jpeg` is not supported by this driver'));
+        $ThumbCreator->ImageManager->method('make')->willThrowException(new LogicException('Image type `image/jpeg` is not supported by this driver'));
         $this->invokeMethod($ThumbCreator, 'getImageInstance');
     }
 
@@ -88,11 +83,10 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetImageInstanceNotReadableImageException(): void
     {
-        $this->expectException(NotReadableImageException::class);
         $this->expectExceptionMessage('Unable to read image from file `anExampleFile`');
         $ThumbCreator = $this->getThumbCreatorInstance();
         $ThumbCreator->ImageManager = $this->createPartialMock(ImageManager::class, ['make']);
-        $ThumbCreator->ImageManager->method('make')->willThrowException(new NotReadableImageException('Unable to read image from file `anExampleFile`'));
+        $ThumbCreator->ImageManager->method('make')->willThrowException(new LogicException('Unable to read image from file `anExampleFile`'));
         $this->invokeMethod($ThumbCreator, 'getImageInstance');
     }
 

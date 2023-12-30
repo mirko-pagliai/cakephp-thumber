@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.11 branch
+### 1.11.3
+* removed some exception classes already deprecated or scheduled for deprecation.
+
 ### 1.11.2
 * no longer needs the `me-tools` package;
 * no longer uses the `Exceptionist` class;
