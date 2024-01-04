@@ -30,25 +30,25 @@ class ThumbnailMiddleware implements MiddlewareInterface
 {
     /**
      * Serves thumbnail if the request matches one
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request
+     * @param \Psr\Http\Message\ServerRequestInterface $Request The request
      * @param \Psr\Http\Server\RequestHandlerInterface $handler Request handler
      * @return \Psr\Http\Message\ResponseInterface A response
      * @throws \Thumber\Cake\Http\Exception\ThumbNotFoundException
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function process(ServerRequestInterface $Request, RequestHandlerInterface $handler): ResponseInterface
     {
-        /** @var \Cake\Http\ServerRequest $request */
-        $file = Filesystem::instance()->concatenate(THUMBER_TARGET, base64_decode($request->getParam('basename')));
+        /** @var \Cake\Http\ServerRequest $Request */
+        $file = Filesystem::instance()->concatenate(THUMBER_TARGET, base64_decode($Request->getParam('basename')));
         if (!is_readable($file)) {
             throw new ThumbNotFoundException(__d('thumber', "File `{0}` doesn't exist", $file));
         }
 
-        $response = new Response();
-        $response = $response->withModified(filemtime($file) ?: 0);
-        if ($response->isNotModified($request)) {
-            return $response->withNotModified();
+        $Response = new Response();
+        $Response = $Response->withModified(filemtime($file) ?: 0);
+        if ($Response->isNotModified($Request)) {
+            return $Response->withNotModified();
         }
 
-        return $response->withFile($file)->withType(mime_content_type($file) ?: '');
+        return $Response->withFile($file)->withType(mime_content_type($file) ?: '');
     }
 }

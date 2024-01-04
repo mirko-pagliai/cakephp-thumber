@@ -56,6 +56,9 @@ class ThumbnailMiddlewareTest extends TestCase
                 'tif' => 'image/tiff',
                 'tiff' => 'image/tiff',
             ];
+            if (version_compare(PHP_VERSION, '8.3', '>=')) {
+                $extensions['bmp'] = 'image/bmp';
+            }
         }
 
         $ThumbHelper = new ThumbHelper(new View());
