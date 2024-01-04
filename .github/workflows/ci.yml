@@ -12,23 +12,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.4', '8.0', '8.1', '8.2']
+        php-version: ['8.1', '8.2']
         prefer-lowest: ['']
         thumber-driver: ['imagick', 'gd']
         include:
-          - php-version: '7.4'
-            prefer-lowest: 'prefer-lowest'
-            thumber-driver: 'imagick'
-          - php-version: '8.0'
-            prefer-lowest: 'prefer-lowest'
-            thumber-driver: 'imagick'
           - php-version: '8.1'
             prefer-lowest: 'prefer-lowest'
             thumber-driver: 'imagick'
           - php-version: '8.2'
             prefer-lowest: 'prefer-lowest'
             thumber-driver: 'imagick'
-          - php-version: '7.4'
+          - php-version: '8.1'
             thumber-driver: 'gd'
 
     steps:
@@ -76,7 +70,7 @@ jobs:
             fi
 
         - name: Submit code coverage
-          if: matrix.php-version == '8.1'
+          if: matrix.php-version == '8.2'
           uses: codecov/codecov-action@v3
 
   cs-stan:
@@ -89,7 +83,7 @@ jobs:
         - name: Setup PHP
           uses: shivammathur/setup-php@v2
           with:
-            php-version: '8.1'
+            php-version: '8.2'
             coverage: none
             tools: cs2pr
 
@@ -108,7 +102,7 @@ jobs:
 
         - name: Run psalm
           if: success() || failure()
-          run: vendor/bin/psalm --output-format=github --php-version=8.1
+          run: vendor/bin/psalm --output-format=github --php-version=8.2
 
         - name: Run phpstan
           if: success() || failure()
@@ -117,11 +111,11 @@ jobs:
 
   testsuite-windows:
     runs-on: windows-2019
-    name: Windows - PHP 7.4
+    name: Windows - PHP 8.2
 
     env:
       EXTENSIONS: mbstring, intl, gd
-      PHP_VERSION: '7.4'
+      PHP_VERSION: '8.2'
 
     steps:
     - uses: actions/checkout@v3
