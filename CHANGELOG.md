@@ -1,4 +1,8 @@
 # 1.x branch
+## 1.12 branch
+### 1.12.0
+* requires at least PHP 8.1.
+
 ## 1.11 branch
 ### 1.11.3
 * removed some exception classes already deprecated or scheduled for deprecation.
