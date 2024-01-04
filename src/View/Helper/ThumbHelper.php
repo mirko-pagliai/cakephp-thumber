@@ -53,7 +53,6 @@ class ThumbHelper extends Helper
      * @param array $params Array of params for the method
      * @return string
      * @throws \LogicException
-     * @throws \Tools\Exception\MethodNotExistsException
      * @see https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
      * @since 1.4.0
      */
