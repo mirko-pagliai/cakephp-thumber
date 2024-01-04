@@ -22,8 +22,9 @@ jobs:
           - php-version: '8.2'
             prefer-lowest: 'prefer-lowest'
             thumber-driver: 'imagick'
-          - php-version: '8.1'
-            thumber-driver: 'gd'
+          - php-version: '8.3'
+            prefer-lowest: 'prefer-lowest'
+            thumber-driver: 'imagick'
 
     steps:
         - uses: actions/checkout@v3
