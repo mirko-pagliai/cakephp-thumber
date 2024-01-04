@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.12 branch
 ### 1.12.0
-* requires at least PHP 8.1.
+* requires at least PHP 8.1;
+* added tests for PHP 8.3.
 
 ## 1.11 branch
 ### 1.11.3
