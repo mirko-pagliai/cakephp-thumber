@@ -65,7 +65,7 @@ jobs:
             if  [[ ${{ matrix.thumber-driver }} == 'gd' ]] || ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
               vendor/bin/phpunit --exclude-group imageEquals
             elif [[ ${{ matrix.php-version }} == '8.0' ]]; then
-             export XDEBUG_MODE=coverage && vendor/bin/phpunit --verbose --coverage-clover=coverage.xml
+             export XDEBUG_MODE=coverage && vendor/bin/phpunit --coverage-clover=coverage.xml
             else
               vendor/bin/phpunit
             fi
@@ -142,4 +142,4 @@ jobs:
       run: composer update
 
     - name: Run PHPUnit
-      run: vendor/bin/phpunit --verbose --exclude-group imageEquals
+      run: vendor/bin/phpunit --exclude-group imageEquals
