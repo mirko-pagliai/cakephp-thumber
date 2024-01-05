@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -40,8 +39,6 @@ class ClearCommandTest extends TestCase
      */
     public function testExecute(): void
     {
-        $this->useCommandRunner();
-
         $command = 'thumber.clear -v';
 
         $this->createSomeThumbs();
@@ -67,7 +64,6 @@ class ClearCommandTest extends TestCase
     }
 
     /**
-     * Test for `execute()` method, on failure
      * @test
      * @uses \Thumber\Cake\Command\ClearCommand::execute()
      */

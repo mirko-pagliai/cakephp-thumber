@@ -21,6 +21,7 @@ use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Exception;
 use Thumber\Cake\Utility\ThumbManager;
+use function Cake\I18n\__d;
 
 /**
  * Clears all thumbnails that have been generated from an image path
@@ -60,7 +61,7 @@ class ClearCommand extends Command
     {
         try {
             $count = $this->getThumbManager()->clear((string)$args->getArgument('path'));
-        } catch (Exception $e) {
+        } catch (Exception) {
             $io->err(__d('thumber', 'Error deleting thumbnails'));
             $this->abort();
         }
