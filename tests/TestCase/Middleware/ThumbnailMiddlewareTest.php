@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -87,7 +86,7 @@ class ThumbnailMiddlewareTest extends TestCase
         $this->assertResponseCode(304);
 
         //Deletes the last thumbnail file. Now the `Last-Modified` header is different
-        @unlink($thumb);
+        unlink($thumb);
         sleep(1);
         (new ThumbCreator($file))->resize(200)->save();
         $this->get($url);

@@ -21,6 +21,7 @@ use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Exception;
 use Thumber\Cake\Utility\ThumbManager;
+use function Cake\I18n\__d;
 
 /**
  * Clears all thumbnails
@@ -56,7 +57,7 @@ class ClearAllCommand extends Command
     {
         try {
             $count = $this->getThumbManager()->clearAll();
-        } catch (Exception $e) {
+        } catch (Exception) {
             $io->err(__d('thumber', 'Error deleting thumbnails'));
             $this->abort();
         }

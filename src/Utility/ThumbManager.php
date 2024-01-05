@@ -18,6 +18,7 @@ namespace Thumber\Cake\Utility;
 use Cake\Core\Plugin;
 use Thumber\ThumbManager as BaseThumbManager;
 use Tools\Filesystem;
+use function Cake\Core\pluginSplit;
 
 /**
  * A utility to manage thumbnails

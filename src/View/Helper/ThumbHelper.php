@@ -19,6 +19,7 @@ use BadMethodCallException;
 use Cake\View\Helper;
 use LogicException;
 use Thumber\Cake\Utility\ThumbCreator;
+use function Cake\I18n\__d;
 
 /**
  * Thumb Helper.
@@ -40,7 +41,7 @@ class ThumbHelper extends Helper
      * Helpers
      * @var array
      */
-    public $helpers = ['Html'];
+    public array $helpers = ['Html'];
 
     /**
      * Magic method. It dynamically calls all other methods.

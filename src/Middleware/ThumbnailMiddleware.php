@@ -22,6 +22,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
 use Tools\Filesystem;
+use function Cake\I18n\__d;
 
 /**
  * Handles serving thumbnails
