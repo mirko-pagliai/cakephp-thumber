@@ -30,17 +30,17 @@ even a coffee is enough! Thank you.
 
 ***
 
-* [Requirements and supported formats](#requirements-and-supported-formats)
-* [Installation](#installation)
+  * [Requirements and supported formats](#requirements-and-supported-formats)
+  * [Installation](#installation)
     + [Installation on older CakePHP and PHP versions](#installation-on-older-cakephp-and-php-versions)
-        - [For PHP 8.0 and CakePHP 4 or later](#for-php-80-and-cakephp-4-or-later)
-        - [For PHP 7.2 or later](#for-php-72-or-later)
-        - [For PHP 5.6 and CakePHP 3 or later](#for-php-56-and-cakephp-3-or-later)
-* [Configuration](#configuration)
+      - [For PHP 7.4 and CakePHP 4.4 or later](#for-php-74-and-cakephp-44-or-later)
+      - [For PHP 7.2 or later](#for-php-72-or-later)
+      - [For PHP 5.6 and CakePHP 3 or later](#for-php-56-and-cakephp-3-or-later)
+  * [Configuration](#configuration)
     + [Configuration values](#configuration-values)
-* [How to use](#how-to-use)
-* [Testing](#testing)
-* [Versioning](#versioning)
+  * [How to use](#how-to-use)
+  * [Testing](#testing)
+  * [Versioning](#versioning)
 
 ## Requirements and supported formats
 *cakephp-thumber* requires GD Library (>=2.0) **or** Imagick PHP extension
@@ -89,7 +89,7 @@ CakePHP and PHP.
 However, there are still some branches compatible with previous versions of
 CakePHP and PHP.
 
-#### For PHP 8.0 and CakePHP 4 or later
+#### For PHP 7.4 and CakePHP 4.4 or later
 The [cakephp4](//github.com/mirko-pagliai/cakephp-thumber/tree/cakephp4) branch
 requires at least PHP `>=7.4` and CakePHP `^4.4`.
 
