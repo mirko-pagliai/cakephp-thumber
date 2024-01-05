@@ -5,13 +5,15 @@
   processIsolation="false"
   stopOnFailure="false"
   bootstrap="./tests/bootstrap.php"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
 >
-  <coverage>
+  <coverage/>
+
+  <source>
     <include>
       <directory suffix=".php">./src/</directory>
     </include>
-  </coverage>
+  </source>
 
   <testsuites>
     <testsuite name="cakephp-thumber Test Cases">

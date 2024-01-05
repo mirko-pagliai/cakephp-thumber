@@ -18,6 +18,7 @@ namespace Thumber\Cake\Utility;
 use Cake\Core\Plugin;
 use Thumber\ThumbManager as BaseThumbManager;
 use Tools\Filesystem;
+use function Cake\Core\pluginSplit;
 
 /**
  * A utility to manage thumbnails
@@ -51,7 +52,6 @@ class ThumbManager extends BaseThumbManager
      * @param string $path Path of the original image
      * @param bool $sort Whether results should be sorted
      * @return array<string, string>
-     * @throws \Tools\Exception\NotReadableException
      */
     public function get(string $path, bool $sort = false): array
     {

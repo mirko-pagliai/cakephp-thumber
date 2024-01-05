@@ -19,6 +19,7 @@ namespace Thumber\Cake\Utility;
 use Cake\Routing\Router;
 use LogicException;
 use Thumber\ThumbCreator as BaseThumbCreator;
+use function Cake\I18n\__d;
 
 /**
  * Utility to create a thumb.

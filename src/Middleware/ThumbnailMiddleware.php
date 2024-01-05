@@ -22,6 +22,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Thumber\Cake\Http\Exception\ThumbNotFoundException;
 use Tools\Filesystem;
+use function Cake\I18n\__d;
 
 /**
  * Handles serving thumbnails
@@ -43,12 +44,12 @@ class ThumbnailMiddleware implements MiddlewareInterface
             throw new ThumbNotFoundException(__d('thumber', "File `{0}` doesn't exist", $file));
         }
 
-        $response = new Response();
-        $response = $response->withModified(filemtime($file) ?: 0);
-        if ($response->isNotModified($request)) {
-            return $response->withNotModified();
+        $Response = new Response();
+        $Response = $Response->withModified(filemtime($file) ?: 0);
+        if ($Response->isNotModified($request)) {
+            return $Response->withNotModified();
         }
 
-        return $response->withFile($file)->withType(mime_content_type($file) ?: '');
+        return $Response->withFile($file)->withType(mime_content_type($file) ?: '');
     }
 }
