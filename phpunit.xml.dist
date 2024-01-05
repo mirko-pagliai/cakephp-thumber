@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-	colors="true"
-	processIsolation="false"
-	stopOnFailure="false"
-	bootstrap="./tests/bootstrap.php"
-	>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  colors="true"
+  processIsolation="false"
+  stopOnFailure="false"
+  bootstrap="./tests/bootstrap.php"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+>
+  <coverage>
+    <include>
+      <directory suffix=".php">./src/</directory>
+    </include>
+  </coverage>
 
-	<testsuites>
-		<testsuite name="cakephp-thumber Test Cases">
-			<directory>./tests/TestCase</directory>
-		</testsuite>
-        
-        <testsuite name="cakephp3.4">
-			<directory>./tests/TestCase</directory>
-            <exclude>./tests/TestCase/Shell/ThumberShellTest.php</exclude>
-        </testsuite>
-	</testsuites>
-    
-	<!-- configure code coverage -->
-	<filter>
-		<whitelist>
-			<directory suffix=".php">./src/</directory>
-		</whitelist>
-	</filter>
+  <testsuites>
+    <testsuite name="cakephp-thumber Test Cases">
+      <directory>./tests/TestCase</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>
