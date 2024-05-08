@@ -15,9 +15,7 @@ declare(strict_types=1);
 
 namespace Thumber\Cake\TestSuite;
 
-use Cake\Core\Configure;
 use Thumber\Cake\Utility\ThumbCreator;
-use Tools\Filesystem;
 
 /**
  * TestCase trait
