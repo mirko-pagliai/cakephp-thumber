@@ -29,6 +29,42 @@ class TestCaseTest extends TestCase
 {
     /**
      * @test
+     * @uses \Thumber\Cake\TestSuite\TestCase::assertImageFileEquals()
+     */
+    public function testAssertImageFileEquals(): void
+    {
+        $this->markTestIncomplete('to be implemented');
+    }
+
+    /**
+     * @test
+     * @uses \Thumber\Cake\TestSuite\TestCase::assertImageSize()
+     */
+    public function testAssertImageSize(): void
+    {
+        $this->markTestIncomplete('to be implemented');
+    }
+
+    /**
+     * @test
+     * @uses \Thumber\Cake\TestSuite\TestCase::assertThumbPath()
+     */
+    public function testAssertThumbPath(): void
+    {
+        $this->markTestIncomplete('to be implemented');
+    }
+
+    /**
+     * @test
+     * @uses \Thumber\Cake\TestSuite\TestCase::assertThumbUrl()
+     */
+    public function testAssertThumbUrl(): void
+    {
+        $this->markTestIncomplete('to be implemented');
+    }
+
+    /**
+     * @test
      * @uses \Thumber\Cake\TestSuite\TestCase::skipIfDriverIs()
      */
     public function testSkipIfDriverIs(): void

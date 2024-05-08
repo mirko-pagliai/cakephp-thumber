@@ -121,7 +121,7 @@ abstract class TestCase extends BaseTestCase
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public function assertImageSize(int $expectedWidth, int $expectedHeight, string $filename, string $message = ''): void
+    public static function assertImageSize(int $expectedWidth, int $expectedHeight, string $filename, string $message = ''): void
     {
         self::assertFileExists($filename);
         [$actualWidth, $actualHeight] = getimagesize($filename) ?: [0 => 0, 1 => 0];
@@ -135,7 +135,7 @@ abstract class TestCase extends BaseTestCase
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public function assertThumbPath(string $path, string $message = ''): void
+    public static function assertThumbPath(string $path, string $message = ''): void
     {
         $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote(Filesystem::instance()->addSlashTerm(THUMBER_TARGET), DS));
         self::assertMatchesRegularExpression($regex, $path, $message);
@@ -148,7 +148,7 @@ abstract class TestCase extends BaseTestCase
      * @return void
      * @since 1.4.0
      */
-    public function assertThumbUrl(string $url, string $message = ''): void
+    public static function assertThumbUrl(string $url, string $message = ''): void
     {
         self::assertMatchesRegularExpression('/^(http:\/\/localhost)?\/thumb\/[\w\d]+/', $url, $message);
     }
