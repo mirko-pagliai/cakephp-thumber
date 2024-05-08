@@ -21,6 +21,7 @@ use Tools\TestSuite\ReflectionTrait;
 
 /**
  * ThumbManagerTest class
+ * @uses \Thumber\Cake\Utility\ThumbManager
  */
 class ThumbManagerTest extends TestCase
 {
@@ -38,9 +39,7 @@ class ThumbManagerTest extends TestCase
     {
         parent::setUp();
 
-        if (empty($this->ThumbManager)) {
-            $this->ThumbManager = new ThumbManager();
-        }
+        $this->ThumbManager ??= new ThumbManager();
 
         $this->createSomeThumbs();
     }
@@ -67,6 +66,23 @@ class ThumbManagerTest extends TestCase
     {
         $this->assertCount(2, $this->ThumbManager->get('400x400.jpg'));
         $this->assertCount(1, $this->ThumbManager->get('400x400.png'));
+
+        //With a no existing file
+        $this->expectExceptionMessage('File or directory `noExisting` is not readable');
+        $this->ThumbManager->get('noExisting');
+    }
+
+    /**
+     * @test
+     * @uses \Thumber\Cake\ThumbManager::getAll()
+     */
+    public function testGetAll(): void
+    {
+        $result = $this->ThumbManager->getAll();
+        $this->assertCount(3, $result);
+
+        //With sorting, the result is the same
+        $this->assertEquals($result, $this->ThumbManager->getAll(true));
     }
 
     /**
