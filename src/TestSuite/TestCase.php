@@ -43,4 +43,16 @@ abstract class TestCase extends BaseTestCase
 
         parent::tearDown();
     }
+
+    /**
+     * Internal method to create some thumbs
+     * @return void
+     * @throws \ErrorException
+     */
+    protected function createSomeThumbs(): void
+    {
+        $this->getThumbCreatorInstance('400x400.jpg')->resize(200)->save();
+        $this->getThumbCreatorInstance('400x400.jpg')->resize(300)->save();
+        $this->getThumbCreatorInstance('400x400.png')->resize(200)->save();
+    }
 }

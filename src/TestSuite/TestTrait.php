@@ -15,12 +15,12 @@ declare(strict_types=1);
 namespace Thumber\Cake\TestSuite;
 
 use Thumber\Cake\Utility\ThumbCreator;
-use Thumber\TestSuite\TestTrait as BaseTestTrait;
 
+/**
+ * TestCase trait
+ */
 trait TestTrait
 {
-    use BaseTestTrait;
-
     /**
      * Asserts for a valid thumbnail url
      * @param string $url Thumbnail url
