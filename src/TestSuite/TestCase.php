@@ -41,7 +41,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function tearDown(): void
     {
-        Filesystem::instance()->unlinkRecursive(THUMBER_TARGET);
+        Filesystem::instance()->unlinkRecursive(Configure::readOrFail('Thumber.target'));
 
         parent::tearDown();
     }
@@ -137,7 +137,8 @@ abstract class TestCase extends BaseTestCase
      */
     public static function assertThumbPath(string $path, string $message = ''): void
     {
-        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote(Filesystem::instance()->addSlashTerm(THUMBER_TARGET), DS));
+        $target = Filesystem::instance()->addSlashTerm(Configure::readOrFail('Thumber.target'));
+        $regex = sprintf('/^%s[\w\d_]+\.\w{3,4}/', preg_quote($target, DS));
         self::assertMatchesRegularExpression($regex, $path, $message);
     }
 
