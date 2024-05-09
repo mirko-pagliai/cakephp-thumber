@@ -107,7 +107,7 @@ abstract class TestCase extends BaseTestCase
 
         $expectedCopy = self::createCopy($expected);
         $actualCopy = self::createCopy($actual);
-        $message = $message ?: sprintf('The file `%s` is not what you expected', $expected);
+        $message = $message ?: sprintf('The file `%s` is not what you expected', rtr($expected));
         self::assertSame(md5_file($expectedCopy), md5_file($actualCopy), $message);
 
         $Filesystem->remove([$expectedCopy, $actualCopy]);

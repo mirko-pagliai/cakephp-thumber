@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Thumber\Cake\Test\TestCase\TestSuite;
 
 use Cake\Core\Configure;
+use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestStatus\Skipped;
 use PHPUnit\Framework\TestStatus\Success;
 use Thumber\Cake\Test\TestCase\SkipTestCase;
@@ -28,12 +29,35 @@ use Thumber\Cake\TestSuite\TestCase;
 class TestCaseTest extends TestCase
 {
     /**
+     * @var \Thumber\Cake\TestSuite\TestCase
+     */
+    protected TestCase $TestCase;
+
+    /**
+     * @inheritDoc
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->TestCase = new class ('myTest') extends TestCase {
+        };
+    }
+
+    /**
      * @test
      * @uses \Thumber\Cake\TestSuite\TestCase::assertImageFileEquals()
      */
     public function testAssertImageFileEquals(): void
     {
-        $this->markTestIncomplete('to be implemented');
+        $image = THUMBER_COMPARING_DIR . 'resize_w200_h200.jpg';
+        $copy = $this->createCopy($image);
+        $this->assertImageFileEquals($copy, $image);
+
+        $badCopy = $this->createCopy(THUMBER_COMPARING_DIR . 'resize_w400_h400.jpg');
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessage('The file `' . rtr($badCopy) . '` is not what you expected');
+        $this->assertImageFileEquals($badCopy, $image);
     }
 
     /**
@@ -42,7 +66,13 @@ class TestCaseTest extends TestCase
      */
     public function testAssertImageSize(): void
     {
-        $this->markTestIncomplete('to be implemented');
+        $image = THUMBER_COMPARING_DIR . 'resize_w200_h200.jpg';
+
+        $this->assertImageSize(200, 200, $image);
+
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessage('Failed asserting that 300 matches expected 200');
+        $this->assertImageSize(200, 300, $image);
     }
 
     /**
@@ -51,7 +81,10 @@ class TestCaseTest extends TestCase
      */
     public function testAssertThumbPath(): void
     {
-        $this->markTestIncomplete('to be implemented');
+        $this->assertThumbPath(THUMBER_TARGET . DS . '5426d23e4b4cb4fff73345b634542ba6_50c4f5a3a06310d4100e8815228cab76.png');
+
+        $this->expectException(AssertionFailedError::class);
+        $this->assertThumbPath(THUMBER_TARGET . DS . 'invalid');
     }
 
     /**
@@ -60,7 +93,10 @@ class TestCaseTest extends TestCase
      */
     public function testAssertThumbUrl(): void
     {
-        $this->markTestIncomplete('to be implemented');
+        $this->assertThumbUrl('http://localhost/thumb/' . base64_encode(basename('5426d23e4b4cb4fff73345b634542ba6_50c4f5a3a06310d4100e8815228cab76.png')));
+
+        $this->expectException(AssertionFailedError::class);
+        $this->assertThumbUrl('http://localhost/thumb');
     }
 
     /**
