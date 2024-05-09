@@ -21,6 +21,7 @@ use PHPUnit\Framework\TestStatus\Skipped;
 use PHPUnit\Framework\TestStatus\Success;
 use Thumber\Cake\Test\TestCase\SkipTestCase;
 use Thumber\Cake\TestSuite\TestCase;
+use Tools\Filesystem;
 
 /**
  * TestCaseTest
@@ -40,7 +41,7 @@ class TestCaseTest extends TestCase
     {
         parent::setUp();
 
-        $this->TestCase = new class ('myTest') extends TestCase {
+        $this->TestCase ??= new class ('myTest') extends TestCase {
         };
     }
 
@@ -81,10 +82,12 @@ class TestCaseTest extends TestCase
      */
     public function testAssertThumbPath(): void
     {
-        $this->assertThumbPath(THUMBER_TARGET . DS . '5426d23e4b4cb4fff73345b634542ba6_50c4f5a3a06310d4100e8815228cab76.png');
+        $Filesystem = new Filesystem();
+
+        $this->assertThumbPath($Filesystem->concatenate(Configure::readOrFail('Thumber.target'), '5426d23e4b4cb4fff73345b634542ba6_50c4f5a3a06310d4100e8815228cab76.png'));
 
         $this->expectException(AssertionFailedError::class);
-        $this->assertThumbPath(THUMBER_TARGET . DS . 'invalid');
+        $this->assertThumbPath($Filesystem->concatenate(Configure::readOrFail('Thumber.target'), 'invalid'));
     }
 
     /**

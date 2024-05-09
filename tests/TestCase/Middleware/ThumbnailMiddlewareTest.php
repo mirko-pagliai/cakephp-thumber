@@ -95,7 +95,7 @@ class ThumbnailMiddlewareTest extends TestCase
 
         //With a no existing file
         $this->expectException(ThumbNotFoundException::class);
-        $this->expectExceptionMessage('File `' . Filesystem::instance()->concatenate(THUMBER_TARGET, 'noExistingFile') . '` doesn\'t exist');
+        $this->expectExceptionMessage('File `' . Filesystem::instance()->concatenate(Configure::readOrFail('Thumber.target'), 'noExistingFile') . '` doesn\'t exist');
         $this->disableErrorHandlerMiddleware();
         $this->get('/thumb/' . base64_encode('noExistingFile'));
     }

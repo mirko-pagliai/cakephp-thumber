@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\Utility;
 
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use LogicException;
 use Symfony\Component\Finder\Finder;
@@ -42,7 +43,7 @@ class ThumbManager
     protected function _clear(array $filenames): int
     {
         array_walk($filenames, function (string $filename): void {
-            $filename = Filesystem::instance()->concatenate(THUMBER_TARGET, $filename);
+            $filename = Filesystem::instance()->concatenate(Configure::readOrFail('Thumber.target'), $filename);
             if (!is_writable($filename)) {
                 throw new LogicException('File or directory `' . $filename . '` is not writable'); // @codeCoverageIgnore
             }
@@ -61,7 +62,7 @@ class ThumbManager
     protected function _find(string $pattern = '', bool $sort = false): array
     {
         $pattern = $pattern ?: sprintf('/[\d\w]{32}_[\d\w]{32}\.(%s)$/', implode('|', self::SUPPORTED_FORMATS));
-        $finder = (new Finder())->files()->name($pattern)->in(THUMBER_TARGET);
+        $finder = (new Finder())->files()->name($pattern)->in(Configure::readOrFail('Thumber.target'));
 
         return array_map(fn(SplFileInfo $file): string => $file->getFilename(), iterator_to_array($sort ? $finder->sortByName() : $finder));
     }

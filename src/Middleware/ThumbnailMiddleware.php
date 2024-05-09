@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace Thumber\Cake\Middleware;
 
+use Cake\Core\Configure;
 use Cake\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -39,7 +40,7 @@ class ThumbnailMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         /** @var \Cake\Http\ServerRequest $request */
-        $file = Filesystem::instance()->concatenate(THUMBER_TARGET, base64_decode($request->getParam('basename')));
+        $file = Filesystem::instance()->concatenate(Configure::readOrFail('Thumber.target'), base64_decode($request->getParam('basename')));
         if (!is_readable($file)) {
             throw new ThumbNotFoundException(__d('thumber', "File `{0}` doesn't exist", $file));
         }

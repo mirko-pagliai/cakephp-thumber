@@ -59,7 +59,7 @@ class ThumbCreatorSaveTest extends TestCase
 
             //Using `target` option
             $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['target' => 'image.' . $extension]);
-            $this->assertEquals(Filesystem::instance()->concatenate(THUMBER_TARGET, 'image.' . $extension), $thumb);
+            $this->assertEquals(Filesystem::instance()->concatenate(Configure::readOrFail('Thumber.target'), 'image.' . $extension), $thumb);
             $this->assertSame($expectedMimetype, mime_content_type($thumb));
         }
     }
@@ -147,7 +147,7 @@ class ThumbCreatorSaveTest extends TestCase
     public function testSaveWithTarget(): void
     {
         $thumb = $this->getThumbCreatorInstance()->resize(200)->save(['target' => 'thumb.png']);
-        $this->assertEquals(Filesystem::instance()->concatenate(THUMBER_TARGET, 'thumb.png'), $thumb);
+        $this->assertEquals(Filesystem::instance()->concatenate(Configure::readOrFail('Thumber.target'), 'thumb.png'), $thumb);
         $this->assertSame('image/png', mime_content_type($thumb));
 
         //With an invalid file format
