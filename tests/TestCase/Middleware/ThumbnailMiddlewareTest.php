@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Thumber\Cake\Test\TestCase\Middleware;
 
 use Cake\Core\Configure;
