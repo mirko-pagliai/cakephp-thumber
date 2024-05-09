@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d029b58d1d0941e76a163143b2fe20ac",
+    "content-hash": "e0ef8b62e6326ad4a011d6619772dd21",
     "packages": [
         {
             "name": "cakephp/cakephp",
@@ -691,57 +691,6 @@
                 }
             ],
             "time": "2024-03-13T13:12:53+00:00"
-        },
-        {
-            "name": "mirko-pagliai/php-thumber",
-            "version": "1.6.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mirko-pagliai/php-thumber.git",
-                "reference": "efe1f6ef6980e1f66d4385bf772ab8361779ae88"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mirko-pagliai/php-thumber/zipball/efe1f6ef6980e1f66d4385bf772ab8361779ae88",
-                "reference": "efe1f6ef6980e1f66d4385bf772ab8361779ae88",
-                "shasum": ""
-            },
-            "require": {
-                "ext-fileinfo": "*",
-                "intervention/image": "^2.4",
-                "mirko-pagliai/php-tools": "~1.9.2",
-                "php": ">=8.1"
-            },
-            "require-dev": {
-                "cakephp/cakephp-codesniffer": "^5.0",
-                "ext-gd": "*",
-                "phpstan/phpstan": "^1.10.38",
-                "phpunit/phpunit": "^10.1.0 <=10.5.3",
-                "vimeo/psalm": "^5.15.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Thumber\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mirko Pagliai",
-                    "email": "mirko.pagliai@gmail.com"
-                }
-            ],
-            "description": "A PHP library to generate thumbnails",
-            "homepage": "https://github.com/mirko-pagliai/php-thumber",
-            "support": {
-                "issues": "https://github.com/mirko-pagliai/php-thumber/issues",
-                "source": "https://github.com/mirko-pagliai/php-thumber/tree/1.6.2"
-            },
-            "time": "2024-05-08T13:21:55+00:00"
         },
         {
             "name": "mirko-pagliai/php-tools",
