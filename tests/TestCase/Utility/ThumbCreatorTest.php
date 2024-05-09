@@ -13,6 +13,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Thumber\Cake\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
@@ -29,16 +30,6 @@ use Tools\TestSuite\ReflectionTrait;
 class ThumbCreatorTest extends TestCase
 {
     use ReflectionTrait;
-
-    /**
-     * @inheritDoc
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->loadPlugins(['Thumber/Cake' => []]);
-    }
 
     /**
      * Test for `__construct()` method, passing a no existing file
@@ -99,6 +90,8 @@ class ThumbCreatorTest extends TestCase
      */
     public function testGetUrl(): void
     {
+        $this->loadPlugins(['Thumber/Cake' => []]);
+
         $result = $this->getThumbCreatorInstanceWithSave()->getUrl();
         $this->assertThumbUrl($result);
         $this->assertTextStartsWith(Configure::read('App.fullBaseUrl'), $result);
