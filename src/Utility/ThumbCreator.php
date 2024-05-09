@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace Thumber\Cake\Utility;
 
+use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
@@ -87,7 +88,7 @@ class ThumbCreator
         }
         $this->path = $path;
         $this->Filesystem = new Filesystem();
-        $this->ImageManager = new ImageManager(['driver' => THUMBER_DRIVER]);
+        $this->ImageManager = new ImageManager(['driver' => Configure::readOrFail('Thumber.driver')]);
         $this->arguments[] = $path;
     }
 
@@ -273,12 +274,12 @@ class ThumbCreator
         $format = $target ? $this->getDefaultSaveOptions([], $target)['format'] : $options['format'];
 
         if (!$target) {
-            $this->arguments[] = [THUMBER_DRIVER, $format, $options['quality']];
+            $this->arguments[] = [Configure::readOrFail('Thumber.driver'), $format, $options['quality']];
             $target = sprintf('%s_%s.%s', md5($this->path), md5(serialize($this->arguments)), $format);
         }
 
         //Creates the thumbnail, if this does not exist
-        $target = $this->Filesystem->makePathAbsolute($target, THUMBER_TARGET);
+        $target = $this->Filesystem->makePathAbsolute($target, Configure::readOrFail('Thumber.target'));
         if (!file_exists($target)) {
             $ImageInstance = $this->getImageInstance();
 

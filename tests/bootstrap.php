@@ -73,7 +73,7 @@ if (!getenv('THUMBER_DRIVER')) {
 Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
 define('THUMBER_EXAMPLE_DIR', TESTS . 'examples' . DS);
 define('THUMBER_COMPARING_DIR', THUMBER_EXAMPLE_DIR . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS);
-define('THUMBER_TARGET', Configure::read('Thumber.target', TMP . 'thumbs'));
+Configure::write('Thumber.target', TMP . 'thumbs');
 $_SERVER['PHP_SELF'] = '/';
 
 echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
