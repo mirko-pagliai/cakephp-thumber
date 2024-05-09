@@ -169,7 +169,7 @@ if (!getenv('THUMBER_DRIVER')) {
 Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
 ```
 
-Moreover, some tests belong to the `imageEquals` group. These tests generate thubnails and compare them with pre-loaded thumbnails (inside `tests/comparing_files/`).
+Moreover, some tests belong to the `imageEquals` group. These tests generate thumbnails and compare them with pre-loaded thumbnails (inside `tests/comparing_files/`).
 By default, these tests are not performed, because the images may be different if generated from different environments and systems.
 
 To exclude these tests, you should run:
