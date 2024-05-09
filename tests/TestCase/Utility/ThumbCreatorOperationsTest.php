@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Thumber\Cake\Test\TestCase\Utility;
 
 use Thumber\Cake\TestSuite\TestCase;
+use Thumber\Cake\Utility\ThumbCreator;
 
 /**
  * ThumbCreatorOperationsTest class
@@ -71,7 +72,7 @@ class ThumbCreatorOperationsTest extends TestCase
      */
     public function testCropWithoutParameters(): void
     {
-        $this->expectExceptionMessage('You have to set at least the width for the `Thumber\ThumbCreator::crop()` method');
+        $this->expectExceptionMessage('You have to set at least the width for the `' . ThumbCreator::class . '::crop()` method');
         $this->getThumbCreatorInstance()->crop(0)->save();
     }
 
@@ -103,7 +104,7 @@ class ThumbCreatorOperationsTest extends TestCase
         $this->assertImageSize(450, 450, $thumb);
 
         //Without parameters
-        $this->expectExceptionMessage('You have to set at least the width for the `Thumber\ThumbCreator::fit()` method');
+        $this->expectExceptionMessage('You have to set at least the width for the `' . ThumbCreator::class . '::fit()` method');
         $this->getThumbCreatorInstance()->fit()->save();
     }
 
@@ -151,7 +152,7 @@ class ThumbCreatorOperationsTest extends TestCase
         $this->assertImageSize(500, 600, $thumb);
 
         //Without parameters
-        $this->expectExceptionMessage('You have to set at least the width for the `Thumber\ThumbCreator::resize()` method');
+        $this->expectExceptionMessage('You have to set at least the width for the `' . ThumbCreator::class . '::resize()` method');
         $this->getThumbCreatorInstance()->resize(0)->save();
     }
 
@@ -179,7 +180,7 @@ class ThumbCreatorOperationsTest extends TestCase
         $this->assertImageSize(700, 700, $thumb);
 
         //Without parameters
-        $this->expectExceptionMessage('You have to set at least the width for the `Thumber\ThumbCreator::resizeCanvas()` method');
+        $this->expectExceptionMessage('You have to set at least the width for the `' . ThumbCreator::class . '::resizeCanvas()` method');
         $this->getThumbCreatorInstance()->resizeCanvas(0)->save();
     }
 

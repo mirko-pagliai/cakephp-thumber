@@ -144,7 +144,7 @@ class ThumbCreator
      * @throws \LogicException
      * @see https://github.com/mirko-pagliai/php-thumber/wiki/How-to-use-ThumbCreator-and-create-thumbnails#crop
      */
-    public function crop(int $width, int $height = 0, array $options = []): \Thumber\ThumbCreator
+    public function crop(int $width, int $height = 0, array $options = []): ThumbCreator
     {
         $height = $height ?: $width;
         if (!is_positive($width)) {
