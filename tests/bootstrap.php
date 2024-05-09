@@ -58,14 +58,13 @@ Cache::setConfig([
     ],
 ]);
 
-
 if (getenv('THUMBER_DRIVER')) {
     Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
 }
 require_once ROOT . 'config' . DS . 'bootstrap.php';
 
-define('THUMBER_EXAMPLE_DIR', TESTS . 'examples' . DS);
-define('THUMBER_COMPARING_DIR', THUMBER_EXAMPLE_DIR . 'comparing_files' . DS . Configure::readOrFail('Thumber.driver') . DS);
+define('THUMBER_COMPARING_DIR', TESTS . 'examples' . DS . 'comparing_files' . DS . Configure::readOrFail('Thumber.driver') . DS);
+
 $_SERVER['PHP_SELF'] = '/';
 
 echo 'Running tests for "' . Configure::readOrFail('Thumber.driver') . '" driver ' . PHP_EOL;
