@@ -17,6 +17,7 @@ namespace Thumber\Cake\Test\TestCase\View\Helper;
 
 use Cake\View\View;
 use Thumber\Cake\TestSuite\TestCase;
+use Thumber\Cake\Utility\ThumbCreator;
 use Thumber\Cake\View\Helper\ThumbHelper;
 use Tools\TestSuite\ReflectionTrait;
 
@@ -41,9 +42,7 @@ class ThumbHelperTest extends TestCase
 
         $this->loadPlugins(['Thumber/Cake' => []]);
 
-        if (empty($this->Thumb)) {
-            $this->Thumb = new ThumbHelper(new View());
-        }
+        $this->Thumb ??= new ThumbHelper(new View());
     }
 
     /**
@@ -93,7 +92,7 @@ class ThumbHelperTest extends TestCase
      */
     public function testMagicCallWithoutParameters(): void
     {
-        $this->expectExceptionMessage('You have to set at least the width for the `Thumber\ThumbCreator::crop()` method');
+        $this->expectExceptionMessage('You have to set at least the width for the `' . ThumbCreator::class . '::crop()` method');
         $this->Thumb->crop('400x400.png');
     }
 
