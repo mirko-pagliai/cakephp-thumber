@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Thumber\Cake\TestSuite;
 
 use Cake\Core\Configure;
@@ -25,16 +26,6 @@ use Tools\Filesystem;
 abstract class TestCase extends BaseTestCase
 {
     use TestTrait;
-
-    /**
-     * @inheritDoc
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->loadPlugins(['Thumber\\Cake\\Plugin' => []]);
-    }
 
     /**
      * @inheritDoc
