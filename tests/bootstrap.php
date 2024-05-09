@@ -58,13 +58,14 @@ Cache::setConfig([
     ],
 ]);
 
-if (!getenv('THUMBER_DRIVER')) {
-    putenv('THUMBER_DRIVER=' . (extension_loaded('imagick') ? 'imagick' : 'gd'));
+
+if (getenv('THUMBER_DRIVER')) {
+    Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
 }
-Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
+require_once ROOT . 'config' . DS . 'bootstrap.php';
+
 define('THUMBER_EXAMPLE_DIR', TESTS . 'examples' . DS);
-define('THUMBER_COMPARING_DIR', THUMBER_EXAMPLE_DIR . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS);
-Configure::write('Thumber.target', TMP . 'thumbs');
+define('THUMBER_COMPARING_DIR', THUMBER_EXAMPLE_DIR . 'comparing_files' . DS . Configure::readOrFail('Thumber.driver') . DS);
 $_SERVER['PHP_SELF'] = '/';
 
-echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
+echo 'Running tests for "' . Configure::readOrFail('Thumber.driver') . '" driver ' . PHP_EOL;
