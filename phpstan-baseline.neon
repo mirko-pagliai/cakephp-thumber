@@ -1,12 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to an undefined method Thumber\\\\Cake\\\\View\\\\Helper\\\\ThumbHelper\\:\\:noExisting\\(\\)\\.$#"
+			message: "#^Call to an undefined method Thumber\\\\View\\\\Helper\\\\ThumbHelper\\:\\:noExisting\\(\\)\\.$#"
 			count: 1
 			path: tests/TestCase/View/Helper/ThumbHelperTest.php
 
 		-
-			message: "#^Method Thumber\\\\Cake\\\\View\\\\Helper\\\\ThumbHelper\\:\\:crop\\(\\) invoked with 0 parameters, 1\\-3 required\\.$#"
+			message: "#^Method Thumber\\\\View\\\\Helper\\\\ThumbHelper\\:\\:crop\\(\\) invoked with 0 parameters, 1\\-3 required\\.$#"
 			count: 1
 			path: tests/TestCase/View/Helper/ThumbHelperTest.php
 
