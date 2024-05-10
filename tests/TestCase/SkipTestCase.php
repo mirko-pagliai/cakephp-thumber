@@ -13,9 +13,9 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\Test\TestCase;
+namespace Thumber\Test\TestCase;
 
-use Thumber\Cake\TestSuite\TestCase;
+use Thumber\TestSuite\TestCase;
 
 /**
  * This class helps in testing the `skip()` methods
@@ -25,7 +25,7 @@ class SkipTestCase extends TestCase
     /**
      * Test that a test is marked as skipped if the driver is `gd`
      * @test
-     * @uses \Thumber\Cake\TestSuite\TestCase::skipIfDriverIs()
+     * @uses \Thumber\TestSuite\TestCase::skipIfDriverIs()
      */
     public function testSkipIfDriverIsGd(): void
     {
@@ -36,7 +36,7 @@ class SkipTestCase extends TestCase
     /**
      * Test that a test is marked as skipped if the driver is `imagick`
      * @test
-     * @uses \Thumber\Cake\TestSuite\TestCase::skipIfDriverIs()
+     * @uses \Thumber\TestSuite\TestCase::skipIfDriverIs()
      */
     public function testSkipIfDriverIsImagick(): void
     {

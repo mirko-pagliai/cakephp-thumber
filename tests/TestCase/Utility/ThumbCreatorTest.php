@@ -14,18 +14,18 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\Test\TestCase\Utility;
+namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Intervention\Image\ImageManager;
 use LogicException;
-use Thumber\Cake\TestSuite\TestCase;
+use Thumber\TestSuite\TestCase;
 use Tools\TestSuite\ReflectionTrait;
 
 /**
  * ThumbCreatorTest class
- * @uses \Thumber\Cake\Utility\ThumbCreator
+ * @uses \Thumber\Utility\ThumbCreator
  */
 class ThumbCreatorTest extends TestCase
 {
@@ -34,7 +34,7 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `__construct()` method, passing a no existing file
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::__construct()
+     * @uses \Thumber\Utility\ThumbCreator::__construct()
      */
     public function testConstructNoExistingFile(): void
     {
@@ -45,7 +45,7 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `__construct()` method, passing a no existing file from plugin
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::__construct()
+     * @uses \Thumber\Utility\ThumbCreator::__construct()
      */
     public function testConstructNoExistingFileFromPlugin(): void
     {
@@ -57,7 +57,7 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `getImageInstance()` method, with unsupported image type for GD driver
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::getImageInstance()
+     * @uses \Thumber\Utility\ThumbCreator::getImageInstance()
      */
     public function testGetImageInstanceUnsupportedImageType(): void
     {
@@ -72,7 +72,7 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `getImageInstance()` method, with a not readable image
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::getImageInstance()
+     * @uses \Thumber\Utility\ThumbCreator::getImageInstance()
      */
     public function testGetImageInstanceNotReadableImageException(): void
     {
@@ -86,11 +86,11 @@ class ThumbCreatorTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::getUrl()
+     * @uses \Thumber\Utility\ThumbCreator::getUrl()
      */
     public function testGetUrl(): void
     {
-        $this->loadPlugins(['Thumber/Cake' => []]);
+        $this->loadPlugins(['Thumber' => []]);
 
         $result = $this->getThumbCreatorInstanceWithSave()->getUrl();
         $this->assertThumbUrl($result);
@@ -109,7 +109,7 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `save()` method, with no valid method called before
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveWithNoValidMethod(): void
     {
@@ -120,7 +120,7 @@ class ThumbCreatorTest extends TestCase
     /**
      * Test for `save()` method, with a bad target
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveWithBadTarget(): void
     {

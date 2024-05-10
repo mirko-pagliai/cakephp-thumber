@@ -13,21 +13,21 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Cake\Test\TestCase\Command;
+namespace Thumber\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
 use Cake\Console\Exception\StopException;
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Console\TestSuite\StubConsoleOutput;
 use Exception;
-use Thumber\Cake\Command\ClearAllCommand;
-use Thumber\Cake\TestSuite\TestCase;
-use Thumber\Cake\TestSuite\TestTrait;
-use Thumber\Cake\Utility\ThumbManager;
+use Thumber\Command\ClearAllCommand;
+use Thumber\TestSuite\TestCase;
+use Thumber\TestSuite\TestTrait;
+use Thumber\Utility\ThumbManager;
 
 /**
  * ClearAllCommandTest class
- * @property \Thumber\Cake\Command\ClearAllCommand $Command
+ * @property \Thumber\Command\ClearAllCommand $Command
  */
 class ClearAllCommandTest extends TestCase
 {
@@ -36,7 +36,7 @@ class ClearAllCommandTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Command\ClearAllCommand::execute()
+     * @uses \Thumber\Command\ClearAllCommand::execute()
      */
     public function testExecute(): void
     {
@@ -55,7 +55,7 @@ class ClearAllCommandTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Command\ClearAllCommand::execute()
+     * @uses \Thumber\Command\ClearAllCommand::execute()
      */
     public function testExecuteOnFailure(): void
     {

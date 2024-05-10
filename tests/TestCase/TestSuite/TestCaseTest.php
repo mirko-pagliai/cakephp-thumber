@@ -14,24 +14,24 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\Test\TestCase\TestSuite;
+namespace Thumber\Test\TestCase\TestSuite;
 
 use Cake\Core\Configure;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestStatus\Skipped;
 use PHPUnit\Framework\TestStatus\Success;
-use Thumber\Cake\Test\TestCase\SkipTestCase;
-use Thumber\Cake\TestSuite\TestCase;
+use Thumber\Test\TestCase\SkipTestCase;
+use Thumber\TestSuite\TestCase;
 use Tools\Filesystem;
 
 /**
  * TestCaseTest
- * @uses \Thumber\Cake\TestSuite\TestCase
+ * @uses \Thumber\TestSuite\TestCase
  */
 class TestCaseTest extends TestCase
 {
     /**
-     * @var \Thumber\Cake\TestSuite\TestCase
+     * @var \Thumber\TestSuite\TestCase
      */
     protected TestCase $TestCase;
 
@@ -48,7 +48,7 @@ class TestCaseTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\TestSuite\TestCase::assertImageFileEquals()
+     * @uses \Thumber\TestSuite\TestCase::assertImageFileEquals()
      */
     public function testAssertImageFileEquals(): void
     {
@@ -64,7 +64,7 @@ class TestCaseTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\TestSuite\TestCase::assertImageSize()
+     * @uses \Thumber\TestSuite\TestCase::assertImageSize()
      */
     public function testAssertImageSize(): void
     {
@@ -79,7 +79,7 @@ class TestCaseTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\TestSuite\TestCase::assertThumbPath()
+     * @uses \Thumber\TestSuite\TestCase::assertThumbPath()
      */
     public function testAssertThumbPath(): void
     {
@@ -93,7 +93,7 @@ class TestCaseTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\TestSuite\TestCase::assertThumbUrl()
+     * @uses \Thumber\TestSuite\TestCase::assertThumbUrl()
      */
     public function testAssertThumbUrl(): void
     {
@@ -105,7 +105,7 @@ class TestCaseTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\TestSuite\TestCase::skipIfDriverIs()
+     * @uses \Thumber\TestSuite\TestCase::skipIfDriverIs()
      */
     public function testSkipIfDriverIs(): void
     {

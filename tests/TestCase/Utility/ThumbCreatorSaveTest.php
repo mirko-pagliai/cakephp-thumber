@@ -14,23 +14,23 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\Test\TestCase\Utility;
+namespace Thumber\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Intervention\Image\Exception\InvalidArgumentException;
 use Intervention\Image\Exception\NotSupportedException;
-use Thumber\Cake\TestSuite\TestCase;
+use Thumber\TestSuite\TestCase;
 use Tools\Filesystem;
 
 /**
  * ThumbCreatorSaveTest class
- * @uses \Thumber\Cake\Utility\ThumbCreator
+ * @uses \Thumber\Utility\ThumbCreator
  */
 class ThumbCreatorSaveTest extends TestCase
 {
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSave(): void
     {
@@ -69,7 +69,7 @@ class ThumbCreatorSaveTest extends TestCase
      * Test for `save()` method, if unable to create file
      * @requires OS Linux
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveUnableToCreateFile(): void
     {
@@ -81,7 +81,7 @@ class ThumbCreatorSaveTest extends TestCase
      * Test for `save()` method, using the same file with different arguments, so the two thumbnails will have the same
      *  prefix in the name, but a different suffix
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveSameFileDifferentArguments(): void
     {
@@ -94,7 +94,7 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method. It tests the thumbnails is created only if it does not exist
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveReturnsExistingThumb(): void
     {
@@ -117,7 +117,7 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using the `quality` option
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveWithQuality(): void
     {
@@ -132,7 +132,7 @@ class ThumbCreatorSaveTest extends TestCase
      * Test for `save()` method, using the `quality` option, equating images
      * @group imageEquals
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveWithQualityImageEquals(): void
     {
@@ -143,7 +143,7 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using the `target` option
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveWithTarget(): void
     {
@@ -159,7 +159,7 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, using similar format names, as `jpeg` or `tif`
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveWithSimilarFormat(): void
     {
@@ -180,7 +180,7 @@ class ThumbCreatorSaveTest extends TestCase
     /**
      * Test for `save()` method, without a valid method called before
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::save()
+     * @uses \Thumber\Utility\ThumbCreator::save()
      */
     public function testSaveWithoutCallbacks(): void
     {

@@ -13,12 +13,13 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-use-the-helper
  */
-namespace Thumber\Cake\View\Helper;
+
+namespace Thumber\View\Helper;
 
 use BadMethodCallException;
 use Cake\View\Helper;
 use LogicException;
-use Thumber\Cake\Utility\ThumbCreator;
+use Thumber\Utility\ThumbCreator;
 use function Cake\I18n\__d;
 
 /**

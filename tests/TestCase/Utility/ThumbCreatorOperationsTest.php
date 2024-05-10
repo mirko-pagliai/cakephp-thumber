@@ -14,20 +14,20 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\Test\TestCase\Utility;
+namespace Thumber\Test\TestCase\Utility;
 
-use Thumber\Cake\TestSuite\TestCase;
-use Thumber\Cake\Utility\ThumbCreator;
+use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbCreator;
 
 /**
  * ThumbCreatorOperationsTest class
- * @uses \Thumber\Cake\Utility\ThumbCreator
+ * @uses \Thumber\Utility\ThumbCreator
  */
 class ThumbCreatorOperationsTest extends TestCase
 {
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::crop()
+     * @uses \Thumber\Utility\ThumbCreator::crop()
      */
     public function testCrop(): void
     {
@@ -49,7 +49,7 @@ class ThumbCreatorOperationsTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::crop()
+     * @uses \Thumber\Utility\ThumbCreator::crop()
      */
     public function testCropInvalidXOption(): void
     {
@@ -59,7 +59,7 @@ class ThumbCreatorOperationsTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::crop()
+     * @uses \Thumber\Utility\ThumbCreator::crop()
      */
     public function testCropInvalidYOption(): void
     {
@@ -69,7 +69,7 @@ class ThumbCreatorOperationsTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::crop()
+     * @uses \Thumber\Utility\ThumbCreator::crop()
      */
     public function testCropWithoutParameters(): void
     {
@@ -79,7 +79,7 @@ class ThumbCreatorOperationsTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::fit()
+     * @uses \Thumber\Utility\ThumbCreator::fit()
      */
     public function testFit(): void
     {
@@ -111,7 +111,7 @@ class ThumbCreatorOperationsTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::resize()
+     * @uses \Thumber\Utility\ThumbCreator::resize()
      */
     public function testResize(): void
     {
@@ -159,7 +159,7 @@ class ThumbCreatorOperationsTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::resizeCanvas()
+     * @uses \Thumber\Utility\ThumbCreator::resizeCanvas()
      */
     public function testResizeCanvas(): void
     {
@@ -188,8 +188,8 @@ class ThumbCreatorOperationsTest extends TestCase
     /**
      * Test for several methods called in sequence on the same image (eg., `crop()` and `resize()`
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbCreator::crop()
-     * @uses \Thumber\Cake\Utility\ThumbCreator::resize()
+     * @uses \Thumber\Utility\ThumbCreator::crop()
+     * @uses \Thumber\Utility\ThumbCreator::resize()
      */
     public function testSeveralMethods(): void
     {
