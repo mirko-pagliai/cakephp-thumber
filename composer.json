@@ -25,13 +25,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Thumber\\Cake\\": "src"
+            "Thumber\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "App\\": "tests/test_app/TestApp/",
-            "Thumber\\Cake\\Test\\": "tests"
+            "Thumber\\Test\\": "tests"
         }
     },
     "scripts": {

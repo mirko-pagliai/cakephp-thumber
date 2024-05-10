@@ -13,9 +13,9 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\TestSuite;
+namespace Thumber\TestSuite;
 
-use Thumber\Cake\Utility\ThumbCreator;
+use Thumber\Utility\ThumbCreator;
 
 /**
  * TestCase trait
@@ -26,7 +26,7 @@ trait TestTrait
      * Returns an instance of `ThumbCreator`
      * @param string $path Path of the image from which to create the thumbnail. It can be a relative path (to `
      *  APP/webroot/img`), a full path or a remote url
-     * @return \Thumber\Cake\Utility\ThumbCreator
+     * @return \Thumber\Utility\ThumbCreator
      */
     protected function getThumbCreatorInstance(string $path = ''): ThumbCreator
     {

@@ -13,7 +13,8 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.3.0
  */
-namespace Thumber\Cake\Utility;
+
+namespace Thumber\Utility;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;

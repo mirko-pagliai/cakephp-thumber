@@ -13,14 +13,15 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.7.0
  */
-namespace Thumber\Cake\Command;
+
+namespace Thumber\Command;
 
 use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Exception;
-use Thumber\Cake\Utility\ThumbManager;
+use Thumber\Utility\ThumbManager;
 use function Cake\I18n\__d;
 
 /**
@@ -40,7 +41,7 @@ class ClearAllCommand extends Command
 
     /**
      * Internal method to get a `ThumbManager` instance
-     * @return \Thumber\Cake\Utility\ThumbManager
+     * @return \Thumber\Utility\ThumbManager
      */
     protected function getThumbManager(): ThumbManager
     {

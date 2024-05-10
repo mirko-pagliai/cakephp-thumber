@@ -1,3 +1,8 @@
+# 2.x branch
+## 2.0 branch
+### 2.0.0
+* the plugin name and its namespace have changed from `Thumber\Cake` to `Thumber`.
+
 # 1.x branch
 ## 1.13 branch
 ### 1.13.0

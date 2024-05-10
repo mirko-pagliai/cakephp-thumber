@@ -13,11 +13,11 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\TestSuite;
+namespace Thumber\TestSuite;
 
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase as BaseTestCase;
-use Thumber\Cake\Utility\ThumbCreator;
+use Thumber\Utility\ThumbCreator;
 use Tools\Filesystem;
 
 /**
@@ -70,7 +70,7 @@ abstract class TestCase extends BaseTestCase
      * It can be called passing only the array of options as first argument.
      * @param string $path Path of the image from which to create the thumbnail. It can be a full path or a remote url
      * @param array $options Options for saving
-     * @return \Thumber\Cake\Utility\ThumbCreator
+     * @return \Thumber\Utility\ThumbCreator
      * @throws \ErrorException
      */
     protected function getThumbCreatorInstanceWithSave(string $path = '', array $options = []): ThumbCreator

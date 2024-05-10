@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @see         https://github.com/mirko-pagliai/cakephp-thumber/wiki/How-to-uses-the-ThumbCreator-utility#save
  */
 
-namespace Thumber\Cake\Utility;
+namespace Thumber\Utility;
 
 use Cake\Core\Configure;
 use Cake\Routing\Router;

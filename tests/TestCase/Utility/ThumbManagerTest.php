@@ -14,22 +14,22 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\Test\TestCase\Utility;
+namespace Thumber\Test\TestCase\Utility;
 
-use Thumber\Cake\TestSuite\TestCase;
-use Thumber\Cake\Utility\ThumbManager;
+use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbManager;
 use Tools\TestSuite\ReflectionTrait;
 
 /**
  * ThumbManagerTest class
- * @uses \Thumber\Cake\Utility\ThumbManager
+ * @uses \Thumber\Utility\ThumbManager
  */
 class ThumbManagerTest extends TestCase
 {
     use ReflectionTrait;
 
     /**
-     * @var \Thumber\Cake\Utility\ThumbManager
+     * @var \Thumber\Utility\ThumbManager
      */
     protected ThumbManager $ThumbManager;
 
@@ -47,7 +47,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbManager::resolveFilePath()
+     * @uses \Thumber\Utility\ThumbManager::resolveFilePath()
      */
     public function testResolveFilePath(): void
     {
@@ -61,7 +61,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbManager::get()
+     * @uses \Thumber\Utility\ThumbManager::get()
      */
     public function testGet(): void
     {
@@ -75,7 +75,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\ThumbManager::getAll()
+     * @uses \Thumber\ThumbManager::getAll()
      */
     public function testGetAll(): void
     {
@@ -88,7 +88,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbManager::clear()
+     * @uses \Thumber\Utility\ThumbManager::clear()
      */
     public function testClear(): void
     {
@@ -101,7 +101,7 @@ class ThumbManagerTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Utility\ThumbManager::clearAll()
+     * @uses \Thumber\Utility\ThumbManager::clearAll()
      */
     public function testClearAll(): void
     {

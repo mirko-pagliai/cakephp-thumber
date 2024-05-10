@@ -13,12 +13,12 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\Test\TestCase\View\Helper;
+namespace Thumber\Test\TestCase\View\Helper;
 
 use Cake\View\View;
-use Thumber\Cake\TestSuite\TestCase;
-use Thumber\Cake\Utility\ThumbCreator;
-use Thumber\Cake\View\Helper\ThumbHelper;
+use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbCreator;
+use Thumber\View\Helper\ThumbHelper;
 use Tools\TestSuite\ReflectionTrait;
 
 /**
@@ -29,7 +29,7 @@ class ThumbHelperTest extends TestCase
     use ReflectionTrait;
 
     /**
-     * @var \Thumber\Cake\View\Helper\ThumbHelper
+     * @var \Thumber\View\Helper\ThumbHelper
      */
     protected ThumbHelper $Thumb;
 
@@ -40,14 +40,14 @@ class ThumbHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->loadPlugins(['Thumber/Cake' => []]);
+        $this->loadPlugins(['Thumber' => []]);
 
         $this->Thumb ??= new ThumbHelper(new View());
     }
 
     /**
      * @test
-     * @uses \Thumber\Cake\View\Helper\ThumbHelper::__call()
+     * @uses \Thumber\View\Helper\ThumbHelper::__call()
      */
     public function testMagicCall(): void
     {
@@ -81,14 +81,14 @@ class ThumbHelperTest extends TestCase
         }
 
         //Calling a no existing method
-        $this->expectExceptionMessage('Method `Thumber\Cake\Utility\ThumbCreator::noExisting()` does not exist');
+        $this->expectExceptionMessage('Method `' . ThumbCreator::class . '::noExisting()` does not exist');
         $this->Thumb->noExisting('400x400.png');
     }
 
     /**
      * Test for magic `_call()` method, called without parameters
      * @test
-     * @uses \Thumber\Cake\View\Helper\ThumbHelper::__call()
+     * @uses \Thumber\View\Helper\ThumbHelper::__call()
      */
     public function testMagicCallWithoutParameters(): void
     {
@@ -99,7 +99,7 @@ class ThumbHelperTest extends TestCase
     /**
      * Test for magic `_call()` method, called without path
      * @test
-     * @uses \Thumber\Cake\View\Helper\ThumbHelper::__call()
+     * @uses \Thumber\View\Helper\ThumbHelper::__call()
      */
     public function testMagicCallWithoutPath(): void
     {
@@ -109,7 +109,7 @@ class ThumbHelperTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\View\Helper\ThumbHelper::isUrlMethod()
+     * @uses \Thumber\View\Helper\ThumbHelper::isUrlMethod()
      */
     public function testIsUrlMethod(): void
     {

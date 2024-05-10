@@ -14,19 +14,19 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Thumber\Cake\Test\TestCase\Utility;
+namespace Thumber\Test\TestCase\Utility;
 
-use Thumber\Cake\TestSuite\TestCase;
+use Thumber\TestSuite\TestCase;
 
 /**
  * ThumbCreatorOperationsImageEqualsTest class
- * @uses \Thumber\Cake\Utility\ThumbCreator
+ * @uses \Thumber\Utility\ThumbCreator
  */
 class ThumbCreatorOperationsImageEqualsTest extends TestCase
 {
     /**
      * @group imageEquals
-     * @uses \Thumber\Cake\Utility\ThumbCreator::crop()
+     * @uses \Thumber\Utility\ThumbCreator::crop()
      * @test
      */
     public function testCrop(): void
@@ -45,7 +45,7 @@ class ThumbCreatorOperationsImageEqualsTest extends TestCase
 
     /**
      * @group imageEquals
-     * @uses \Thumber\Cake\Utility\ThumbCreator::fit()
+     * @uses \Thumber\Utility\ThumbCreator::fit()
      * @test
      */
     public function testFit(): void
@@ -80,7 +80,7 @@ class ThumbCreatorOperationsImageEqualsTest extends TestCase
 
     /**
      * @group imageEquals
-     * @uses \Thumber\Cake\Utility\ThumbCreator::resize()
+     * @uses \Thumber\Utility\ThumbCreator::resize()
      * @test
      */
     public function testResize(): void
@@ -121,7 +121,7 @@ class ThumbCreatorOperationsImageEqualsTest extends TestCase
 
     /**
      * @group imageEquals
-     * @uses \Thumber\Cake\Utility\ThumbCreator::resizeCanvas()
+     * @uses \Thumber\Utility\ThumbCreator::resizeCanvas()
      * @test
      */
     public function testResizeCanvas(): void
@@ -146,8 +146,8 @@ class ThumbCreatorOperationsImageEqualsTest extends TestCase
     /**
      * Test for several methods called in sequence on the same image (eg., `crop()` and `resize()`
      * @group imageEquals
-     * @uses \Thumber\Cake\Utility\ThumbCreator::crop()
-     * @uses \Thumber\Cake\Utility\ThumbCreator::resize()
+     * @uses \Thumber\Utility\ThumbCreator::crop()
+     * @uses \Thumber\Utility\ThumbCreator::resize()
      * @test
      */
     public function testSeveralMethods(): void
