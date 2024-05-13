@@ -16,11 +16,11 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 //Default thumbnails driver
-if (!defined('THUMBER_DRIVER')) {
-    define('THUMBER_DRIVER', Configure::read('Thumber.driver', extension_loaded('imagick') ? 'imagick' : 'gd'));
+if (!Configure::check('Thumber.driver')) {
+    Configure::write('Thumber.driver', extension_loaded('imagick') ? 'imagick' : 'gd');
 }
 
 //Default thumbnails directory
-if (!defined('THUMBER_TARGET')) {
-    define('THUMBER_TARGET', Configure::read('Thumber.target', TMP . 'thumbs'));
+if (!Configure::check('Thumber.target')) {
+    Configure::write('Thumber.target', TMP . 'thumbs');
 }

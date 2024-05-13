@@ -13,33 +13,19 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.5.0
  */
-namespace Thumber\Cake;
+
+namespace Thumber;
 
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
-use Cake\Core\PluginApplicationInterface;
-use Thumber\Cake\Command\ClearAllCommand;
-use Thumber\Cake\Command\ClearCommand;
-use Tools\Filesystem;
+use Thumber\Command\ClearAllCommand;
+use Thumber\Command\ClearCommand;
 
 /**
  * Plugin class
  */
 class Plugin extends BasePlugin
 {
-    /**
-     * Load all the application configuration and bootstrap logic
-     * @param \Cake\Core\PluginApplicationInterface $app The host application
-     * @return void
-     */
-    public function bootstrap(PluginApplicationInterface $app): void
-    {
-        parent::bootstrap($app);
-
-        //Loads bootstrap for `php-thumber`
-        require_once Filesystem::instance()->concatenate(ROOT, 'vendor', 'mirko-pagliai', 'php-thumber', 'config', 'bootstrap.php');
-    }
-
     /**
      * Add console commands for the plugin
      * @param \Cake\Console\CommandCollection $commands The command collection to update

@@ -12,15 +12,16 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Cake\Test\TestCase\Middleware;
+
+namespace Thumber\Test\TestCase\Middleware;
 
 use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\View\View;
-use Thumber\Cake\Http\Exception\ThumbNotFoundException;
-use Thumber\Cake\TestSuite\TestCase;
-use Thumber\Cake\Utility\ThumbCreator;
-use Thumber\Cake\View\Helper\ThumbHelper;
+use Thumber\Http\Exception\ThumbNotFoundException;
+use Thumber\TestSuite\TestCase;
+use Thumber\Utility\ThumbCreator;
+use Thumber\View\Helper\ThumbHelper;
 use Tools\Filesystem;
 
 /**
@@ -33,11 +34,11 @@ class ThumbnailMiddlewareTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Middleware\ThumbnailMiddleware::process()
+     * @uses \Thumber\Middleware\ThumbnailMiddleware::process()
      */
     public function testThumb(): void
     {
-        $this->loadPlugins(['Thumber/Cake' => []]);
+        $this->loadPlugins(['Thumber' => []]);
 
         $extensions = [
             'gif' => 'image/gif',
@@ -95,7 +96,7 @@ class ThumbnailMiddlewareTest extends TestCase
 
         //With a no existing file
         $this->expectException(ThumbNotFoundException::class);
-        $this->expectExceptionMessage('File `' . Filesystem::instance()->concatenate(THUMBER_TARGET, 'noExistingFile') . '` doesn\'t exist');
+        $this->expectExceptionMessage('File `' . Filesystem::instance()->concatenate(Configure::readOrFail('Thumber.target'), 'noExistingFile') . '` doesn\'t exist');
         $this->disableErrorHandlerMiddleware();
         $this->get('/thumb/' . base64_encode('noExistingFile'));
     }

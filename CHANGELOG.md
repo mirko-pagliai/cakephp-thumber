@@ -1,4 +1,13 @@
+# 2.x branch
+## 2.0 branch
+### 2.0.0
+* the plugin name and its namespace have changed from `Thumber\Cake` to `Thumber`.
+
 # 1.x branch
+## 1.13 branch
+### 1.13.0
+* it no longer needs the `php-thumber` package (which will be discontinued), as all the necessary code has been absorbed.
+
 ## 1.12 branch
 ### 1.12.0
 * requires at least PHP 8.1, CakePHP 5.0 and PHPUnit 10;

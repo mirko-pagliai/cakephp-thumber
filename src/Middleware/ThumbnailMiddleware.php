@@ -13,14 +13,16 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.6.0
  */
-namespace Thumber\Cake\Middleware;
 
+namespace Thumber\Middleware;
+
+use Cake\Core\Configure;
 use Cake\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Thumber\Cake\Http\Exception\ThumbNotFoundException;
+use Thumber\Http\Exception\ThumbNotFoundException;
 use Tools\Filesystem;
 use function Cake\I18n\__d;
 
@@ -34,12 +36,12 @@ class ThumbnailMiddleware implements MiddlewareInterface
      * @param \Psr\Http\Message\ServerRequestInterface $request The request
      * @param \Psr\Http\Server\RequestHandlerInterface $handler Request handler
      * @return \Psr\Http\Message\ResponseInterface A response
-     * @throws \Thumber\Cake\Http\Exception\ThumbNotFoundException
+     * @throws \Thumber\Http\Exception\ThumbNotFoundException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         /** @var \Cake\Http\ServerRequest $request */
-        $file = Filesystem::instance()->concatenate(THUMBER_TARGET, base64_decode($request->getParam('basename')));
+        $file = Filesystem::instance()->concatenate(Configure::readOrFail('Thumber.target'), base64_decode($request->getParam('basename')));
         if (!is_readable($file)) {
             throw new ThumbNotFoundException(__d('thumber', "File `{0}` doesn't exist", $file));
         }

@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 
 use Cake\Routing\RouteBuilder;
-use Thumber\Cake\Middleware\ThumbnailMiddleware;
+use Thumber\Middleware\ThumbnailMiddleware;
 
 /** @var \Cake\Routing\RouteBuilder $routes */
 $routes->plugin('Thumber', ['path' => '/thumb'], function (RouteBuilder $routes): void {

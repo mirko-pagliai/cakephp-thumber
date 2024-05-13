@@ -27,7 +27,7 @@ jobs:
             thumber-driver: 'imagick'
 
     steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
 
         - name: Validate composer.json and composer.lock
           run: composer validate --strict
@@ -40,7 +40,7 @@ jobs:
 
         - name: Cache Composer packages
           id: composer-cache
-          uses: actions/cache@v3
+          uses: actions/cache@v4
           with:
             path: vendor
             key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -72,14 +72,16 @@ jobs:
 
         - name: Submit code coverage
           if: matrix.php-version == '8.2'
-          uses: codecov/codecov-action@v3
+          uses: codecov/codecov-action@v4
+          env:
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   cs-stan:
     name: Coding Standard & Static Analysis
     runs-on: ubuntu-latest
 
     steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
 
         - name: Setup PHP
           uses: shivammathur/setup-php@v2
@@ -119,7 +121,7 @@ jobs:
       PHP_VERSION: '8.2'
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -131,7 +133,7 @@ jobs:
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}

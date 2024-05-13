@@ -21,24 +21,15 @@ date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
 define('ROOT', dirname(__DIR__) . DS);
-define('CAKE_CORE_INCLUDE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
-define('CORE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
-define('CAKE', CORE_PATH . 'src' . DS);
-define('TESTS', ROOT . 'tests' . DS);
-define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
-define('APP_DIR', 'test_app' . DS);
-define('WEBROOT_DIR', 'webroot' . DS);
-define('WWW_ROOT', APP . 'webroot' . DS);
+const CORE_PATH = ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS;
+const TESTS = ROOT . 'tests' . DS;
+const APP = ROOT . 'tests' . DS . 'test_app' . DS;
+const WWW_ROOT = APP . 'webroot' . DS;
 define('TMP', sys_get_temp_dir() . DS . 'cakephp-thumber' . DS);
-define('CONFIG', APP . 'config' . DS);
-define('CACHE', TMP . 'cache' . DS);
-define('LOGS', TMP . 'logs' . DS);
-define('SESSIONS', TMP . 'sessions' . DS);
+const CONFIG = APP . 'config' . DS;
 
-foreach ([TMP, LOGS, SESSIONS, CACHE . 'views', CACHE . 'models'] as $dir) {
-    if (!file_exists($dir)) {
-        mkdir($dir, 0777, true);
-    }
+if (!file_exists(TMP)) {
+    mkdir(TMP, 0777, true);
 }
 
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -50,7 +41,7 @@ Configure::write('App', [
     'encoding' => 'UTF-8',
     'base' => false,
     'baseUrl' => false,
-    'dir' => APP_DIR,
+    'dir' => 'test_app' . DS,
     'webroot' => 'webroot',
     'wwwRoot' => WWW_ROOT,
     'fullBaseUrl' => 'http://localhost',
@@ -67,13 +58,13 @@ Cache::setConfig([
     ],
 ]);
 
-if (!getenv('THUMBER_DRIVER')) {
-    putenv('THUMBER_DRIVER=' . (extension_loaded('imagick') ? 'imagick' : 'gd'));
+if (getenv('THUMBER_DRIVER')) {
+    Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
 }
-Configure::write('Thumber.driver', getenv('THUMBER_DRIVER'));
-define('THUMBER_EXAMPLE_DIR', ROOT . 'vendor' . DS . 'mirko-pagliai' . DS . 'php-thumber' . DS . 'tests' . DS . 'examples' . DS);
-define('THUMBER_COMPARING_DIR', THUMBER_EXAMPLE_DIR . 'comparing_files' . DS . getenv('THUMBER_DRIVER') . DS);
-define('THUMBER_TARGET', Configure::read('Thumber.target', TMP . 'thumbs'));
+require_once ROOT . 'config' . DS . 'bootstrap.php';
+
+define('THUMBER_COMPARING_DIR', TESTS . 'examples' . DS . 'comparing_files' . DS . Configure::readOrFail('Thumber.driver') . DS);
+
 $_SERVER['PHP_SELF'] = '/';
 
-echo 'Running tests for "' . getenv('THUMBER_DRIVER') . '" driver ' . PHP_EOL;
+echo 'Running tests for "' . Configure::readOrFail('Thumber.driver') . '" driver ' . PHP_EOL;

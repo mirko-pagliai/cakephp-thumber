@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -12,21 +13,22 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/cakephp-thumber
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Thumber\Cake\Test\TestCase\Command;
+
+namespace Thumber\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
 use Cake\Console\Exception\StopException;
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Console\TestSuite\StubConsoleOutput;
 use Exception;
-use Thumber\Cake\Command\ClearCommand;
-use Thumber\Cake\TestSuite\TestCase;
-use Thumber\Cake\TestSuite\TestTrait;
-use Thumber\Cake\Utility\ThumbManager;
+use Thumber\Command\ClearCommand;
+use Thumber\TestSuite\TestCase;
+use Thumber\TestSuite\TestTrait;
+use Thumber\Utility\ThumbManager;
 
 /**
  * ClearCommandTest class
- * @property \Thumber\Cake\Command\ClearCommand $Command
+ * @property \Thumber\Command\ClearCommand $Command
  */
 class ClearCommandTest extends TestCase
 {
@@ -35,7 +37,7 @@ class ClearCommandTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Command\ClearCommand::execute()
+     * @uses \Thumber\Command\ClearCommand::execute()
      */
     public function testExecute(): void
     {
@@ -65,7 +67,7 @@ class ClearCommandTest extends TestCase
 
     /**
      * @test
-     * @uses \Thumber\Cake\Command\ClearCommand::execute()
+     * @uses \Thumber\Command\ClearCommand::execute()
      */
     public function testExecuteOnFailure(): void
     {
