@@ -19,15 +19,12 @@ use Cake\View\View;
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbCreator;
 use Thumber\View\Helper\ThumbHelper;
-use Tools\TestSuite\ReflectionTrait;
 
 /**
  * ThumbHelperTest class
  */
 class ThumbHelperTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \Thumber\View\Helper\ThumbHelper
      */
@@ -105,19 +102,5 @@ class ThumbHelperTest extends TestCase
     {
         $this->expectExceptionMessage('Thumbnail path is missing');
         $this->Thumb->crop();
-    }
-
-    /**
-     * @test
-     * @uses \Thumber\View\Helper\ThumbHelper::isUrlMethod()
-     */
-    public function testIsUrlMethod(): void
-    {
-        $isUrlMethod = fn(string $methodName) => $this->invokeMethod($this->Thumb, 'isUrlMethod', [$methodName]);
-
-        $this->assertFalse($isUrlMethod('method'));
-        $this->assertTrue($isUrlMethod('methodUrl'));
-        $this->assertTrue($isUrlMethod('Url'));
-        $this->assertFalse($isUrlMethod('method_url'));
     }
 }

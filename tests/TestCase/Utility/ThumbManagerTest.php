@@ -18,7 +18,6 @@ namespace Thumber\Test\TestCase\Utility;
 
 use Thumber\TestSuite\TestCase;
 use Thumber\Utility\ThumbManager;
-use Tools\TestSuite\ReflectionTrait;
 
 /**
  * ThumbManagerTest class
@@ -26,8 +25,6 @@ use Tools\TestSuite\ReflectionTrait;
  */
 class ThumbManagerTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * @var \Thumber\Utility\ThumbManager
      */
@@ -51,11 +48,11 @@ class ThumbManagerTest extends TestCase
      */
     public function testResolveFilePath(): void
     {
-        $result = $this->invokeMethod($this->ThumbManager, 'resolveFilePath', ['400x400.jpg']);
+        $result = $this->ThumbManager->resolveFilePath('400x400.jpg');
         $this->assertSame($result, WWW_ROOT . 'img' . DS . '400x400.jpg');
 
         $this->loadPlugins(['TestPlugin' => []]);
-        $result = $this->invokeMethod($this->ThumbManager, 'resolveFilePath', ['TestPlugin.400x400.png']);
+        $result = $this->ThumbManager->resolveFilePath('TestPlugin.400x400.png');
         $this->assertStringEndsWith('TestPlugin' . DS . 'webroot' . DS . 'img' . DS . '400x400.png', $result);
     }
 

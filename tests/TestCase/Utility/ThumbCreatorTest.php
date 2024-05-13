@@ -21,7 +21,6 @@ use Cake\Core\Plugin;
 use Intervention\Image\ImageManager;
 use LogicException;
 use Thumber\TestSuite\TestCase;
-use Tools\TestSuite\ReflectionTrait;
 
 /**
  * ThumbCreatorTest class
@@ -29,8 +28,6 @@ use Tools\TestSuite\ReflectionTrait;
  */
 class ThumbCreatorTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Test for `__construct()` method, passing a no existing file
      * @test
@@ -66,7 +63,7 @@ class ThumbCreatorTest extends TestCase
         $ThumbCreator->ImageManager = $this->createPartialMock(ImageManager::class, ['make']);
         $ThumbCreator->ImageManager->method('make')
             ->willThrowException(new LogicException('Image type `image/jpeg` is not supported by this driver'));
-        $this->invokeMethod($ThumbCreator, 'getImageInstance');
+        $ThumbCreator->resize(10)->save();
     }
 
     /**
@@ -81,7 +78,7 @@ class ThumbCreatorTest extends TestCase
         $ThumbCreator->ImageManager = $this->createPartialMock(ImageManager::class, ['make']);
         $ThumbCreator->ImageManager->method('make')
             ->willThrowException(new LogicException('Unable to read image from file `anExampleFile`'));
-        $this->invokeMethod($ThumbCreator, 'getImageInstance');
+        $ThumbCreator->resize(10)->save();
     }
 
     /**
